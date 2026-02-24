@@ -2,6 +2,12 @@
   "lastUpdated": "2026-02-06T12:00:00Z",
   "items": [
     {
+      "id": "productivity-paradox-2-0",
+      "file": "productivity-paradox-2-0.json",
+      "date": "2026-02-24",
+      "status": "published"
+    },
+    {
       "id": "antti-klemetti-thesis",
       "file": "antti-klemetti-thesis.json",
       "date": "2026-02-18",
@@ -13,5 +19,6 @@
       "date": "2026-02-18",
       "status": "published"
     }
+
   ]
 }
