@@ -303,7 +303,7 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
   return (
     <>
       {/* Author byline */}
-      <div className="flex items-center gap-2 mb-6 text-neon-gold font-serif italic text-lg">
+      <div className="flex items-center gap-2 mb-6 text-neon-gold font-sans italic text-lg">
         By {data.author} &bull; {data.authorRole}
       </div>
 
@@ -314,12 +314,12 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
       </div>
 
       {/* Title */}
-      <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-10 leading-tight">
+      <h2 className="text-3xl md:text-4xl font-sans font-bold text-white mb-10 leading-tight">
         {data.title}
       </h2>
 
       {/* Full article body */}
-      <div className="prose prose-invert prose-lg max-w-none font-serif text-gray-300">
+      <div className="prose prose-invert prose-lg max-w-none font-sans text-gray-300">
         {fetchedMarkdown || data.markdownContent ? (
           <Markdown
             components={{
@@ -391,7 +391,7 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                 );
               case "paragraph":
                 return (
-                  <p key={index} className="leading-loose mb-6">
+                  <p key={index} className="leading-relaxed mb-6">
                     {block.text}
                   </p>
                 );
@@ -401,7 +401,7 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
           })
         ) : (
           data.paragraphs?.map((paragraph, index) => (
-            <p key={index} className="leading-loose mb-6">
+            <p key={index} className="leading-relaxed mb-6">
               {paragraph}
             </p>
           ))

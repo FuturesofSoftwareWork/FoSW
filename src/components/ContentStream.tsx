@@ -176,7 +176,7 @@ const ContentStream = () => {
         <div className="relative mt-12 md:mt-0" id="expert-insights">
           <div className="flex items-center gap-3 mb-8 border-b border-neon-gold/30 pb-4 justify-end md:justify-start">
             <User className="w-8 h-8 text-neon-gold" />
-            <h2 className="text-3xl font-serif font-bold text-white">
+            <h2 className="text-3xl font-sans font-bold text-white">
               Expert <span className="text-neon-gold">Insights</span>
             </h2>
           </div>
@@ -196,13 +196,13 @@ const ContentStream = () => {
                   }
                   className="bg-white/5 p-8 rounded-xl border border-white/5 hover:border-neon-gold/30 transition-all hover:bg-white/10 cursor-pointer group"
                 >
-                  <div className="flex items-center gap-2 mb-4 text-neon-gold font-serif italic">
+                  <div className="flex items-center gap-2 mb-4 text-neon-gold font-sans italic">
                     By {insight.author} &bull; {insight.authorRole}
                   </div>
-                  <h3 className="text-3xl font-serif font-bold text-white mb-4 leading-tight group-hover:text-neon-gold transition-colors">
+                  <h3 className="text-3xl font-sans font-bold text-white mb-4 leading-tight group-hover:text-neon-gold transition-colors">
                     {insight.title}
                   </h3>
-                  <div className="prose prose-invert max-w-none text-gray-300 font-serif leading-loose">
+                  <div className="prose prose-invert max-w-none text-gray-300 font-sans leading-relaxed">
                     <p>{insight.excerpt}</p>
                   </div>
                   <button className="mt-6 text-neon-gold hover:text-white font-bold uppercase text-xs tracking-widest flex items-center gap-2 border border-neon-gold/30 px-4 py-2 rounded-full hover:bg-neon-gold/20 transition-all">

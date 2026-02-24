@@ -1,5 +1,3 @@
-## **Productivity Paradox 2.0: Measuring Software Work When AI Writes the Code**.
-
 A bit over a year ago, I was working with computer science students and had a growing sense that something big was changing in software engineering. To understand it better, we wrote a project plan and applied for funding to explore what software work could be in the 2030s and how firms should adapt to the forthcoming changes.
 
 Since then, the pace of change has been… unreal. It’s hard to overstate what’s happening: we’re living through the most radical transformation in history, how knowledge work gets done, and software work sits right at the center of it.
@@ -7,7 +5,6 @@ Since then, the pace of change has been… unreal. It’s hard to overstate what
 Software work—coding, testing, reviewing, planning, product management—has become one of the most common well‑paid professions in today’s economy. The cliché that “every business is a software business” exists for a reason: software has reshaped entire industries.
 
 Yet the day‑to‑day craft of building software changed more slowly. For years, productivity gains were stubbornly incremental—so in many orgs, a sustained 1–2% improvement was considered a major win.
-
 That baseline expectation is now breaking.
 
 ### The measurement problem: science is behind the curve
