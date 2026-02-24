@@ -3,7 +3,11 @@ export type AISignalCategory =
   | "AI Tools"
   | "SDLC Change"
   | "Quality Testing"
-  | "Org Leadership";
+  | "Org & Leadership"
+  | "Work Wellbeing"
+  | "Skills & Learning"
+  | "Ethics & Policy"
+  | "Security & Risk";
 
 export type DecisionHorizon = "2026" | "2027-2028" | "2029+";
 

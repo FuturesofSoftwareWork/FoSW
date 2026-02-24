@@ -1,5 +1,6 @@
 import { Search, X, ArrowUpAz, ArrowDownAz, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { AISignalCategory } from "@/types/content";
 
 interface SignalControlsProps {
   searchQuery: string;
@@ -8,6 +9,10 @@ interface SignalControlsProps {
   setSortOrder: (order: "asc" | "desc") => void;
   sortField: "date" | "detectedAt";
   setSortField: (field: "date" | "detectedAt") => void;
+  categories: AISignalCategory[];
+  activeCategory: AISignalCategory | null;
+  setActiveCategory: (category: AISignalCategory | null) => void;
+  onVisibleCountReset: () => void;
 }
 
 const SignalControls = ({
@@ -17,6 +22,10 @@ const SignalControls = ({
   setSortOrder,
   sortField,
   setSortField,
+  categories,
+  activeCategory,
+  setActiveCategory,
+  onVisibleCountReset,
 }: SignalControlsProps) => {
   return (
     <div className="relative mb-8 group">
@@ -94,6 +103,41 @@ const SignalControls = ({
             )}
           </button>
         </div>
+
+        {/* Category Filter Pills */}
+        {categories && categories.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-white/5">
+            <button
+              onClick={() => {
+                setActiveCategory(null);
+                onVisibleCountReset();
+              }}
+              className={`px-3 py-1.5 text-xs font-mono rounded-full border transition-all ${
+                activeCategory === null
+                  ? "bg-hologram-cyan/20 text-hologram-cyan border-hologram-cyan"
+                  : "bg-white/5 text-gray-400 border-white/10 hover:border-hologram-cyan/30"
+              }`}
+            >
+              All
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => {
+                  setActiveCategory(cat);
+                  onVisibleCountReset();
+                }}
+                className={`px-3 py-1.5 text-xs font-mono rounded-full border transition-all ${
+                  activeCategory === cat
+                    ? "bg-hologram-cyan/20 text-hologram-cyan border-hologram-cyan"
+                    : "bg-white/5 text-gray-400 border-white/10 hover:border-hologram-cyan/30"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Decorative noise/texture overlay hint (simulated with standard CSS for now) */}

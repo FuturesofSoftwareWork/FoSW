@@ -110,42 +110,11 @@ const ContentStream = () => {
               setSortOrder={setSortOrder}
               sortField={sortField}
               setSortField={setSortField}
+              categories={categories}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              onVisibleCountReset={() => setVisibleCount(SIGNALS_PER_PAGE)}
             />
-
-            {/* Category filter pills */}
-            {!isLoading && categories.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                <button
-                  onClick={() => {
-                    setActiveCategory(null);
-                    setVisibleCount(SIGNALS_PER_PAGE);
-                  }}
-                  className={`px-3 py-1.5 text-xs font-mono rounded-full border transition-all ${
-                    activeCategory === null
-                      ? "bg-hologram-cyan/20 text-hologram-cyan border-hologram-cyan"
-                      : "bg-white/5 text-gray-400 border-white/10 hover:border-hologram-cyan/30"
-                  }`}
-                >
-                  All
-                </button>
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => {
-                      setActiveCategory(cat);
-                      setVisibleCount(SIGNALS_PER_PAGE);
-                    }}
-                    className={`px-3 py-1.5 text-xs font-mono rounded-full border transition-all ${
-                      activeCategory === cat
-                        ? "bg-hologram-cyan/20 text-hologram-cyan border-hologram-cyan"
-                        : "bg-white/5 text-gray-400 border-white/10 hover:border-hologram-cyan/30"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            )}
 
             {isLoading ? (
               <SignalSkeleton />
