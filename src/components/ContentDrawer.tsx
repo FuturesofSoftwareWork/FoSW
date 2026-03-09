@@ -180,7 +180,7 @@ const SignalContent = ({ data }: { data: AISignal }) => {
       </h2>
 
       {/* Summary */}
-      <div className="prose prose-invert prose-lg max-w-none">
+      <div className="prose prose-invert max-w-none">
         <p className="text-gray-300 leading-relaxed">{data.summary}</p>
       </div>
 

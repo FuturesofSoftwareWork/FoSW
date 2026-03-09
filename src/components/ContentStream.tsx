@@ -18,6 +18,13 @@ const formatDetectedDate = (isoString: string): string => {
 
 const SIGNALS_PER_PAGE = 5;
 
+const truncateWords = (text: string, maxWords: number) => {
+  if (!text) return "";
+  const words = text.trim().split(/\s+/);
+  if (words.length <= maxWords) return text;
+  return words.slice(0, maxWords).join(" ") + "...";
+};
+
 const ContentStream = () => {
   const { signals, insights, isLoading } = useContent({
     maxInsights: 3,
@@ -149,9 +156,9 @@ const ContentStream = () => {
                       <h3 className="text-lg font-bold text-gray-100 mb-2 group-hover:text-hologram-cyan transition-colors">
                         {signal.title}
                       </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
-                        {signal.summary}
-                      </p>
+                      <div className="prose prose-invert max-w-none text-gray-300 font-sans leading-relaxed">
+                        <p>{truncateWords(signal.summary, 50)}</p>
+                      </div>
                     </motion.div>
                   ))}
                 </AnimatePresence>
@@ -199,11 +206,11 @@ const ContentStream = () => {
                   <div className="flex items-center gap-2 mb-4 text-neon-gold font-sans italic">
                     By {insight.author} &bull; {insight.authorRole}
                   </div>
-                  <h3 className="text-3xl font-sans font-bold text-white mb-4 leading-tight group-hover:text-neon-gold transition-colors">
+                  <h3 className="text-lg font-bold text-gray-100 mb-2 group-hover:text-neon-gold transition-colors">
                     {insight.title}
                   </h3>
                   <div className="prose prose-invert max-w-none text-gray-300 font-sans leading-relaxed">
-                    <p>{insight.excerpt}</p>
+                    <p>{truncateWords(insight.excerpt, 50)}</p>
                   </div>
                   <button className="mt-6 text-neon-gold hover:text-white font-bold uppercase text-xs tracking-widest flex items-center gap-2 border border-neon-gold/30 px-4 py-2 rounded-full hover:bg-neon-gold/20 transition-all">
                     Read More <Newspaper size={14} />
