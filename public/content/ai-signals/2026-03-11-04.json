@@ -1,0 +1,29 @@
+{
+  "id": "2026-03-11-04",
+  "title": "Cortex benchmark finds AI is making engineering faster but not better: PRs up 20%, incidents per PR up 23.5%",
+  "summary": "Cortex published its 2026 AI benchmark report analyzing engineering performance data and surveying over 50 engineering leaders. The central finding is a speed-quality tradeoff: pull requests per author increased 20% year-over-year and deployment frequency rose across organizations, but incidents per pull request increased 23.5% and change failure rates rose approximately 30%. The report concludes that AI acts as an amplifier, magnifying both good and bad engineering practices. Organizations with strong testing practices, clear service ownership, and robust documentation achieved better outcomes when adopting AI tools, while those without these foundations saw quality deteriorate faster than speed improved. Only 45% of organizations have formal AI usage policies, creating governance gaps. For engineering leaders, this is one of the first data-driven reports showing that velocity gains from AI tools can be more than offset by quality degradation if engineering foundations are not in place first.",
+  "source": "Cortex (Engineering Intelligence Platform)",
+  "sourceUrl": "https://www.cortex.io/post/ai-is-making-engineering-faster-but-not-better-state-of-ai-benchmark-2026",
+  "sourceType": "article",
+  "detectedAt": "2026-03-11",
+  "date": "2025-11-12",
+  "status": "published",
+  "tags": ["engineering-productivity", "code-quality", "incidents", "change-failure-rate", "ai-governance", "DORA-metrics"],
+  "category": ["Quality & Testing", "Org & Leadership"],
+  "whyItMatters": [
+    "A 23.5% increase in incidents per PR alongside a 20% increase in PR volume means the absolute incident load is growing substantially, which can overwhelm on-call teams and erode reliability.",
+    "The 'amplifier effect' finding means AI tool rollouts without concurrent investment in testing, documentation, and ownership will likely worsen quality outcomes rather than simply maintaining them.",
+    "Only 45% having formal AI usage policies reveals that most organizations are deploying AI tools faster than they are building the governance structures to manage their impact."
+  ],
+  "recommendedActions": [
+    "Before scaling AI coding tool adoption, ensure baseline engineering practices are mature: test coverage, service ownership, incident response, and documentation.",
+    "Track quality metrics (incidents/PR, change failure rate, MTTR) alongside velocity metrics (PRs/author, deployment frequency) to detect when AI-driven speed is degrading reliability.",
+    "Establish formal AI usage policies and review processes, particularly around AI-generated code that bypasses traditional review rigor."
+  ],
+  "risksAndCaveats": [
+    "The survey sample of 50+ engineering leaders may skew toward organizations that self-selected for participation; results may not be representative of the full industry.",
+    "Correlation between AI adoption and quality decline does not prove causation; other factors (hiring changes, market pressure, reduced review standards) may contribute.",
+    "The report is from an engineering intelligence vendor with a commercial interest in selling quality-monitoring solutions, which may influence framing."
+  ],
+  "decisionHorizon": "now"
+}
