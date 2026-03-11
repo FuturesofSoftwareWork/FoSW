@@ -1,0 +1,29 @@
+{
+  "id": "2026-03-11-02",
+  "title": "SWE-CI benchmark reveals 75% of AI coding agents break previously working code during long-term maintenance",
+  "summary": "Researchers from Alibaba introduced SWE-CI, the first repository-level benchmark evaluating AI coding agents on continuous integration and long-term codebase maintenance rather than isolated bug fixes. Testing 18 AI models across 100 real codebases over 233 simulated days of maintenance, SWE-CI found that most agents accumulate technical debt and inadvertently break previously passing tests in approximately 75% of cases. The paper introduces EvoScore, a future-weighted metric that penalizes brittle short-term fixes in favor of well-factored solutions that remain maintainable over multiple evolution cycles. Among all models evaluated, only the Claude Opus series achieved a zero-regression rate above 50%. The benchmark highlights a critical gap between performance on static benchmarks like SWE-bench (where many models now score well) and real-world sustained maintenance capability. For software leaders considering AI agents for ongoing codebase work, SWE-CI provides the first systematic evidence that current agents are substantially better at one-shot fixes than at maintaining code health over time.",
+  "source": "arXiv Preprint (Alibaba Research)",
+  "sourceUrl": "https://arxiv.org/html/2603.03823",
+  "sourceType": "academic",
+  "detectedAt": "2026-03-11",
+  "date": "2026-03-05",
+  "status": "published",
+  "tags": ["ai-coding-agents", "benchmarks", "code-maintenance", "technical-debt", "continuous-integration", "EvoScore"],
+  "category": ["Quality & Testing"],
+  "whyItMatters": [
+    "Existing AI coding benchmarks test one-shot fixes; SWE-CI reveals that agents performing well on those benchmarks still fail at sustained maintenance, which is the dominant activity in real software organizations.",
+    "A 75% regression rate during AI-driven maintenance means deploying autonomous coding agents on production codebases without robust CI/CD safeguards will likely increase defect rates.",
+    "EvoScore gives engineering leaders a more realistic evaluation framework for comparing AI coding tools based on long-term code health rather than pass rates on curated patches."
+  ],
+  "recommendedActions": [
+    "Before expanding AI agent use to ongoing maintenance or feature work, validate your CI pipeline can catch regressions introduced by AI-generated code (test coverage, mutation testing, integration tests).",
+    "Use SWE-CI-style multi-round evaluation when piloting AI coding agents; single-task demos are insufficient to predict real-world reliability.",
+    "Factor zero-regression rate into AI tool selection criteria alongside functional correctness benchmarks."
+  ],
+  "risksAndCaveats": [
+    "The benchmark uses a specific simulation methodology; real-world regression rates may differ depending on codebase complexity, test coverage, and human review practices.",
+    "Model performance is rapidly improving; current rankings may shift within months as providers specifically optimize for maintenance-style tasks.",
+    "The study benchmarks fully autonomous operation; human-in-the-loop workflows with AI review would likely show better outcomes."
+  ],
+  "decisionHorizon": "now"
+}

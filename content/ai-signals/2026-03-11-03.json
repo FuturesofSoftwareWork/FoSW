@@ -1,0 +1,29 @@
+{
+  "id": "2026-03-11-03",
+  "title": "ETH Zurich study finds AGENTS.md context files often hinder AI coding agents, contradicting industry best practices",
+  "summary": "Researchers at ETH Zurich published a systematic evaluation of AGENTS.md and similar repository-level context files across 138 real-world Python tasks and 5,694 pull requests. Automatically generated context files reduced AI agent task success rates by approximately 3% while increasing inference costs by over 20%. Even human-written context files provided only a marginal 4% improvement in success rates while raising costs by up to 19%. Both file types consistently increased the number of steps agents required to complete tasks. The study tested multiple models including Claude 3.5 Sonnet, Codex GPT-5.2, GPT-5.1 mini, and Qwen Code. The researchers recommend omitting LLM-generated context files entirely and limiting human-written instructions to non-inferable details such as highly specific tooling or custom build commands. This directly contradicts widespread industry recommendations from OpenAI, Anthropic, and GitHub that had promoted such files as best practices for configuring AI coding agents.",
+  "source": "ETH Zurich (arXiv Preprint)",
+  "sourceUrl": "https://www.infoq.com/news/2026/03/agents-context-file-value-review/",
+  "sourceType": "academic",
+  "detectedAt": "2026-03-11",
+  "date": "2026-03-06",
+  "status": "published",
+  "tags": ["ai-coding-agents", "AGENTS-md", "context-engineering", "developer-experience", "prompt-engineering"],
+  "category": ["AI Tools"],
+  "whyItMatters": [
+    "Many engineering teams have invested effort in crafting AGENTS.md files following vendor recommendations; this study suggests that effort may be counterproductive, especially for auto-generated files.",
+    "The 20% increase in inference costs from context files is a direct cost concern for organizations scaling AI agent usage across many repositories.",
+    "The finding highlights a broader pattern: intuitive best practices for AI tools can be wrong, and rigorous evaluation is needed before standardizing AI workflow configurations across an organization."
+  ],
+  "recommendedActions": [
+    "Audit existing AGENTS.md or similar context files in your repositories; remove auto-generated ones and pare human-written ones down to non-obvious, non-inferable details only.",
+    "Before rolling out standardized AI agent configuration practices org-wide, run controlled A/B tests on a sample of your own repositories to validate effectiveness.",
+    "Focus context engineering efforts on providing build/test commands and unusual project conventions rather than general coding style guidance that models can infer from the codebase itself."
+  ],
+  "risksAndCaveats": [
+    "The study tested specific models; newer or different models may respond differently to context files. Results should be validated against the tools your team actually uses.",
+    "The benchmark deliberately used niche repositories to avoid memorization effects; for highly unusual or proprietary codebases, context files may provide greater value.",
+    "A 138-task dataset, while substantial, may not capture the full range of scenarios where context files could help or hinder agent performance."
+  ],
+  "decisionHorizon": "now"
+}
