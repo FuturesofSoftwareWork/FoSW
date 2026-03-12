@@ -9,7 +9,7 @@
   "date": "2026-03-05",
   "status": "published",
   "tags": ["ai-coding-agents", "benchmarks", "code-maintenance", "technical-debt", "continuous-integration", "EvoScore"],
-  "category": ["Quality & Testing", "AI agents"],
+  "category": ["Quality & Testing", "AI Agents"],
   "whyItMatters": [
     "Existing AI coding benchmarks test one-shot fixes; SWE-CI reveals that agents performing well on those benchmarks still fail at sustained maintenance, which is the dominant activity in real software organizations.",
     "A 75% regression rate during AI-driven maintenance means deploying autonomous coding agents on production codebases without robust CI/CD safeguards will likely increase defect rates.",

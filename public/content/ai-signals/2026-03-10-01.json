@@ -1,0 +1,31 @@
+{
+"id": "2026-03-10-01",
+"title": "Anthropic: Agentic Coding Trends Report 2026",
+"summary": "Anthropic’s 2026 Agentic Coding Trends Report argues that software development is shifting from AI assistance to agent orchestration, where engineers supervise systems of AI agents that implement features, write tests, and debug code. The report identifies eight trends, including multi-agent development workflows, long-running agents capable of building full systems over hours or days, and automated AI-driven quality review that escalates only critical decisions to humans. Research cited in the report suggests developers already use AI in roughly 60% of their work but fully delegate only 0–20% of tasks, reinforcing a collaborative human-AI model. Agentic workflows are predicted to compress SDLC timelines from weeks to days or hours by automating implementation, testing, and documentation loops. The report also predicts broader adoption outside engineering, enabling domain experts in legal, operations, and design to build automation directly. Overall, the report frames agent orchestration and oversight as a new core engineering skill that will reshape team structure, development economics, and security practices.",
+"source": "Anthropic – 2026 Agentic Coding Trends Report",
+"sourceType": "article",
+"sourceUrl": "https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf",
+"detectedAt": "2026-03-10T00:00:00Z",
+"date": "2026-02-10",
+"status": "published",
+"tags": ["AI agents", "developer productivity", "agent orchestration", "SDLC transformation", "multi-agent systems"],
+"category": "SDLC Change",
+"whyItMatters": [
+"Because engineers increasingly orchestrate agents rather than write code directly, engineering leadership should rethink role definitions, hiring criteria, and performance metrics.",
+"Because multi-agent workflows and long-running agents can compress delivery timelines, organizations that master agent orchestration may ship features dramatically faster than competitors.",
+"Because AI expands coding capabilities to non-engineering teams, platform and governance models must evolve to support safe internal tool creation across departments.",
+"Because AI can both strengthen and scale cyberattacks, security architecture must be integrated into agent-driven development environments from the start."
+],
+"recommendedActions": [
+"Pilot multi-agent development workflows in a controlled internal project to understand orchestration, monitoring, and review patterns.",
+"Introduce engineering practices for agent supervision (AI code review, escalation rules, verification pipelines).",
+"Evaluate which internal teams beyond engineering could safely build automations with agentic tools and establish governance guardrails.",
+"Track productivity metrics beyond speed (e.g., output volume, bug backlog reduction, experimentation rate)."
+],
+"risksAndCaveats": [
+"The report is vendor-authored and largely based on customer anecdotes and internal observations rather than controlled empirical studies.",
+"Reported productivity gains may depend heavily on codebase structure, tooling integration, and team experience with AI workflows.",
+"Delegation limits remain significant; engineers report fully delegating only a small portion of tasks, indicating oversight costs may remain substantial."
+],
+"decisionHorizon": "0,5 - 2 years"
+}
