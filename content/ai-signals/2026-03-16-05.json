@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-16-05",
+  "title": "Opsera benchmark: AI coding cuts time-to-PR by 58% but introduces 15–18% more security vulnerabilities and 4.6x longer review waits",
+  "summary": "Opsera's AI Coding Impact 2026 Benchmark Report, published January 29, 2026 and based on data from 250,000+ developers across 60+ enterprise organizations, quantifies a growing tension in AI-assisted software delivery. AI-driven workflows reduce time-to-pull-request by 48–58%, but this speed gain is offset by downstream friction: AI-generated code introduces 15–18% more security vulnerabilities per line compared to human-written code, code duplication rose from 10.5% to 13.5%, and AI-generated PRs wait 4.6x longer in review queues without governance mechanisms. The report also finds a striking productivity disparity: senior engineers realize nearly five times the productivity gains of junior engineers from the same AI tools. Additionally, 21% of AI tool licenses remain underutilized, and GitHub Copilot holds 60–65% market share. Highly regulated sectors (healthcare, insurance) lag 9–12 percentage points behind technology and startup sectors in adoption.",
+  "source": "Opsera / PRNewswire",
+  "sourceUrl": "https://www.prnewswire.com/news-releases/new-opsera-report-reveals-how-ai-is-transforming-software-delivery-and-driving-business-outcomes-302673996.html",
+  "sourceType": "article",
+  "detectedAt": "2026-03-16",
+  "date": "2026-01-29",
+  "status": "published",
+  "tags": ["developer-productivity", "security-vulnerabilities", "code-review", "enterprise-benchmark", "ai-coding", "governance"],
+  "category": ["Productivity", "Security & Risk", "Quality & Testing"],
+  "whyItMatters": [
+    "The 4.6x review queue delay reveals that AI coding acceleration without corresponding review and governance investment creates new bottlenecks rather than eliminating them — teams optimizing only for code generation speed may see net-zero or negative throughput improvement.",
+    "The 5x senior-to-junior productivity gap from the same AI tools means AI coding adoption may widen — not narrow — skill-based performance differences within engineering organizations, with significant implications for team composition and compensation.",
+    "15–18% more security vulnerabilities per line is a quantified risk that security and AppSec teams need to plan for; organizations scaling AI coding without proportional security automation are accumulating vulnerability debt."
+  ],
+  "recommendedActions": [
+    "Instrument your CI/CD pipeline to measure not just time-to-PR but time-to-merge and defect escape rate; isolated speed metrics can mask downstream slowdowns.",
+    "Invest in automated security scanning (SAST/DAST) proportional to AI code volume increases; the 15–18% vulnerability uplift demands commensurate detection capability.",
+    "Audit AI tool license utilization (21% underutilized); consolidate or reallocate licenses to maximize ROI before expanding procurement.",
+    "Design AI coding governance policies that include review SLAs for AI-generated PRs to prevent the 4.6x review delay from becoming a default."
+  ],
+  "risksAndCaveats": [
+    "The 250,000+ developer dataset skews toward enterprises with mature DevOps practices; results may not represent smaller organizations or those earlier in AI adoption.",
+    "The 15–18% vulnerability increase is an aggregate across languages and frameworks; specific vulnerability rates vary significantly by technology stack and AI tool configuration.",
+    "Opsera is a DevOps platform vendor with a commercial interest in governance and measurement tooling; findings that emphasize governance needs should be read with this context."
+  ],
+  "decisionHorizon": "now"
+}
