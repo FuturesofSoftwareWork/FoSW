@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-16-07",
+  "title": "Sonar's 2026 State of Code survey: 96% of developers don't fully trust AI-generated code, yet only 48% always verify before committing",
+  "summary": "SonarSource published its 2026 State of Code Developer Survey on January 8, 2026, drawing on its platform's analysis of 750 billion lines of code daily. The report reveals a critical 'verification gap' in AI-assisted development: while 72% of developers who have tried AI coding tools use them daily and AI now accounts for 42% of all committed code (projected to reach 65% by 2027), 96% of developers don't fully trust that AI-generated code is functionally correct — yet only 48% always verify it before committing. The survey identifies that 88% of developers cite negative impacts from AI-generated code, specifically code that 'looks correct but isn't reliable.' The report finds that the bottleneck in software engineering has shifted from writing code to validating it, with time saved during creation now spent reviewing, debugging, and validating AI output. Enterprise teams report lower raw speed gains but are 20% more likely to report improvements in code quality and maintainability compared to SMBs, suggesting that systematic verification processes — not AI generation speed — determine real-world quality outcomes.",
+  "source": "SonarSource",
+  "sourceUrl": "https://www.sonarsource.com/blog/state-of-code-developer-survey-report-the-current-reality-of-ai-coding/",
+  "sourceType": "article",
+  "detectedAt": "2026-03-16",
+  "date": "2026-01-08",
+  "status": "published",
+  "tags": ["verification-gap", "ai-code-quality", "developer-trust", "code-verification", "enterprise-adoption", "developer-survey"],
+  "category": ["Quality & Testing", "Productivity"],
+  "whyItMatters": [
+    "The 48-percentage-point gap between distrust (96%) and verification (48%) means roughly half of all AI-generated code enters production without the scrutiny developers themselves believe it requires — a systemic quality risk at 42% AI code share.",
+    "The shift from 'writing code is hard' to 'verifying code is hard' fundamentally changes where engineering organizations should invest: review tooling, testing infrastructure, and verification workflows become higher-leverage investments than code generation acceleration.",
+    "The 20% quality advantage of enterprises over SMBs suggests that systematic verification processes (CI/CD quality gates, automated analysis) are a stronger predictor of AI-assisted development success than raw tool adoption."
+  ],
+  "recommendedActions": [
+    "Establish mandatory automated quality gates (static analysis, security scanning, test coverage thresholds) for all code — especially AI-generated — before merge; the verification gap cannot be closed by developer discipline alone.",
+    "Track the ratio of AI-generated code to verification effort in your organization; if verification is not scaling proportionally with AI code volume, quality debt is accumulating silently.",
+    "Invest in developer education on AI code verification practices; the gap between distrust and actual verification suggests developers lack either time, tooling, or process support to verify consistently.",
+    "Benchmark your organization against the enterprise finding: if you have systematic verification processes and see quality improvements, scale them; if not, prioritize verification infrastructure over additional AI coding tools."
+  ],
+  "risksAndCaveats": [
+    "SonarSource is a code quality and security vendor with commercial interest in verification tooling; the 'verification gap' framing aligns with their product positioning.",
+    "The 42% AI code share is a global average; actual percentages vary dramatically by team, language, project type, and organizational policy.",
+    "Survey-based trust and verification data reflects self-reported behavior, which may differ from actual practice; developers may over-report verification frequency or under-report trust."
+  ],
+  "decisionHorizon": "now"
+}

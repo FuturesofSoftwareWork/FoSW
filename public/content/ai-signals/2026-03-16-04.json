@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-16-04",
+  "title": "Anthropic launches multi-agent Code Review for Claude Code, tripling substantive review coverage at less than 1% false positive rate",
+  "summary": "Anthropic launched Code Review for Claude Code on March 9, 2026 — a multi-agent system that automatically reviews pull requests by dispatching parallel agents to find bugs, verify findings to filter false positives, and rank issues by severity. The system scales agent count based on PR complexity. Internal results at Anthropic show substantive review comments increased from 16% to 54% of PRs, with engineers marking less than 1% of findings as incorrect. The tool is available in research preview for Claude Team and Claude Enterprise customers at an estimated $15–25 per review, with average review time of approximately 20 minutes. This represents a significant industry shift: as AI-generated code volumes grow (now 42% of committed code per Sonar's 2026 survey), the bottleneck has moved from writing code to verifying it. Multi-agent code review is an early attempt to address this verification gap at scale.",
+  "source": "TechCrunch / Anthropic Blog",
+  "sourceUrl": "https://techcrunch.com/2026/03/09/anthropic-launches-code-review-tool-to-check-flood-of-ai-generated-code/",
+  "sourceType": "article",
+  "detectedAt": "2026-03-16",
+  "date": "2026-03-09",
+  "status": "published",
+  "tags": ["ai-code-review", "multi-agent", "verification-bottleneck", "claude-code", "pull-requests", "code-quality"],
+  "category": ["AI Agents", "Quality & Testing"],
+  "whyItMatters": [
+    "The verification bottleneck — not code generation — is now the primary constraint on AI-assisted development throughput; tools that credibly address review quality at scale will determine which organizations actually realize productivity gains from AI coding.",
+    "A less-than-1% false positive rate, if replicated across diverse codebases, sets a new bar for AI review tooling; prior tools suffered from noise that led developers to ignore findings.",
+    "Multi-agent review architecture (dispatch, verify, rank) establishes a pattern that competing tools will likely adopt, making this an early indicator of how AI-on-AI quality assurance will be structured."
+  ],
+  "recommendedActions": [
+    "Engineering leaders should evaluate multi-agent code review tools as a complement to — not replacement for — human review, focusing on how they change reviewer attention and cognitive load.",
+    "Measure the impact on review queue latency: Opsera's benchmark found AI-generated PRs wait 4.6x longer without governance; multi-agent review could reduce this bottleneck.",
+    "Assess cost-effectiveness: at $15–25 per review, compare against the cost of human review hours for equivalent coverage, especially for high-volume AI-assisted teams.",
+    "If adopting, track false positive rates and developer trust over time; early high accuracy often degrades as codebases diversify."
+  ],
+  "risksAndCaveats": [
+    "Internal metrics from the vendor (Anthropic) on their own codebase may not generalize to diverse enterprise codebases with different languages, frameworks, and domain complexity.",
+    "The $15–25 per review cost could become significant at scale for high-PR-volume organizations; ROI depends on how many human review hours are actually displaced.",
+    "Multi-agent review creates a dependency on an external service for a critical quality gate; organizations should evaluate availability, latency, and data privacy implications."
+  ],
+  "decisionHorizon": "now"
+}
