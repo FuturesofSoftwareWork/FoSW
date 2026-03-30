@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-30-04",
+  "title": "Junior developer hiring cliff deepens: 67% drop in entry-level postings, Harvard study finds 7.7% junior employment decline at AI-adopting firms",
+  "summary": "Multiple converging data points in March 2026 confirm that the junior developer talent pipeline is breaking. Entry-level software engineering postings in the US dropped 67% between 2023 and 2024, tech internship postings fell 30% since 2023, and CS graduate unemployment reached 6.1% — nearly double the national average. A Harvard study identified 'seniority-biased technological change,' finding junior employment declined 7.7% at firms adopting AI while senior employment remained stable or grew. UK tech graduate roles fell 46% in 2024. The economics driving this are stark: managers compare the $20–30/month cost of AI coding tools against 6–12 months of junior developer ramp-up time. The downstream risk is severe — a 67% hiring cliff sustained over 2024–2026 means 67% fewer potential engineering leaders in 2031–2036. The Klarna case provides an early warning: after aggressive AI-driven staffing cuts in 2023, the company scrambled to rehire by mid-2025 due to service quality degradation, and research indicates 55% of companies regret AI-driven layoffs.",
+  "source": "ThinkPol / Harvard / IEEE Spectrum / BLS",
+  "sourceUrl": "https://thinkpol.ca/2026/03/24/the-junior-developer-pipeline-is-broken-and-nobody-has-a-plan-to-fix-it/",
+  "sourceType": "article",
+  "detectedAt": "2026-03-30",
+  "date": "2026-03-24",
+  "status": "published",
+  "tags": ["junior-developers", "hiring-cliff", "talent-pipeline", "workforce-planning", "seniority-bias", "engineering-leadership"],
+  "category": ["Org & Leadership", "Skills & Learning"],
+  "whyItMatters": [
+    "The 10-year lag between junior hiring cuts and senior talent shortages means decisions made today about entry-level hiring will constrain engineering leadership capacity through the early 2030s — this is a strategic workforce risk, not a short-term cost optimization.",
+    "The Klarna precedent (aggressive cuts → quality degradation → rehiring) demonstrates that AI-driven staffing reductions can backfire within 18–24 months, suggesting the current industry-wide hiring freeze may produce similar reversals.",
+    "The Harvard finding of seniority-biased technological change means AI adoption structurally favors experienced engineers, creating a self-reinforcing cycle where fewer juniors get hired, fewer gain experience, and the senior talent pool eventually contracts."
+  ],
+  "recommendedActions": [
+    "Model your 3–5 year engineering leadership pipeline: if junior hiring has dropped significantly, project when mid-level and senior talent gaps will emerge and plan accordingly.",
+    "Redesign entry-level roles to pair AI tool proficiency with structured mentorship — the article proposes restructured apprenticeships integrating AI code review skills as a viable path forward.",
+    "Track and report honest metrics (incident resolution, defect rates over time, knowledge transfer effectiveness) to counter the narrative that AI tools fully substitute for junior developer contributions.",
+    "Benchmark against the 55% regret rate for AI-driven layoffs before making further workforce reductions based on AI productivity assumptions."
+  ],
+  "risksAndCaveats": [
+    "The 67% drop in entry-level postings conflates multiple factors: post-pandemic hiring normalization, interest rate effects on tech spending, and AI-specific displacement — isolating AI's causal share is difficult.",
+    "The Harvard study's 7.7% figure is based on early AI adoption data and may not reflect current conditions as AI tools and organizational practices evolve.",
+    "The Klarna example is a single case study in fintech; generalizability to other sectors and company sizes is uncertain."
+  ],
+  "decisionHorizon": "now"
+}

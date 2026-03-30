@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-23-01",
+  "title": "2025 DORA Report: AI amplifies existing engineering quality rather than replacing engineering discipline",
+  "summary": "Google's 2025 DORA Report, covered by InfoQ on March 17, 2026, finds that AI does not automatically improve software delivery performance. Instead, it acts as an amplifier of existing engineering conditions: high-performing teams see further gains, while organizations with fragmented processes and poorly structured development systems see AI accelerate technical debt, increase code review complexity, and introduce instability. Based on nearly 5,000 survey responses and over 100 hours of qualitative interviews, the report introduces a new DORA AI Capabilities Model identifying six practices that determine AI's impact: clear AI strategy, healthy data ecosystem, knowledge accessibility, foundational engineering practices, user-centric development, and platform engineering. Approximately 90% of developers now use AI assistance, with two-thirds relying heavily on it for coding, documentation, debugging, and framework exploration. The report also adds 'Rework Rate' as a new formal metric, reflecting that AI increases delivery throughput but also increases delivery instability and rework.",
+  "source": "InfoQ / Google DORA",
+  "sourceUrl": "https://www.infoq.com/news/2026/03/ai-dora-report/",
+  "sourceType": "article",
+  "detectedAt": "2026-03-23",
+  "date": "2026-03-17",
+  "status": "published",
+  "tags": ["DORA", "DevOps", "software-delivery", "platform-engineering", "amplifier-effect", "rework-rate", "engineering-maturity"],
+  "category": ["Productivity", "SDLC Change", "Org & Leadership"],
+  "whyItMatters": [
+    "The amplifier finding inverts the common assumption that AI adoption alone drives improvement; engineering leaders must now treat foundational practices (CI/CD, code review, documentation, platform engineering) as prerequisites for AI ROI, not afterthoughts.",
+    "The new 'Rework Rate' metric signals that AI-assisted throughput gains come at the cost of increased instability and rework, forcing leaders to measure net delivery value rather than raw velocity.",
+    "The DORA AI Capabilities Model gives CTOs a concrete diagnostic framework: organizations lacking clear AI strategy, accessible knowledge, or mature platform engineering are likely to see negative returns from AI tool investments."
+  ],
+  "recommendedActions": [
+    "Assess your organization against the six DORA AI Capabilities (AI strategy, data ecosystem, knowledge accessibility, engineering practices, user-centric development, platform engineering) before expanding AI tooling investments.",
+    "Begin tracking Rework Rate alongside traditional DORA metrics (deployment frequency, lead time, change failure rate, MTTR) to detect whether AI is increasing net delivery value or just accelerating churn.",
+    "Invest in platform engineering as the foundational enabler: the report finds a direct correlation between internal platform quality and ability to unlock AI value.",
+    "Use the DORA findings to reframe AI ROI conversations with executive leadership: shift from 'AI makes developers faster' to 'AI amplifies whatever engineering culture you already have.'"
+  ],
+  "risksAndCaveats": [
+    "The DORA survey is self-reported and skews toward organizations with mature DevOps awareness; the amplifier effect may be even more negative in organizations that don't participate in DORA-type benchmarking.",
+    "The six-capability model is new and untested as a predictive framework; it reflects correlational patterns from 2025 data, not causal validation.",
+    "Google sponsors DORA research, which may influence emphasis on platform engineering and infrastructure maturity as key enablers."
+  ],
+  "decisionHorizon": "now"
+}
