@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-23-05",
+  "title": "EU AI Act general application date of August 2, 2026 approaches with most enterprises unprepared for compliance",
+  "summary": "The EU AI Act's general application date of August 2, 2026, is now fewer than five months away, bringing enforceable requirements for high-risk AI systems including conformity assessments, technical documentation, CE markings, risk management systems, automatic logging, and registration in the EU's public AI database. Penalties for non-compliance reach up to EUR 35 million or 7% of global turnover. Multiple compliance analyses report that over half of organizations lack systematic inventories of AI systems in production or development, making risk classification impossible. The documentation burden is described as the most underestimated compliance challenge, exceeding what most organizations maintain for traditional software. A European Commission 'Digital Omnibus' package proposed in late 2025 could postpone some high-risk obligations to December 2027, but this remains under negotiation and should not be assumed. Each EU member state must also establish at least one AI regulatory sandbox by the August 2026 deadline. For software organizations building or integrating AI, the Act creates new responsibilities around data governance, bias testing, human oversight mechanisms, and lifecycle risk management that must be embedded into development workflows.",
+  "source": "Multiple regulatory sources",
+  "sourceUrl": "https://secureprivacy.ai/blog/eu-ai-act-2026-compliance",
+  "sourceType": "article",
+  "detectedAt": "2026-03-23",
+  "date": "2026-03-15",
+  "status": "published",
+  "tags": ["EU-AI-Act", "regulation", "compliance", "high-risk-AI", "documentation", "conformity-assessment", "governance"],
+  "category": ["Ethics & Policy"],
+  "whyItMatters": [
+    "Software organizations building AI-powered features face a hard compliance deadline in under five months; the documentation, conformity assessment, and risk management requirements are far more demanding than typical software compliance and cannot be retrofitted quickly.",
+    "The 7% of global turnover penalty ceiling makes EU AI Act violations potentially more costly than GDPR fines, elevating AI compliance from a legal concern to a board-level business risk.",
+    "For engineering leaders, the Act's requirements (automatic logging, bias testing, human oversight, lifecycle risk management) must be built into the SDLC, not bolted on post-deployment; this changes how AI features are architected and shipped."
+  ],
+  "recommendedActions": [
+    "Conduct an immediate inventory of all AI systems in production and development; classify each against the EU AI Act risk categories to identify which require conformity assessments by August 2026.",
+    "Begin building technical documentation pipelines for high-risk AI systems now; retrofitting documentation is exponentially harder than embedding it into development workflows from the start.",
+    "Clarify your organization's role under the Act (provider, deployer, distributor, or importer) for each AI system, as obligations differ significantly by role.",
+    "Do not rely on the Digital Omnibus postponement; treat August 2, 2026 as the binding deadline and plan accordingly."
+  ],
+  "risksAndCaveats": [
+    "Many EU member states have not yet appointed national regulators for the AI Act, creating uncertainty about how enforcement will actually be carried out in the early months.",
+    "The Digital Omnibus negotiations could alter specific requirements or timelines, but the direction of travel toward AI regulation is clear regardless of precise dates.",
+    "The Act primarily applies to AI systems placed on the EU market or affecting EU persons; organizations operating solely outside the EU may have different compliance obligations, though global companies with EU customers are likely in scope."
+  ],
+  "decisionHorizon": "now"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-30-03",
+  "title": "20% of organizations experienced serious incidents from AI-generated code, two-thirds of developers bypass security due to alert fatigue",
+  "summary": "Aikido Security's State of AI in Security & Development 2026 surveyed 450 security leaders, developers, and AppSec engineers across Europe and the US. The report finds that 24% of production code is now AI-generated (29% in the US, 21% in Europe), and nearly 70% of respondents have found vulnerabilities introduced by AI code. One in five organizations reported serious incidents with material business impact from AI-generated code, with a striking US-Europe gap: 43% of US organizations reported serious incidents versus 20% in Europe. Alert fatigue is eroding security discipline: teams spend an average of 6.1 hours per week triaging security alerts, with most time wasted on false positives. Two-thirds of respondents admit to bypassing, dismissing, or delaying security checks due to alert overload — estimated to cost $20 million annually for a 1,000-developer organization. Accountability remains unclear: 53% blame security teams for AI code breaches, 45% blame the developer, and 42% blame whoever merged it.",
+  "source": "Aikido Security",
+  "sourceUrl": "https://www.aikido.dev/state-of-ai-security-development-2026",
+  "sourceType": "article",
+  "detectedAt": "2026-03-30",
+  "date": "2026-03-24",
+  "status": "published",
+  "tags": ["AI-security", "alert-fatigue", "CISO", "AppSec", "incident-response", "accountability", "developer-experience"],
+  "category": ["Security & Risk", "Work Wellbeing", "Org & Leadership"],
+  "whyItMatters": [
+    "The two-thirds bypass rate due to alert fatigue means security tooling is actively undermining its own purpose — engineering leaders must treat alert quality as a first-class operational metric, not just alert volume.",
+    "The unclear accountability split (53% security team, 45% developer, 42% merger) signals that most organizations have not updated their incident ownership models for AI-generated code, creating governance gaps that will worsen as AI code share grows.",
+    "The US-Europe incident gap (43% vs. 20% serious incidents) suggests that faster AI adoption without proportional security investment correlates with worse outcomes — a cautionary signal for organizations accelerating AI tool rollouts."
+  ],
+  "recommendedActions": [
+    "Establish clear accountability policies for AI-generated code: define who owns security review, who is responsible for vulnerabilities, and how AI-authored code is flagged in your merge process.",
+    "Evaluate and consolidate security tooling to reduce false positive rates — the report finds teams using unified developer-and-security tools were 2x more likely to report zero incidents.",
+    "Quantify your organization's alert fatigue cost using the report's $20M/1000-developer benchmark to build the business case for security tool consolidation.",
+    "Benchmark your AI-generated code share and track it alongside incident rates to establish whether your security posture is keeping pace with AI adoption."
+  ],
+  "risksAndCaveats": [
+    "The survey was conducted by Aikido Security, a security tooling vendor, which may bias findings toward emphasizing tooling consolidation as the primary solution.",
+    "The 24% AI-generated code figure is self-reported and may vary significantly by organization size, industry, and how 'AI-generated' is defined.",
+    "The US-Europe gap may reflect differences in regulatory environments (EU AI Act awareness) rather than purely adoption-speed effects."
+  ],
+  "decisionHorizon": "now"
+}

@@ -121,3 +121,6 @@ dist
 dist-ssr
 *.local
 settings.local.json
+settings.json
+.vscode/settings.json
+FuturesofSoftwareWork.code-workspace
