@@ -53,7 +53,10 @@ async function prerender() {
 
   try {
     // 2. Launch browser and navigate to the page
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: process.env.CI ? ["--no-sandbox", "--disable-setuid-sandbox"] : [],
+    });
     const page = await browser.newPage();
 
     const url = `http://localhost:${PORT}${ROUTE}`;
