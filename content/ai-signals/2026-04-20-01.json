@@ -1,0 +1,37 @@
+{
+  "id": "2026-04-20-02",
+  "title": "Stanford AI Index 2026: AI capability plateaus are over — organizational readiness becomes the real bottleneck",
+  "summary": "The 2026 AI Index marks a transition point: AI model capability is no longer the main uncertainty — deployment quality, organizational integration, and systemic risk are. The report shows performance on many benchmarks converging rapidly, while real-world incidents, coordination costs, and governance challenges increase. At the same time, productivity gains concentrate in narrow domains (especially software engineering), even as workforce effects, provider concentration, and dependency risks intensify. The data suggests the AI race is shifting from who builds the best models to who can absorb AI without destabilizing their operations.",
+  "source": "Stanford HAI AI Index 2026",
+  "sourceUrl": "https://hai.stanford.edu/ai-index/2026-ai-index-report",
+  "sourceType": "academic",
+  "detectedAt": "2026-04-20",
+  "date": "2026-04-13",
+  "status": "published",
+  "tags": [
+    "Stanford-AI-Index",
+    "AI-deployment",
+    "organizational-capability",
+    "AI-governance",
+    "productivity-risk",
+    "model-concentration"
+  ],
+  "category": ["Business Impact", "Org & Leadership"],
+  "whyItMatters": [
+    "The data suggests AI capability is becoming commoditized faster than organizations can safely integrate it, flipping the competitive advantage from model access to institutional readiness.",
+    "Rising real-world failures despite improving benchmark scores indicate that the dominant risks now sit at the system and process level, not inside the model.",
+    "The convergence of falling technical costs and rising organizational costs reframes AI investment decisions from technology bets into leadership and design challenges."
+  ],
+  "recommendedActions": [
+    "Reframe AI strategy discussions toward organizational absorption capacity, including workflows, incentives, and accountability structures.",
+    "Scrutinize where AI introduces variance and coordination load in engineering and operational systems, not just where it accelerates task completion.",
+    "Track dependency risks on frontier AI providers explicitly, treating them as strategic infrastructure rather than interchangeable tools.",
+    "Use the AI Index as an external reality check to challenge internal narratives about productivity gains, risk exposure, and readiness."
+  ],
+  "risksAndCaveats": [
+    "The report aggregates global and multi-sector data; individual organizations may experience very different dynamics depending on maturity and domain.",
+    "Benchmark convergence should not be mistaken for real-world reliability, particularly in high-complexity or safety-critical contexts.",
+    "Several trends identified are early signals rather than stabilized outcomes and should be monitored longitudinally."
+  ],
+  "decisionHorizon": "now"
+}

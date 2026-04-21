@@ -1,0 +1,29 @@
+{
+  "id": "2026-04-06-03",
+  "title": "Anthropic publishes three-agent harness architecture for multi-hour autonomous development, separating planning, generation, and evaluation",
+  "summary": "Anthropic published details of a three-agent harness design for long-running autonomous application development. The architecture divides autonomous development sessions into three distinct agents: a Planning Agent that establishes direction and task structure, a Generation Agent that produces code and design outputs, and an Evaluation Agent that assesses quality using few-shot examples and structured scoring criteria. The key innovation is separating the agent doing work from the agent judging it, addressing the documented problem of biased self-evaluation in single-agent systems. The system uses context resets with structured handoff artifacts between agents rather than context compaction, allowing each agent to continue from a well-defined state without losing coherence over multi-hour sessions (typically 5-15 iteration cycles, sometimes up to 4 hours). For frontend work, the evaluation agent applies four grading criteria: design quality, originality, craft, and functionality. According to Prithvi Rajasekaran, engineering lead at Anthropic Labs, this separation proves to be a strong lever for improving output quality in extended autonomous sessions.",
+  "source": "Anthropic",
+  "sourceUrl": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+  "sourceType": "article",
+  "detectedAt": "2026-04-06",
+  "date": "2026-04-04",
+  "status": "published",
+  "tags": ["multi-agent-architecture", "autonomous-development", "agent-evaluation", "context-management", "Anthropic", "long-running-agents"],
+  "category": ["AI Agents", "SDLC Change"],
+  "whyItMatters": [
+    "The plan-generate-evaluate separation establishes a reusable architectural pattern for autonomous development that engineering teams can adapt — organizations building internal agent workflows should study this design before reinventing their own orchestration patterns.",
+    "The context reset approach (structured handoff artifacts rather than context compaction) addresses one of the most practical limitations of current AI coding sessions: models becoming overly cautious or losing coherence as context windows fill, which currently limits agent autonomy to short tasks.",
+    "The explicit separation of generation from evaluation directly addresses the self-assessment bias documented in AI systems, where agents consistently overrate their own output — this has governance implications for any organization allowing agents to self-validate code before merge."
+  ],
+  "recommendedActions": [
+    "Evaluate whether your current AI-assisted development workflows suffer from the self-evaluation bias this architecture addresses: if agents or AI tools are both generating and reviewing their own code, consider introducing independent evaluation checkpoints.",
+    "For teams experimenting with multi-agent development, adopt the plan-generate-evaluate separation as a baseline architecture and measure output quality compared to single-agent approaches.",
+    "Use the structured handoff artifact pattern for any long-running agent workflow (not just code generation) where context degradation over time is a risk — this applies to automated testing, documentation generation, and infrastructure management."
+  ],
+  "risksAndCaveats": [
+    "The architecture is described through Anthropic's own use case and engineering blog — independent validation of quality improvements over single-agent systems at scale has not been published.",
+    "Multi-agent orchestration adds complexity, latency, and cost (three separate agent invocations per iteration cycle, 5-15 cycles per session) — the ROI depends on task complexity and may not justify overhead for shorter or simpler development tasks.",
+    "The evaluation criteria (design quality, originality, craft, functionality) are specific to frontend development; applicability to backend, infrastructure, or security-critical code generation may require significantly different evaluation frameworks."
+  ],
+  "decisionHorizon": "0,5 - 2 years"
+}
