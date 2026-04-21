@@ -1,0 +1,31 @@
+{
+  "id": "2026-04-13-05",
+  "title": "ICSE 2026 study of 2,989 developers finds AI coding assistants deliver modest time savings but risk eroding technical expertise and code ownership",
+  "summary": "A mixed-methods study surveyed 2,989 developers and conducted 11 in-depth interviews to assess how AI coding assistants (specifically GitHub Copilot) affect developer productivity. While overall satisfaction with the tools is high, the reported time savings are relatively modest — far below the dramatic productivity multipliers often cited in marketing materials. More significantly, the study identified six distinct factors that influence productivity with AI coding assistants, spanning short-term efficiency to long-term dimensions. The interviews revealed that developers are concerned about the erosion of technical expertise and sense of code ownership when relying heavily on AI-generated code. The findings suggest that current commit-based and output-based productivity metrics are inadequate for capturing the full impact of AI coding assistants, and that long-term metrics around skill development and ownership matter more than previously recognized.",
+  "source": "arXiv Preprint / ICSE-SEIP 2026 Conference",
+  "sourceUrl": "https://arxiv.org/abs/2602.03593",
+  "sourceType": "academic",
+  "detectedAt": "2026-04-13",
+  "date": "2026-04-12",
+  "status": "published",
+  "tags": ["developer-productivity", "AI-coding-assistants", "code-ownership", "technical-expertise", "ICSE-2026", "enterprise-study", "human-factors"],
+  "category": ["Productivity"],
+  "whyItMatters": [
+    "The gap between marketed productivity multipliers and actual reported time savings should recalibrate leadership expectations — investment cases for AI coding tools need to be built on realistic, empirically-grounded efficiency gains rather than vendor claims.",
+    "The finding that AI tools may erode technical expertise and code ownership has strategic implications for talent development: organizations that over-rely on AI assistance may inadvertently weaken their teams' ability to handle complex debugging, architecture decisions, and incident response.",
+    "With nearly 3,000 respondents in a single enterprise, this is one of the largest controlled studies of AI coding assistant productivity in a corporate setting, making it a strong reference point for enterprise adoption decisions."
+  ],
+  "recommendedActions": [
+    "Revisit your AI coding tool ROI calculations: replace vendor-quoted productivity multipliers with the modest, empirically-observed time savings from this and similar enterprise studies.",
+    "Incorporate long-term skill development and code ownership metrics into your AI tool evaluation framework — track whether developers are deepening or losing domain expertise in areas where they rely heavily on AI assistance.",
+    "Design AI coding assistant usage policies that preserve learning opportunities: for example, require junior developers to review and understand AI-generated code before committing, or rotate AI-heavy and manual-coding tasks.",
+    "Update your developer productivity measurement framework to include the six factors identified in this study, going beyond commit velocity and lines-of-code output."
+  ],
+  "risksAndCaveats": [
+    "Data was collected in 2025 (no specific dates given), so data may be outdated.",
+    "The study was conducted at a single large financial services firm (BNY Mellon) — developer populations, codebases, and organizational cultures at other firms may yield different results.",
+    "Self-reported productivity perceptions may not correlate perfectly with actual measured output changes; the study relies on survey responses rather than controlled time-on-task measurements.",
+    "The study focused on GitHub Copilot specifically — results may differ for other AI coding assistants or autonomous agents that operate with different interaction models."
+  ],
+  "decisionHorizon": "0,5 - 2 years"
+}

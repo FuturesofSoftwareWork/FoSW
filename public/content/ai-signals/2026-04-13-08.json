@@ -1,0 +1,30 @@
+{
+  "id": "2026-04-13-08",
+  "title": "Software Engineer Hiring Rebounds Sharply: 67,000+ Positions Open as AI Projects Drive Demand",
+  "summary": "Despite widespread layoff headlines, the US software engineering labor market is showing its strongest growth since 2022. Software engineering roles have doubled since their mid-2023 trough, with more than 67,000 positions currently open, representing a 30% increase so far in 2026. AI-related job postings have grown 74% year-over-year, spanning roles in LLM integration, prompt engineering, MLOps, and RAG system development. IBM announced it is tripling entry-level hiring in the US, including software developer roles. The data challenges the narrative that AI is eliminating engineering jobs, suggesting instead that AI investment is generating net new demand for engineers who can build, integrate, and maintain AI-powered systems.",
+  "source": "CNN Business",
+  "sourceUrl": "https://www.cnn.com/2026/04/08/tech/ai-software-developer-jobs",
+  "sourceType": "article",
+  "detectedAt": "2026-04-13",
+  "date": "2026-04-08",
+  "status": "published",
+  "tags": ["software engineer hiring", "labor market", "AI jobs", "workforce demand", "skills gap"],
+  "category": ["Business Impact"],
+  "whyItMatters": [
+    "The simultaneous layoff and hiring wave reveals a workforce composition shift, not a net reduction: companies are shedding roles that AI can automate while aggressively hiring for roles that leverage AI, creating winners and losers within the same profession.",
+    "Engineering leaders face a paradox where talent is simultaneously being displaced and in critically short supply, making workforce planning more complex than simple headcount decisions.",
+    "The 74% year-over-year growth in AI-related postings confirms that AI fluency is becoming a baseline hiring requirement, not a specialization."
+  ],
+  "recommendedActions": [
+    "Reframe workforce strategy from 'headcount' to 'capability mix': map your team's current skills against emerging AI-native role requirements.",
+    "Invest in upskilling existing engineers in LLM integration, RAG architectures, and AI agent orchestration to reduce external hiring dependency.",
+    "Review job descriptions and hiring criteria to reflect the AI-augmented engineering reality, including collaboration with AI tools as a core competency.",
+    "Track the ratio of AI-adjacent to traditional engineering roles in your pipeline to identify emerging skill gaps early."
+  ],
+  "risksAndCaveats": [
+    "Aggregate job posting data can overcount actual net new positions, as companies may post AI-titled roles that replace rather than supplement traditional ones.",
+    "The demand surge is concentrated in companies with large AI infrastructure budgets; smaller firms and non-tech sectors may not see equivalent hiring growth.",
+    "Entry-level hiring increases (e.g., IBM) may be partly driven by lower salary expectations for junior AI roles rather than genuine net job creation."
+  ],
+  "decisionHorizon": "now"
+}

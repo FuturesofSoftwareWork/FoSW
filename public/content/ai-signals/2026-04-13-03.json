@@ -1,0 +1,29 @@
+{
+  "id": "2026-04-13-03",
+  "title": "Graph-based test-impact analysis reduces AI coding agent regressions by 70%, while naive TDD instructions make regressions worse",
+  "summary": "A March 2026 paper introduces TDAD (Test-Driven Agentic Development), an open-source tool that performs pre-change impact analysis for AI coding agents by building a dependency graph between source code and test files. Before an agent commits a patch, TDAD identifies which tests are affected and feeds that targeted context to the agent, enabling self-correction. Evaluated on SWE-bench Verified with two open-weight models running on consumer hardware (Qwen3-Coder 30B and Qwen3.5-35B-A3B), TDAD reduced code regressions by 70% — from a 6.08% regression rate to 1.82%. Strikingly, simply adding generic TDD procedural instructions to agents without targeted test context actually increased regressions to 9.94%, worse than no intervention at all. This demonstrates that the value lies in precise, graph-derived test targeting rather than in generic process instructions. The tool, code, data, and logs are fully open-source.",
+  "source": "arXiv",
+  "sourceUrl": "https://arxiv.org/abs/2603.17973",
+  "sourceType": "academic",
+  "detectedAt": "2026-04-13",
+  "date": "2026-03-24",
+  "status": "published",
+  "tags": ["test-driven-development", "coding-agents", "code-regressions", "dependency-analysis", "quality-assurance", "open-source", "SWE-bench"],
+  "category": ["Quality & Testing", "AI Tools"],
+  "whyItMatters": [
+    "The finding that naive TDD instructions worsen agent performance is a critical warning: teams that respond to agent quality problems by adding process documentation may be making things worse without targeted tooling.",
+    "A 70% regression reduction using a lightweight, open-source pre-commit analysis tool demonstrates that practical quality guardrails for AI agents are achievable today without expensive infrastructure changes.",
+    "The approach works on consumer-grade hardware with open-weight models, meaning mid-size organizations and teams without GPU clusters can benefit immediately."
+  ],
+  "recommendedActions": [
+    "Evaluate TDAD or similar graph-based impact analysis tools as a pre-commit quality gate for any autonomous coding agent workflows in your organization.",
+    "Audit your current agent prompting strategy: if you are providing generic process instructions (e.g., 'follow TDD', 'write tests first') without code-specific context, measure whether this is actually helping or hurting agent output quality.",
+    "For teams building internal agent tooling, adopt the graph-first design principle: invest in code-test dependency mapping that can be queried at agent runtime rather than relying on natural-language process instructions."
+  ],
+  "risksAndCaveats": [
+    "Results are demonstrated on SWE-bench Verified — a standardized benchmark — and may not generalize to all codebases, languages, or agent architectures without adaptation.",
+    "The evaluation uses open-weight models (Qwen series) on limited sample sizes (25–100 instances); performance with commercial models or at production scale is not yet validated.",
+    "TDAD requires an up-to-date code-test dependency graph, which adds build-time overhead and may be difficult to maintain in monorepos or projects with dynamic test generation."
+  ],
+  "decisionHorizon": "now"
+}

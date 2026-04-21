@@ -1,0 +1,30 @@
+{
+  "id": "2026-04-20-05",
+  "title": "95% use AI weekly, cost concerns growing, and three developer archetypes emerge shaping team dynamics",
+  "summary": "The Pragmatic Engineer published results from a survey of 900+ software engineers and engineering leaders on April 14, revealing that 95% now use AI tools weekly or more, with 75% using AI for at least half their engineering work and 56% for 70% or more. Claude Code overtook GitHub Copilot and Cursor as the most-used AI coding tool. The survey identifies three emerging developer archetypes that shape team dynamics differently: 'Builders' (quality-focused engineers who benefit from refactoring and migrations but struggle with reviewing AI-generated code and report identity loss over reduced hands-on coding), 'Shippers' (outcome-focused engineers who are most enthusiastic about AI but risk accumulating technical debt by building without sufficient planning), and 'Coasters' (less experienced engineers who level up faster but generate significant low-quality code that frustrates senior team members). Cost is emerging as a significant concern, with 15% of respondents flagging it and 30% reporting they have hit usage limits. Staff-plus engineers and directors adopt agents at the highest rates (63.5%), and agent users are nearly twice as likely to be positive about AI tools compared to non-users.",
+  "source": "The Pragmatic Engineer Newsletter",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-impact-of-ai-on-software-engineers-2026",
+  "sourceType": "social",
+  "detectedAt": "2026-04-20",
+  "date": "2026-04-14",
+  "status": "published",
+  "tags": ["developer-survey", "AI-adoption", "developer-archetypes", "cost-concerns", "Claude-Code", "engineering-management", "team-dynamics", "Pragmatic-Engineer"],
+  "category": ["Productivity", "AI Tools"],
+  "whyItMatters": [
+    "The Builder/Shipper/Coaster archetype framework gives engineering managers a practical lens for understanding why AI tools create different outcomes on the same team — it is not the tool but the developer's orientation that determines whether AI accelerates quality work or compounds technical debt.",
+    "Cost concerns at 15% of respondents and 30% hitting usage limits signal that the 'free trial' phase of AI tool adoption is ending; engineering budgets will need to formally account for AI tooling costs that could reach $100-200/month per engineer for premium plans.",
+    "The 63.5% agent adoption rate among staff-plus engineers suggests that senior technical leaders are voting with their workflows: agentic AI is not a fad but a capability that experienced engineers find genuinely valuable."
+  ],
+  "recommendedActions": [
+    "Use the Builder/Shipper/Coaster framework to diagnose team dynamics: identify which archetype each team member gravitates toward and adjust code review expectations, mentoring, and task allocation accordingly.",
+    "Budget for AI tool costs as a line item: with 30% of engineers hitting usage limits, ad-hoc or personal subscriptions are insufficient — establish organizational procurement and cost monitoring for AI development tools.",
+    "Monitor the quality of AI-generated code contributions by archetype: 'Shippers' who produce high volumes of AI-assisted code need stronger review gates, while 'Builders' experiencing identity loss may need explicit validation that quality-focused work remains valued.",
+    "If your team has low agent adoption, investigate whether it correlates with seniority: the survey suggests exposure and experience with agents converts skeptics, so pilot programs with senior engineers may drive broader adoption."
+  ],
+  "risksAndCaveats": [
+    "The survey sample of 900+ respondents is self-selected from The Pragmatic Engineer newsletter readership, which skews toward experienced, engaged engineers at technology-forward companies — results may not represent the broader software engineering population.",
+    "The Builder/Shipper/Coaster archetypes are observational categories from survey responses, not validated psychological constructs; individual engineers may exhibit different modes depending on project context, deadlines, and team composition.",
+    "Claude Code's top ranking may reflect the timing and audience of the survey (January-February 2026); the AI coding tools market is evolving rapidly, and tool preferences may shift significantly within months."
+  ],
+  "decisionHorizon": "now"
+}

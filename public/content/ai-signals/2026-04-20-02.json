@@ -1,0 +1,30 @@
+{
+  "id": "2026-04-20-02",
+  "title": "Comprehension debt emerges as the hidden cost of AI-generated code, with 17% lower developer understanding in controlled trials",
+  "summary": "O'Reilly Radar introduces 'comprehension debt' as a distinct risk category for AI-augmented software teams: the growing gap between how much code exists in a system and how much of it any human genuinely understands. Unlike traditional technical debt that announces itself through friction, comprehension debt breeds false confidence because the code is clean and tests pass. The essay cites a January 2026 randomized controlled trial with 52 software engineers where AI-assisted participants completed tasks in equivalent time but scored 17% lower on comprehension quizzes (50% vs. 67%), with the steepest declines in debugging ability. Crucially, the research distinguishes between passive delegation (below 40% comprehension) and active question-driven AI use (above 65% comprehension), suggesting the mode of AI interaction matters more than whether AI is used at all. The essay argues that speed asymmetry, where AI generates code faster than humans can review it, breaks the traditional feedback loop where peer review forced comprehension and distributed system knowledge across teams.",
+  "source": "O'Reilly Radar / Addy Osmani",
+  "sourceUrl": "https://www.oreilly.com/radar/comprehension-debt-the-hidden-cost-of-ai-generated-code/",
+  "sourceType": "article",
+  "detectedAt": "2026-04-20",
+  "date": "2026-04-13",
+  "status": "published",
+  "tags": ["comprehension-debt", "cognitive-debt", "code-understanding", "AI-generated-code", "developer-skills", "code-review", "knowledge-management"],
+  "category": ["Skills & Learning", "Quality & Testing"],
+  "whyItMatters": [
+    "Comprehension debt accumulates invisibly within measurement systems that optimize for velocity and code coverage, meaning organizations may believe they are performing well while actually hollowing out their teams' ability to debug, maintain, and evolve critical systems.",
+    "The 17% comprehension decline in controlled conditions is likely conservative in production environments where time pressure, larger codebases, and less structured learning contexts amplify the effect.",
+    "The distinction between passive delegation (40% comprehension) and active AI use (65%+ comprehension) gives engineering leaders a concrete lever: how teams interact with AI tools matters more than whether they use them."
+  ],
+  "recommendedActions": [
+    "Establish comprehension checks for AI-heavy development: require developers to explain the logic and edge cases of AI-generated code before merging, not just verify that tests pass.",
+    "Redesign code review processes to counteract speed asymmetry: when AI generates code faster than humans can review, the review bottleneck becomes the critical quality gate that must not be bypassed through rubber-stamping.",
+    "Train teams on active AI interaction patterns (questioning, exploring, understanding) rather than passive delegation (accepting, committing, moving on) to preserve learning and comprehension outcomes.",
+    "Add comprehension-oriented metrics to your engineering health dashboard: track how many team members can explain recent system changes, not just how fast those changes were delivered."
+  ],
+  "risksAndCaveats": [
+    "The cited RCT involved only 52 engineers learning a new library, a narrow context that may not generalize to experienced teams working on familiar codebases where prior knowledge compensates for reduced learning during AI-assisted tasks.",
+    "Comprehension debt is inherently difficult to measure in practice; unlike defect rates or cycle time, there is no widely adopted metric for 'how well does the team understand the codebase,' making governance challenging.",
+    "The concept may be used to justify blanket restrictions on AI tool usage rather than addressing the real issue of interaction quality; the research suggests active AI use preserves comprehension, so banning tools would be counterproductive."
+  ],
+  "decisionHorizon": "now"
+}
