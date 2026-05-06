@@ -1,0 +1,30 @@
+{
+  "id": "2026-05-06-05",
+  "title": "MSR 2026 research confirms AI-generated pull requests are rejected more often, but failure patterns are more predictable than human PR failures",
+  "summary": "A peer-reviewed study presented at MSR 2026 (Mining Software Repositories, April 13, 2026) analyzed 1,779 rejected pull requests — 594 AI-generated and 1,185 human-authored — alongside 19,450 review comments and 28,875 review events from the AIDev dataset. The researchers developed a ten-category taxonomy of rejection reasons grounded in reviewer explanations and code-level evidence. The key finding is that AI-generated PRs are rejected at higher rates than human PRs, primarily due to incomplete implementation and testing inadequacy issues. However, a critical nuance emerged: human PR rejections tend to involve heterogeneous or context-specific reasons that vary widely, while AI PR failures demonstrate more consistent and predictable patterns with stronger predictive signals from description-level features. This predictability is significant because it means AI PR quality can potentially be improved through systematic feedback loops and automated pre-submission checks — a Circuit Breaker triage model using simple structural signals like patch size and files touched achieves strong discrimination for high-review-effort PRs. Separately, an analysis of 33,580 agentic PRs found that 2.66% contain at least one reverting commit, with substantial variation across agents (0.7% for OpenAI Codex to 7.6% for GitHub Copilot).",
+  "source": "MSR 2026 Conference / University of Alberta",
+  "sourceUrl": "https://2026.msrconf.org/details/msr-2026-mining-challenge/8/Do-AI-Generated-Pull-Requests-Get-Rejected-More-Yes-but-Why-",
+  "sourceType": "academic",
+  "detectedAt": "2026-05-06",
+  "date": "2026-04-13",
+  "status": "published",
+  "tags": ["AI-generated-PRs", "code-review", "pull-request-quality", "rejection-patterns", "MSR-2026", "AIDev-dataset", "review-automation"],
+  "category": ["Quality & Testing", "AI Agents"],
+  "whyItMatters": [
+    "The finding that AI PR failures are more predictable than human PR failures is strategically important: it means engineering teams can build targeted pre-submission filters and automated quality gates specifically calibrated to the consistent failure modes of AI-generated code, reducing review burden on human reviewers.",
+    "The dominance of incomplete implementation and testing inadequacy as AI-specific rejection reasons points to a fundamental limitation of current coding agents: they can generate plausible code but struggle with completeness verification and test coverage, suggesting that test-first development workflows may be especially important when using AI agents.",
+    "The 2.66% revert rate across 33,580 agentic PRs, with wide variation by agent (0.7% to 7.6%), gives engineering leaders concrete data for agent selection and risk assessment — not all AI coding agents produce equally reliable output."
+  ],
+  "recommendedActions": [
+    "Implement pre-submission checks for AI-generated PRs based on the predictable failure patterns identified: verify implementation completeness against the stated objective and ensure adequate test coverage before human review begins.",
+    "Use the ten-category rejection taxonomy to train both AI agents and human reviewers: agents can be prompted to self-check against common failure categories before submitting, and reviewers can use the taxonomy as a structured checklist.",
+    "Track revert rates by AI agent tool to inform agent selection and configuration decisions — the 10x variation between agents (0.7% to 7.6%) represents a meaningful quality difference that should factor into tooling choices.",
+    "Consider implementing a Circuit Breaker triage system that uses structural signals (patch size, files touched) to automatically flag high-review-effort AI PRs for senior reviewer attention."
+  ],
+  "risksAndCaveats": [
+    "The study analyzed open-source repositories from the AIDev dataset; rejection patterns in enterprise codebases with different review cultures, CI/CD pipelines, and coding standards may differ significantly.",
+    "The 1,779 rejected PR sample, while substantial, represents a fraction of total AI-generated PRs — the study focuses on rejections and does not provide overall rejection rates, making it difficult to calculate the absolute risk level.",
+    "Agent revert rates reflect early-2026 agent capabilities and may change rapidly as agents are updated — the 0.7% to 7.6% range is a snapshot, not a stable performance characteristic."
+  ],
+  "decisionHorizon": "now"
+}

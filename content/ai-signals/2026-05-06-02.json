@@ -1,0 +1,30 @@
+{
+  "id": "2026-05-06-02",
+  "title": "ProjectDiscovery report finds 100% of security teams see increased engineering output from AI, but 62% say keeping up with security review is getting harder",
+  "summary": "ProjectDiscovery's 2026 AI Coding Impact Report, published April 22, surveyed 200 cybersecurity practitioners and leaders across North America and Western Europe at mid-to-large enterprises (1,001-5,000 employees). The report reveals a widening gap between engineering velocity and security capacity: 100% of respondents reported increased engineering delivery over the past 12 months, with 49% attributing most or all of that acceleration to AI-assisted coding tools. However, 62% of security teams report that keeping up with the volume of code requiring security review is becoming harder, and 66% spend more than half their time manually validating findings rather than actually fixing vulnerabilities. The top security concerns from AI-generated code are exposure of corporate secrets (78%), supply-chain risks from unreliable dependencies (73%), and business logic vulnerabilities (72%). Only 40% of respondents said they are managing the increased workload well, and 57% require full audit trails before trusting AI-based penetration testing.",
+  "source": "ProjectDiscovery",
+  "sourceUrl": "https://projectdiscovery.io/blog/new-report-state-of-appsec-2026-security-at-engineering-speed",
+  "sourceType": "article",
+  "detectedAt": "2026-05-06",
+  "date": "2026-04-22",
+  "status": "published",
+  "tags": ["application-security", "AI-generated-code", "security-review", "supply-chain-risk", "secret-exposure", "security-capacity", "AppSec"],
+  "category": ["Security & Risk"],
+  "whyItMatters": [
+    "The finding that 100% of security respondents see increased engineering output but 62% cannot keep up with review volume quantifies a structural gap: AI is accelerating code production faster than organizations are scaling their security review capacity, creating a growing attack surface.",
+    "The dominance of secret exposure (78%) and supply-chain risks (73%) as top concerns indicates that AI-generated code introduces risks that differ in kind from traditional developer-written code — these are systemic risks that require governance changes, not just better scanners.",
+    "With 66% of security teams spending the majority of their time validating findings rather than fixing vulnerabilities, AI is paradoxically increasing the administrative burden on security teams even as it is supposed to reduce friction elsewhere."
+  ],
+  "recommendedActions": [
+    "Integrate automated secret scanning and dependency auditing directly into CI/CD pipelines for all AI-generated code, treating every AI code contribution as higher-risk for secret exposure and dependency issues.",
+    "Reallocate security team capacity from manual validation toward AI-assisted triage: if 66% of time goes to validating findings, invest in tools that reduce false positives and auto-prioritize exploitable vulnerabilities.",
+    "Establish a formal security review SLA specifically for AI-generated code that accounts for the higher volume and different risk profile compared to human-authored code.",
+    "Brief engineering leadership on the 78%/73%/72% risk breakdown (secrets, supply chain, business logic) to align security investment with the specific threat vectors AI-generated code introduces."
+  ],
+  "risksAndCaveats": [
+    "The survey sample of 200 security practitioners is relatively small and limited to North America and Western Europe; security posture and AI adoption patterns may differ significantly in other regions.",
+    "The report is produced by ProjectDiscovery, a security tooling vendor, which may introduce framing bias toward findings that support investment in automated security scanning and testing solutions.",
+    "The 100% reporting increased engineering delivery may reflect sampling bias — security teams at organizations with low AI adoption are less likely to report delivery acceleration and may be underrepresented in the sample."
+  ],
+  "decisionHorizon": "now"
+}

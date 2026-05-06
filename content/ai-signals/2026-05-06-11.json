@@ -1,0 +1,39 @@
+{
+  "id": "2026-05-06-11",
+  "title": "Cloudflare deploys multi-agent AI code review system across 5,169 repositories, completing 131,000 reviews in first 30 days at $1.19 average cost",
+  "summary": "Cloudflare published a detailed engineering report on its production AI code review system, which uses a coordinator-plus-specialist architecture with up to seven specialized AI agents covering security, performance, code quality, documentation, release management, compliance, and AGENTS.md validation. In its first 30 days (March 10 to April 9, 2026), the system completed 131,246 review runs across 48,095 merge requests in 5,169 repositories with a median review time of 3 minutes 39 seconds. The coordinator agent (using Claude Opus 4.7 or GPT-5.4) deduplicates specialist findings, filters false positives, judges severity, and makes approval or block decisions. Of the 159,103 findings generated, code quality dominated (74,898), followed by documentation (26,432) and performance (14,615). Security findings had the highest critical rate at 4%. The system processed approximately 120 billion tokens with an 85.7% cache hit rate, and only 288 merge requests (0.6%) required 'break glass' overrides of the system's block decisions.",
+  "source": "Cloudflare Engineering Blog",
+  "sourceUrl": "https://blog.cloudflare.com/ai-code-review/",
+  "sourceType": "article",
+  "detectedAt": "2026-05-06",
+  "date": "2026-04-20",
+  "status": "published",
+  "tags": [
+    "AI-code-review",
+    "multi-agent-architecture",
+    "code-quality",
+    "Cloudflare",
+    "DevOps",
+    "production-deployment",
+    "cost-optimization"
+  ],
+  "category": ["Quality & Testing", "AI Agents", "SDLC Change"],
+  "whyItMatters": [
+    "Cloudflare's 0.6% break-glass override rate and 3m39s median review time demonstrate that multi-agent code review is production-viable at enterprise scale — this is no longer an experiment but an operational reality that compresses review bottlenecks.",
+    "The $0.98 median cost per review and tiered pricing model ($0.17 for trivial changes up to $1.47 for full reviews) establishes concrete cost benchmarks that engineering leaders can use to build business cases for similar systems.",
+    "The 4% critical rate on security findings across 11,985 security-related detections shows that AI reviewers are surfacing real security issues at scale — organizations without comparable automated security review face a growing gap in defect detection.",
+    "The architecture — coordinator agent plus specialized reviewers with model failback — provides a replicable blueprint for engineering organizations building their own AI review infrastructure."
+  ],
+  "recommendedActions": [
+    "Evaluate whether your code review process could benefit from a similar multi-agent architecture: specialized agents for security, performance, and compliance reviewing every merge request, with a coordinator filtering noise.",
+    "Use Cloudflare's published cost benchmarks ($0.98 median per review) to estimate the economics of AI code review at your organization's scale and compare against the cost of delayed reviews and escaped defects.",
+    "If already using AI-assisted code review, measure your override rate against Cloudflare's 0.6% as a calibration benchmark — a significantly higher rate may indicate poor tuning; a lower rate may indicate over-trust.",
+    "Consider the cache hit rate optimization strategy (85.7% in Cloudflare's case) when architecting AI review systems — token caching can substantially reduce inference costs at scale."
+  ],
+  "risksAndCaveats": [
+    "Cloudflare is a technology company with deep infrastructure expertise — replicating this system requires significant engineering investment in orchestration, model routing, and failure handling that most organizations lack.",
+    "The report is published by Cloudflare about its own system, so the metrics reflect a best-case implementation; organizations with more heterogeneous codebases or less disciplined development practices may see different results.",
+    "The system acknowledges limitations in architectural awareness, cross-system impact tracking, and subtle concurrency bugs — these remain human-review territory and represent areas where AI review creates false confidence if relied upon exclusively."
+  ],
+  "decisionHorizon": "now"
+}
