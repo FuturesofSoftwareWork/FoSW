@@ -1,0 +1,39 @@
+{
+  "id": "2026-05-06-09",
+  "title": "Datadog State of AI Engineering report finds agent framework adoption doubled year-over-year, but 59% of agentic requests still make only a single service call",
+  "summary": "Datadog's State of AI Engineering report, published in March 2026, provides infrastructure-level telemetry on how organizations are deploying AI in production. Agent framework adoption nearly doubled from 9% of organizations in early 2025 to 18% by early 2026, with the number of services using agentic frameworks more than doubling in the same period. However, production agent behavior remains far simpler than the multi-agent architectures discussed in industry discourse: 59% of agentic requests make only a single service call, and just 18% involve three or more service calls. The multi-model trend is accelerating — over 70% of organizations now use three or more AI models, with OpenAI's market share declining from 75% to 63% as Google Gemini and Anthropic Claude gained 20 and 23 percentage points respectively. System prompts consume 69% of input tokens, yet only 28% of LLM calls use prompt caching despite broad platform support. Reliability remains a challenge: 5% of LLM call spans reported errors in February 2026, with rate limits causing 60% of failures — by March, 8.4 million rate limit errors were recorded.",
+  "source": "Datadog",
+  "sourceUrl": "https://www.datadoghq.com/state-of-ai-engineering/",
+  "sourceType": "article",
+  "detectedAt": "2026-05-06",
+  "date": "2026-03-15",
+  "status": "published",
+  "tags": [
+    "AI-infrastructure",
+    "agent-frameworks",
+    "LLM-operations",
+    "multi-model",
+    "Datadog",
+    "rate-limits",
+    "prompt-caching",
+    "production-telemetry"
+  ],
+  "category": ["AI Agents", "SDLC Change", "Business Impact"],
+  "whyItMatters": [
+    "The gap between agent framework adoption (18% of orgs) and actual multi-step agent behavior (only 18% of requests make 3+ calls) reveals that most production 'agents' are still single-tool wrappers — organizations buying into agent infrastructure should calibrate expectations against this reality.",
+    "The 69% of tokens consumed by system prompts combined with only 28% cache utilization represents a massive cost optimization opportunity — engineering teams leaving prompt caching off the table are overpaying by a significant margin on every LLM call.",
+    "Rate limit errors accounting for 60% of all LLM failures, totaling 8.4 million errors in a single month, indicates that AI infrastructure capacity planning is now a first-order engineering challenge, not a nice-to-have — organizations treating LLM APIs like traditional SaaS endpoints will hit reliability ceilings."
+  ],
+  "recommendedActions": [
+    "Audit your AI agent implementations for actual multi-step behavior: if most 'agentic' workflows are making single service calls, simplify the architecture and save the orchestration complexity for workflows that genuinely require it.",
+    "Implement prompt caching across all LLM integrations immediately — with 69% of tokens going to system prompts and only 28% cache adoption, this is likely the highest-ROI optimization available for AI infrastructure costs.",
+    "Build rate limit handling and capacity planning into your AI infrastructure the same way you plan database capacity: implement circuit breakers, request queuing, and multi-provider failover to absorb the rate limit errors that now dominate AI production failures.",
+    "Track your multi-model usage patterns and negotiate contracts accordingly — with 70%+ of organizations already using three or more models, single-vendor commitments leave you over-exposed and under-leveraged."
+  ],
+  "risksAndCaveats": [
+    "Datadog's data comes from its own customer base, which skews toward larger, more operationally mature organizations — smaller companies and less instrumented deployments may show different patterns.",
+    "The doubling of agent framework adoption from 9% to 18% is rapid growth from a small base — it does not necessarily indicate mainstream adoption, and many of these deployments may be experimental rather than production-critical.",
+    "Market share percentages for AI providers reflect Datadog-observed API call volume, not revenue or strategic importance — a provider with lower call share may still dominate in high-value use cases like coding agents or enterprise deployments."
+  ],
+  "decisionHorizon": "now"
+}
