@@ -45,7 +45,8 @@ export const useContent = ({
       contentPath: string,
       maxItems: number,
     ): Promise<TItem[]> => {
-      const indexUrl = `${basePath}content/${contentPath}/index.json`;
+      const timestamp = new Date().getTime();
+      const indexUrl = `${basePath}content/${contentPath}/index.json?t=${timestamp}`;
       const index = await fetchJson<ContentIndex<TIndex>>(indexUrl);
 
       const published = index.items
@@ -55,7 +56,7 @@ export const useContent = ({
       const results = await Promise.allSettled(
         published.map((entry) =>
           fetchJson<TItem>(
-            `${basePath}content/${contentPath}/${entry.file}`,
+            `${basePath}content/${contentPath}/${entry.file}?t=${timestamp}`,
           ),
         ),
       );

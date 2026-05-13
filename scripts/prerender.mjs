@@ -47,6 +47,23 @@ function startServer() {
   });
 }
 
+function refreshSitemap() {
+  const sitemapPath = join(DIST_DIR, "sitemap.xml");
+  const today = new Date().toISOString().slice(0, 10);
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://futuresofsoftwarework.github.io/FoSW/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+`;
+  writeFileSync(sitemapPath, sitemap, "utf-8");
+  console.log(`Sitemap refreshed with lastmod=${today} at ${sitemapPath}`);
+}
+
 async function prerender() {
   // 1. Start a local server to serve the built files
   const server = await startServer();
@@ -73,6 +90,9 @@ async function prerender() {
     const outputPath = join(DIST_DIR, "index.html");
     writeFileSync(outputPath, html, "utf-8");
     console.log(`Pre-rendered HTML written to ${outputPath}`);
+
+    // 6. Refresh sitemap lastmod so Google sees a recent update each deploy
+    refreshSitemap();
 
     await browser.close();
   } finally {
