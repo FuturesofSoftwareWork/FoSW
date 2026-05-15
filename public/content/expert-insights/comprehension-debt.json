@@ -1,0 +1,12 @@
+{
+  "id": "comprehension-debt",
+  "title": "Faster coding, thinner understanding?",
+  "author": "Maaria Nuutinen PhD (Psychology) Senior Principal Scientist @VTT, Arto Wallin Project Manager & Senior Scientist @VTT",
+  "authorRole": "",
+  "excerpt": "AI agents can write, test, review, and fix software faster than human teams ever could. But this productivity leap creates a quieter risk: comprehension debt, the widening gap between what the codebase does and what the organization still understands. The lesson from automation is clear: when humans shift from doing to supervising, situation awareness can weaken unless it is deliberately maintained. For software leaders, the key question is no longer only how much faster agents can produce code, but how to ensure that humans still understand, question, and take control of the systems their businesses depend on.",
+  "markdownFile": "comprehension-debt.md",
+  "date": "2026-05-15",
+  "status": "published",
+  "tags": ["Comprehension Debt", "Automation", "Developer Expertise", "Human Oversight"],
+  "url": "https://medium.com/p/eb7d70c07d56"
+}

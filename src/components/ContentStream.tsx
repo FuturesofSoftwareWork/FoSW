@@ -17,6 +17,7 @@ const formatDetectedDate = (isoString: string): string => {
 };
 
 const SIGNALS_PER_PAGE = 5;
+const INSIGHTS_PER_PAGE = 3;
 
 const truncateWords = (text: string, maxWords: number) => {
   if (!text) return "";
@@ -27,7 +28,7 @@ const truncateWords = (text: string, maxWords: number) => {
 
 const ContentStream = () => {
   const { signals, insights, isLoading } = useContent({
-    maxInsights: 3,
+    maxInsights: Infinity,
   });
 
   const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(
@@ -44,6 +45,10 @@ const ContentStream = () => {
   const [sortField, setSortField] = useState<"date" | "detectedAt">("date");
 
   const [visibleCount, setVisibleCount] = useState(SIGNALS_PER_PAGE);
+  const [visibleInsightCount, setVisibleInsightCount] =
+    useState(INSIGHTS_PER_PAGE);
+
+  const visibleInsights = insights.slice(0, visibleInsightCount);
 
   const categories = useMemo(() => {
     const cats = new Set<AISignalCategory>();
@@ -192,7 +197,7 @@ const ContentStream = () => {
             <InsightSkeleton />
           ) : (
             <div className="space-y-12">
-              {insights.map((insight) => (
+              {visibleInsights.map((insight) => (
                 <motion.article
                   key={insight.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -217,6 +222,17 @@ const ContentStream = () => {
                   </button>
                 </motion.article>
               ))}
+
+              {visibleInsightCount < insights.length && (
+                <button
+                  onClick={() =>
+                    setVisibleInsightCount((prev) => prev + INSIGHTS_PER_PAGE)
+                  }
+                  className="w-full py-3 text-sm font-mono text-neon-gold border border-neon-gold/30 hover:bg-neon-gold/10 transition-all"
+                >
+                  Show more ({insights.length - visibleInsightCount} remaining)
+                </button>
+              )}
             </div>
           )}
         </div>

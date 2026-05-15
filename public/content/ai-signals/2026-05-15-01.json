@@ -1,0 +1,39 @@
+{
+  "id": "2026-05-15-01",
+  "title": "METR survey: technical workers self-report 1.4–2x value uplift from AI in March 2026, with strong caveats",
+  "summary": "METR published results from a 349-respondent survey of software engineers, researchers, academics, and founders measuring self-reported AI productivity impact. Median reported value-of-work multiplier was 1.4–2x for March 2026, with a higher 3x median for speed-of-task; respondents retrospectively estimated 1.3x in March 2025 and forecast 2.5x by March 2027. METR explicitly cautions that surveys overestimate productivity: their own 2025 controlled trial found experienced OSS developers were 19% slower with AI tools while feeling 20% faster — a ~40-percentage-point delusion gap. Subgroup variation is large: heavy Claude Code users report the highest gains, while METR's own employees report notably lower gains. The headline number is therefore best read as a perception trend, not a measured productivity outcome.",
+  "source": "METR Research Blog",
+  "sourceUrl": "https://metr.org/blog/2026-05-11-ai-usage-survey/",
+  "sourceType": "article",
+  "detectedAt": "2026-05-15",
+  "date": "2026-05-11",
+  "status": "published",
+  "tags": [
+    "productivity",
+    "self-report",
+    "survey",
+    "METR",
+    "measurement",
+    "developer-experience"
+  ],
+  "category": [
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "Many vendor ROI claims and exec dashboards are still built on self-reported numbers; this study quantifies how unreliable that signal is, and reinforces that leaders should not size investments or headcount decisions on perception alone.",
+    "The gap between speed (3x) and value (1.4–2x) suggests AI mostly substitutes for the easy parts of work — leaders should look for value capture upstream of coding (scope, review, integration) rather than only at keystrokes.",
+    "Subgroup variation by tool and role means org-wide averages hide where AI is actually working; finer measurement at the team level is needed before standardizing tooling.",
+    "Forecast growth to 2.5x by 2027 will continue to be used as a planning input despite the caveats — engineering finance teams should pressure-test it against telemetry."
+  ],
+  "recommendedActions": [
+    "Pair self-report data with controlled or quasi-experimental measurement (matched-pair PRs, randomized task assignment) before making productivity claims to the board.",
+    "Track speed and value as separate metrics in internal dashboards; do not treat 'felt faster' as evidence of business throughput.",
+    "Run a small replication of METR's design on your own engineers to calibrate the perception gap in your environment."
+  ],
+  "risksAndCaveats": [
+    "Sample is small (n=349), recruited through METR's network, and ~70% incentivized — selection bias is substantial.",
+    "Retrospective estimates of March 2025 productivity are subject to recall and post-hoc rationalization.",
+    "Findings are about perception and forecasts, not measured throughput, defect rates, or revenue impact."
+  ],
+  "decisionHorizon": "now"
+}

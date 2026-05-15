@@ -28,6 +28,16 @@ const AboutProject = () => {
           className="prose prose-base prose-invert mx-auto text-gray-300 leading-relaxed font-light"
         >
           <p>
+            Alternative Futures of Software Work is a research initiative
+            exploring how AI is reshaping the practice, organization, and
+            meaning of software development. Run by VTT and the University of
+            Helsinki and funded by Business Finland, the project tracks emerging
+            AI signals weekly, publishes expert insights from researchers and
+            practitioners, and collaborates with Finnish software companies to
+            anticipate the socio-technical shifts now underway.
+          </p>
+
+          <p>
             Software work has significantly evolved over the past decades, and
             the demand for software professionals has skyrocketed. According to
             a report published in 2023, Finland will need 200,000 new software

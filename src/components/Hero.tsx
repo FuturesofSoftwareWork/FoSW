@@ -28,10 +28,10 @@ const Hero = () => {
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-xl md:text-2xl text-gray-200 mb-12 font-light leading-relaxed max-w-3xl mx-auto drop-shadow-md"
+          className="text-xl md:text-2xl text-gray-200 mb-12 font-light leading-relaxed max-w-3xl mx-auto"
         >
           <p className="mb-4">
             Exploring the{" "}

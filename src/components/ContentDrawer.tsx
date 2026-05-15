@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -11,8 +11,10 @@ import {
   AlertTriangle,
   Clock,
   LayoutGrid,
+  BookOpen,
 } from "lucide-react";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import type { AISignal, ExpertInsight, DrawerContent } from "@/types/content";
 
 interface ContentDrawerProps {
@@ -22,6 +24,8 @@ interface ContentDrawerProps {
 
 const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Escape key listener
   useEffect(() => {
@@ -52,7 +56,22 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
     }
   }, [content]);
 
+  // Reset + track scroll progress for the reading progress bar
+  useEffect(() => {
+    if (!content) return;
+    setScrollProgress(0);
+    const node = scrollRef.current;
+    if (!node) return;
+    const handleScroll = () => {
+      const max = node.scrollHeight - node.clientHeight;
+      setScrollProgress(max > 0 ? (node.scrollTop / max) * 100 : 0);
+    };
+    node.addEventListener("scroll", handleScroll, { passive: true });
+    return () => node.removeEventListener("scroll", handleScroll);
+  }, [content]);
+
   const isSignal = content?.type === "signal";
+  const isInsight = content?.type === "insight";
 
   return (
     <AnimatePresence>
@@ -70,6 +89,7 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
 
           {/* Drawer panel */}
           <motion.div
+            ref={scrollRef}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -99,6 +119,13 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
               >
                 <X size={20} />
               </button>
+              {isInsight && (
+                <div
+                  className="absolute bottom-0 left-0 h-0.5 bg-neon-gold transition-[width] duration-75"
+                  style={{ width: `${scrollProgress}%` }}
+                  aria-hidden="true"
+                />
+              )}
             </div>
 
             {/* Content */}
@@ -277,6 +304,19 @@ const SignalContent = ({ data }: { data: AISignal }) => {
   );
 };
 
+const countWords = (text: string): number =>
+  text.trim().split(/\s+/).filter(Boolean).length;
+
+const extractFootnotes = (markdown: string): Record<string, string> => {
+  const map: Record<string, string> = {};
+  const regex = /^\[\^([^\]]+)\]:[ \t]+(.+)$/gm;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(markdown)) !== null) {
+    map[match[1]] = match[2].trim();
+  }
+  return map;
+};
+
 const InsightContent = ({ data }: { data: ExpertInsight }) => {
   const [fetchedMarkdown, setFetchedMarkdown] = useState<string | null>(null);
 
@@ -300,65 +340,192 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
     day: "numeric",
   });
 
+  const markdownSource = fetchedMarkdown || data.markdownContent || "";
+  const footnoteMap = useMemo(
+    () => (markdownSource ? extractFootnotes(markdownSource) : {}),
+    [markdownSource],
+  );
+
+  const readMinutes = useMemo(() => {
+    let text = "";
+    if (fetchedMarkdown) text = fetchedMarkdown;
+    else if (data.markdownContent) text = data.markdownContent;
+    else if (data.content)
+      text = data.content
+        .map((b) => {
+          if (b.type === "list") return b.items.join(" ");
+          if ("text" in b) return b.text;
+          return "";
+        })
+        .join(" ");
+    else if (data.paragraphs) text = data.paragraphs.join(" ");
+    if (!text) return 0;
+    return Math.max(1, Math.ceil(countWords(text) / 220));
+  }, [fetchedMarkdown, data]);
+
   return (
-    <>
+    <div className="max-w-[68ch] mx-auto">
       {/* Author byline */}
-      <div className="flex items-center gap-2 mb-6 text-neon-gold font-sans italic text-lg">
+      <div className="flex items-center gap-2 mb-4 text-neon-gold font-sans italic text-lg">
         By {data.author} &bull; {data.authorRole}
       </div>
 
-      {/* Date */}
-      <div className="flex items-center gap-2 mb-6 text-gray-500 text-sm">
-        <Calendar size={14} />
-        {formattedDate}
+      {/* Date + read time */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-8 text-gray-500 text-sm font-sans">
+        <span className="flex items-center gap-2">
+          <Calendar size={14} />
+          {formattedDate}
+        </span>
+        {readMinutes > 0 && (
+          <span className="flex items-center gap-2 text-neon-gold/80">
+            <BookOpen size={14} />
+            {readMinutes} min read
+          </span>
+        )}
       </div>
 
       {/* Title */}
-      <h2 className="text-3xl md:text-4xl font-sans font-bold text-white mb-10 leading-tight">
+      <h2 className="font-serif text-3xl md:text-5xl font-black text-white mb-12 leading-[1.15] tracking-tight">
         {data.title}
       </h2>
 
       {/* Full article body */}
-      <div className="prose prose-invert prose-lg max-w-none font-sans text-gray-300">
-        {fetchedMarkdown || data.markdownContent ? (
+      <div className="prose prose-invert prose-lg max-w-none font-serif text-gray-200 leading-[1.75] selection:bg-neon-gold/30 selection:text-white [counter-reset:section] [&>p:first-of-type]:text-xl [&>p:first-of-type]:text-gray-100 [&>p:first-of-type]:leading-[1.6] [&>p:first-of-type]:mb-10">
+        {markdownSource ? (
           <Markdown
+            remarkPlugins={[remarkGfm]}
             components={{
-              h2: ({ node, ...props }: any) => (
-                <h3
-                  className="text-2xl font-bold text-neon-gold mt-8 mb-4"
-                  {...props}
-                />
-              ),
+              h2: ({ node, ...props }: any) => {
+                const isFootnoteLabel =
+                  (props as any).id === "footnote-label" ||
+                  (props as any).className?.includes("sr-only");
+                if (isFootnoteLabel) {
+                  return (
+                    <h2
+                      {...props}
+                      className="font-sans text-base font-bold text-white tracking-wide mt-0 mb-2"
+                    />
+                  );
+                }
+                return (
+                  <h3
+                    className="font-sans text-2xl font-bold text-white mt-12 mb-5 pb-2 border-b border-neon-gold/40 [counter-increment:section] before:[content:counter(section,upper-roman)] before:font-serif before:font-black before:text-neon-gold before:text-3xl before:mr-4 before:opacity-80 before:align-baseline"
+                    {...props}
+                  />
+                );
+              },
               h3: ({ node, ...props }: any) => (
                 <h4
-                  className="text-xl font-bold text-neon-gold mt-6 mb-3"
+                  className="font-sans text-xl font-bold text-white mt-8 mb-3"
                   {...props}
                 />
               ),
               ul: ({ node, ...props }: any) => (
-                <ul className="list-disc pl-5 space-y-2 mb-6" {...props} />
+                <ul className="list-disc pl-5 space-y-3 mb-8" {...props} />
               ),
               ol: ({ node, ...props }: any) => (
-                <ol className="list-decimal pl-5 space-y-2 mb-6" {...props} />
+                <ol className="list-decimal pl-5 space-y-3 mb-8" {...props} />
               ),
               li: ({ node, ...props }: any) => (
-                <li className="pl-1" {...props} />
+                <li className="pl-1 leading-[1.75]" {...props} />
               ),
               p: ({ node, ...props }: any) => (
-                <p className="leading-relaxed mb-6" {...props} />
+                <p className="mb-8" {...props} />
               ),
               strong: ({ node, ...props }: any) => (
-                <strong className="text-white font-bold" {...props} />
+                <strong
+                  className="text-white font-bold bg-neon-gold/15 px-1 rounded-sm box-decoration-clone"
+                  {...props}
+                />
+              ),
+              sup: ({ node, children, ...props }: any) => {
+                const arr = Array.isArray(children) ? children : [children];
+                let id = "";
+                for (const c of arr) {
+                  const href = (c as any)?.props?.href as string | undefined;
+                  if (href) {
+                    const m = href.match(/fn-(.+)$/);
+                    if (m) id = decodeURIComponent(m[1]);
+                  }
+                }
+                const text = footnoteMap[id];
+                return (
+                  <sup
+                    className="group relative inline-block align-super text-[0.7em]"
+                    {...props}
+                  >
+                    {children}
+                    {text && (
+                      <span
+                        role="tooltip"
+                        className="pointer-events-none invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 max-w-[calc(100vw-2rem)] p-3 text-sm text-gray-200 bg-midnight border border-neon-gold/40 rounded shadow-xl z-30 font-sans normal-case tracking-normal leading-relaxed text-left"
+                      >
+                        {text}
+                      </span>
+                    )}
+                  </sup>
+                );
+              },
+              a: ({ node, ...props }: any) => {
+                const isFnRef =
+                  (props as any)["data-footnote-ref"] !== undefined;
+                const className: string | undefined = (props as any).className;
+                const isFnBackref = className?.includes(
+                  "data-footnote-backref",
+                );
+                if (isFnRef) {
+                  return (
+                    <a
+                      {...props}
+                      className="text-neon-gold font-bold no-underline hover:text-white px-0.5"
+                    />
+                  );
+                }
+                if (isFnBackref) {
+                  return (
+                    <a
+                      {...props}
+                      className="text-neon-gold/60 no-underline ml-1 hover:text-neon-gold"
+                    />
+                  );
+                }
+                return (
+                  <a
+                    {...props}
+                    className="text-hologram-cyan underline decoration-hologram-cyan/40 underline-offset-4 hover:decoration-hologram-cyan transition-colors"
+                  />
+                );
+              },
+              section: ({ node, ...props }: any) => {
+                const isFootnotes =
+                  (props as any)["data-footnotes"] !== undefined;
+                if (isFootnotes) {
+                  return (
+                    <section
+                      {...props}
+                      className="not-prose mt-10 pt-4 border-t border-neon-gold/20 text-[12px] font-sans text-gray-400 leading-[1.4] [&_ol]:list-decimal [&_ol]:pl-3 [&_ol]:space-y-1 [&_ol]:m-0 [&_ol]:marker:text-gray-500 md:[&_ol]:columns-2 md:[&_ol]:gap-x-6 [&_li]:break-inside-avoid [&_li]:pl-0.5 [&_li]:leading-[1.4] [&_li_p]:m-0 [&_li_p]:inline [&_a.data-footnote-backref]:text-[11px]"
+                    />
+                  );
+                }
+                return <section {...props} />;
+              },
+              hr: () => (
+                <div
+                  className="flex justify-center my-14 text-neon-gold/60 select-none"
+                  aria-hidden="true"
+                >
+                  <span className="text-2xl tracking-[1em]">···</span>
+                </div>
               ),
               blockquote: ({ node, ...props }: any) => (
                 <blockquote
-                  className="border-l-4 border-neon-gold pl-4 italic my-6 text-gray-400"
+                  className="border-l-4 border-neon-gold pl-6 my-10 text-xl text-gray-100 leading-relaxed bg-neon-gold/5 py-4 pr-4 not-italic"
                   {...props}
                 />
               ),
             }}
           >
-            {fetchedMarkdown || data.markdownContent}
+            {markdownSource}
           </Markdown>
         ) : data.content ? (
           data.content.map((block, index) => {
@@ -367,7 +534,7 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                 return (
                   <h3
                     key={index}
-                    className="text-2xl font-bold text-white mt-8 mb-4"
+                    className="font-sans text-2xl font-bold text-white mt-12 mb-5 pb-2 border-b border-neon-gold/40 [counter-increment:section] before:[content:counter(section,upper-roman)] before:font-serif before:font-black before:text-neon-gold before:text-3xl before:mr-4 before:opacity-80 before:align-baseline"
                   >
                     {block.text}
                   </h3>
@@ -376,22 +543,27 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                 return (
                   <h4
                     key={index}
-                    className="text-xl font-bold text-neon-gold mt-6 mb-3"
+                    className="font-sans text-xl font-bold text-white mt-8 mb-3"
                   >
                     {block.text}
                   </h4>
                 );
               case "list":
                 return (
-                  <ul key={index} className="list-disc pl-5 space-y-2 mb-6">
+                  <ul key={index} className="list-disc pl-5 space-y-3 mb-8">
                     {block.items.map((item, i) => (
-                      <li key={i}>{item}</li>
+                      <li key={i} className="leading-[1.75]">
+                        {item}
+                      </li>
                     ))}
                   </ul>
                 );
               case "paragraph":
                 return (
-                  <p key={index} className="leading-relaxed mb-6">
+                  <p
+                    key={index}
+                    className="mb-8 first-of-type:text-xl first-of-type:text-gray-100 first-of-type:leading-[1.6] first-of-type:mb-10"
+                  >
                     {block.text}
                   </p>
                 );
@@ -401,7 +573,10 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
           })
         ) : (
           data.paragraphs?.map((paragraph, index) => (
-            <p key={index} className="leading-relaxed mb-6">
+            <p
+              key={index}
+              className="mb-8 first-of-type:text-xl first-of-type:text-gray-100 first-of-type:leading-[1.6] first-of-type:mb-10"
+            >
               {paragraph}
             </p>
           ))
@@ -410,7 +585,7 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
 
       {/* Tags */}
       {data.tags && data.tags.length > 0 && (
-        <div className="mt-10 flex flex-wrap gap-2">
+        <div className="mt-12 flex flex-wrap gap-2 font-sans">
           <Tag size={14} className="text-neon-gold mt-1" />
           {data.tags.map((tag) => (
             <span
@@ -429,12 +604,12 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
           href={data.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center gap-2 text-neon-gold hover:text-white border border-neon-gold/50 px-6 py-3 rounded-full hover:bg-neon-gold/20 transition-all text-sm font-bold uppercase tracking-widest"
+          className="mt-8 inline-flex items-center gap-2 text-neon-gold hover:text-white border border-neon-gold/50 px-6 py-3 rounded-full hover:bg-neon-gold/20 transition-all text-sm font-bold uppercase tracking-widest font-sans"
         >
           Link to Original Article <ExternalLink size={14} />
         </a>
       )}
-    </>
+    </div>
   );
 };
 
