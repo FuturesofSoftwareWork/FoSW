@@ -40,29 +40,20 @@ const AboutProject = () => {
           <p>
             Software work has significantly evolved over the past decades, and
             the demand for software professionals has skyrocketed. According to
-            a report published in 2023, Finland will need 200,000 new software
-            professionals by 2030. However, the development of artificial
-            intelligence, particularly generative language models like ChatGPT,
-            has rapidly changed the landscape. In 2025, advanced language models
-            are expected to handle routine programming tasks and surpass the
-            skills of the best programmers.
+            a report published in 2023, Finland was estimated to need 200,000
+            new software professionals by 2030. However, the development of
+            large language models, has rapidly changed the landscape. In 2026,
+            advanced AI-driven development tools handle routine programming
+            tasks and are about to surpass the skills of even the best
+            programmers.
           </p>
 
           <p>
-            This development does not imply that humans will lose their roles in
-            the software industry; rather, the nature of the work will change.
-            Industry leaders and researchers predict that in the future, there
-            will be little need for novice and mid-level software engineers,
-            with demand focusing primarily on top-tier experts.
-          </p>
-
-          <p>
-            The breakthrough in AI has also transformed the nature of work and
-            accelerated the pace of software development. This creates
-            challenges in terms of employee motivation, well-being, and ensuring
-            organizational competitiveness. The impact of AI on the workplace is
-            not merely technological but constitutes an unpredictable
-            socio-technical shift.
+            The breakthrough in AI has also transformed the nature of software
+            work. This creates challenges in terms of employee motivation,
+            well-being, and ensuring organizational competitiveness. The impact
+            of AI on the workplace is not merely technological but constitutes
+            an unpredictable socio-technical shift.
           </p>
 
           <p>
