@@ -1,0 +1,37 @@
+{
+  "id": "2026-05-20-04",
+  "title": "Code review time up 91% on high-AI-adoption teams as PR throughput overwhelms reviewers",
+  "summary": "Industry productivity studies converge on a single bottleneck: AI accelerates code production but pushes the constraint downstream to review. Faros AI data, cited in 2026 SDLC syntheses, shows review time has risen 91% on teams with high AI-coding adoption, while 38.7% of AI-agent review comments in Atlassian's RovoDev study trigger additional code fixes. Developer trust is fragile — 46% distrust AI output and 66% cite 'almost right but not quite' as their top frustration. The operational implication is that flow metrics like cycle time can worsen even as commit volume rises. Leaders measuring only generation-side metrics risk celebrating phantom productivity while WIP and review backlogs grow.",
+  "source": "DevEssence (synthesis of Faros AI, Atlassian RovoDev, McKinsey)",
+  "sourceUrl": "https://devessence.com/blog/!/78/ai-in-software-development-2026-sdlc-impact-real-productivity-data-whats-next",
+  "sourceType": "article",
+  "detectedAt": "2026-05-20",
+  "date": "2026-05-10",
+  "status": "published",
+  "tags": [
+    "code review",
+    "cycle time",
+    "developer productivity",
+    "flow metrics"
+  ],
+  "category": [
+    "SDLC Change",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "Generation-side productivity metrics (commits, LOC, PRs opened) can mask a worsening review bottleneck.",
+    "Engineering leaders need to rebalance staffing toward reviewers and reviewer-tooling, not just toward more AI seats.",
+    "Trust collapse on 'almost right' outputs is a leading indicator of tool abandonment and shadow workflows."
+  ],
+  "recommendedActions": [
+    "Track end-to-end cycle time (idea → prod), not just PR throughput, when reporting AI ROI.",
+    "Pilot AI-assisted review (summary, risk highlighting, test suggestions) before adding more generation tools.",
+    "Set explicit limits on agent-opened PRs per reviewer per day to protect quality and morale."
+  ],
+  "risksAndCaveats": [
+    "Synthesis blends vendor studies of varying rigor; absolute 91% figure is directional, not definitive.",
+    "Effects vary by repo size, language, and review culture.",
+    "Survey-based trust numbers reflect perception and may lag actual defect rates."
+  ],
+  "decisionHorizon": "now"
+}
