@@ -1,0 +1,17 @@
+{
+  "id": "ai-adoption-joins-agility",
+  "title": "AI Adoption Joins Business, Organizational and Enterprise Agility",
+  "author": "Petri Kettunen",
+  "authorRole": "University of Helsinki, Dept. of CS",
+  "excerpt": "AI tools, especially GenAI, are reshaping software development. To ensure effective and sustainable outcomes, software organizations must scale agility from local development teams to business, organizational, and enterprise levels.",
+  "markdownFile": "ai-adoption-joins-agility.md",
+  "date": "2026-05-22",
+  "status": "published",
+  "tags": [
+    "agility",
+    "AI-adoption",
+    "business-agility",
+    "organizational-agility",
+    "enterprise-agility"
+  ]
+}
