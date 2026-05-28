@@ -1,0 +1,29 @@
+{
+  "id": "2026-05-25-02",
+  "title": "DORA: AI is an amplifier — returns come from platform quality, not the tools",
+  "summary": "The DORA team's ROI of AI-Assisted Software Development report (2026.01), surfaced in InfoQ coverage in May, draws on ~5,000 technology professionals and 100+ hours of interviews to argue that AI investment payoff is gated by the underlying engineering system: internal platform quality, workflow clarity, and team alignment. The report introduces a J-Curve value-realization model and an interactive ROI calculator. Companion DORA findings show AI lifts throughput 2–18% but raises change-failure rates and technical debt where code-level observability is weak. For CTOs this reframes the AI rollout decision: organizations with fragmented processes will see AI magnify dysfunction, not paper over it.",
+  "source": "InfoQ / DORA",
+  "sourceUrl": "https://www.infoq.com/news/2026/05/dora-roi-ai-assisted-dev-report/",
+  "sourceType": "article",
+  "detectedAt": "2026-05-25",
+  "date": "2026-05-25",
+  "status": "published",
+  "tags": ["DORA", "ROI", "platform-engineering", "throughput", "stability"],
+  "category": ["Productivity", "SDLC Change", "Org & Leadership"],
+  "whyItMatters": [
+    "Throughput gains (2–18%) are real but modest — they will not justify large agent licensing on their own without platform investment.",
+    "The J-Curve framing gives leadership a defensible narrative for why year-1 returns are negative, useful in board-level ROI debates.",
+    "Stability regressions (failure rates, tech debt) shift the priority from 'adopt AI' to 'instrument the codebase first'."
+  ],
+  "recommendedActions": [
+    "Before scaling AI coding tools, audit platform foundations: CI reliability, deployment frequency baseline, code-level observability.",
+    "Adopt the DORA ROI calculator as a default template in business-case approvals to discipline vendor claims.",
+    "Pair every productivity metric with a stability metric (CFR, MTTR, debt indicator) in exec dashboards."
+  ],
+  "risksAndCaveats": [
+    "Survey-and-interview methodology — self-reported productivity is known to overstate AI gains.",
+    "DORA findings generalize across industries; regulated sectors should weight stability findings more heavily.",
+    "'Amplifier' framing is intuitive but hard to falsify; specific magnitude estimates carry wide confidence intervals."
+  ],
+  "decisionHorizon": "now"
+}

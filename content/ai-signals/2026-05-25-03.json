@@ -1,0 +1,29 @@
+{
+  "id": "2026-05-25-03",
+  "title": "LinearB 2026 benchmarks: AI-generated PRs accepted at 32.7% vs 84.4% for humans",
+  "summary": "LinearB's 2026 Software Engineering Benchmarks Report, drawing on 8.1M+ pull requests from 4,800+ organizations, finds AI-generated PRs are accepted at 32.7% versus 84.4% for human-authored PRs, and wait 4.6x longer for first review but are reviewed 2x faster once picked up. Acceptance rates diverge sharply by tool — Devin trending up since April, Copilot slipping since May. The metric exposes a hidden cost of agentic coding: review queues are absorbing the productivity gains, and reviewer cognitive load is becoming the new bottleneck. The data is among the first large-N evidence that bot-PR economics differ structurally from human-PR economics.",
+  "source": "LinearB Benchmarks Report",
+  "sourceUrl": "https://linearb.io/resources/software-engineering-benchmarks-report",
+  "sourceType": "article",
+  "detectedAt": "2026-05-25",
+  "date": "2026-05-25",
+  "status": "published",
+  "tags": ["benchmarks", "pull-requests", "code-review", "agents", "measurement"],
+  "category": ["Productivity", "Quality & Testing", "SDLC Change"],
+  "whyItMatters": [
+    "A 51-point acceptance gap means agent throughput claims must be discounted by rework and abandoned-PR volume — vendor ROI math typically ignores this.",
+    "Review queues becoming the constraint flips the optimization target: invest in reviewer tooling and triage policy, not faster code generation.",
+    "Tool-level variance (Devin up, Copilot down) suggests AI tool selection is now an ongoing optimization, not a one-time procurement."
+  ],
+  "recommendedActions": [
+    "Track bot-PR acceptance rate and time-to-first-review as first-class metrics alongside DORA.",
+    "Set policy on bot-PR labeling, reviewer routing, and automated pre-review checks before scaling agent volume.",
+    "Run periodic vendor bake-offs on your own acceptance-rate data, not vendor benchmarks."
+  ],
+  "risksAndCaveats": [
+    "LinearB's customer base skews toward larger, instrumented orgs — small teams may see different ratios.",
+    "'Acceptance rate' definitions vary across teams (merged, closed-without-merge, rewritten); cross-tool comparisons need caveats.",
+    "It is not entirely clear when the data for the study were collected. The oldest survey data is from 2024, developer usage survey from November 2025, and Engineering leadership survey 2026."
+  ],
+  "decisionHorizon": "now"
+}
