@@ -1,0 +1,29 @@
+{
+  "id": "2026-05-25-05",
+  "title": "Harness: measurement frameworks haven't caught up with AI productivity, eroding developer trust",
+  "summary": "Harness's State of Engineering Excellence 2026, fielded in April across 700 practitioners and managers in the US, UK, India, France and Germany, finds the top three challenges are measurement-of-productivity (26%), maintaining code quality with AI (24%), and proving ROI (18%). 54% of developers fear individual performance evaluation based on AI usage data; managers are nearly 4x more likely than practitioners (15% vs 4%) to say they have no concerns about how AI data is used. Developers want separation between improvement data and evaluation (55%), measurement transparency (50%), and a voice in defining metrics (49%). The data shows a widening manager–practitioner trust gap that is becoming a retention and adoption risk.",
+  "source": "Harness",
+  "sourceUrl": "https://www.harness.io/state-of-engineering-excellence",
+  "sourceType": "article",
+  "detectedAt": "2026-05-25",
+  "date": "2026-05-25",
+  "status": "published",
+  "tags": ["productivity", "measurement", "trust", "developer-experience", "management"],
+  "category": ["Org & Leadership", "Productivity", "Work Wellbeing"],
+  "whyItMatters": [
+    "The 4x manager–practitioner gap on AI-data concerns is a leading indicator of trust erosion; ignoring it now creates retention exposure later.",
+    "If 54% fear AI usage being used in evals, voluntary AI adoption data will become biased, breaking the same metrics leaders rely on.",
+    "Demand for measurement co-design (49%) is a concrete, low-cost lever to rebuild trust before mandating tools."
+  ],
+  "recommendedActions": [
+    "Publish an explicit policy separating AI-improvement telemetry from individual performance evaluation.",
+    "Co-design AI productivity metrics with practitioner representatives before rolling out exec dashboards.",
+    "Pair every productivity KPI with a cognitive-load or burnout indicator to detect over-optimization."
+  ],
+  "risksAndCaveats": [
+    "Vendor-sponsored survey (Harness sells DevOps tooling) — directional, not unbiased.",
+    "Self-reported fear/trust questions are sensitive to framing.",
+    "Geographic mix tilts Western; norms around evaluation-by-data differ in other markets."
+  ],
+  "decisionHorizon": "now"
+}
