@@ -1,0 +1,40 @@
+{
+"id": "2026-06-08-01",
+"title": "Frameworks are dying, harnesses are winning: agent reliability moves from prompts to control loops",
+"summary": "Laurie Voss argues that the key engineering surface for AI agents has shifted from prompts and agent “frameworks” to the agent harness: the control loop that decomposes tasks, retries, isolates execution, manages context, enforces permissions, and reports outcomes. In this view, competitive advantage and day-to-day reliability are increasingly determined by harness behavior (and its observability), not by how teams wire deterministic chains together in a framework. The article points to converging industry signals (coding agents and tool-based loops) and highlights recent examples where orchestration bugs and sandbox/runtime choices materially changed cost and user experience even with the same underlying model. It also reframes evaluation as trajectory- and operations-centric (success rate, retries, tool efficiency, recovery time, tool hallucinations, cost per successful run) rather than outcome-only benchmark scores. For software leaders, the implication is that adopting agents is less about prompt craftsmanship and more about treating harness engineering like production systems engineering: instrumentation, failure analysis, and controlled environments.",
+"source": "LinkedIn Pulse",
+"sourceUrl": "https://www.linkedin.com/pulse/frameworks-dying-harnesses-winning-laurie-voss-qujlc/",
+"sourceType": "social",
+"detectedAt": "2026-06-08",
+"date": "2026-06-06",
+"status": "published",
+"tags": [
+"agent harness",
+"coding agents",
+"observability",
+"agent evaluation",
+"sandboxed execution",
+"reliability engineering"
+],
+"category": [
+"AI Agents",
+"SDLC Change"
+],
+"whyItMatters": [
+"If the harness is the real product surface, vendor selection (and in-house build decisions) should prioritize control-loop behavior, safety gates, and instrumentation—not just model quality or “framework” ergonomics.",
+"Operational metrics like retries, recovery, and cost-per-successful-trajectory become management KPIs for AI-assisted development, similar to SLOs for production services.",
+"Harness-level failures can burn budget and derail adoption even when the underlying model is strong, so reliability work shifts toward execution isolation, permissions, and trace-driven debugging."
+],
+"recommendedActions": [
+"Define a small set of harness KPIs for any coding agent pilot (e.g., success rate, retries per task, tool-call waste, recovery time from errors, tool-hallucination rate, cost per successful task) and review them weekly.",
+"Instrument agent runs with traces/spans and store trajectories as artifacts so repeated failures can be analyzed and fixed at the loop/tooling layer, not by ad-hoc prompt tweaks.",
+"Adopt or build sandboxed execution and permission layers (file/network/process controls) as a default requirement for coding agents touching repos or CI environments.",
+"Run a bake-off that compares agents/harnesses on real internal tasks using the same models where possible, to isolate harness quality from model quality."
+],
+"risksAndCaveats": [
+"The piece is a synthesis/opinionated framing rather than a controlled study; teams should validate “harness > framework” claims on their own workloads and constraints.",
+"Organizations with heavy compliance or bespoke toolchains may still need framework-like composition work; “out-of-the-box harness” value varies by environment complexity.",
+"Trajectory-centric evaluation requires additional instrumentation and data handling, which can introduce privacy/security considerations and operational overhead."
+],
+"decisionHorizon": "now"
+}
