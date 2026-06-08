@@ -1,0 +1,39 @@
+{
+"id": "2026-06-08-02",
+"title": "Everybody’s talking about harnesses, but nobody actually knows what it is",
+"summary": "Arize's blog introduces a practical definition of an “agent harness,” arguing it is not an agent framework (e.g., LangChain/LangGraph) but a shipped, working agent architecture that runs a tool-using iteration loop with fixed system behaviors. The post breaks the harness into concrete engineering components that matter in production: a tool-calling while-loop, context management and compression, a tools/skills registry, permission and lifecycle hooks, sub-agent isolation, and session persistence/recovery. It claims modern coding-agent products converged on similar harness patterns because real-world repository editing forces reliability features (permissions, recovery, bounded context, tool output limits) that frameworks typically leave to humans to assemble correctly. For software orgs adopting coding agents, this reframes “agent quality” from model choice or prompt tricks toward harness engineering—how you constrain execution, manage context budgets, and make failures observable and recoverable. The piece also implicitly sets a checklist for evaluating vendors and internal builds: can the harness run safely by default, and does it provide enough traceability to debug and improve behavior over time?",
+"source": "Company Blog",
+"sourceUrl": "https://arize.com/blog/what-is-an-agent-harness/",
+"sourceType": "social",
+"detectedAt": "2026-06-08",
+"date": "2026-04-24",
+"status": "published",
+"tags": [
+"agent harness",
+"context management",
+"tool calling loop",
+"permissions",
+"session recovery",
+"sub-agents"
+],
+"category": [
+"AI Agents",
+"SDLC Change"
+],
+"whyItMatters": [
+"Leaders evaluating coding agents should assess harness capabilities (permissions, isolation, recovery, context compression) as first-class reliability controls, not optional “engineering polish.”",
+"Adoption risk often comes from execution-layer failures (unsafe tool calls, runaway loops, missing recovery) that won’t be fixed by switching models; harness design is the lever.",
+"The post provides a concrete architecture checklist that can standardize procurement, internal platform requirements, and governance for agentic tooling."
+],
+"recommendedActions": [
+"Convert the harness components listed (loop, context compression, tool/skills registry, permissions/hooks, sub-agent isolation, persistence/recovery) into your acceptance criteria for any agent pilot or vendor selection.",
+"Instrument pilots to capture trajectories (tool calls, context compaction events, approvals/denials, recoveries) so failures are debuggable at the harness layer rather than treated as “model randomness.”",
+"Define a default permission model for repo/CI access (allow/deny rules + human approvals + pre/post hooks) before expanding agents beyond read-only workflows."
+],
+"risksAndCaveats": [
+"The article is a conceptual framing and architecture description, not a quantitative benchmark; teams should validate the claimed “out-of-the-box” advantages against their own toolchains and compliance requirements.",
+"Some organizations may still need framework-style composition for bespoke workflows; the harness/framework boundary can blur in complex environments.",
+"Vendor narratives can bias definitions; compare multiple sources and test whether the proposed harness components actually reduce incidents and cost in your environment."
+],
+"decisionHorizon": "now"
+}
