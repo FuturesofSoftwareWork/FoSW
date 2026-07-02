@@ -17,7 +17,7 @@
     "vendor-strategy",
     "agentic-coding"
   ],
-  "category": ["AI Tools", "Business Impact"],
+  "category": ["Costs & Economics", "AI Tools", "Business Impact"],
   "whyItMatters": [
     "At one-third the inference cost of leading Western models, these open-weight alternatives make AI coding agents economically viable for organizations and use cases where current API costs are prohibitive — this could accelerate adoption in cost-sensitive markets and for high-volume agent workflows.",
     "Four competitive releases within 12 days eliminates the narrative that frontier AI coding capability is exclusive to a small number of Western labs — engineering leaders now face a genuine multi-vendor landscape for agentic coding, with implications for procurement, compliance, and data sovereignty.",

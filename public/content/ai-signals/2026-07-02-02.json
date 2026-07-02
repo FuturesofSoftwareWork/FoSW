@@ -1,0 +1,40 @@
+{
+  "id": "2026-07-02-02",
+  "title": "The caching flip: the bigger prompt is now the cheaper prompt — agentic cost is a harness-design property, not a model-price choice",
+  "summary": "New evidence is inverting a decade of 'trim your prompts to save money' intuition. The arXiv study 'Don't Break the Cache' shows that in long-horizon agent loops the dominant cost driver is structural: naive agents re-serialize and re-inject the entire history every turn, so token cost grows quadratically with session length. Exact-prefix prompt caching collapses that curve toward linear and cuts input-token costs by up to ~90% (practitioner reports put API savings at 41–80%), and since agentic sessions run 20–25x more input than output tokens, this is where the bill actually lives. The counterintuitive corollary: a larger, stable cached prefix is often cheaper than a lean, churning one, because every reformat or aggressive context compaction is a cache reset that forces full recomputation. The insight for engineering leaders: the biggest cost lever in agentic coding is not switching to a cheaper model — it is harness and context-engineering discipline (stable prefixes, cache-aware tools, compaction timed 'like a database vacuum'). Two teams on the identical model can see an order-of-magnitude cost gap purely from loop design, which means cost optimization is an in-house engineering capability, not just a procurement decision.",
+  "source": "arXiv Preprint ('Don't Break the Cache: An Evaluation of Prompt Caching for Long-Horizon Agentic Tasks'), with corroborating practitioner analyses",
+  "sourceUrl": "https://arxiv.org/abs/2601.06007",
+  "sourceType": "academic",
+  "detectedAt": "2026-07-02",
+  "date": "2026-01-09",
+  "status": "published",
+  "tags": [
+    "prompt caching",
+    "context engineering",
+    "agent harness",
+    "inference cost",
+    "agentic coding",
+    "cache invalidation"
+  ],
+  "category": [
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "The dominant driver of agentic bills is loop architecture (quadratic context re-injection), not headline per-token price — so the highest-ROI cost work is engineering the harness, not renegotiating the model.",
+    "Old 'trim the prompt' advice is now actively counterproductive: a stable, well-cached large prefix can be cheaper and better-performing than a lean prompt that keeps breaking the cache.",
+    "Because two teams on the same model can differ ~10x on cost through loop design, cost efficiency becomes an internal engineering competency and a real differentiator, not merely a vendor-selection outcome.",
+    "Context compaction — which many agents (and defaults) trigger automatically near context limits — silently resets the cache and can spike cost; it needs to be timed and governed, not left implicit."
+  ],
+  "recommendedActions": [
+    "Instrument cache-hit rate and input-token cost per agent session as first-class metrics, not just total spend.",
+    "Design harnesses for stable, append-only context prefixes and cache-aware tool ordering; avoid per-turn reformatting that invalidates the cache.",
+    "Treat context compaction as a deliberate, timed operation (like a DB vacuum) with measured cost/benefit, rather than an automatic trigger at the context ceiling.",
+    "Before switching models to save money, run a caching/context-engineering pass on the existing harness — it is often the larger and faster win."
+  ],
+  "risksAndCaveats": [
+    "Caching economics depend on provider implementations (Anthropic, OpenAI, Google differ), cache TTLs, and request routing across replicas, so realized savings vary and can erode if traffic patterns break prefix reuse.",
+    "Caching reduces the linear re-processing term but does not eliminate the underlying quadratic growth of accumulating context, so very long horizons still need genuine context management.",
+    "Some cost-reduction percentages come from practitioner/vendor sources and specific workloads; absolute savings should be validated on your own agent traces."
+  ],
+  "decisionHorizon": "now"
+}

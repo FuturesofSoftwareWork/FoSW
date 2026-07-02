@@ -1,13 +1,17 @@
 export type AISignalCategory =
   | "AI Agents"
   | "AI Tools"
+  | "Productivity"
   | "SDLC Change"
-  | "Quality Testing"
+  | "Quality & Testing"
+  | "Security & Risk"
   | "Org & Leadership"
-  | "Work Wellbeing"
   | "Skills & Learning"
+  | "Work Wellbeing"
   | "Ethics & Policy"
-  | "Security & Risk";
+  | "Business Impact"
+  | "Costs & Economics"
+  | "Other";
 
 export type DecisionHorizon = "2026" | "2027-2028" | "2029+";
 
