@@ -1,0 +1,42 @@
+{
+  "id": "2026-06-29-04",
+  "title": "Faros AI's 2026 Engineering Report - Throughput Is No Longer the Bottleneck",
+  "summary": "Faros' study analyzes telemetry data (likely from 2024 to early 2026) from 22,000 developers and finds that the most important impact of AI may not be higher productivity, but a shift in where engineering organizations become constrained. While task throughput and feature delivery increased significantly, review queues, workflow delays, and production incidents grew even faster. The report argues that the scarce resource is no longer code generation but senior engineering attention. As AI produces larger volumes of seemingly correct code, experienced engineers spend more time validating architecture, intent, and edge cases rather than simply reviewing implementations. \n One of the report's most surprising findings is that engineering maturity did not appear to shield teams from AI-related quality challenges. Organizations with strong DevOps practices and mature delivery processes experienced similar increases in review effort, workflow bottlenecks, and production incidents as less mature teams. The implication for engineering leaders is that traditional software engineering excellence may no longer be sufficient. AI governance, context-rich development environments, automated quality controls, and scalable review processes are emerging as critical capabilities for organizations seeking to realize productivity gains without sacrificing software quality and reliability.",
+  "source": "Faros AI Engineering Report 2026",
+  "sourceUrl": "https://www.faros.ai/research/ai-acceleration-whiplash",
+  "sourceType": "article",
+  "detectedAt": "2026-06-29",
+  "date": "2026-06-15",
+  "status": "published",
+  "tags": [
+    "code quality",
+    "production incidents",
+    "code churn",
+    "engineering metrics",
+    "code review",
+    "technical debt",
+    "telemetry"
+  ],
+  "category": [
+    "Quality & Testing",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "A 54% increase in bugs per developer and 3x increase in incidents per PR, measured across 22,000 developers, suggests that AI-accelerated code production is systematically degrading production reliability — and this is not a fringe-team problem but a pattern across maturity levels.",
+    "The 10x code churn increase indicates that AI-generated code is being rewritten at dramatically higher rates, which means the apparent throughput gains are partially consumed by rework that most dashboards do not surface as a cost.",
+    "The 31.3% increase in PRs merged without review is an operational risk: as AI-generated volume outpaces review capacity, organizations are implicitly lowering quality gates, compounding the incident and bug increases.",
+    "The finding that engineering maturity does not insulate teams challenges the assumption that 'mature teams will handle AI fine' — quality investment must be explicit and proportional to AI adoption, regardless of current process maturity."
+  ],
+  "recommendedActions": [
+    "Track quality and reliability metrics as mandatory counterparts to AI-adoption and throughput metrics — do not report one without the other.",
+    "Set policy guardrails to prevent review-gate erosion: require minimum review coverage for AI-generated PRs and alert on increasing 'merged without review' rates.",
+    "Invest in automated quality gates proportional to AI code generation volume — the data shows human review alone cannot absorb the increased throughput.",
+    "Run an internal analysis comparing your pre- and post-AI-adoption quality metrics to benchmark against these industry figures and detect whether Acceleration Whiplash is affecting your teams."
+  ],
+  "risksAndCaveats": [
+    "The report does not disclose the exact data collection period. Although the analysis was completed in March 2026, it is based on roughly two years of historical telemetry data, meaning some observations may reflect earlier stages of AI tool adoption and model capabilities that differ significantly from today's state of the art.",
+    "Faros AI is a vendor of engineering intelligence tooling, so the report's framing may emphasize problems its products address; absolute figures should be treated as directional rather than universal benchmarks.",
+    "Telemetry data captures activity and outcomes but not root causes — the quality degradation may partly reflect AI adoption correlating with other changes (faster hiring, new codebases, shifting practices) rather than AI being the sole cause."
+  ],
+  "decisionHorizon": "now"
+}
