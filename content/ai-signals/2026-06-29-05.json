@@ -1,0 +1,40 @@
+{
+  "id": "2026-06-29-05",
+  "title": "Engineering is the most resilient job function despite the AI-layoff narrative — SignalFire tracks demand, not headlines",
+  "summary": "SignalFire's State of Talent Report 2026, surfaced by TechCrunch, tracks actual hiring across more than 80 million companies and finds that software engineering has held up far better than the 'AI is killing coding jobs' narrative implies. Engineering roles are down only 11% versus 2019 levels, against a 25% drop in overall tech hiring, and engineers made up 55% of new hires at major tech companies in 2025 (up from 46% in 2019). Early-stage startups actually hired 7% more engineers in 2025 than in 2019. SignalFire's head of research notes a gap between the stated rationale for layoffs ('AI') and what the hiring data shows on the ground, invoking the Jevons paradox: cheaper code production is expanding, not shrinking, demand for people who can direct and validate it. For leaders, this is a useful corrective to staffing decisions made on press-release sentiment rather than demand data — the role is shifting toward orchestration and review, not disappearing.",
+  "source": "Reputable Tech Press (TechCrunch, reporting SignalFire State of Talent Report 2026)",
+  "sourceUrl": "https://techcrunch.com/2026/06/24/ai-was-supposed-to-kill-engineering-jobs-but-new-data-suggests-theyre-the-most-resilient/",
+  "sourceType": "article",
+  "detectedAt": "2026-06-29",
+  "date": "2026-06-24",
+  "status": "published",
+  "tags": [
+    "hiring",
+    "engineering jobs",
+    "labor market",
+    "Jevons paradox",
+    "workforce planning",
+    "AI layoffs"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Business Impact",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "The data contradicts the dominant layoff narrative: engineering headcount is the most resilient function, so workforce plans that assume AI lets you cut engineers may be mispriced against actual demand.",
+    "Rising engineer share of new hires suggests the bottleneck is shifting to people who can specify, direct, and validate AI output — a hiring and skills profile, not a headcount-reduction story.",
+    "Boards hearing 'we cut staff because of AI' should separate genuine productivity-driven reductions from cost-cutting that merely uses AI as cover."
+  ],
+  "recommendedActions": [
+    "Base engineering headcount decisions on internal demand and throughput data, not on competitor layoff announcements or AI sentiment.",
+    "Reframe role definitions and hiring rubrics around code review, system design, and agent orchestration rather than raw coding volume.",
+    "Track whether your own AI investment is increasing or decreasing net demand for engineering work before committing to long-term staffing cuts."
+  ],
+  "risksAndCaveats": [
+    "Findings come from a venture firm's talent dataset and aggregate 2025 hiring; they describe a lagging labor-market signal and may not capture a faster 2026 shift.",
+    "Resilience at 'major tech companies' and funded startups may not generalize to non-tech enterprises or offshore/contract engineering pools.",
+    "The report measures hiring counts, not role content; jobs can persist while day-to-day work and seniority mix change substantially underneath the title."
+  ],
+  "decisionHorizon": "now"
+}

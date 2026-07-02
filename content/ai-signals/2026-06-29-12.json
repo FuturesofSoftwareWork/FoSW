@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-29-12",
+  "title": "Jellyfish survey of 635 engineering leaders: the challenge shifts from AI adoption to AI accountability",
+  "summary": "Jellyfish's seventh annual State of Engineering Management report, surveying 635+ CTOs, engineering managers, and individual contributors, reveals that the industry's central challenge has shifted from achieving AI adoption to proving AI's business value. Key findings: 64% of engineering professionals report at least a 25% increase in developer velocity from AI (up from 2025), yet only 46% actively track AI-specific metrics such as adoption rates, acceptance rates, and model usage. Cost is now the top adoption challenge: 42% cite increasing AI tool expenses as their primary concern — surpassing security, quality, and training. Productivity remains the dominant management priority (84%), but 75% now view it as a strategic business concern requiring executive attention, not just an engineering operations metric. Teams with the highest AI adoption consistently report higher job satisfaction and stronger efficiency gains, but the measurement gap means most organizations cannot connect these reported gains to delivery outcomes.",
+  "source": "Jellyfish",
+  "sourceUrl": "https://jellyfish.co/blog/2026-engineering-leaders-shifting-from-ai-adoption-to-ai-accountability/",
+  "sourceType": "article",
+  "detectedAt": "2026-06-29",
+  "date": "2026-06-18",
+  "status": "published",
+  "tags": ["engineering management", "AI ROI", "measurement", "AI accountability", "developer productivity", "token costs"],
+  "category": ["Org & Leadership", "Business Impact"],
+  "whyItMatters": [
+    "The 46% measurement gap represents an urgent governance risk: organizations are scaling AI investment without the instrumentation to know whether it is working. Leaders who cannot quantify AI's contribution to delivery outcomes will face increasing pressure from CFOs and boards.",
+    "Cost overtaking security and quality as the top adoption challenge marks a phase transition: the AI coding tool market has moved from 'should we adopt?' to 'can we afford what we've adopted?' Engineering leaders need FinOps capabilities they may not have built yet.",
+    "The correlation between high AI adoption and high job satisfaction suggests that organizations still restricting AI access may face retention risk, but only if the productivity gains are real — which brings the measurement gap full circle."
+  ],
+  "recommendedActions": [
+    "Implement AI-specific metrics (adoption rate, acceptance rate, model-mix, token spend per outcome) within your engineering analytics platform before the next budget cycle.",
+    "Establish a cross-functional AI cost governance committee spanning engineering, finance, and procurement to align AI tool spending with business outcome targets.",
+    "Benchmark your measurement maturity against the 46% baseline — if you are not tracking AI-specific metrics, you are in the majority but also in the blind spot.",
+    "Connect developer satisfaction surveys to AI usage data to validate whether your organization sees the same adoption-satisfaction correlation the report identifies."
+  ],
+  "risksAndCaveats": [
+    "Self-reported velocity gains (64% claiming 25%+ improvement) may reflect perception rather than measured delivery outcomes, which aligns with the report's own finding about a measurement gap.",
+    "The survey population (Jellyfish newsletter subscribers and customers) skews toward engineering organizations already invested in measurement and analytics, potentially overstating industry-wide adoption maturity.",
+    "The cost concern finding (42%) predates the full impact of usage-based billing shifts (GitHub Copilot, Claude pricing changes) — actual cost pressure in H2 2026 may be significantly higher."
+  ],
+  "decisionHorizon": "now"
+}
