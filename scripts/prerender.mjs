@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, join, extname } from "path";
 import puppeteer from "puppeteer";
 
@@ -139,7 +139,7 @@ async function prerender() {
       headless: true,
       args: process.env.CI ? ["--no-sandbox", "--disable-setuid-sandbox"] : [],
     });
-    const page = await browser.newPage();
+    let page = await browser.newPage();
 
     const url = `http://localhost:${PORT}${ROUTE}`;
     console.log(`Navigating to ${url}...`);
@@ -165,8 +165,49 @@ async function prerender() {
       console.log(`Pre-rendered insight: ${item.id}`);
     }
 
+    // Optional: prerender one page per published AI signal.
+    let signalItems = [];
+    let signalUrls = [];
+    if (PRERENDER_SIGNALS) {
+      const allSignalItems = readPublishedIndex("ai-signals");
+      // Filter out entries whose JSON files are missing or whose in-file id
+      // doesn't match the index id (those can't be opened via their URL path).
+      signalItems = allSignalItems.filter((item) => {
+        const filePath = join(DIST_DIR, "content", "ai-signals", item.file);
+        if (!existsSync(filePath)) return false;
+        try {
+          const data = JSON.parse(readFileSync(filePath, "utf-8"));
+          return data.id === item.id;
+        } catch {
+          return false;
+        }
+      });
+      if (allSignalItems.length !== signalItems.length) {
+        console.warn(
+          `Skipping ${allSignalItems.length - signalItems.length} signal(s) with missing or mismatched content files.`,
+        );
+      }
+      // Use a fresh page every 20 signals to avoid browser memory/performance
+      // degradation when processing large signal sets.
+      const SIGNALS_PER_PAGE = 20;
+      for (let i = 0; i < signalItems.length; i++) {
+        const item = signalItems[i];
+        // Refresh the page object every SIGNALS_PER_PAGE items.
+        if (i > 0 && i % SIGNALS_PER_PAGE === 0) {
+          await page.close();
+          page = await browser.newPage();
+        }
+        const url = await prerenderItem(page, "signals", item.id);
+        signalUrls.push({ url, lastmod: item.date });
+        console.log(`Pre-rendered signal: ${item.id}`);
+      }
+    }
+
     verifyItemPages("insights", insightItems, "expert-insights");
-    refreshSitemap(insightUrls);
+    if (PRERENDER_SIGNALS) {
+      verifyItemPages("signals", signalItems, "ai-signals");
+    }
+    refreshSitemap([...insightUrls, ...signalUrls]);
 
     await browser.close();
   } finally {
