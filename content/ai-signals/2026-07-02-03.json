@@ -1,0 +1,40 @@
+{
+  "id": "2026-07-02-03",
+  "title": "Jevons hits the token bill: per-developer usage jumped ~18x in nine months even as unit prices fell ~60%",
+  "summary": "A TechCrunch investigation documents how AI's falling per-token prices have not lowered software teams' bills — they have amplified them, because consumption is rising far faster than prices drop. Per-developer token usage climbed roughly 18.6x in nine months (Jellyfish data) while per-token prices fell about 60% over the prior year, a textbook Jevons-paradox dynamic that is now hitting engineering budgets directly. The enterprise fallout is concrete: Uber exhausted its entire 2026 AI coding budget by April; Microsoft revoked developers' Claude Code licenses months after enabling them; a Priceline renewal came back 4–5x higher, with one engineer spending $40,000 on tokens in a single month. Tellingly, the heaviest token users were about twice as productive but consumed roughly 10x the tokens to get there, so cost and value are entangled rather than cleanly separable. The industry response is a rapid pivot from 'tokenmaxxing' to cost governance — the share of FinOps teams managing AI spend has jumped from 31% to 98%. For leaders, the lesson is that cheaper tokens do not mean cheaper AI, and unmanaged consumption is the real budget risk.",
+  "source": "Reputable Tech Press (TechCrunch)",
+  "sourceUrl": "https://techcrunch.com/2026/06/05/the-token-bill-comes-due-inside-the-industry-scramble-to-manage-ais-runaway-costs/",
+  "sourceType": "article",
+  "detectedAt": "2026-07-02",
+  "date": "2026-06-05",
+  "status": "published",
+  "tags": [
+    "Jevons paradox",
+    "token consumption",
+    "AI cost governance",
+    "FinOps",
+    "engineering budgets",
+    "agentic coding"
+  ],
+  "category": [
+    "Costs & Economics",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "Falling token prices are lulling budget owners into underestimating spend; consumption growth (~18x in nine months) is swamping ~60% price declines, so bills rise despite 'cheaper' AI.",
+    "Named enterprise blowouts (Uber's budget gone by April, Microsoft revoking licenses) show this is a present operational problem, not a future risk, and that reactive license clawbacks are a blunt, morale-costly control.",
+    "Because top token users are more productive but far more expensive, cost governance must protect ROI without simply throttling the highest-value work — a nuanced policy problem, not a flat cap."
+  ],
+  "recommendedActions": [
+    "Stand up AI-spend FinOps now: real-time token/credit dashboards per developer and team, with budgets, anomaly alerts, and a monthly review cadence.",
+    "Reconcile vendor-reported usage against internal telemetry (some enterprises found discrepancies) so you are billing- and forecast-accurate.",
+    "Adopt cost-reduction defaults — prompt caching, model routing, and task-scoped agent runs — as platform policy rather than leaving them to individual choice.",
+    "Tie token budgets to measured outcomes so high-consumption, high-value engineers are funded deliberately rather than throttled indiscriminately."
+  ],
+  "risksAndCaveats": [
+    "Several figures are single-company anecdotes ($40k/month engineer, specific renewal multipliers) and may not represent typical teams.",
+    "The 18.6x usage growth reflects an early, rapid-adoption phase; growth may plateau as governance and tooling mature, changing the trajectory.",
+    "Productivity-vs-token comparisons are correlational; attributing the 2x productivity purely to higher token spend risks overstating the causal link."
+  ],
+  "decisionHorizon": "now"
+}

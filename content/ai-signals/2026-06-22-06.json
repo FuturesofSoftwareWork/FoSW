@@ -1,0 +1,38 @@
+{
+  "id": "2026-06-22-06",
+  "title": "Code review agents without humans: 45% merge rate vs 68%, and most feedback is noise — contradicting the '80% of PRs autonomously' pitch",
+  "summary": "A study analyzing 3,109 pull requests from the AIDev dataset tested the industry claim that automated code review agents (CRAs) can independently handle the bulk of open-source review work. The empirical reality is sharply different: PRs reviewed only by CRAs were merged 45.20% of the time versus 68.37% for human-only review — a 23-point gap — with markedly higher abandonment. Feedback quality was the core problem: 60.2% of closed CRA-only PRs fell into the lowest signal band (0–30% useful comments), and 12 of 13 review agents averaged signal ratios below 60%, meaning most automated comments were noise rather than actionable findings. The authors conclude CRAs should augment, not replace, human reviewers, directly contradicting vendor claims that bots can autonomously manage ~80% of PRs. For engineering leaders, this is a caution against removing humans from the review gate: low-signal bot review correlates with worse merge outcomes and can erode contributor trust and velocity even as it appears to add 'coverage.'",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2604.03196",
+  "sourceType": "academic",
+  "detectedAt": "2026-06-22",
+  "date": "2026-04-03",
+  "status": "published",
+  "tags": [
+    "code review",
+    "review agents",
+    "pull requests",
+    "signal-to-noise",
+    "human oversight",
+    "developer experience"
+  ],
+  "category": [
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "Removing humans from the review gate in favor of CRAs is associated with worse outcomes — a 23-point lower merge rate and more abandoned PRs — so 'autonomous review' should be treated as unproven for the merge decision.",
+    "Most automated review comments are low-signal noise (12 of 13 agents below 60% signal), which taxes contributor attention and trust; coverage metrics for bot review can be actively misleading.",
+    "Vendor claims of handling ~80% of PRs autonomously are not borne out in this data, warranting skepticism in procurement and a focus on human-plus-agent workflows rather than replacement."
+  ],
+  "recommendedActions": [
+    "Keep a human as the merge-decision authority; position review agents as triage and first-pass assistants, not autonomous gatekeepers.",
+    "Measure review-agent signal-to-noise (share of comments that lead to a change) and tune or disable bots that fall below a useful threshold.",
+    "Evaluate any review-automation vendor against merge rate, abandonment, and contributor-trust metrics — not just comment volume or 'PRs covered.'"
+  ],
+  "risksAndCaveats": [
+    "Based on open-source AIDev PRs; enterprise repositories with stronger conventions, gated CI, and known contributors may see different agent performance.",
+    "Correlational: low merge rates may partly reflect which PRs get routed to CRA-only review, not solely agent quality.",
+    "Preprint reflecting the specific 13 review agents available in early 2026; tools are improving quickly."
+  ],
+  "decisionHorizon": "now"
+}
