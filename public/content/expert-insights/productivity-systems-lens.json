@@ -1,0 +1,11 @@
+{
+  "id": "productivity-systems-lens",
+  "title": "Your Developers Are More Productive. So Why Isn't Your Organization?",
+  "author": "Arto Wallin",
+  "authorRole": "Project Manager & Senior Scientist @ VTT",
+  "excerpt": "Developers describe AI as transformational, yet release frequency, customer value, and revenue per engineer barely move. The usual answer is that we lack good productivity metrics. But the deeper issue is not how we measure productivity — it's where. Through a systems lens, two cases show how local gains get trapped by shifting bottlenecks inside the organization, or redistributed to customers by competitive markets. Productivity doesn't disappear; it changes form as it moves from developers to organizations to markets.",
+  "markdownFile": "productivity-systems-lens.md",
+  "date": "2026-06-30",
+  "status": "published",
+  "tags": ["productivity", "systems-thinking", "engineering-leadership", "value-capture", "AI-impact"]
+}
