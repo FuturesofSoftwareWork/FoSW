@@ -469,6 +469,30 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
               p: ({ node, ...props }: any) => (
                 <p className="mb-8" {...props} />
               ),
+              img: ({ node, src, alt, ...props }: any) => {
+                const rawSrc = typeof src === "string" ? src : "";
+                const resolved = /^https?:\/\//.test(rawSrc)
+                  ? rawSrc
+                  : `${import.meta.env.BASE_URL}content/expert-insights/${rawSrc.replace(/^\.?\//, "")}`;
+                const caption = typeof alt === "string" ? alt.trim() : "";
+                return (
+                  <span className="block my-10">
+                    <img
+                      src={resolved}
+                      alt={caption}
+                      loading="lazy"
+                      decoding="async"
+                      className="block w-full rounded-lg border border-white/10"
+                      {...props}
+                    />
+                    {caption && (
+                      <span className="block mt-3 text-center text-sm font-sans text-gray-400 italic">
+                        {caption}
+                      </span>
+                    )}
+                  </span>
+                );
+              },
               strong: ({ node, ...props }: any) => (
                 <strong
                   className="text-white font-bold bg-neon-gold/15 px-1 rounded-sm box-decoration-clone"
