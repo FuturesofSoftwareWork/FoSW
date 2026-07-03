@@ -1,6 +1,12 @@
 {
-  "lastUpdated": "2026-05-22T13:16:00Z",
+  "lastUpdated": "2026-07-03T00:00:00Z",
   "items": [
+    {
+      "id": "productivity-systems-lens",
+      "file": "productivity-systems-lens.json",
+      "date": "2026-07-03",
+      "status": "published"
+    },
     {
       "id": "ai-adoption-joins-agility",
       "file": "ai-adoption-joins-agility.json",
