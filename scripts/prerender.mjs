@@ -7,7 +7,7 @@ const DIST_DIR = resolve("dist");
 const ROUTE = "/FoSW/";
 const PORT = 4173;
 const SITE_URL = "https://futuresofsoftwarework.github.io/FoSW"; // must match src/config.ts
-const PRERENDER_SIGNALS = true; // toggle AI-signal pages (Task 7)
+const PRERENDER_SIGNALS = false; // toggle AI-signal pages (Task 7)
 
 const MIME_TYPES = {
   ".html": "text/html",
@@ -174,18 +174,25 @@ async function prerender() {
       // doesn't match the index id (those can't be opened via their URL path).
       signalItems = allSignalItems.filter((item) => {
         const filePath = join(DIST_DIR, "content", "ai-signals", item.file);
-        if (!existsSync(filePath)) return false;
+        if (!existsSync(filePath)) {
+          console.warn(`  Skipping signal ${item.id}: file not found (${item.file})`);
+          return false;
+        }
         try {
           const data = JSON.parse(readFileSync(filePath, "utf-8"));
-          return data.id === item.id;
+          if (data.id !== item.id) {
+            console.warn(`  Skipping signal ${item.id}: id mismatch (file has "${data.id}")`);
+            return false;
+          }
+          return true;
         } catch {
+          console.warn(`  Skipping signal ${item.id}: unreadable JSON (${item.file})`);
           return false;
         }
       });
-      if (allSignalItems.length !== signalItems.length) {
-        console.warn(
-          `Skipping ${allSignalItems.length - signalItems.length} signal(s) with missing or mismatched content files.`,
-        );
+      const skipped = allSignalItems.length - signalItems.length;
+      if (skipped > 0) {
+        console.warn(`Skipped ${skipped} signal(s) with missing/mismatched content (see above).`);
       }
       // Use a fresh page every 20 signals to avoid browser memory/performance
       // degradation when processing large signal sets.
