@@ -12,6 +12,8 @@ import {
   Clock,
   LayoutGrid,
   BookOpen,
+  Link2,
+  Check,
 } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -26,6 +28,22 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+    };
+  }, []);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      if (copyTimer.current) clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   // Escape key listener
   useEffect(() => {
@@ -106,7 +124,26 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
             }`}
           >
             {/* Close button */}
-            <div className="sticky top-0 z-10 flex justify-end p-4 bg-midnight/80 backdrop-blur-sm">
+            <div className="sticky top-0 z-10 flex justify-between items-center p-4 bg-midnight/80 backdrop-blur-sm">
+              <button
+                onClick={handleCopyLink}
+                className={`flex items-center gap-2 text-xs font-mono uppercase tracking-wider px-3 py-2 rounded-full transition-all focus:outline-none focus:ring-2 ${
+                  isSignal
+                    ? "text-hologram-cyan hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50"
+                    : "text-neon-gold hover:bg-neon-gold/20 focus:ring-neon-gold/50"
+                }`}
+                aria-label="Copy link to this article"
+              >
+                {copied ? (
+                  <>
+                    <Check size={14} /> Copied
+                  </>
+                ) : (
+                  <>
+                    <Link2 size={14} /> Copy link
+                  </>
+                )}
+              </button>
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
