@@ -4,6 +4,8 @@ Yet when the discussion shifts from individual developers to the organization as
 
 How can these observations all be true?
 
+
+
 The common explanation is that we simply lack good productivity metrics. That is certainly part of the story, and we discussed this in our previous article on the Productivity Paradox 2.0. However, I believe there is a more fundamental explanation.
 
 **The problem is not only how we measure productivity, but where we measure it.**
@@ -11,6 +13,8 @@ The common explanation is that we simply lack good productivity metrics. That is
 Software organizations are complex systems. Productivity does not automatically propagate through those systems simply because one activity becomes dramatically faster. Instead, it is transformed, delayed, constrained by new bottlenecks, and sometimes redistributed to customers through competitive pressure. Looking through this systems lens helps explain why developers, engineering leaders and economists can all be right while reaching seemingly contradictory conclusions.
 
 ## Case 1: When the bottleneck moves
+
+![Figure 1: Where the bottleneck moves](productivity-systems-lens.png)
 
 Consider a hypothetical SaaS company, AlphaCloud, employing around sixty software engineers. After introducing AI coding agents across the engineering organization, the initial results appear impressive. Internal surveys consistently report that developers complete routine implementation work in roughly half the previous time. Boilerplate code is generated automatically, unit tests are produced alongside new features, and developers spend considerably less effort navigating unfamiliar parts of the codebase. From the perspective of individual engineers, productivity has increased substantially.
 
@@ -81,3 +85,4 @@ AI continues this long effort to remove friction from software work, but it also
 From a systems perspective, this shift is unsurprising. Competitive advantage rarely comes from optimizing one component in isolation. It emerges from improving the performance of the system as a whole.
 
 **The defining productivity question of the AI era is whether organizations can redesign how work is specified, validated, delivered, and priced so that local productivity gains become durable organizational advantage.**
+
