@@ -2,6 +2,8 @@ import { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bot, User, Newspaper, Sparkles } from "lucide-react";
 import { useContent } from "@/hooks/useContent";
+import { useDeepLink } from "@/hooks/useDeepLink";
+import { useArticleMeta } from "@/hooks/useArticleMeta";
 import { SignalSkeleton, InsightSkeleton } from "@/components/ContentSkeleton";
 import ContentDrawer from "@/components/ContentDrawer";
 import SignalControls from "@/components/SignalControls";
@@ -35,6 +37,16 @@ const ContentStream = () => {
     null,
   );
   const closeDrawer = useCallback(() => setDrawerContent(null), []);
+
+  useDeepLink({
+    insights,
+    signals,
+    isLoading,
+    drawerContent,
+    setDrawerContent,
+  });
+
+  useArticleMeta(drawerContent);
 
   const [activeCategory, setActiveCategory] = useState<AISignalCategory | null>(
     null,

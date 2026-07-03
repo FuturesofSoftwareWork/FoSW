@@ -33,6 +33,7 @@ export interface AISignal {
   recommendedActions?: string[];
   risksAndCaveats?: string[];
   decisionHorizon?: DecisionHorizon;
+  image?: string;
 }
 
 export type ContentBlock =
@@ -55,6 +56,7 @@ export interface ExpertInsight {
   status: "published" | "draft";
   tags?: string[];
   url?: string;
+  image?: string;
 }
 
 export interface AISignalIndexEntry {
