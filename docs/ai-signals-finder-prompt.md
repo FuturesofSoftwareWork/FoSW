@@ -94,6 +94,33 @@ Reject items that are:
 - Also dedupe within this run: if several sources cover one development, output a single item using the most primary source as `sourceUrl` and the others in `corroboration`.
 - Do NOT write to the ledger yourself. A separate reconcile script records your output. Your only job is to read it and respect it.
 
+## Signal types
+
+Assign exactly one `signalType`. Each type requires its own fields.
+
+| Type | Use when | Required extra fields |
+| --- | --- | --- |
+| `weak-signal` | One named practitioner's firsthand, unvalidated observation | `observer` |
+| `field-report` | Industry or vendor survey / benchmark report | `sampleSize`, `fieldworkPeriod`, `sponsor` |
+| `study` | Academic paper or formal benchmark | `dataCollectedPeriod`, `replicated` |
+| `regulatory` | Law, policy or standard with a real date | `effectiveDate`, `jurisdiction` |
+| `tool-shift` | Release or capability change that alters practice | `version`, `availability` |
+
+**`recommendedActions` may be `[]` for `weak-signal`.** An early firsthand report
+does not support confident recommendations, and inventing them is worse than
+omitting them. Do not let the need to fill this field stop you surfacing an early
+signal — this is the single most important rule in this section.
+
+For `study` and `field-report`, `dataCollectedPeriod` / `fieldworkPeriod` are
+mandatory precisely because they expose staleness: a paper published this week
+about 2025 data is a lagging indicator, and the reader must see that.
+
+For `regulatory`, compute `decisionHorizon` from `effectiveDate` rather than
+judging it: within 6 months → `"now"`, within ~2 years → `"0,5 - 2 years"`,
+beyond → `"2+ years"`.
+
+Set `sponsor` to `"independent"` when a report has no commercial backer.
+
 ## Output
 
 Write your results to TWO files, and also print the main array so it appears in the run log.
@@ -114,8 +141,19 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
   "source": "string (e.g. Practitioner Blog, Hacker News Discussion, Company Blog, arXiv Preprint)",
   "sourceUrl": "https://example.com",
   "sourceType": "academic | article | social | video | discussion | release",
+  "signalType": "weak-signal | field-report | study | regulatory | tool-shift",
   "signalStrength": "weak | emerging | established",
   "signalStage": "leading | concurrent | lagging",
+  "observer": "string (weak-signal only: who reported it and why credible)",
+  "sampleSize": "string (field-report only)",
+  "fieldworkPeriod": "string (field-report only)",
+  "sponsor": "string (field-report only; 'independent' if none)",
+  "dataCollectedPeriod": "string (study only)",
+  "replicated": false,
+  "effectiveDate": "YYYY-MM-DD (regulatory only)",
+  "jurisdiction": "string (regulatory only)",
+  "version": "string (tool-shift only)",
+  "availability": "GA | preview | announced (tool-shift only)",
   "leadTimeEstimate": "string (how far ahead of mainstream, e.g. '~6-12 months', or 'confirms current practice')",
   "corroboration": ["https://other-source.example.com"],
   "detectedAt": "YYYY-MM-DD (today)",
@@ -135,6 +173,7 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
 ### Allowed values
 
 - `status`: `published` or `draft`
+- `signalType`: `weak-signal`, `field-report`, `study`, `regulatory`, `tool-shift`
 - `decisionHorizon`: `now`, `0,5 - 2 years`, `2+ years` — use these exact strings, they render verbatim on the site
 - `sourceType`: `academic` (peer-reviewed or preprint), `article` (non-academic article), `social` (blogs, social posts), `video`, `discussion` (forum/comment threads), `release` (changelogs, release notes)
 - `category`: choose 1 primary plus up to 2 secondary (max 3) from: `AI Agents`, `AI Tools`, `Productivity`, `SDLC Change`, `Quality & Testing`, `Security & Risk`, `Org & Leadership`, `Skills & Learning`, `Work Wellbeing`, `Ethics & Policy`, `Business Impact`, `Costs & Economics`, `Other`
