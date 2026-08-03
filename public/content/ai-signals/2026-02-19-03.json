@@ -3,7 +3,7 @@
 "title": "Science study measures real-world diffusion of AI-assisted coding on GitHub and finds modest but meaningful output gains",
 "summary": "This Science paper estimates how much code is being written with generative AI (by the end of 2024) by training a classifier to detect AI-generated Python functions across more than 30 million GitHub commits from ~160k developers worldwide. The authors estimate that AI tools account for about 29% of Python functions in the United States (with other countries catching up), and that aggregate developer output (proxied by online code contributions) increased by ~3.6% as adoption spread. The work also highlights that uptake and benefits are uneven: adoption varies substantially by country and developer segment, which the authors argue could widen skill and income gaps if productivity gains accrue disproportionately. For software leaders, the key change is a shift from anecdotal productivity claims to population-scale measurement of AI usage and its distribution, which can inform workforce strategy, tooling governance, and investment cases. The measured productivity lift is not “10x,” but at industry scale even low-single-digit gains can materially affect delivery capacity and engineering cost structure.",
 "source": "Science",
-"sourceType": "Academic",
+"sourceType": "academic",
 "sourceUrl": "https://www.science.org/doi/10.1126/science.adz9311",
 "detectedAt": "2026-02-19T10:00:00Z",
 "date": "2026-01-22",

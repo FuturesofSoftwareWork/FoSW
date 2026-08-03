@@ -3,7 +3,7 @@
 "title": "Beyond Greenfield: The D³ Framework for AI-Driven Productivity in Brownfield Engineering",
 "summary": "This arXiv preprint proposes a structured LLM-assisted workflow for “brownfield” engineering (legacy codebases with incomplete docs and fragmented context): Discover–Define–Deliver (D³). The core mechanism is role-separated prompting plus a dual-agent setup (a Builder model generates artifacts like research notes, plans, code; a Reviewer model critiques for gaps/risks), with explicit human approval gates between phases. The author reports an exploratory two-phase (baseline vs post-intervention) survey of 52 practitioners using D³ on real tasks (legacy exploration, documentation reconstruction, refactoring), finding self-reported improvements such as ~26.9% weighted average productivity gain, reduced cognitive load for ~77% of participants, and less rework for ~83% due to better upfront planning. The main practical claim is that brownfield gains come less from faster code generation and more from reducing ambiguity and review churn via better context-building and pre-review critique loops. Evidence is preliminary (self-reported survey), but the workflow is concrete enough for leadership teams to trial as a process change rather than a tool-only rollout.",
 "source": "arXiv Preprint",
-"sourceType": "Academic",
+"sourceType": "academic",
 "sourceUrl": "https://arxiv.org/abs/2512.01155",
 "detectedAt": "2026-02-19T10:00:00Z",
 "date": "2025-12-01",
