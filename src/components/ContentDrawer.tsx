@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, isValidElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -552,10 +552,10 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
           <Markdown
             remarkPlugins={[remarkGfm]}
             components={{
-              h2: ({ node, ...props }: any) => {
+              h2: ({ node, ...props }) => {
                 const isFootnoteLabel =
-                  (props as any).id === "footnote-label" ||
-                  (props as any).className?.includes("sr-only");
+                  props.id === "footnote-label" ||
+                  props.className?.includes("sr-only");
                 if (isFootnoteLabel) {
                   return (
                     <h2
@@ -571,25 +571,25 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                   />
                 );
               },
-              h3: ({ node, ...props }: any) => (
+              h3: ({ node, ...props }) => (
                 <h4
                   className="font-sans text-xl font-bold text-white mt-8 mb-3"
                   {...props}
                 />
               ),
-              ul: ({ node, ...props }: any) => (
+              ul: ({ node, ...props }) => (
                 <ul className="list-disc pl-5 space-y-3 mb-8" {...props} />
               ),
-              ol: ({ node, ...props }: any) => (
+              ol: ({ node, ...props }) => (
                 <ol className="list-decimal pl-5 space-y-3 mb-8" {...props} />
               ),
-              li: ({ node, ...props }: any) => (
+              li: ({ node, ...props }) => (
                 <li className="pl-1 leading-[1.75]" {...props} />
               ),
-              p: ({ node, ...props }: any) => (
+              p: ({ node, ...props }) => (
                 <p className="mb-8" {...props} />
               ),
-              img: ({ node, src, alt, ...props }: any) => {
+              img: ({ node, src, alt, ...props }) => {
                 const rawSrc = typeof src === "string" ? src : "";
                 const resolved = /^https?:\/\//.test(rawSrc)
                   ? rawSrc
@@ -613,17 +613,17 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                   </span>
                 );
               },
-              strong: ({ node, ...props }: any) => (
+              strong: ({ node, ...props }) => (
                 <strong
                   className="text-white font-bold bg-neon-gold/15 px-1 rounded-sm box-decoration-clone"
                   {...props}
                 />
               ),
-              sup: ({ node, children, ...props }: any) => {
+              sup: ({ node, children, ...props }) => {
                 const arr = Array.isArray(children) ? children : [children];
                 let id = "";
                 for (const c of arr) {
-                  const href = (c as any)?.props?.href as string | undefined;
+                  const href = isValidElement<{ href?: string }>(c) ? c.props.href : undefined;
                   if (href) {
                     const m = href.match(/fn-(.+)$/);
                     if (m) id = decodeURIComponent(m[1]);
@@ -647,10 +647,10 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                   </sup>
                 );
               },
-              a: ({ node, ...props }: any) => {
+              a: ({ node, ...props }) => {
                 const isFnRef =
-                  (props as any)["data-footnote-ref"] !== undefined;
-                const className: string | undefined = (props as any).className;
+                  (props as Record<string, unknown>)["data-footnote-ref"] !== undefined;
+                const className: string | undefined = props.className;
                 const isFnBackref = className?.includes(
                   "data-footnote-backref",
                 );
@@ -677,9 +677,9 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                   />
                 );
               },
-              section: ({ node, ...props }: any) => {
+              section: ({ node, ...props }) => {
                 const isFootnotes =
-                  (props as any)["data-footnotes"] !== undefined;
+                  (props as Record<string, unknown>)["data-footnotes"] !== undefined;
                 if (isFootnotes) {
                   return (
                     <section
@@ -698,7 +698,7 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
                   <span className="text-2xl tracking-[1em]">···</span>
                 </div>
               ),
-              blockquote: ({ node, ...props }: any) => (
+              blockquote: ({ node, ...props }) => (
                 <blockquote
                   className="border-l-4 border-neon-gold pl-6 my-10 text-xl text-gray-100 leading-relaxed bg-neon-gold/5 py-4 pr-4 not-italic"
                   {...props}

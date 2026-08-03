@@ -108,10 +108,11 @@ async function getJson(url, opts = {}) {
     });
   } catch (err) {
     // TimeoutError comes from AbortSignal.timeout; AbortError from an external abort.
+    // `cause` keeps the original error attached for debugging.
     if (err?.name === "TimeoutError" || err?.name === "AbortError") {
-      throw new Error(`timed out after ${TIMEOUT_MS}ms for ${url}`);
+      throw new Error(`timed out after ${TIMEOUT_MS}ms for ${url}`, { cause: err });
     }
-    throw new Error(`${err?.message || err} for ${url}`);
+    throw new Error(`${err?.message || err} for ${url}`, { cause: err });
   }
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
   return res.json();
