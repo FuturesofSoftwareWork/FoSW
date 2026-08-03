@@ -9,9 +9,14 @@
  *
  * Two-stage design: retrieve broadly here (code) -> score editorially in the prompt (LLM).
  *
- *   node scripts/collect-candidates.mjs [--days N] [--out <file>]
- *       --days N   only keep items from the last N days   (default 10)
- *       --out      output path   (default data/_candidates.json)
+ *   node scripts/collect-candidates.mjs [--days N] [--out <file>] [--timeout MS]
+ *       --days N     only keep items from the last N days   (default 10)
+ *       --out        output path   (default data/_candidates.json)
+ *       --timeout    per-request timeout in ms   (default 15000)
+ *
+ * Every request is bounded by --timeout, so an unresponsive feed cannot hang the
+ * cron job. Requests run sequentially, so worst-case wall clock is roughly
+ * (number of requests) x timeout; with the default lists that is about 5 minutes.
  *
  * Working files live in data/, NOT public/. Vite copies public/ into dist, so
  * anything written there is published on the live site.
@@ -63,23 +68,51 @@ const GITHUB_REPOS = [
 ];
 
 const args = process.argv.slice(2);
-const DAYS = numArg("--days", 10);
-const OUT = strArg("--out", join(DATA_DIR, "_candidates.json"));
-const CUTOFF = Date.now() - DAYS * 86_400_000;
 
 function numArg(flag, def) {
   const i = args.indexOf(flag);
-  return i !== -1 ? Number(args[i + 1]) : def;
+  if (i === -1) return def;
+  const n = Number(args[i + 1]);
+  // A missing or non-numeric value used to yield NaN, which silently dropped
+  // every candidate (`t >= NaN` is always false). Fail loudly instead.
+  if (!Number.isFinite(n) || n <= 0) {
+    console.error(`collect: ${flag} needs a positive number, got ${JSON.stringify(args[i + 1])}`);
+    process.exit(1);
+  }
+  return n;
 }
 function strArg(flag, def) {
   const i = args.indexOf(flag);
   return i !== -1 ? args[i + 1] : def;
 }
 
+const DAYS = numArg("--days", 10);
+const TIMEOUT_MS = numArg("--timeout", 15_000);
+const OUT = strArg("--out", join(DATA_DIR, "_candidates.json"));
+const CUTOFF = Date.now() - DAYS * 86_400_000;
+
+/**
+ * Fetch JSON with a hard per-request timeout.
+ *
+ * This runs unattended from cron, where a feed that accepts the connection and
+ * then never responds would hang the job forever — worse than failing, because
+ * nothing reports it. Each request is bounded; a timed-out feed is treated like
+ * any other failed source and isolated by the caller.
+ */
 async function getJson(url, opts = {}) {
-  const res = await fetch(url, {
-    headers: { "User-Agent": "FoSW-signal-collector/1.0", Accept: "application/json", ...(opts.headers || {}) },
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      headers: { "User-Agent": "FoSW-signal-collector/1.0", Accept: "application/json", ...(opts.headers || {}) },
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+  } catch (err) {
+    // TimeoutError comes from AbortSignal.timeout; AbortError from an external abort.
+    if (err?.name === "TimeoutError" || err?.name === "AbortError") {
+      throw new Error(`timed out after ${TIMEOUT_MS}ms for ${url}`);
+    }
+    throw new Error(`${err?.message || err} for ${url}`);
+  }
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
   return res.json();
 }
@@ -223,14 +256,29 @@ async function main() {
   const seen = loadSeenUrls();
   const all = [];
 
+  const failed = [];
   for (const [name, fn] of COLLECTORS) {
     try {
       const items = await fn();
       console.log(`  ${name}: ${items.length} raw`);
       all.push(...items);
     } catch (err) {
+      failed.push(name);
       console.warn(`  ! ${name} failed: ${err.message}`);
     }
+  }
+
+  // Every source dying looks identical to a quiet news week if we exit 0: the
+  // finder would run against an empty pool and silently fall back to web search.
+  // Make total failure visible to whatever is running the cron.
+  if (failed.length === COLLECTORS.length) {
+    console.error(
+      `collect: ALL ${COLLECTORS.length} sources failed (${failed.join(", ")}) — not writing a candidate pool`
+    );
+    process.exit(1);
+  }
+  if (failed.length) {
+    console.warn(`collect: ${failed.length}/${COLLECTORS.length} sources failed: ${failed.join(", ")}`);
   }
 
   // dedup within this run + against seen-ledger/published history, then window-filter
