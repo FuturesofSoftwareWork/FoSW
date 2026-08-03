@@ -28,6 +28,14 @@ const CATEGORIES = [
   "Ethics & Policy", "Business Impact", "Costs & Economics", "Other",
 ];
 const REQUIRED = ["id", "title", "summary", "source", "detectedAt", "date", "status"];
+// Fields the site renders with .map() — a non-array value crashes the render.
+const ARRAY_FIELDS = [
+  "tags",
+  "whyItMatters",
+  "recommendedActions",
+  "risksAndCaveats",
+  "corroboration",
+];
 
 const errors = [];
 const err = (file, msg) => errors.push(`${file}: ${msg}`);
@@ -39,10 +47,23 @@ function checkEnum(file, field, value, allowed) {
   }
 }
 
-const index = JSON.parse(readFileSync(INDEX_FILE, "utf8"));
+let index;
+try {
+  index = JSON.parse(readFileSync(INDEX_FILE, "utf8"));
+} catch (e) {
+  // Report this in the script's own format rather than as a raw Node stack trace;
+  // this runs first in `npm run build`, so the message is what a failing CI shows.
+  console.error(`validate: could not read ${INDEX_FILE}\n  ${e.message}`);
+  process.exit(1);
+}
+
 const indexed = new Set();
 
 for (const entry of index.items || []) {
+  if (typeof entry?.file !== "string" || !entry.file) {
+    err(JSON.stringify(entry), "index entry has a missing or non-string 'file'");
+    continue;
+  }
   indexed.add(entry.file);
   const path = join(SIGNALS_DIR, entry.file);
   if (!existsSync(path)) {
@@ -58,8 +79,24 @@ for (const entry of index.items || []) {
     continue;
   }
 
+  // A signal file whose root is null, an array, or a scalar would crash every
+  // field check below with a confusing error.
+  if (typeof s !== "object" || s === null || Array.isArray(s)) {
+    err(entry.file, "root value is not a JSON object");
+    continue;
+  }
+
   for (const field of REQUIRED) {
     if (s[field] == null || s[field] === "") err(entry.file, `missing required field '${field}'`);
+  }
+
+  // The site maps over these directly. A string where an array is expected
+  // (e.g. "corroboration": "https://…") throws inside render and blanks the UI,
+  // so catch the shape here — this validator is the only gate on fetched content.
+  for (const field of ARRAY_FIELDS) {
+    if (s[field] !== undefined && !Array.isArray(s[field])) {
+      err(entry.file, `'${field}' must be an array, got ${typeof s[field]}`);
+    }
   }
 
   checkEnum(entry.file, "decisionHorizon", s.decisionHorizon, DECISION_HORIZONS);
