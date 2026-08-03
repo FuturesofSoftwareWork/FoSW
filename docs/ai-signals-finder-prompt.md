@@ -7,7 +7,7 @@ Paste the block below into the scheduled job. Run order is documented in
 npm run signals:prepare
 npm run signals:collect
 <this prompt runs>
-npm run signals:reconcile -- public/content/ai-signals/_finder-output.json --rejected public/content/ai-signals/_finder-rejected.json
+npm run signals:reconcile -- data/_finder-output.json --rejected data/_finder-rejected.json
 ```
 
 ---
@@ -24,8 +24,8 @@ You are a scout, not a librarian. A specific, credible firsthand practitioner ac
 
 ## Step 1 — Read your inputs first (do this before anything else)
 
-1. `public/content/ai-signals/_seen-ledger.jsonl` — append-only memory of everything already surfaced or already rejected. One JSON object per line: `{key, claim, url, firstSeen, lastSeen, timesSeen, status, id}`. This is your "do not repeat" list. If the file is missing or empty, treat this as the first run.
-2. `public/content/ai-signals/_candidates.json` — a freshly collected pool of candidate items from practitioner and discussion feeds (Hacker News, Dev.to, GitHub releases, and others). Each entry has `{title, url, discussionUrl, source, sourceType, date, score, signals}`. This pool is your PRIMARY hunting ground.
+1. `data/_seen-ledger.jsonl` — append-only memory of everything already surfaced or already rejected. One JSON object per line: `{key, claim, url, firstSeen, lastSeen, timesSeen, status, id}`. This is your "do not repeat" list. If the file is missing or empty, treat this as the first run.
+2. `data/_candidates.json` — a freshly collected pool of candidate items from practitioner and discussion feeds (Hacker News, Dev.to, GitHub releases, and others). Each entry has `{title, url, discussionUrl, source, sourceType, date, score, signals}`. This pool is your PRIMARY hunting ground.
 3. `public/content/ai-signals/index.json` — existing published items. Read it to find which `id` values for today's date are already taken so your new ids do not collide.
 
 The candidate pool is a starting point, not a limit. It does NOT cover LinkedIn, X/Twitter, curated practitioner newsletters, company engineering blogs, or conference talks. Actively search the web for those to fill gaps — especially named practitioners posting firsthand operational lessons. Follow promising `discussionUrl` links and read the comment threads: senior engineers routinely report what is actually working or failing there months before anyone writes it up formally.
@@ -137,9 +137,9 @@ Set `sponsor` to `"independent"` when a report has no commercial backer.
 
 Write your results to TWO files, and also print the main array so it appears in the run log.
 
-**1. `public/content/ai-signals/_finder-output.json`** — a JSON array of selected items using the schema below. Write `[]` if nothing qualifies. Valid JSON only, no markdown, no commentary.
+**1. `data/_finder-output.json`** — a JSON array of selected items using the schema below. Write `[]` if nothing qualifies. Valid JSON only, no markdown, no commentary.
 
-**2. `public/content/ai-signals/_finder-rejected.json`** — a JSON array of notable items you evaluated and deliberately rejected, so future runs do not re-evaluate them. Keep it short (max ~10) and limit it to items that looked plausible but failed your criteria. Format: `[{"claim": "...", "url": "..."}]`. Write `[]` if none.
+**2. `data/_finder-rejected.json`** — a JSON array of notable items you evaluated and deliberately rejected, so future runs do not re-evaluate them. Keep it short (max ~10) and limit it to items that looked plausible but failed your criteria. Format: `[{"claim": "...", "url": "..."}]`. Write `[]` if none.
 
 Do not create individual signal files or edit `index.json`. Publishing is a separate, reviewed step.
 
