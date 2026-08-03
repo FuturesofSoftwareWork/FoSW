@@ -26,5 +26,11 @@
     "Enforcement readiness varies significantly across EU member states; early enforcement actions may be inconsistent and unpredictable as national authorities build capacity.",
     "The boundary between 'AI-generated code as developer tooling' (generally exempt) and 'AI-generated content in user-facing products' (covered) may be ambiguous for products that expose AI-generated outputs to end users."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "regulatory",
+  "signalStrength": "established",
+  "signalStage": "leading",
+  "leadTimeEstimate": "fixed date",
+  "effectiveDate": "2026-08-02",
+  "jurisdiction": "EU"
 }

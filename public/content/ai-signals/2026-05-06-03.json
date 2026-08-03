@@ -26,5 +26,11 @@
     "Walk-away coding sessions may exacerbate comprehension debt: developers who are not present during code generation have even less opportunity to understand the reasoning and tradeoffs embedded in generated code.",
     "Auto Mode is specific to Anthropic's Claude Code ecosystem; engineering teams adopting it create deeper vendor lock-in to Anthropic's safety framework and tooling assumptions."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "tool-shift",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "leadTimeEstimate": "~3-6 months",
+  "version": "Auto Mode (released 2026-05-05)",
+  "availability": "GA"
 }

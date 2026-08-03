@@ -35,5 +35,10 @@
     "Attack success depends on how permissively each team wires agents to repos — the 66.5% figure is a lab upper bound, not a universal production rate.",
     "Single academic group; awaits independent replication."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "lagging",
+  "leadTimeEstimate": "confirms a risk that is already live in production agent deployments",
+  "replicated": false
 }

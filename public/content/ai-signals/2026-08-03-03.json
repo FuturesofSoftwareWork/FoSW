@@ -35,5 +35,10 @@
     "Aggregates studies with differing methodologies and dates, so numbers should be treated as directional, not precise.",
     "Practices are prescriptive guidance, not validated in a controlled trial."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "weak-signal",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "leadTimeEstimate": "~6-12 months",
+  "observer": "Addy Osmani, practitioner author of the addyosmani.com engineering blog, synthesizing data from GitClear, CodeRabbit, and GitHub rather than offering pure opinion"
 }

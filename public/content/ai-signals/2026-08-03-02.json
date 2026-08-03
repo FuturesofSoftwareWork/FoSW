@@ -34,5 +34,11 @@
     "Early-2026 tool versions; agent capability has moved quickly since data collection.",
     "Authors are affiliated with a tooling vendor/ecosystem — watch for optimism bias in framing."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "leadTimeEstimate": "confirms current practice",
+  "fieldworkPeriod": "early 2026",
+  "sponsor": "Microsoft (internal Microsoft Research study)"
 }
