@@ -1,0 +1,48 @@
+{
+  "id": "2026-08-03-09",
+  "title": "SlopCodeBench: newer models pass more incremental-change checkpoints but emit roughly 11.6x more slop to do it",
+  "summary": "SlopCodeBench, from researchers at UW Madison led by Gabe Orlanski, tests something most coding benchmarks skip: whether a model can keep a codebase healthy as requirements arrive in stages. Rather than stating a problem once, it reveals specifications at successive checkpoints and black-box tests the result after each, where a 'strict pass' means the new requirement passes and every inherited regression test still does. A practitioner run over a 17-checkpoint subset reports Opus 5 at 24% strict pass (4 of 17) against 6% each for Opus 4.8 and Sonnet 5, with the original paper reporting Opus 4.6 at 17% and GPT-5.4 at 11%. The important finding is the trade: the same analysis measured roughly 11.6x greater slop density against baseline codebases, with markedly more test code and more output flagged verbose. Correctness on evolving requirements improved, but it was bought with volume — which is precisely the code a human then has to review or maintain.",
+  "source": "Practitioner benchmark run (humanlayer) of the UW Madison SlopCodeBench, discussed on Hacker News",
+  "sourceUrl": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/benchmarking-opus-5-on-slop-code-bench.md",
+  "sourceType": "article",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "leadTimeEstimate": "quantifies a trade-off teams are living through now",
+  "corroboration": [
+    "https://news.ycombinator.com/item?id=49076391"
+  ],
+  "dataCollectedPeriod": "underlying benchmark published 2026-03; this Opus 5 run reported 2026-07",
+  "replicated": false,
+  "detectedAt": "2026-08-03",
+  "date": "2026-07-27",
+  "status": "published",
+  "tags": [
+    "benchmark",
+    "code-quality",
+    "maintainability",
+    "model-comparison",
+    "technical-debt"
+  ],
+  "category": [
+    "Quality & Testing",
+    "AI Tools",
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "Because headline pass rates hide a volume cost, leaders comparing models on benchmark scores alone will systematically underestimate the maintenance and review burden they are buying.",
+    "A benchmark that tests evolving requirements is much closer to real product work than one-shot problem solving, so a 24% strict-pass ceiling is a sober counterweight to autonomous-agent claims.",
+    "Slop density is a measurable proxy for future review load — it belongs alongside cycle time in any AI-productivity dashboard."
+  ],
+  "recommendedActions": [
+    "When evaluating models internally, measure output size and diff churn alongside pass rate, not pass rate alone.",
+    "Run at least one evaluation on a task with staged requirement changes rather than only greenfield problems.",
+    "Treat a jump in lines-changed-per-accepted-task as a quality signal worth investigating, not as productivity."
+  ],
+  "risksAndCaveats": [
+    "The reported run covers only 17 checkpoints across 3 problems — a small subset, and the practitioner analysis is not peer-reviewed or independently replicated.",
+    "Benchmark tasks are synthetic; slop density on constructed problems may not track maintenance cost in a real codebase.",
+    "Model results date quickly, and the underlying benchmark paper is from March 2026, so some comparison points are already stale."
+  ],
+  "decisionHorizon": "now"
+}
