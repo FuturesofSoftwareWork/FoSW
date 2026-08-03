@@ -55,16 +55,38 @@ function daysAgo(dateStr) {
   return (Date.now() - then) / 86_400_000;
 }
 
-/** Canonical dedup key from a URL: drop protocol, www, query, hash, trailing slash. */
+// Query params that never identify content — safe to drop before comparing.
+const TRACKING_PARAMS = /^(utm_[a-z]+|fbclid|gclid|msclkid|mc_cid|mc_eid|igshid)$/i;
+
+/**
+ * Canonical dedup key from a URL: drop protocol, www, hash and tracking params;
+ * keep the meaningful query string.
+ *
+ * The query string MUST be preserved. Some sites put the entire item identity
+ * there — `news.ycombinator.com/item?id=49104747` — so discarding it collapsed
+ * every Hacker News discussion onto one key, and any new HN item was silently
+ * skipped as "already seen" because an unrelated one was recorded months
+ * earlier. Params are sorted so cosmetic reordering still dedupes.
+ */
 export function normalizeUrl(url) {
   if (!url || typeof url !== "string") return "";
   try {
     const u = new URL(url.trim());
-    let host = u.hostname.toLowerCase().replace(/^www\./, "");
-    let path = u.pathname.replace(/\/+$/, "");
-    return `${host}${path}`.toLowerCase();
+    const host = u.hostname.toLowerCase().replace(/^www\./, "");
+    const path = u.pathname.replace(/\/+$/, "");
+    const params = [...u.searchParams.entries()]
+      .filter(([k]) => !TRACKING_PARAMS.test(k))
+      .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
+    const query = params.length ? "?" + params.map(([k, v]) => `${k}=${v}`).join("&") : "";
+    return `${host}${path}${query}`.toLowerCase();
   } catch {
-    return url.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/+$/, "").split(/[?#]/)[0];
+    return url
+      .trim()
+      .toLowerCase()
+      .replace(/^https?:\/\//, "")
+      .replace(/^www\./, "")
+      .split("#")[0]
+      .replace(/\/+$/, "");
   }
 }
 
@@ -187,9 +209,11 @@ function cmdPrepare() {
     byKey.set(rec.key, byKey.has(rec.key) ? mergeRecords(byKey.get(rec.key), rec) : rec);
   };
 
-  // 1) existing ledger lines
+  // 1) existing ledger lines — recompute each key from its url/claim rather than
+  //    trusting the stored one, so a change to normalizeUrl heals the whole file
+  //    on the next prepare instead of leaving two generations of keys in place.
   const existing = readLedger();
-  existing.forEach(add);
+  existing.forEach((r) => add({ ...r, key: keyFor({ url: r.url, claim: r.claim }) }));
 
   // 2) published history from index.json (permanent seen-set — this is why the
   //    Faros study, already published, will never be re-surfaced)
@@ -301,6 +325,8 @@ function main() {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+// process.argv[1] is undefined when this module is imported by `node -e` or a
+// REPL, which made pathToFileURL throw on import rather than simply not running.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main();
 }
