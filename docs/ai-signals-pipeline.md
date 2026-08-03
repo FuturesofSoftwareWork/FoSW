@@ -88,7 +88,26 @@ Tune the lists at the top of `scripts/collect-candidates.mjs`:
 - `SUBREDDITS` — subreddits where senior engineers report before blogging.
 - `GITHUB_REPOS` — dev-tool repos whose **releases lead the discourse** (a tool ships months before anyone studies it).
 
-Flags: `--days N` (window), `--out <file>` (output path).
+Flags: `--days N` (window, default 10), `--out <file>` (output path),
+`--timeout MS` (per-request timeout, default 15000).
+
+### Failure behaviour (matters for cron)
+
+- **Every request is bounded by `--timeout`.** A feed that accepts the
+  connection and then stops responding cannot hang the job. Requests run
+  sequentially, so worst-case wall clock is roughly *(number of requests) ×
+  timeout* — about 5 minutes with the default source lists.
+- **A failing source is isolated**, logged as `! <name> failed: <reason>`, and
+  the run continues with the rest. A partial run still writes a pool and exits 0,
+  with a `N/M sources failed` summary line.
+- **If ALL sources fail, the collector exits 1 and writes nothing.** Exiting 0
+  with an empty pool would be indistinguishable from a quiet news week: the
+  finder would score an empty candidate list and silently fall back to web
+  search, losing the point of the collector. Whatever runs the cron should treat
+  a non-zero exit as "collection broke", not "no news".
+- **Bad flag values fail fast.** `--days`/`--timeout` require a positive number;
+  previously a missing or non-numeric value produced `NaN` and silently dropped
+  every candidate.
 
 ### Known source limitations
 
