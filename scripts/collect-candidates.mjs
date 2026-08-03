@@ -119,59 +119,77 @@ async function getJson(url, opts = {}) {
 
 // ---------- source collectors (each returns candidate[] and never throws upward) ----------
 
+/**
+ * Run `fn` for each item in `list`, isolating failures to the individual request.
+ *
+ * Without this, one rate-limited search term or one blocked subreddit discarded
+ * every result from that whole source — including requests that had already
+ * succeeded. Reddit routinely 403s, so that was the normal case, not the edge.
+ *
+ * The source is only reported as failed if EVERY request failed, which keeps the
+ * caller's per-source failure accounting intact.
+ */
+async function perItem(label, list, fn) {
+  const items = [];
+  let failed = 0;
+  for (const item of list) {
+    try {
+      items.push(...(await fn(item)));
+    } catch (err) {
+      failed++;
+      console.warn(`    ! ${label} [${item}] failed: ${err.message}`);
+    }
+  }
+  if (list.length > 0 && failed === list.length) {
+    throw new Error(`all ${list.length} requests failed`);
+  }
+  if (failed) console.warn(`    ${label}: ${failed}/${list.length} requests failed, keeping the rest`);
+  return items;
+}
+
 async function collectHackerNews() {
-  const out = [];
   const sinceTs = Math.floor(CUTOFF / 1000);
-  for (const term of TERMS) {
+  return perItem("Hacker News", TERMS, async (term) => {
     const url =
       `https://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(term)}` +
       `&tags=story&numericFilters=points>30,created_at_i>${sinceTs}&hitsPerPage=20`;
     const data = await getJson(url);
-    for (const h of data.hits || []) {
-      const link = h.url || `https://news.ycombinator.com/item?id=${h.objectID}`;
-      out.push({
-        title: h.title,
-        url: link,
-        discussionUrl: `https://news.ycombinator.com/item?id=${h.objectID}`,
-        source: "Hacker News",
-        sourceType: "discussion",
-        date: (h.created_at || "").slice(0, 10),
-        score: h.points || 0,
-        signals: { comments: h.num_comments || 0, matchedTerm: term },
-      });
-    }
-  }
-  return out;
+    return (data.hits || []).map((h) => ({
+      title: h.title,
+      url: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
+      discussionUrl: `https://news.ycombinator.com/item?id=${h.objectID}`,
+      source: "Hacker News",
+      sourceType: "discussion",
+      date: (h.created_at || "").slice(0, 10),
+      score: h.points || 0,
+      signals: { comments: h.num_comments || 0, matchedTerm: term },
+    }));
+  });
 }
 
 async function collectDevto() {
-  const out = [];
-  for (const tag of DEVTO_TAGS) {
+  return perItem("Dev.to", DEVTO_TAGS, async (tag) => {
     const data = await getJson(`https://dev.to/api/articles?tag=${tag}&top=7&per_page=20`);
-    for (const a of data || []) {
-      out.push({
-        title: a.title,
-        url: a.url,
-        source: "Dev.to",
-        sourceType: "social",
-        date: (a.published_at || "").slice(0, 10),
-        score: a.positive_reactions_count || 0,
-        by: a.user?.name,
-        signals: { comments: a.comments_count || 0, tag },
-      });
-    }
-  }
-  return out;
+    return (data || []).map((a) => ({
+      title: a.title,
+      url: a.url,
+      source: "Dev.to",
+      sourceType: "social",
+      date: (a.published_at || "").slice(0, 10),
+      score: a.positive_reactions_count || 0,
+      by: a.user?.name,
+      signals: { comments: a.comments_count || 0, tag },
+    }));
+  });
 }
 
 async function collectReddit() {
-  const out = [];
-  for (const sub of SUBREDDITS) {
+  return perItem("Reddit", SUBREDDITS, async (sub) => {
     const data = await getJson(`https://www.reddit.com/r/${sub}/top.json?t=week&limit=20`);
-    for (const c of data?.data?.children || []) {
-      const p = c.data;
-      if (p.stickied) continue;
-      out.push({
+    return (data?.data?.children || [])
+      .map((c) => c.data)
+      .filter((p) => !p.stickied)
+      .map((p) => ({
         title: p.title,
         url: p.url_overridden_by_dest || `https://www.reddit.com${p.permalink}`,
         discussionUrl: `https://www.reddit.com${p.permalink}`,
@@ -180,21 +198,18 @@ async function collectReddit() {
         date: new Date(p.created_utc * 1000).toISOString().slice(0, 10),
         score: p.score || 0,
         signals: { comments: p.num_comments || 0, subreddit: sub },
-      });
-    }
-  }
-  return out;
+      }));
+  });
 }
 
 async function collectGithubReleases() {
-  const out = [];
-  for (const repo of GITHUB_REPOS) {
+  return perItem("GitHub releases", GITHUB_REPOS, async (repo) => {
     const data = await getJson(`https://api.github.com/repos/${repo}/releases?per_page=5`, {
       headers: { Accept: "application/vnd.github+json" },
     });
-    for (const r of data || []) {
-      if (r.draft || r.prerelease) continue;
-      out.push({
+    return (data || [])
+      .filter((r) => !r.draft && !r.prerelease)
+      .map((r) => ({
         title: `${repo} ${r.name || r.tag_name}`,
         url: r.html_url,
         source: `GitHub: ${repo}`,
@@ -202,10 +217,8 @@ async function collectGithubReleases() {
         date: (r.published_at || "").slice(0, 10),
         score: r.reactions?.total_count || 0,
         signals: { tag: r.tag_name },
-      });
-    }
-  }
-  return out;
+      }));
+  });
 }
 
 const COLLECTORS = [

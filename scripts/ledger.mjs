@@ -27,7 +27,7 @@
  *       items whose url/claim already exist are skipped. Run this AFTER a finder run.
  */
 
-import { readFileSync, writeFileSync, existsSync, appendFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, appendFileSync, mkdirSync, renameSync } from "fs";
 import { resolve, join, dirname } from "path";
 import { pathToFileURL } from "url";
 
@@ -135,7 +135,14 @@ function recordFromSignal(s) {
   };
 }
 
-/** Merge two records for the same key. */
+/**
+ * Merge two records for the same key.
+ *
+ * `timesSeen` takes the max rather than the sum. `prepare` re-derives every
+ * published signal from index.json on each run and merges it with the existing
+ * ledger line, so summing inflated the count by one per run regardless of
+ * whether the item had actually been seen again — making the field meaningless.
+ */
 function mergeRecords(a, b) {
   const firstSeen = a.firstSeen < b.firstSeen ? a.firstSeen : b.firstSeen;
   const lastSeen = a.lastSeen > b.lastSeen ? a.lastSeen : b.lastSeen;
@@ -145,18 +152,28 @@ function mergeRecords(a, b) {
     url: a.url || b.url,
     firstSeen,
     lastSeen,
-    timesSeen: (a.timesSeen || 1) + (b.timesSeen || 1),
+    timesSeen: Math.max(a.timesSeen || 1, b.timesSeen || 1),
     // published is authoritative and never downgraded to rejected
     status: a.status === "published" || b.status === "published" ? "published" : "rejected",
     id: a.id || b.id || "",
   };
 }
 
+/**
+ * Rewrite the ledger atomically: write a temp file, then rename over the target.
+ *
+ * A plain truncate-then-write leaves a window where a crash (or a killed cron)
+ * empties the file this pipeline treats as durable state. rename() is atomic on
+ * the same filesystem, so the ledger is either the old content or the new one,
+ * never a half-written file.
+ */
 function writeLedger(records) {
   const sorted = [...records].sort((a, b) => (a.lastSeen < b.lastSeen ? 1 : -1));
   const body = sorted.map((r) => JSON.stringify(r)).join("\n");
   ensureLedgerDir();
-  writeFileSync(LEDGER_FILE, body ? body + "\n" : "", "utf8");
+  const tmp = `${LEDGER_FILE}.tmp`;
+  writeFileSync(tmp, body ? body + "\n" : "", "utf8");
+  renameSync(tmp, LEDGER_FILE);
 }
 
 // ---------- commands ----------

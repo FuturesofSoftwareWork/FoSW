@@ -336,7 +336,7 @@ const SignalContent = ({ data }: { data: AISignal }) => {
         </div>
       )}
 
-      {data.corroboration && data.corroboration.length > 0 && (
+      {Array.isArray(data.corroboration) && data.corroboration.length > 0 && (
         <div className="mb-6 text-xs text-gray-400 font-mono">
           <span className="text-hologram-cyan">
             Corroborated by {data.corroboration.length} independent source

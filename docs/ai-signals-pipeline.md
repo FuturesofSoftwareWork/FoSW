@@ -97,9 +97,15 @@ Flags: `--days N` (window, default 10), `--out <file>` (output path),
   connection and then stops responding cannot hang the job. Requests run
   sequentially, so worst-case wall clock is roughly *(number of requests) ×
   timeout* — about 5 minutes with the default source lists.
-- **A failing source is isolated**, logged as `! <name> failed: <reason>`, and
-  the run continues with the rest. A partial run still writes a pool and exits 0,
-  with a `N/M sources failed` summary line.
+- **Failures are isolated per request, not per source.** Each search term,
+  tag, subreddit, and repo is its own request; one rate-limited term costs only
+  that term's results, and the source keeps everything else
+  (`GitHub releases: 1/5 requests failed, keeping the rest`). A source is only
+  reported as failed when *every* one of its requests failed — which is the
+  normal case for Reddit, since it 403s unauthenticated datacenter traffic.
+- **A failed source is isolated too**, logged as `! <name> failed: <reason>`,
+  and the run continues with the rest. A partial run still writes a pool and
+  exits 0, with a `N/M sources failed` summary line.
 - **If ALL sources fail, the collector exits 1 and writes nothing.** Exiting 0
   with an empty pool would be indistinguishable from a quiet news week: the
   finder would score an empty candidate list and silently fall back to web
