@@ -1,7 +1,6 @@
 # Signal finder: stateful pipeline + typed signals
 
-Two related changes to the AI-signals pipeline. The first is complete and
-verified; the second is a spec whose implementation follows on this branch.
+Two related changes to the AI-signals pipeline, both complete and verified.
 
 ## Why
 
@@ -41,6 +40,11 @@ moved into scripts.
   (Hacker News, Dev.to, Reddit, GitHub releases), dedupes against the ledger and
   published history, and writes a per-run candidate pool. Each source is isolated
   so one failing feed cannot kill the run.
+- **`scripts/validate-signals.mjs`** — schema validator for all indexed signals.
+  Content is runtime-fetched and never type-checked by `tsc`, so this is the only
+  enforcement of the signal schema; `npm run build` now runs it first, so invalid
+  content fails the build instead of shipping. Also available as
+  `npm run signals:validate`.
 - **`docs/ai-signals-finder-prompt.md`** — rewritten finder prompt: reframed
   around lead time, adds a weak-signal track with non-benchmark credibility
   criteria, source-mix quotas, caps on academic and security items, a
@@ -100,10 +104,33 @@ And normalises the content to match: 8 × `"0-6m"` → `"now"`, 5 stray capitali
 `sourceType` values, and 5 orphan signal files that exist on disk but are absent
 from `index.json` (invisible to the site, and would be invisible to the radar).
 
+## Fixes surfaced during implementation
+
+- **Duplicate signal id (user-facing).** `2026-02-09-01.json` carried the in-file
+  id `2026-02-05-01`. Indexing the orphan file of that name made two live signals
+  share it, and the site keys on the in-file id — so a shared deep link opened the
+  wrong article. Corrected. Three other non-colliding id mismatches were left
+  alone deliberately, to avoid breaking already-shared links.
+- **Null values passed the required-field check**, which would crash the signal
+  list when a user typed in the search box. Tightened.
+- **Reconcile lost the whole published batch** if the optional `--rejected` file
+  was missing or malformed — the exact state-loss the ledger exists to prevent.
+  Rejected-file errors are now non-fatal; main-output errors still fail loudly.
+- **`CLAUDE.md` documented a schema that no longer existed** (six categories that
+  are not real values, and `decisionHorizon` values used by zero files). Updated,
+  since it is the first file future contributors and agents read.
+
 ## Notes
 
 - All new schema fields are optional, so the 84 existing signals remain valid and
   render unchanged.
+- Type-specific fields are expected only where the source states the value. On a
+  research-communication site an invented sample size or fieldwork window is a
+  credibility risk, so the docs say "omit rather than fabricate" and the validator
+  hard-requires only `observer` (weak-signal) and `effectiveDate` (regulatory).
+- `npm run lint` is broken repo-wide and was NOT fixed here: eslint is named in
+  `package.json`'s lint script but is not a declared dependency, is not installed,
+  and has no config. Pre-existing and out of scope for this branch.
 - `_seen-ledger.jsonl` is committed state. `_candidates.json` and the finder
   output/rejected files are per-run artifacts and are gitignored.
 - X/Twitter and LinkedIn are deliberately not collected — neither offers
