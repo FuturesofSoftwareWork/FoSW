@@ -80,16 +80,22 @@ unsure this is real" from "this is real but distant".
 Five types. Each appears in the existing corpus and needs genuinely different
 fields.
 
-| Type | Marker | Definition | Type-specific fields | Core relaxation |
+| Type | Marker | Definition | Type-specific fields (expected where known) | Core relaxation |
 | --- | --- | --- | --- | --- |
-| `weak-signal` | ◇ hollow | One named practitioner's firsthand, unvalidated observation or synthesis | `observer` | `recommendedActions` **optional** |
+| `weak-signal` | ◇ hollow | One named practitioner's firsthand, unvalidated observation or synthesis | `observer` (hard-required) | `recommendedActions` **optional** |
 | `field-report` | ○ | Industry/vendor survey or benchmark report | `sampleSize`, `fieldworkPeriod`, `sponsor` | — |
 | `study` | △ | Academic paper or formal benchmark | `dataCollectedPeriod`, `replicated` | — |
-| `regulatory` | ▣ | Law, policy or standard with a real date | `effectiveDate`, `jurisdiction` | `decisionHorizon` computed, not judged (see below) |
+| `regulatory` | ▣ | Law, policy or standard with a real date | `effectiveDate` (hard-required), `jurisdiction` | `decisionHorizon` computed, not judged (see below) |
 | `tool-shift` | ▶ | Release or capability change that alters practice | `version`, `availability` | — |
 
 Marker glyphs above are indicative; final visual design belongs to the radar
 project.
+
+Except for `observer` on `weak-signal` and `effectiveDate` on `regulatory`
+(both hard-required), the type-specific fields above are expected only where
+the source states the value — never fabricated to satisfy the schema. This is
+a research-communication site; an invented sample size or data-collection
+window is a credibility risk, not a schema nicety.
 
 ### Field definitions
 

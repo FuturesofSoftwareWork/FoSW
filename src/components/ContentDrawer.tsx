@@ -343,7 +343,7 @@ const SignalContent = ({ data }: { data: AISignal }) => {
             {data.corroboration.length > 1 ? "s" : ""}:
           </span>{" "}
           {data.corroboration.map((url, i) => (
-            <span key={url}>
+            <span key={`${url}-${i}`}>
               {i > 0 && " · "}
               <a
                 href={url}

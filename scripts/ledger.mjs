@@ -226,7 +226,14 @@ function cmdReconcile(args) {
 
   // rejected-as-already-seen items (optional): array of {claim,url} or signal-shaped
   if (rejectedPath) {
-    for (const r of loadJsonArray(rejectedPath)) {
+    let rejectedItems;
+    try {
+      rejectedItems = loadJsonArray(rejectedPath);
+    } catch (e) {
+      console.warn(`  ! could not read rejected file ${rejectedPath}: ${e.message} — continuing with published items only`);
+      rejectedItems = [];
+    }
+    for (const r of rejectedItems) {
       const claim = r.claim || r.title || "";
       const url = r.url || r.sourceUrl || "";
       append({

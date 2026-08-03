@@ -21,6 +21,7 @@ const SOURCE_TYPES = ["academic", "article", "social", "video", "discussion", "r
 const SIGNAL_TYPES = ["weak-signal", "field-report", "study", "regulatory", "tool-shift"];
 const SIGNAL_STRENGTHS = ["weak", "emerging", "established"];
 const SIGNAL_STAGES = ["leading", "concurrent", "lagging"];
+const AVAILABILITY = ["GA", "preview", "announced"];
 const CATEGORIES = [
   "AI Agents", "AI Tools", "Productivity", "SDLC Change", "Quality & Testing",
   "Security & Risk", "Org & Leadership", "Skills & Learning", "Work Wellbeing",
@@ -58,7 +59,7 @@ for (const entry of index.items || []) {
   }
 
   for (const field of REQUIRED) {
-    if (s[field] === undefined || s[field] === "") err(entry.file, `missing required field '${field}'`);
+    if (s[field] == null || s[field] === "") err(entry.file, `missing required field '${field}'`);
   }
 
   checkEnum(entry.file, "decisionHorizon", s.decisionHorizon, DECISION_HORIZONS);
@@ -66,6 +67,7 @@ for (const entry of index.items || []) {
   checkEnum(entry.file, "signalType", s.signalType, SIGNAL_TYPES);
   checkEnum(entry.file, "signalStrength", s.signalStrength, SIGNAL_STRENGTHS);
   checkEnum(entry.file, "signalStage", s.signalStage, SIGNAL_STAGES);
+  checkEnum(entry.file, "availability", s.availability, AVAILABILITY);
 
   const cats = Array.isArray(s.category) ? s.category : s.category ? [s.category] : [];
   for (const c of cats) checkEnum(entry.file, "category", c, CATEGORIES);

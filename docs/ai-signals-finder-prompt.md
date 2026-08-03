@@ -96,24 +96,36 @@ Reject items that are:
 
 ## Signal types
 
-Assign exactly one `signalType`. Each type requires its own fields.
+Assign exactly one `signalType`. Each type has fields that are typically
+associated with it — but include every type-specific field only when its value
+is genuinely known.
 
-| Type | Use when | Required extra fields |
+| Type | Use when | Fields expected where known |
 | --- | --- | --- |
-| `weak-signal` | One named practitioner's firsthand, unvalidated observation | `observer` |
+| `weak-signal` | One named practitioner's firsthand, unvalidated observation | `observer` (hard-required) |
 | `field-report` | Industry or vendor survey / benchmark report | `sampleSize`, `fieldworkPeriod`, `sponsor` |
 | `study` | Academic paper or formal benchmark | `dataCollectedPeriod`, `replicated` |
-| `regulatory` | Law, policy or standard with a real date | `effectiveDate`, `jurisdiction` |
+| `regulatory` | Law, policy or standard with a real date | `effectiveDate` (hard-required), `jurisdiction` |
 | `tool-shift` | Release or capability change that alters practice | `version`, `availability` |
+
+**Include every type-specific field whose value is stated in the source. If the
+source does not state it, OMIT the field — never invent a sample size,
+fieldwork window, or data-collection period.** This is a research-communication
+site; fabricating a figure to satisfy a schema is worse than leaving it out.
+Only `observer` (weak-signal) and `effectiveDate` (regulatory) are hard
+requirements — every other type-specific field above is expected where known,
+not mandatory.
 
 **`recommendedActions` may be `[]` for `weak-signal`.** An early firsthand report
 does not support confident recommendations, and inventing them is worse than
 omitting them. Do not let the need to fill this field stop you surfacing an early
 signal — this is the single most important rule in this section.
 
-For `study` and `field-report`, `dataCollectedPeriod` / `fieldworkPeriod` are
-mandatory precisely because they expose staleness: a paper published this week
-about 2025 data is a lagging indicator, and the reader must see that.
+For `study` and `field-report`, include `dataCollectedPeriod` / `fieldworkPeriod`
+whenever the source states them — they expose staleness (a paper published this
+week about 2025 data is a lagging indicator, and the reader must see that). If
+the source does not state the collection window, omit the field rather than
+guessing.
 
 For `regulatory`, compute `decisionHorizon` from `effectiveDate` rather than
 judging it: within 6 months → `"now"`, within ~2 years → `"0,5 - 2 years"`,
@@ -131,7 +143,7 @@ Write your results to TWO files, and also print the main array so it appears in 
 
 Do not create individual signal files or edit `index.json`. Publishing is a separate, reviewed step.
 
-### Schema — every field required
+### Schema — core fields required; type-specific fields as noted above
 
 ```json
 {
