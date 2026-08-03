@@ -230,12 +230,34 @@ const SIGNAL_STRENGTH_META: Record<SignalStrength, { label: string; className: s
   established: { label: "Established", className: "border-white/40 text-white bg-white/10" },
 };
 
+const hostLabel = (url: string): string => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+};
+
 const SignalContent = ({ data }: { data: AISignal }) => {
   const typeMeta = data.signalType ? SIGNAL_TYPE_META[data.signalType] : null;
   const TypeIcon = typeMeta?.Icon;
   const strengthMeta = data.signalStrength
     ? SIGNAL_STRENGTH_META[data.signalStrength]
     : null;
+  const evidenceParts: string[] = [];
+  if (data.observer) evidenceParts.push(data.observer);
+  if (data.sampleSize) evidenceParts.push(data.sampleSize);
+  if (data.fieldworkPeriod) evidenceParts.push(`fieldwork ${data.fieldworkPeriod}`);
+  if (data.sponsor) evidenceParts.push(`sponsor: ${data.sponsor}`);
+  if (data.dataCollectedPeriod) evidenceParts.push(`data collected ${data.dataCollectedPeriod}`);
+  if (data.replicated !== undefined) {
+    evidenceParts.push(data.replicated ? "independently replicated" : "not replicated");
+  }
+  if (data.effectiveDate) evidenceParts.push(`effective ${data.effectiveDate}`);
+  if (data.jurisdiction) evidenceParts.push(data.jurisdiction);
+  if (data.version) evidenceParts.push(data.version);
+  if (data.availability) evidenceParts.push(data.availability);
+  if (data.leadTimeEstimate) evidenceParts.push(`lead time ${data.leadTimeEstimate}`);
   return (
     <>
       {/* Top metadata row: source + category + decision horizon */}
@@ -307,6 +329,34 @@ const SignalContent = ({ data }: { data: AISignal }) => {
           )
         </span>
       </div>
+
+      {evidenceParts.length > 0 && (
+        <div className="mb-6 text-xs text-gray-400 font-mono">
+          {evidenceParts.join(" · ")}
+        </div>
+      )}
+
+      {data.corroboration && data.corroboration.length > 0 && (
+        <div className="mb-6 text-xs text-gray-400 font-mono">
+          <span className="text-hologram-cyan">
+            Corroborated by {data.corroboration.length} independent source
+            {data.corroboration.length > 1 ? "s" : ""}:
+          </span>{" "}
+          {data.corroboration.map((url, i) => (
+            <span key={url}>
+              {i > 0 && " · "}
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-hologram-cyan"
+              >
+                {hostLabel(url)}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Title */}
       <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
