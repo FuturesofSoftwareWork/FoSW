@@ -11,7 +11,10 @@
  *
  *   node scripts/collect-candidates.mjs [--days N] [--out <file>]
  *       --days N   only keep items from the last N days   (default 10)
- *       --out      output path   (default public/content/ai-signals/_candidates.json)
+ *       --out      output path   (default data/_candidates.json)
+ *
+ * Working files live in data/, NOT public/. Vite copies public/ into dist, so
+ * anything written there is published on the live site.
  *
  * Sources are each wrapped so one failing feed never kills the run. Add sources by
  * pushing an async collector into COLLECTORS. GitHub releases / Reddit are leading
@@ -23,13 +26,15 @@
  * them manually — see docs/ai-signals-pipeline.md.
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, join } from "path";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { resolve, join, dirname } from "path";
 import { normalizeUrl } from "./ledger.mjs";
 
 const SIGNALS_DIR = resolve("public/content/ai-signals");
-const LEDGER_FILE = join(SIGNALS_DIR, "_seen-ledger.jsonl");
 const INDEX_FILE = join(SIGNALS_DIR, "index.json");
+// Outside public/ on purpose — see the note in the file header.
+const DATA_DIR = resolve("data");
+const LEDGER_FILE = join(DATA_DIR, "_seen-ledger.jsonl");
 
 // Topic terms used for keyword-search feeds (HN). Tune to taste.
 const TERMS = [
@@ -59,7 +64,7 @@ const GITHUB_REPOS = [
 
 const args = process.argv.slice(2);
 const DAYS = numArg("--days", 10);
-const OUT = strArg("--out", join(SIGNALS_DIR, "_candidates.json"));
+const OUT = strArg("--out", join(DATA_DIR, "_candidates.json"));
 const CUTOFF = Date.now() - DAYS * 86_400_000;
 
 function numArg(flag, def) {
@@ -250,6 +255,7 @@ async function main() {
   }
 
   pool.sort((a, b) => (b.score || 0) - (a.score || 0));
+  mkdirSync(dirname(resolve(OUT)), { recursive: true });
   writeFileSync(resolve(OUT), JSON.stringify(pool, null, 2) + "\n", "utf8");
   console.log(
     `collect: ${pool.length} candidates (dropped ${dropSeen} already-seen, ${dropOld} outside ${DAYS}d). Wrote ${OUT}`

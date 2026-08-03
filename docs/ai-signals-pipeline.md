@@ -14,19 +14,37 @@ model does the editorial judgment.
 |------|------------|------------|
 | `scripts/ledger.mjs` | Seen-ledger manager (`prepare`, `reconcile`) | yes |
 | `scripts/collect-candidates.mjs` | Zero-auth feed collector (HN, Dev.to, Reddit, GitHub releases) | yes |
-| `public/content/ai-signals/_seen-ledger.jsonl` | Append-only memory of everything seen | **yes — this is state** |
-| `public/content/ai-signals/_candidates.json` | Per-run candidate pool for the prompt | no (gitignored, regenerated) |
+| `scripts/validate-signals.mjs` | Schema validator; runs first in `npm run build` | yes |
+| `data/_seen-ledger.jsonl` | Append-only memory of everything seen | **yes — this is state** |
+| `data/_candidates.json` | Per-run candidate pool for the prompt | no (gitignored, regenerated) |
+| `data/_finder-output.json` | The finder's selected items for this run | no (gitignored) |
+| `data/_finder-rejected.json` | Items evaluated and declined this run | no (gitignored) |
+
+### Why these live in `data/`, not `public/`
+
+Vite copies everything under `public/` into `dist`, and `dist` is what gets
+deployed to GitHub Pages. A working file kept there is served on the live site.
+
+That matters because the ledger records `status: "rejected"` entries and
+`_finder-rejected.json` holds them directly — a list of stories the editorial
+team evaluated and declined. On a VTT / University of Helsinki research site
+that should not be world-readable. Keeping the whole pipeline's working set in
+`data/` makes the boundary obvious: `public/` is published, `data/` is not.
+
+`data/` must never be moved under `public/`, and no pipeline file should be
+written into `public/` — only finished signal JSON belongs there.
 
 ## Run order (per finder run)
 
 ```bash
 npm run signals:prepare      # 1. bootstrap/compact the seen-ledger from published history
-npm run signals:collect      # 2. pull leading-indicator feeds -> _candidates.json
+npm run signals:collect      # 2. pull leading-indicator feeds -> data/_candidates.json
 #                              3. run the finder prompt, feeding it:
-#                                   - _seen-ledger.jsonl  (what NOT to resurface)
-#                                   - _candidates.json    (fresh items to score)
-#                                 the prompt emits finder-output.json
-npm run signals:reconcile -- finder-output.json --rejected rejected.json   # 4. append to ledger
+#                                   - data/_seen-ledger.jsonl  (what NOT to resurface)
+#                                   - data/_candidates.json    (fresh items to score)
+#                                 the prompt writes data/_finder-output.json
+#                                 and data/_finder-rejected.json
+npm run signals:reconcile -- data/_finder-output.json --rejected data/_finder-rejected.json   # 4. append to ledger
 ```
 
 Steps 1, 2, and 4 are deterministic code. Step 3 is the LLM. Keeping ledger writes in code

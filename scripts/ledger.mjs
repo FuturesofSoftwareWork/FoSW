@@ -6,7 +6,10 @@
  * landmark studies (e.g. the Faros study) every run. This script owns that memory
  * as a file so state is maintained by deterministic code, not by model discipline.
  *
- * File: public/content/ai-signals/_seen-ledger.jsonl  (append-only, one record per line)
+ * File: data/_seen-ledger.jsonl  (append-only, one record per line)
+ *   NOTE: this lives OUTSIDE public/ deliberately. Vite copies public/ into dist,
+ *   so a ledger kept there would be published on the live site — and it records
+ *   "rejected" items, i.e. stories the editorial team evaluated and declined.
  *   { key, claim, url, firstSeen, lastSeen, timesSeen, status, id }
  *   - key:       dedup key (normalized url, else normalized claim)
  *   - status:    "published" (surfaced on the site) | "rejected" (seen but not surfaced)
@@ -24,14 +27,21 @@
  *       items whose url/claim already exist are skipped. Run this AFTER a finder run.
  */
 
-import { readFileSync, writeFileSync, existsSync, appendFileSync } from "fs";
-import { resolve, join } from "path";
+import { readFileSync, writeFileSync, existsSync, appendFileSync, mkdirSync } from "fs";
+import { resolve, join, dirname } from "path";
 import { pathToFileURL } from "url";
 
 const SIGNALS_DIR = resolve("public/content/ai-signals");
 const INDEX_FILE = join(SIGNALS_DIR, "index.json");
-const LEDGER_FILE = join(SIGNALS_DIR, "_seen-ledger.jsonl");
+// Outside public/ on purpose — see the note in the file header.
+const DATA_DIR = resolve("data");
+const LEDGER_FILE = join(DATA_DIR, "_seen-ledger.jsonl");
 const RETENTION_DAYS = 90; // rejected records older than this are pruned
+
+/** Create the ledger's parent directory if it does not exist yet. */
+function ensureLedgerDir() {
+  mkdirSync(dirname(LEDGER_FILE), { recursive: true });
+}
 
 // ---------- helpers ----------
 
@@ -145,6 +155,7 @@ function mergeRecords(a, b) {
 function writeLedger(records) {
   const sorted = [...records].sort((a, b) => (a.lastSeen < b.lastSeen ? 1 : -1));
   const body = sorted.map((r) => JSON.stringify(r)).join("\n");
+  ensureLedgerDir();
   writeFileSync(LEDGER_FILE, body ? body + "\n" : "", "utf8");
 }
 
@@ -249,7 +260,10 @@ function cmdReconcile(args) {
     }
   }
 
-  if (lines.length) appendFileSync(LEDGER_FILE, lines.join("\n") + "\n", "utf8");
+  if (lines.length) {
+    ensureLedgerDir();
+    appendFileSync(LEDGER_FILE, lines.join("\n") + "\n", "utf8");
+  }
   console.log(`reconcile: appended ${added}, skipped ${skipped} already-seen. Ledger: ${LEDGER_FILE}`);
 }
 

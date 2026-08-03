@@ -85,6 +85,17 @@ for (const entry of index.items || []) {
 }
 
 for (const file of readdirSync(SIGNALS_DIR)) {
+  // Pipeline working files must never sit under public/ — Vite copies public/
+  // into dist, so anything here is published on the live site. The ledger and
+  // the finder's rejected list record stories the team declined; they belong
+  // in data/. Fail the build rather than deploy them.
+  if (file.startsWith("_")) {
+    err(
+      file,
+      "pipeline working file found under public/ — it would be published on the live site. Move it to data/ (see docs/ai-signals-pipeline.md)"
+    );
+    continue;
+  }
   if (!/^\d{4}-\d{2}-\d{2}-\d+\.json$/.test(file)) continue;
   if (!indexed.has(file)) err(file, "exists on disk but is not listed in index.json (invisible to the site)");
 }
