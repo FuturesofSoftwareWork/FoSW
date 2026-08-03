@@ -1,0 +1,38 @@
+{
+  "id": "2026-08-03-02",
+  "title": "Microsoft field study measures the real workplace impact of command-line coding agents (Claude Code, Copilot CLI)",
+  "summary": "A Microsoft Research study (Murphy-Hill, Butler, Savelieva) examined the early-2026 internal rollout of command-line AI coding agents — Claude Code and GitHub Copilot CLI — using diffusion-of-innovation and technology-acceptance framing plus causal-impact analysis. Unlike vendor benchmarks, this is a firsthand enterprise deployment study of terminal-native agents that plan and execute multi-step tasks rather than autocomplete code. It captures how adoption spreads across a large engineering org and what actually changes in developer workflow once agents move from IDE autocomplete to persistent CLI tooling. For leaders evaluating where CLI agents fit, this is a rare inside-a-large-org signal on adoption dynamics and impact rather than a marketing claim.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2607.01418",
+  "sourceType": "academic",
+  "detectedAt": "2026-08-03",
+  "date": "2026-07-03",
+  "status": "published",
+  "tags": [
+    "claude-code",
+    "copilot-cli",
+    "adoption",
+    "developer-productivity",
+    "enterprise"
+  ],
+  "category": [
+    "Productivity",
+    "AI Tools",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "CLI agents are a different operating model than IDE assistants (autonomous multi-step execution); leaders planning rollouts need adoption and impact evidence specific to that model.",
+    "Diffusion patterns from a large org help predict where internal champions, training, and holdouts will appear — useful for change-management planning.",
+    "Grounds tooling decisions in observed enterprise behavior rather than vendor benchmark scores."
+  ],
+  "recommendedActions": [
+    "Pilot CLI agents with a defined adoption cohort and measure diffusion (who adopts, who stalls) rather than assuming uniform uptake.",
+    "Pair rollout with explicit workflow guidance, since CLI agents change task structure more than autocomplete does."
+  ],
+  "risksAndCaveats": [
+    "Single-company (Microsoft) internal population; external validity to smaller orgs or different stacks is uncertain.",
+    "Early-2026 tool versions; agent capability has moved quickly since data collection.",
+    "Authors are affiliated with a tooling vendor/ecosystem — watch for optimism bias in framing."
+  ],
+  "decisionHorizon": "now"
+}
