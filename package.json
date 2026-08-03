@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "signals:prepare": "node scripts/ledger.mjs prepare",
     "signals:collect": "node scripts/collect-candidates.mjs",
-    "signals:reconcile": "node scripts/ledger.mjs reconcile"
+    "signals:reconcile": "node scripts/ledger.mjs reconcile",
+    "signals:validate": "node scripts/validate-signals.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
