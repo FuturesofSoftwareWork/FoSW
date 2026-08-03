@@ -23,5 +23,5 @@
 "Results depend on the specific benchmark/tasks and harness implementation details; gains may vary by language and repo structure.",
 "Improving edit success doesn’t guarantee semantic correctness—verification (tests, review gates) still matters."
 ],
-"decisionHorizon": "0-6m"
+"decisionHorizon": "now"
 }

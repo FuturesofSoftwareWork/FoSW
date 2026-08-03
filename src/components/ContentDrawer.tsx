@@ -14,10 +14,22 @@ import {
   BookOpen,
   Link2,
   Check,
+  Radio,
+  BarChart3,
+  FlaskConical,
+  Scale,
+  Package,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { AISignal, ExpertInsight, DrawerContent } from "@/types/content";
+import type {
+  AISignal,
+  ExpertInsight,
+  DrawerContent,
+  SignalType,
+  SignalStrength,
+} from "@/types/content";
 
 interface ContentDrawerProps {
   content: DrawerContent | null;
@@ -180,7 +192,72 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
   );
 };
 
+// Full static Tailwind class strings — never interpolate (see CLAUDE.md).
+const SIGNAL_TYPE_META: Record<
+  SignalType,
+  { label: string; className: string; Icon: LucideIcon }
+> = {
+  "weak-signal": {
+    label: "Weak signal",
+    className: "border-neon-gold/40 text-neon-gold bg-neon-gold/10",
+    Icon: Radio,
+  },
+  "field-report": {
+    label: "Field report",
+    className: "border-electric-blue/40 text-electric-blue bg-electric-blue/10",
+    Icon: BarChart3,
+  },
+  study: {
+    label: "Study",
+    className: "border-hologram-cyan/40 text-hologram-cyan bg-hologram-cyan/10",
+    Icon: FlaskConical,
+  },
+  regulatory: {
+    label: "Regulatory",
+    className: "border-rose-400/40 text-rose-300 bg-rose-400/10",
+    Icon: Scale,
+  },
+  "tool-shift": {
+    label: "Tool shift",
+    className: "border-emerald-400/40 text-emerald-300 bg-emerald-400/10",
+    Icon: Package,
+  },
+};
+
+const SIGNAL_STRENGTH_META: Record<SignalStrength, { label: string; className: string }> = {
+  weak: { label: "Weak · unvalidated", className: "border-white/20 text-gray-400" },
+  emerging: { label: "Emerging", className: "border-white/30 text-gray-200 bg-white/5" },
+  established: { label: "Established", className: "border-white/40 text-white bg-white/10" },
+};
+
+const hostLabel = (url: string): string => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+};
+
 const SignalContent = ({ data }: { data: AISignal }) => {
+  const typeMeta = data.signalType ? SIGNAL_TYPE_META[data.signalType] : null;
+  const TypeIcon = typeMeta?.Icon;
+  const strengthMeta = data.signalStrength
+    ? SIGNAL_STRENGTH_META[data.signalStrength]
+    : null;
+  const evidenceParts: string[] = [];
+  if (data.observer) evidenceParts.push(data.observer);
+  if (data.sampleSize) evidenceParts.push(data.sampleSize);
+  if (data.fieldworkPeriod) evidenceParts.push(`fieldwork ${data.fieldworkPeriod}`);
+  if (data.sponsor) evidenceParts.push(`sponsor: ${data.sponsor}`);
+  if (data.dataCollectedPeriod) evidenceParts.push(`data collected ${data.dataCollectedPeriod}`);
+  if (data.replicated !== undefined) {
+    evidenceParts.push(data.replicated ? "independently replicated" : "not replicated");
+  }
+  if (data.effectiveDate) evidenceParts.push(`effective ${data.effectiveDate}`);
+  if (data.jurisdiction) evidenceParts.push(data.jurisdiction);
+  if (data.version) evidenceParts.push(data.version);
+  if (data.availability) evidenceParts.push(data.availability);
+  if (data.leadTimeEstimate) evidenceParts.push(`lead time ${data.leadTimeEstimate}`);
   return (
     <>
       {/* Top metadata row: source + category + decision horizon */}
@@ -189,6 +266,21 @@ const SignalContent = ({ data }: { data: AISignal }) => {
           <Sparkles size={14} />
           {data.source}
         </div>
+        {typeMeta && TypeIcon && (
+          <span
+            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-mono rounded-full border ${typeMeta.className}`}
+          >
+            <TypeIcon size={12} />
+            {typeMeta.label}
+          </span>
+        )}
+        {strengthMeta && (
+          <span
+            className={`px-3 py-1 text-xs font-mono rounded-full border ${strengthMeta.className}`}
+          >
+            {strengthMeta.label}
+          </span>
+        )}
         {data.category && (
           <>
             {Array.isArray(data.category) ? (
@@ -237,6 +329,34 @@ const SignalContent = ({ data }: { data: AISignal }) => {
           )
         </span>
       </div>
+
+      {evidenceParts.length > 0 && (
+        <div className="mb-6 text-xs text-gray-400 font-mono">
+          {evidenceParts.join(" · ")}
+        </div>
+      )}
+
+      {data.corroboration && data.corroboration.length > 0 && (
+        <div className="mb-6 text-xs text-gray-400 font-mono">
+          <span className="text-hologram-cyan">
+            Corroborated by {data.corroboration.length} independent source
+            {data.corroboration.length > 1 ? "s" : ""}:
+          </span>{" "}
+          {data.corroboration.map((url, i) => (
+            <span key={`${url}-${i}`}>
+              {i > 0 && " · "}
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-hologram-cyan"
+              >
+                {hostLabel(url)}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Title */}
       <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">

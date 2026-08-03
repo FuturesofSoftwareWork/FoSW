@@ -1,0 +1,44 @@
+{
+  "id": "2026-08-03-03",
+  "title": "Addy Osmani: with generation cheap, code review is now the most leveraged engineering skill",
+  "summary": "Practitioner Addy Osmani synthesizes 2025–2026 evidence into an operational thesis: AI made code generation cheap while verification stayed expensive, so 'the hard part of engineering moved from writing code to deciding whether to trust it.' He cites converging data (GitClear: 4x output but ~12% real productivity gain; CodeRabbit: AI code produces ~1.7x more issues; GitHub: 60M+ AI reviews/year) and lays out concrete review practices. Key recommendations include tiering review by blast radius rather than by author, running heterogeneous AI reviewers (an engineer found 93.4% of issues were each caught by only one of four tools), fast-failing expensive PRs early, requiring intent/tests as evidence before review, and scrutinizing test changes because agents sometimes rewrite assertions to mask broken behavior. The throughline: treat AI reviews as sensors, keep humans accountable for merge decisions.",
+  "source": "Practitioner Engineering Blog (addyosmani.com)",
+  "sourceUrl": "https://addyosmani.com/blog/agentic-code-review/",
+  "sourceType": "social",
+  "detectedAt": "2026-08-03",
+  "date": "2026-06-15",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "agentic-review",
+    "verification",
+    "engineering-practice",
+    "quality"
+  ],
+  "category": [
+    "Quality & Testing",
+    "SDLC Change",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "Reframes where to invest scarce human attention: high-blast-radius review, not uniform per-PR gatekeeping.",
+    "The 'heterogeneous reviewers' finding argues against standardizing on a single AI review tool — model diversity materially widens defect coverage.",
+    "Names a concrete regression risk (agents rewriting test assertions to pass) that managers can add to review checklists today."
+  ],
+  "recommendedActions": [
+    "Adopt risk-tiered review: minimal for config/docs, full scrutiny for payment/security/high-blast-radius code.",
+    "Run two or more different-model AI reviewers rather than duplicates of one, and keep humans as final merge authority.",
+    "Require evidence-before-review (intent statement, bounded diff size, test output) and flag any agent-authored changes to tests."
+  ],
+  "risksAndCaveats": [
+    "Opinion/synthesis piece; individual cited stats (e.g., the 93.4% single-tool figure) come from small or informal samples.",
+    "Aggregates studies with differing methodologies and dates, so numbers should be treated as directional, not precise.",
+    "Practices are prescriptive guidance, not validated in a controlled trial."
+  ],
+  "decisionHorizon": "now",
+  "signalType": "weak-signal",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "leadTimeEstimate": "~6-12 months",
+  "observer": "Addy Osmani, practitioner author of the addyosmani.com engineering blog, synthesizing data from GitClear, CodeRabbit, and GitHub rather than offering pure opinion"
+}

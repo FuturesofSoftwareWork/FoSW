@@ -58,10 +58,25 @@ public/
 
 **AI Signal** (`public/content/ai-signals/*.json`):
 - Required: `id`, `title`, `summary`, `source`, `detectedAt`, `date`, `status`
-- Optional: `sourceUrl`, `tags`, `category`, `whyItMatters`, `recommendedActions`, `risksAndCaveats`, `decisionHorizon`
-- `category` must be one of: "AI Agents", "AI Tools", "SDLC Change", "Quality Testing", "Security Risk", "Org Leadership"
-- `decisionHorizon` must be one of: "2026", "2027-2028", "2029+"
+- Optional: `sourceUrl`, `tags`, `category`, `whyItMatters`, `recommendedActions`, `risksAndCaveats`, `decisionHorizon`, `sourceType`
+- `category`: choose 1 primary plus up to 2 secondary (max 3) from the 13 real values: AI Agents, AI Tools, Productivity, SDLC Change, Quality & Testing, Security & Risk, Org & Leadership, Skills & Learning, Work Wellbeing, Ethics & Policy, Business Impact, Costs & Economics, Other
+- `decisionHorizon` must be one of: "now", "0,5 - 2 years", "2+ years" (keep the comma in "0,5 - 2 years" — it renders verbatim on the site)
+- `sourceType` must be one of (lowercase): academic, article, social, video, discussion, release
 - `status` must be "published" or "draft" (only published items are fetched)
+
+Optional signal-typing / radar-provenance fields (all optional; render conditionally so untyped legacy signals are unaffected):
+- `signalType`: one of `weak-signal`, `field-report`, `study`, `regulatory`, `tool-shift`
+- `signalStrength`: one of `weak`, `emerging`, `established`
+- `signalStage`: one of `leading`, `concurrent`, `lagging`
+- `leadTimeEstimate`: human-readable string, e.g. `"~6-12 months"`
+- `corroboration`: array of supporting source URLs
+- `observer`: who reported it and why credible (expected for `signalType: weak-signal`)
+- `sampleSize`, `fieldworkPeriod`, `sponsor`: expected for `signalType: field-report`
+- `dataCollectedPeriod`, `replicated`: expected for `signalType: study`
+- `effectiveDate`, `jurisdiction`: expected for `signalType: regulatory`
+- `version`, `availability` (`GA` | `preview` | `announced`): expected for `signalType: tool-shift`
+
+Only include a type-specific field when its value is actually stated in the source — never invent a sample size, fieldwork window, or data-collection period to fill the schema.
 
 **Expert Insight** (`public/content/expert-insights/*.json`):
 - Required: `id`, `title`, `author`, `authorRole`, `excerpt`, `paragraphs`, `date`, `status`
@@ -69,4 +84,4 @@ public/
 
 ## Verification
 
-Always run `npm run build` after changes to catch TypeScript errors before considering work complete.
+Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run signals:validate` checks AI-signal content against the schema above (enum values, required fields, id/index consistency); it now runs automatically as the first step of `npm run build`.
