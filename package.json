@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc && vite build && node scripts/prerender.mjs",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "signals:prepare": "node scripts/ledger.mjs prepare",
+    "signals:collect": "node scripts/collect-candidates.mjs",
+    "signals:reconcile": "node scripts/ledger.mjs reconcile"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
