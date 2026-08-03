@@ -23,5 +23,5 @@
 "“Context engineering” can become a buzzword; ensure changes are tied to measurable failure/retry reductions.",
 "More context can also mean more noise if not curated—quality and structure matter."
 ],
-"decisionHorizon": "0-6m"
+"decisionHorizon": "now"
 }

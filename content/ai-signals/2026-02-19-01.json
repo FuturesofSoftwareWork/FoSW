@@ -3,7 +3,7 @@
   "title": "The Software Engineering Identity Crisis",
   "summary": "Annie Vella argues that AI coding assistants are not just accelerating coding, but shifting the software engineer’s professional identity from “builder” to “orchestrator/overseer.” The post links this to concrete signals (e.g., large reported shares of AI-generated code) and to day-to-day workflow changes where engineers spend less time writing code and more time specifying intent, reviewing outputs, and steering tools. Vella frames this as an identity and career-ladder disruption: engineers who valued craftsmanship may feel pushed toward management-like work (communication, problem framing, coordination). She also highlights a quality tradeoff risk from AI-generated code at scale (duplication, churn), implying teams will need stronger technical governance and refactoring discipline. The takeaway for leaders is that AI adoption changes motivation, skill development paths, and team structure—not just productivity metrics.",
   "source": "Company Blog",
-  "sourceType": "Article",
+  "sourceType": "article",
   "sourceUrl": "https://annievella.com/posts/the-software-engineering-identity-crisis/",
   "detectedAt": "2026-02-19T11:30:50Z",
   "date": "2025-03-21",

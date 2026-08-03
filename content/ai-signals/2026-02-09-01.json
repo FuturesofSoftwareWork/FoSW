@@ -1,9 +1,9 @@
   {
-    "id": "2026-02-05-01",
+    "id": "2026-02-09-01",
     "title": "Transformers may be “born biased”: random initialization can imprint lasting behavior",
     "summary": "Transformers are often treated as blank slates at initialization, with structure emerging only after training. This paper argues the opposite: even randomly initialized transformers can show strong, systematic preferences—e.g., predicting certain tokens far more often than others—due to architectural dynamics that “contract” representations along a seed-dependent direction. The authors claim these biases can persist through training, effectively creating a stable model “identity.” They also introduce a fingerprinting approach (“SeedPrint”) that can distinguish models that differ only by their random seed, even after substantial training and distribution shift. Practical implication: provenance and IP questions may get sharper—two models trained on the same data/code could still be distinguishable. It also suggests initialization choices (and seed control) might matter more for reproducibility, auditing, and even security than most teams assume.",
     "source": "arXiv Preprint",
-    "sourceType": "Academic",
+    "sourceType": "academic",
     "sourceUrl": "https://arxiv.org/abs/2602.05927",
     "detectedAt": "2026-02-09T10:00:00Z",
     "date": "2026-02-05",

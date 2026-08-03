@@ -24,5 +24,5 @@
 "The experiment focused on one unfamiliar library (Trio) and a sample of mostly junior engineers; results may vary by domain, task familiarity, and team maturity.",
 "The finding suggests correlation in this setting; organizations should validate locally with their own telemetry and skills outcomes before enforcing broad restrictions."
 ],
-"decisionHorizon": "0-6m"
+"decisionHorizon": "now"
 }
