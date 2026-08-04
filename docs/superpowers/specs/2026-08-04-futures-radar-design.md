@@ -114,7 +114,8 @@ A radar of phenomena where:
 | What changes | `implications[]` — statements, not just dimension tags |
 | Blip size | Freshness (how recently reinforced) |
 | Contested marker | Lightning bolt inside the blip, no ring |
-| Strength basis | A four-criterion rubric, never a raw count |
+| Strength basis | A three-criterion rubric, never a raw count |
+| Contested | Independent flag, not a strength penalty; set editorially |
 | Time horizon | **Rejected** — see below |
 | Review gate | PR review of proposed draft JSON |
 | Reviewer model | Single reviewer now; nothing precludes more later |
@@ -156,7 +157,7 @@ maturity vocabulary, so `strength` already fills that slot". That conflated two
 different things and is withdrawn.
 
 `strength` measures **how well supported the claim is** — independence,
-triangulation, persistence, consistency. It does not measure how widespread,
+triangulation, persistence. It does not measure how widespread,
 advanced or prevalent the change is in the world. The two come apart routinely:
 shadow-AI use is near-universal with thin independent research, while a rigorous
 study can firmly establish a practice that is still rare. Three independent sources
@@ -234,7 +235,7 @@ Design consequences of 30–40, all already accommodated:
 
 ## Data Model
 
-### New content type: `public/content/radar-signals/`
+### New content type: `public/content/phenomena/`
 
 Same shape as the other content types — an `index.json` plus one file per
 phenomenon, fetched at runtime.
@@ -284,11 +285,11 @@ phenomenon, fetched at runtime.
   "strengthBasis": {
     "independence": 2,
     "triangulation": 2,
-    "persistence": 2,
-    "consistency": "consistent"
+    "persistence": 2
   },
   "strengthOverride": null,
   "contested": false,
+  "contestedNote": null,
 
   "firstObserved": "2026-01-29",
   "latestEvidenceDate": "2026-06-15",
@@ -332,10 +333,11 @@ Field notes:
 | `strength` | Written by `radar:score`, never hand-edited. |
 | `strengthBasis` | The four rubric inputs, stored so the ring position is auditable. |
 | `strengthOverride` | Editorial override when the rule is wrong. Non-null wins. |
-| `contested` | Derived from `consistency`. Renders the lightning bolt. |
+| `contested` | Independent of `strength` — a phenomenon may be both established and contested. Suggested by `radar-score`, confirmed editorially. Renders the lightning bolt. |
+| `contestedNote` | Why it is contested, in one sentence. Required when `contested` is true. |
 | `firstObserved` | Earliest evidence date. Derived. |
 | `latestEvidenceDate` | **Newest evidence publication date.** Derived. Drives blip size. |
-| `lastReviewed` | When a human last accepted changes to this phenomenon. Set by `radar:apply`. |
+| `lastReviewed` | When a human last accepted changes. Set by `radar:accept`, **never** by `radar:apply` — see *Who writes what*. |
 | `movement` | Appended by `radar:snapshot`, never hand-edited. |
 | `whatWouldChangeThis` | Falsifiability. Also a guard against over-abstraction — a phenomenon nobody can falsify is too vague for an evidence-based radar. |
 | `developmentPaths` | Optional. See below. |
@@ -620,30 +622,33 @@ design could make, because it would be invisible: the numbers would look rigorou
 
 The stance vocabulary carries the distinction, so no extra field is needed:
 
-| Stance | Means | Counts toward strength? |
+| Stance | Means | Effect |
 | --- | --- | --- |
-| `supports` | The transformation is observably happening | **yes** |
-| `counter` | It is not happening, or is going elsewhere | **yes** (drives `contested`) |
-| `contextual` | The pressure is real, but the item shows no direction | **no** |
+| `supports` | The transformation is observably happening | scores all three criteria |
+| `counter` | It is not happening, or is going elsewhere | suggests `contested`; **does not reduce strength** |
+| `contextual` | The pressure is real, but the item shows no direction | none; shown under `currentPressure` |
 
-**Only `supports` contributes to `independence` and `triangulation`.** Contextual
-evidence is displayed in the drawer under the `currentPressure` heading, where it
-belongs and where it is genuinely informative — but it never moves a blip inward.
+**Only `supports` contributes to `independence`, `triangulation` and
+`persistence`.** Contextual evidence is displayed in the drawer under the
+`currentPressure` heading, where it belongs and where it is genuinely informative —
+but it never moves a blip inward. Counter-evidence moves a blip in no direction at
+all: it raises the `contested` flag and is displayed alongside the supporting
+evidence, so a reader sees the disagreement rather than a diluted score. See
+*Contested is a flag, not a penalty*.
 
 The clustering prompt must apply this test per evidence item: *does this show the
 change happening, or only that the conditions for it exist?* Most news items answer
 the second. That is the correct and expected outcome.
 
-### The four criteria
+### The three criteria
 
 | Criterion | Question | Computed from |
 | --- | --- | --- |
 | `independence` | How many distinct primary sources? | count of `evidence[]` with `stance: "supports"` and `primary: true`, excluding `forecast`, collapsing same-`sponsor` field reports |
 | `triangulation` | How many of the eight genres back it? | distinct `signalType` among supporting primary evidence, excluding `forecast` |
 | `persistence` | Does it recur, or was it one burst? | distinct quarters spanned by supporting evidence dates |
-| `consistency` | Do sources agree on direction? | mix of `stance` values |
 
-Three of the four are fully computable. Two human judgments are required per
+All three are fully computable. The human judgments sit one level down, on each
 evidence item: `primary` (*is this its own observation, or commentary on someone
 else's?*) and `stance` (*does this show the change happening, or only the pressure
 for it?*). The second is the harder one and the more consequential.
@@ -672,27 +677,46 @@ an early field; one whose centre fills up immediately is overclaiming.
 established   independence >= 3
         AND   triangulation >= 2, including at least one of study | field-report | primary-research
         AND   persistence >= 2 quarters
-        AND   consistency = consistent
 
-emerging      ( independence >= 2  OR  >= 1 primary study )
-        AND   consistency != contested
+emerging      independence >= 2  OR  >= 1 primary study
 
 weak          anything below
-
-contested     >= 2 counter-signals  OR  counter >= one third of supporting
 ```
 
 "A primary study" means one `evidence[]` entry with `signalType: "study"` and
-`primary: true` — the parenthesisation matters, so it is written explicitly above.
-
-`contested` is orthogonal to strength — a phenomenon can be well evidenced *and*
-contested. The junior-developer cluster is the live example: `67% drop in
-entry-level postings` and `Harvard: 7.7% junior employment decline` against
-`hiring rebounds: 67,000+ positions` and `SignalFire: engineering most resilient`.
-Being able to say "we have strong evidence in both directions" is more honest than
-picking a side, and most radars cannot express it.
+`primary: true`.
 
 Thresholds are tunable constants in `scripts/radar-score.mjs`.
+
+### Contested is a flag, not a penalty
+
+**Counter-evidence does not reduce strength.** An earlier draft made `established`
+require `consistency = consistent` and `emerging` require `consistency !=
+contested`, which forced every contested phenomenon down to `weak` — while the
+prose two paragraphs later claimed contested was "orthogonal to strength". That was
+a straight contradiction, and the thresholds had it backwards.
+
+Strong supporting evidence and strong counter-evidence routinely coexist, and their
+coexistence is a finding rather than an absence of one. The junior-developer cluster
+is the live case: `67% drop in entry-level postings` and `Harvard: 7.7% junior
+employment decline` against `hiring rebounds: 67,000+ positions` and `SignalFire:
+engineering most resilient`. Forcing that to the rim would tell a reader we barely
+have evidence, when in fact we have a great deal of it pointing both ways. Being
+able to say *"we have strong evidence in both directions"* is the honest reading,
+and most radars cannot express it at all.
+
+So `contested` is an independent boolean, and a phenomenon may be both
+`established` and `contested` — well evidenced, and genuinely disputed.
+
+**It is set editorially, not by formula.** `radar-score` *suggests* it whenever any
+`counter` evidence with `primary: true` exists; a reviewer confirms or clears it,
+recording why in `contestedNote`. This departs from the spec's usual
+derive-everything stance for a reason: independence and triangulation are countable,
+whereas *"is this disagreement substantive or is it one dissenting voice against
+ten studies?"* is not. A numeric rule there (`>= 2 counter-signals`, `counter >= a
+third of supporting`) would be arbitrary, harder to defend in a paper than a stated
+judgment, and would still be wrong in both directions. Where a judgment is genuinely
+a judgment, the spec makes it visible rather than dressing it as arithmetic.
 
 ## Freshness
 
@@ -722,7 +746,7 @@ freshly maintained while the world's signal is stale.
 | --- | --- | --- |
 | `firstObserved` | Publication date of the **earliest** evidence | yes, from `evidence[]` |
 | `latestEvidenceDate` | Publication date of the **newest** evidence | yes, from `evidence[]` |
-| `lastReviewed` | When a human last accepted changes | no, stamped by `radar:apply` |
+| `lastReviewed` | When a human last accepted changes | no, stamped by `radar:accept` |
 
 Blip size uses `latestEvidenceDate` — the world's activity, not ours. All three
 appear in the drawer, because they answer different questions, and `lastReviewed`
@@ -800,7 +824,7 @@ unreachable.
 
 ## Interaction
 
-Extend `DrawerContent` with `{ type: "phenomenon"; data: RadarSignal }`. No new
+Extend `DrawerContent` with `{ type: "phenomenon"; data: Phenomenon }`. No new
 drawer component — `ContentDrawer` already handles signals and insights and already
 renders type badges and evidence lines.
 
@@ -863,7 +887,15 @@ npm run radar:prepare                              # digest published signals ->
 npm run radar:apply -- data/_radar-proposal.json   # write draft phenomena, score, update index
 ```
 
-Review the PR diff, flip `status` to `published`, merge. That is the accept gate.
+Review the PR diff, then `npm run radar:accept -- <ids>` to publish what you accept
+and stamp `lastReviewed`. Merge. That is the accept gate.
+
+Review happens on the **diff of the real content files**, not on an abstract
+proposal document. That is deliberate: you see exactly what will exist rather than a
+description of it, edits are made in place while reviewing, and it matches the
+accept gate the signals pipeline already uses. `radar:apply` writes everything as
+`status: "draft"`, so nothing is published by the act of applying — the gate is
+`radar:accept`, not `radar:apply`.
 
 The bootstrap has **no phenomenon quota.** It should find the clusters the corpus
 actually supports and stop. If that is eight, the radar stays behind the launch gate
@@ -880,20 +912,51 @@ main work of accepting a bootstrap batch.
 
 After `signals:reconcile`, `radar:prepare --since <date>` digests only new items.
 The LLM proposes either *attach to existing phenomenon* (with `stance` and
-`primary`) or *propose new phenomenon*. `radar:apply` merges, rescores, recomputes
-`latestEvidenceDate`, and stamps `lastReviewed`. Review the diff.
+`primary`) or *propose new phenomenon*. `radar:apply` merges, rescores and
+recomputes `latestEvidenceDate`, touching **only machine-owned fields** on
+phenomena that already exist. Review the diff, then `radar:accept`.
 
 The LLM's job is narrow and well-suited to it: *does this item support, counter, or
 contextualise this claim, and is it a primary source or commentary on one?*
+
+### Who writes what
+
+Once a phenomenon exists, its wording is **research output**. A routine weekly run
+attaching one new signal must never be able to rewrite a thesis that took an hour to
+get right, and without an explicit rule it silently would.
+
+| Machine-owned — `radar:apply` may write | Human-owned — `radar:apply` must never touch |
+| --- | --- |
+| `evidence[]` | `label`, `title`, `thesis`, `currentPressure` |
+| `strength`, `strengthBasis` | `implications[]`, `developmentPaths[]` |
+| `firstObserved`, `latestEvidenceDate` | `whatWouldChangeThis`, `related[]` |
+| `movement[]`, `index.json` | `primaryDimension`, `potentialImpact` |
+| | `contested`, `contestedNote`, `strengthOverride`, `lastReviewed`, `status` |
+
+On a **new** phenomenon every field is written once, because there is nothing to
+overwrite. On an **existing** one, only the left column moves. Where the model
+believes human-owned content should change — a thesis outgrown by its evidence, an
+implication now contradicted — it emits a **suggestion** into the run log and the PR
+body. It does not edit the file. Suggestions are read by a person, and acted on by a
+person.
+
+The validator enforces this: `radar:apply` writes a manifest of the fields it
+touched, and a run that touched a human-owned field on an existing phenomenon fails.
 
 ### Scripts
 
 | Script | Role |
 | --- | --- |
 | `scripts/radar-prepare.mjs` | Build the digest fed to the clustering prompt |
-| `scripts/radar-apply.mjs` | Apply a proposal to phenomenon JSON; the only writer |
-| `scripts/radar-score.mjs` | Pure rubric → strength/contested/freshness |
+| `scripts/radar-apply.mjs` | Apply a proposal; the only writer of machine-owned fields |
+| `scripts/radar-accept.mjs` | Flip `status` to `published`, stamp `lastReviewed` — run by the reviewer at accept time |
+| `scripts/radar-score.mjs` | Pure rubric → strength, contested suggestion, freshness |
 | `scripts/radar-snapshot.mjs` | `-- 2026-Q4` — append `movement` entries |
+
+Splitting `accept` out of `apply` is what makes `lastReviewed` honest. An earlier
+draft had `radar:apply` stamp it — but `apply` runs *before* anyone has looked, so
+the field would have claimed a review that had not happened, on precisely the
+phenomena where staleness matters most.
 
 `docs/radar-clustering-prompt.md` is the prompt, alongside the existing finder
 prompt.
@@ -903,7 +966,7 @@ prompt.
 The radar shows **current state**, not the last frozen edition — attaching evidence
 moves a blip immediately, which is the payoff for running the pipeline at all.
 Editions are the historical record: `radar:snapshot` appends a `movement` entry to
-every published phenomenon. `public/content/radar-signals/editions.json` holds
+every published phenomenon. `public/content/phenomena/editions.json` holds
 `{ id, label, publishedAt, notes }`.
 
 **Movement is drawer content, not a radar marker.** Comparing current strength
@@ -940,7 +1003,10 @@ suite, and it already runs as the first step of `npm run build`. Extend it to:
    some phenomenon's `currentPressure`, not on the radar as a blip.
 7. Every `implications[].pathIds` entry resolves to a real `developmentPaths[].id`.
 8. Every `related[].id` resolves to a real phenomenon.
-9. A coverage report — e.g. `62 of 89 signals map to a phenomenon` (illustrative
+9. `contestedNote` present whenever `contested` is true.
+10. The `radar:apply` manifest touched no human-owned field on a pre-existing
+    phenomenon — see *Who writes what*.
+11. A coverage report — e.g. `62 of 89 signals map to a phenomenon` (illustrative
    figure, not a target). Not an error; uncovered news items are expected and fine.
    Printed so drift is visible. Alongside it, the published-phenomenon count and
    whether the launch gate is open.
@@ -1035,9 +1101,15 @@ phases, each independently verifiable by `npm run build`:
 1. **Schema and validation** — types, the two enum renames, three new genres, the
    work-dimension and actor configs, the extended validator. No UI. Verifiable on
    its own because the validator runs in the build.
-2. **Bootstrap pipeline** — `radar:prepare` / `radar:apply` / `radar:score`, the
-   clustering prompt, and the first reviewed batch of phenomena committed as
-   content. Produces real data for phase 3 to render.
+2. **Bootstrap pipeline** — `radar:prepare` / `radar:apply` / `radar:accept` /
+   `radar:score`, the clustering prompt, and the first reviewed batch of phenomena
+   committed as content. Produces real data for phase 3 to render.
+
+   Two things in this phase are load-bearing and must not be trimmed for
+   expedience: the `supports` / `contextual` stance test in the clustering prompt,
+   and the machine-owned / human-owned field split in `radar:apply`. Dropping the
+   first makes every strength score overstate; dropping the second lets a routine
+   run destroy authored research. Both are cheap to build and expensive to retrofit.
 3. **Radar UI** — components, drawer extension, drawer stack, site placement.
    `radar:snapshot` and editions come last, since there is nothing to snapshot
    until phenomena exist.
