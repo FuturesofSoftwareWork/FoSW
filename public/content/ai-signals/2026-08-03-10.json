@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-03-10",
+  "title": "Insight Partners: engineering teams shrinking from 8-10 to five or fewer, and 'AI-ready' leaders commanding a 10-15% pay premium",
+  "summary": "Insight Partners' executive talent team has published what it has seen across more than 400 executive searches and 1,400 candidates over the past year, and the numbers describe a change in how engineering organisations are shaped rather than in how code is written. Teams that were eight to ten people are being rebuilt at five or fewer. Open product and engineering roles are up 78% since 2023 while the median executive search now runs 106 days, which suggests demand has moved faster than the supply of leaders who fit the new brief. Leaders assessed as 'AI-ready' are commanding a 10 to 15% compensation premium. The firm frames the shift as CTOs redesigning the organisation rather than managing it, with cycle times that took weeks now taking days. For readers tracking how AI changes the shape of software work, this is one of the first pieces of hiring-side evidence with real search volume behind it, even though it stops short of naming companies or showing before-and-after hiring rubrics.",
+  "source": "Insight Partners (venture capital firm) — Onsite executive talent team",
+  "sourceUrl": "https://www.insightpartners.com/ideas/ai-hiring-product-eng-leaders/",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "leadTimeEstimate": "~6-12 months ahead of hiring norms settling",
+  "corroboration": [],
+  "sampleSize": "400+ executive searches and 1,400+ candidates over the past year",
+  "fieldworkPeriod": "approximately 2025-07 to 2026-07 ('the past year')",
+  "sponsor": "Insight Partners (venture capital firm; authored by its own executive talent team)",
+  "detectedAt": "2026-08-03",
+  "date": "2026-07-17",
+  "status": "published",
+  "tags": [
+    "hiring",
+    "engineering-leadership",
+    "team-structure",
+    "compensation",
+    "reskilling"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Skills & Learning",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "Because team sizes are being rebuilt at five or fewer, span-of-control, career ladders and promotion criteria built for eight-to-ten-person teams stop fitting — leaders should revisit org design before headcount planning, not after.",
+    "A 10-15% premium for 'AI-ready' leadership is a concrete signal that the market has begun pricing this capability, which affects retention and internal equity as much as recruiting.",
+    "A 106-day median search against 78% growth in open roles suggests the constraint is not budget but the supply of leaders who fit the new brief — an argument for developing internal candidates rather than waiting on the market."
+  ],
+  "recommendedActions": [
+    "Check whether your own team sizes and management ratios still match the work now that agents absorb routine implementation.",
+    "Define what 'AI-ready' means concretely for leadership roles in your organisation before the market definition is imposed on you in salary negotiations.",
+    "Identify internal engineers who could grow into the redesigned leadership brief, given the search-time figures suggest external hiring will be slow."
+  ],
+  "risksAndCaveats": [
+    "Authored by a venture capital firm about the market it invests in; the framing serves its own positioning, and no named companies, candidate quotes or before-and-after hiring rubrics are given.",
+    "The numbers come from Insight's own portfolio and network, which skews toward venture-backed technology companies and is not representative of enterprise IT, public sector or consultancies.",
+    "'AI-ready' is the firm's own construct rather than a validated competency framework, so the 10-15% premium measures how the label is being priced, not a demonstrated capability difference."
+  ],
+  "decisionHorizon": "now"
+}
