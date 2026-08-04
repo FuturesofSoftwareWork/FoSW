@@ -160,7 +160,10 @@ async function getText(url) {
 // Some publishers pad titles with zero-width characters as a scraping
 // fingerprint (Stack Overflow does this). They survive JSON round-trips and make
 // titles look corrupted downstream, so strip them along with the entities.
-const INVISIBLE = /[​-‍⁠﻿­]/g;
+// Written as escapes, not literal characters — invisible bytes in source are
+// unreadable and unreviewable (and ESLint's no-irregular-whitespace rejects them).
+// ZWSP, ZWNJ, ZWJ, word joiner, BOM, soft hyphen.
+const INVISIBLE = /[\u200B-\u200D\u2060\uFEFF\u00AD]/g;
 
 const decodeEntities = (s) =>
   s
