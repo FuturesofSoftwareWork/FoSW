@@ -44,14 +44,22 @@ unreadably thin sectors.
 
 **4. The corpus is news, not signals.** This is the root problem. The 89 items are
 individual dated news observations. A radar blip should be a *phenomenon* — a
-coherent claim about change, supported by many observations. Clustering the corpus
-by hand finds roughly 8–12 phenomena. Examples:
+forward-looking claim about a transformation, supported by many observations.
+Clustering the corpus by hand finds roughly 8–12 clusters. Three of the clearest:
 
-- *Review, not generation, is the binding constraint* — ~10 items (`Opsera: 4.6x
-  longer review waits`, `LinearB: AI PRs accepted 32.7% vs 84.4%`, `Cloudflare:
-  131,000 reviews`, `Faros: throughput is no longer the bottleneck`, …)
-- *The harness, not the model, determines agent capability* — ~7 items
-- *AI is an amplifier; the org, not the tool, is the bottleneck* — ~10 items
+- **review** — ~10 items (`Opsera: 4.6x longer review waits`, `LinearB: AI PRs
+  accepted 32.7% vs 84.4%`, `Cloudflare: 131,000 reviews`, `Faros: throughput is no
+  longer the bottleneck`, …)
+- **agent capability** — ~7 items (`Only the harness changed`, `Anthropic's
+  three-agent harness`, `ETH Zurich: AGENTS.md often hinders`, …)
+- **organisational readiness** — ~10 items (`DX: plateau at 10%`, `DORA: AI
+  amplifies existing quality`, `Stanford AI Index: readiness is the bottleneck`, …)
+
+A cluster is not yet a phenomenon. "Review is the binding constraint" summarises
+what the first cluster observes; the phenomenon it points to is *assurance shifting
+from reading code to verifying evidence* — see *Two tests every phenomenon must
+pass*. The clustering step finds the groupings; naming the transformation each one
+implies is the interpretive work.
 
 Publishing at ~15 news items per month, a one-blip-per-item radar reaches 240+
 blips within a year. A phenomenon radar grows to a bounded 30–40 and then mostly
@@ -62,6 +70,8 @@ crowded.
 
 A radar of phenomena where:
 
+- every blip names a **transformation that may be underway**, not a diagnosis of the
+  present,
 - every blip states **what actually changes about software work**, not merely which
   aspect of it is affected,
 - position is derived from **auditable properties of the evidence**, not from a
@@ -184,6 +194,13 @@ The editorial rule, which should be quoted in the clustering prompt verbatim:
 > changing. Development paths express where that change could lead. Implications
 > state what it changes about software work.
 
+A phenomenon is therefore **not** a summary of the evidence. The evidence shows
+review queues lengthening; the phenomenon claims that assurance is shifting from
+reading code to verifying evidence. The first is a diagnosis, the second is a
+transformation — and only the second belongs on a foresight radar. Where a
+diagnosis is needed to explain the pressure driving a transformation, it goes in
+`currentPressure`.
+
 ## Scale and the launch gate
 
 **30–40 phenomena at maturity. Ten is a launch gate, not a production quota.**
@@ -224,10 +241,11 @@ phenomenon, fetched at runtime.
 
 ```jsonc
 {
-  "id": "review-is-the-binding-constraint",
-  "label": "The review wall",
-  "title": "Writing code got cheap. Reading it didn't.",
-  "thesis": "Generation capacity has outrun the human capacity to review it. Teams adopting AI coding see throughput rise and merge rates fall, and the queue moves from writing code to approving it.",
+  "id": "review-shifts-to-verification",
+  "label": "Review becomes verification",
+  "title": "From reading code to verifying evidence",
+  "thesis": "As AI-generated changes exceed the capacity for line-by-line human review, software assurance shifts from inspecting code towards verifying intended behaviour, test evidence, security properties and architectural constraints. Automated systems take over routine checking, while human attention concentrates on intent, high-risk decisions, exceptions and accountability.",
+  "currentPressure": "Generation capacity is growing faster than review capacity, producing longer queues and lower acceptance rates for AI-authored changes.",
   "status": "published",
 
   "primaryDimension": "nature-and-division-of-work",
@@ -236,36 +254,37 @@ phenomenon, fetched at runtime.
   "implications": [
     {
       "dimension": "nature-and-division-of-work",
-      "statement": "Developers spend less time generating code and more time reviewing, validating and integrating machine-generated changes.",
-      "actors": ["developer", "technical-lead"],
+      "statement": "Reviewing shifts from reading diffs to judging whether the evidence accompanying a change is sufficient.",
+      "actors": ["developer", "reviewer", "technical-lead"],
       "pathIds": []
     },
     {
-      "dimension": "workload-wellbeing-and-social-relations",
-      "statement": "The volume of generated changes may increase review pressure and fragmented attention.",
-      "actors": ["developer", "reviewer"],
-      "pathIds": []
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Specifying acceptance criteria and interpreting verification output become more valuable than close reading of code.",
+      "actors": ["developer", "new-entrant"],
+      "pathIds": ["verification-first-assurance"]
     },
     {
       "dimension": "leadership-governance-and-responsibility",
-      "statement": "Accountability for defects shifts from the author of a change toward whoever approved it.",
+      "statement": "Accountability for defects moves from the author of a change toward whoever accepted the evidence for it.",
       "actors": ["technical-lead", "engineering-manager"],
       "pathIds": []
     }
   ],
 
   "evidence": [
-    { "signalId": "2026-01-29-02", "stance": "supports",    "primary": true,  "note": "4.6x longer review waits" },
-    { "signalId": "2026-05-25-03", "stance": "supports",    "primary": true,  "note": "AI PRs accepted 32.7% vs 84.4%" },
-    { "signalId": "2026-06-15-01", "stance": "supports",    "primary": false, "note": "practitioner synthesis of the above" },
-    { "signalId": "2026-04-20-01", "stance": "contextual",  "primary": true,  "note": "Cloudflare shows it is automatable at scale" }
+    { "signalId": "2026-01-29-02", "stance": "contextual", "primary": true,  "note": "4.6x longer review waits — establishes the pressure, not the shift" },
+    { "signalId": "2026-05-25-03", "stance": "contextual", "primary": true,  "note": "AI PRs accepted 32.7% vs 84.4% — same, pressure only" },
+    { "signalId": "2026-03-09-01", "stance": "supports",   "primary": true,  "note": "Anthropic ships multi-agent review — routine checking automated ahead of humans" },
+    { "signalId": "2026-04-20-01", "stance": "supports",   "primary": true,  "note": "Cloudflare gates 5,169 repos, 131,000 reviews at $1.19 each" },
+    { "signalId": "2026-04-03-01", "stance": "counter",    "primary": true,  "note": "review agents without humans: 45% vs 68% merge rate, most feedback noise" }
   ],
 
-  "strength": "established",
+  "strength": "emerging",
   "strengthBasis": {
-    "independence": 3,
-    "triangulation": 3,
-    "persistence": 3,
+    "independence": 2,
+    "triangulation": 2,
+    "persistence": 2,
     "consistency": "consistent"
   },
   "strengthOverride": null,
@@ -281,10 +300,17 @@ phenomenon, fetched at runtime.
   ],
 
   "whatWouldChangeThis": [
-    "Merge-rate parity between AI and human PRs sustained over two quarters"
+    "Review practice stays diff-centric through 2027 despite sustained volume growth",
+    "Automated reviewers are rolled back after escaped-defect rates rise"
   ],
 
-  "developmentPaths": [],
+  "developmentPaths": [
+    { "id": "verification-first-assurance", "title": "Verification-first assurance", "description": "Machine-generated evidence and behavioural checks displace most routine line-by-line review." },
+    { "id": "ai-reviews-ai",                "title": "AI reviews AI",                "description": "Reviewing is delegated to separate models, with humans supervising exceptions." },
+    { "id": "persistent-review-wall",       "title": "The review wall persists",     "description": "Output continues to exceed validation capacity, producing queues, fatigue and escaped defects." },
+    { "id": "constrained-generation",       "title": "Generation is constrained",    "description": "Organisations cap AI-authored change because verification stays too costly to trust." },
+    { "id": "risk-tiered-review",           "title": "Risk-tiered review",           "description": "Routine changes verified automatically; critical paths receive intensified human scrutiny." }
+  ],
   "related": [],
   "indicators": []
 }
@@ -296,11 +322,12 @@ Field notes:
 | --- | --- |
 | `label` | 2–4 words. The radar blip label. Must be legible at a glance beside a dot. |
 | `title` | The headline, shown in the drawer and legend. Written to make a reader want the description. |
-| `thesis` | 2–4 sentences. The interpretive claim, stated so it could be wrong. |
+| `thesis` | 2–4 sentences. The **forward-looking** transformation claim, stated so it could be wrong. |
+| `currentPressure` | Optional, 1 sentence. The observable present-day pressure driving the transformation. Well evidenced where the thesis is not — see *Pressure is not transformation*. |
 | `primaryDimension` | One work dimension. Drives sector placement. Must also appear in `implications`. |
 | `potentialImpact` | `low` \| `moderate` \| `high` \| `transformative`. Alternate radius. |
 | `implications[]` | What actually changes, per dimension. See *Implications*. |
-| `evidence[].stance` | `supports` \| `counter` \| `contextual`. |
+| `evidence[].stance` | `supports` (shows the **transformation** happening) \| `counter` (shows it is not, or is going elsewhere) \| `contextual` (establishes the **pressure** without showing direction). Only `supports` and `counter` score. |
 | `evidence[].primary` | `false` when the item is commentary on another source rather than its own observation. Drives the independence count. |
 | `strength` | Written by `radar:score`, never hand-edited. |
 | `strengthBasis` | The four rubric inputs, stored so the ring position is auditable. |
@@ -327,18 +354,43 @@ nobody clicks "AI coding assistants affect code review workloads".
 
 | | Job | Example |
 | --- | --- | --- |
-| `label` | Fits beside a dot | *The review wall* |
-| `title` | Makes a reader want the description | *Writing code got cheap. Reading it didn't.* |
-| `thesis` | Precise enough to be wrong | *Generation capacity has outrun the human capacity to review it…* |
+| `label` | Fits beside a dot | *Review becomes verification* |
+| `title` | Makes a reader want the description | *From reading code to verifying evidence* |
+| `thesis` | Precise enough to be wrong | *…assurance shifts from inspecting code towards verifying intended behaviour, test evidence…* |
 
 More worked examples for the clustering prompt:
 
 | `label` | `title` |
 | --- | --- |
-| Harness over model | *The model isn't the product. The harness is.* |
-| AI as amplifier | *AI doesn't fix your organisation. It magnifies it.* |
-| The missing rung | *If AI does the junior work, where do seniors come from?* |
-| Token Jevons | *Prices fell 60%. The bill went up 18x.* |
+| Configuring the machine | *The scarce skill stops being writing and starts being specifying* |
+| Assurance moves to runtime | *If nobody read it, the system has to prove itself* |
+| The vanishing apprenticeship | *If AI does the junior work, where do seniors come from?* |
+| Compute becomes a budget line | *Engineering teams start managing spend the way they manage headcount* |
+
+### Two tests every phenomenon must pass
+
+The naming rules exist because a phenomenon can fail in two opposite directions,
+and satisfying one test alone produces a bad blip.
+
+**Test 1 — future orientation.** *Does this identify what may be changing next, or
+only diagnose what is already happening?* Earlier drafts of this spec failed it:
+"The review wall", "Token Jevons" and "AI as amplifier" are memorable diagnoses of
+the present. They belong in `currentPressure`, as the pressure driving a
+transformation, or as one development path in which nothing adapts — not as the
+phenomenon. A radar of present-tense diagnoses is a news summary in a circle.
+
+**Test 2 — falsifiability.** *Could this be wrong, and can you say how?* This pulls
+against Test 1, because the further forward a claim reaches, the vaguer it gets.
+"The economics of machine work are being redefined" passes Test 1 and fails Test 2 —
+nothing could contradict it. `whatWouldChangeThis` is the forcing function: if
+nobody can state what would change their mind, the phenomenon is too abstract for
+an evidence-based radar.
+
+A good phenomenon names a **specific transformation that has started but could
+still fail**. That is also why `developmentPaths` stay optional rather than
+required: the title-confidence rule already prevents a weakly-evidenced
+transformation from being asserted as inevitable, since a `weak` phenomenon must be
+phrased as a question or tension rather than a claim.
 
 **The editorial constraint that keeps this honest: a title's confidence must match
 its ring.** A `weak` phenomenon asserted as bold fact contradicts its own position
@@ -542,18 +594,69 @@ Derived, never a raw count. Counting collected items measures collection effort,
 not the world: sources skew to certain topics, recent months are more densely
 collected, and ten items can all re-report one underlying survey.
 
+### Pressure is not transformation
+
+A phenomenon claims a **transformation**: assurance moves from reading code to
+verifying evidence. Its `currentPressure` states an observable **present**:
+generation outruns review capacity. These are evidenced very differently.
+
+Present-day pressure is abundantly evidenced — `4.6x longer review waits`,
+`AI PRs accepted 32.7% vs 84.4%`, `review time up 91%`. The transformation is
+thinly evidenced, because it is only starting — `Anthropic ships multi-agent
+review`, `Cloudflare gates 5,169 repositories`.
+
+Scoring both together would let every phenomenon inherit the strength of its
+present-tense premise, and the radar would print `WELL EVIDENCED` over claims about
+the future that nothing yet evidences. That is the single most damaging error this
+design could make, because it would be invisible: the numbers would look rigorous.
+
+The stance vocabulary carries the distinction, so no extra field is needed:
+
+| Stance | Means | Counts toward strength? |
+| --- | --- | --- |
+| `supports` | The transformation is observably happening | **yes** |
+| `counter` | It is not happening, or is going elsewhere | **yes** (drives `contested`) |
+| `contextual` | The pressure is real, but the item shows no direction | **no** |
+
+**Only `supports` contributes to `independence` and `triangulation`.** Contextual
+evidence is displayed in the drawer under the `currentPressure` heading, where it
+belongs and where it is genuinely informative — but it never moves a blip inward.
+
+The clustering prompt must apply this test per evidence item: *does this show the
+change happening, or only that the conditions for it exist?* Most news items answer
+the second. That is the correct and expected outcome.
+
 ### The four criteria
 
 | Criterion | Question | Computed from |
 | --- | --- | --- |
-| `independence` | How many distinct primary sources? | count of `evidence[]` with `primary: true`, excluding `forecast`, collapsing same-`sponsor` field reports |
-| `triangulation` | How many of the eight genres back it? | distinct `signalType` among primary evidence, excluding `forecast` |
-| `persistence` | Does it recur, or was it one burst? | distinct quarters spanned by evidence dates |
+| `independence` | How many distinct primary sources? | count of `evidence[]` with `stance: "supports"` and `primary: true`, excluding `forecast`, collapsing same-`sponsor` field reports |
+| `triangulation` | How many of the eight genres back it? | distinct `signalType` among supporting primary evidence, excluding `forecast` |
+| `persistence` | Does it recur, or was it one burst? | distinct quarters spanned by supporting evidence dates |
 | `consistency` | Do sources agree on direction? | mix of `stance` values |
 
-Three of the four are fully computable. `primary` is the single human judgment
-required per evidence item, and it is an easy one: *is this its own observation, or
-commentary on someone else's?*
+Three of the four are fully computable. Two human judgments are required per
+evidence item: `primary` (*is this its own observation, or commentary on someone
+else's?*) and `stance` (*does this show the change happening, or only the pressure
+for it?*). The second is the harder one and the more consequential.
+
+### Expect the rim to fill first
+
+Because only transformation evidence scores, most phenomena will sit at `weak` or
+`emerging` at launch, and the `WELL EVIDENCED` centre will be sparse.
+
+This is intended, but it deserves scrutiny, since this spec rejects
+`decisionHorizon` partly for collapsing 78% of values into one bucket. The cases
+differ in a way that matters: `decisionHorizon`'s degeneracy was **permanent and
+structural** — news is present-tense by construction, so the distribution would
+never improve. A rim-heavy strength distribution is **temporary and informative**.
+Tool-shift and market-event signals already constitute genuine transformation
+evidence, so there is spread from day one, and phenomena migrate inward as their
+transformations materialise.
+
+That inward migration is what makes editions and `movement` worth recording. A
+foresight radar whose periphery is fuller than its centre is reporting honestly on
+an early field; one whose centre fills up immediately is overclaiming.
 
 ### Thresholds
 
@@ -693,10 +796,12 @@ Extend `DrawerContent` with `{ type: "phenomenon"; data: RadarSignal }`. No new
 drawer component — `ContentDrawer` already handles signals and insights and already
 renders type badges and evidence lines.
 
-The phenomenon view shows, in order: title and thesis · primary dimension ·
-**implications, grouped by dimension and labelled with their actors** · strength
-with `strengthBasis` visible · the three dates · evidence grouped by stance ·
-development paths · related phenomena · `whatWouldChangeThis` · movement history.
+The phenomenon view shows, in order: title and thesis · `currentPressure` ·
+primary dimension · **implications, grouped by dimension and labelled with their
+actors** · strength with `strengthBasis` visible · the three dates · evidence
+grouped by stance, with `contextual` items under the `currentPressure` heading
+rather than mixed in with supporting evidence · development paths · related
+phenomena · `whatWouldChangeThis` · movement history.
 
 Implications sit high in that order deliberately. They are what the reader came
 for — a dimension tag says a phenomenon touches coordination; only the statement
@@ -821,9 +926,13 @@ suite, and it already runs as the first step of `npm run build`. Extend it to:
 5. **At least two `implications`** on every published phenomenon, and
    `primaryDimension` present among them. A phenomenon that says nothing about
    software work does not belong on this radar.
-6. Every `implications[].pathIds` entry resolves to a real `developmentPaths[].id`.
-7. Every `related[].id` resolves to a real phenomenon.
-8. A coverage report — e.g. `62 of 89 signals map to a phenomenon` (illustrative
+6. **At least one `supports` evidence item** on every published phenomenon. Zero
+   transformation evidence and only `contextual` items means the entry is a
+   diagnosis of the present, not a claim about a transformation — it belongs in
+   some phenomenon's `currentPressure`, not on the radar as a blip.
+7. Every `implications[].pathIds` entry resolves to a real `developmentPaths[].id`.
+8. Every `related[].id` resolves to a real phenomenon.
+9. A coverage report — e.g. `62 of 89 signals map to a phenomenon` (illustrative
    figure, not a target). Not an error; uncovered news items are expected and fine.
    Printed so drift is visible. Alongside it, the published-phenomenon count and
    whether the launch gate is open.
@@ -893,6 +1002,15 @@ one would defend it — and, as *Evidence strength is not maturity* records, thi
 spec must not make the reciprocal error of presenting evidence strength as
 prevalence.
 
+**Adopted from a later review round — the pressure/transformation split.** A review
+of this spec's own worked example found that it described the present rather than
+an emerging change, and that the strength rubric would therefore have scored a
+transformation claim using evidence that only established its premise. Both the
+`currentPressure` field and the `supports` / `contextual` scoring split come from
+that critique. It is the sharpest correction the spec has received, because the
+error it identified would have been invisible in the output: the numbers would have
+looked rigorous while overstating every forward-looking claim.
+
 **Tension to watch — abstraction level.** Its example phenomena are broad and
 thematic ("the economics and allocation of machine work are being redefined"); the
 ones clustered from this corpus are narrower and empirical ("review is the binding
@@ -940,6 +1058,8 @@ None blocking. Three items flagged for spec review:
 | Risk | Mitigation |
 | --- | --- |
 | **Implications are fabricated.** An LLM will produce fluent implications that no evidence supports, and they are the least checkable part of a proposal. | Every implication traceable to the phenomenon's evidence; this is the main focus of accepting a batch. The validator cannot catch it — review must. |
+| **Transformation claims are fabricated.** Asking the model to infer *where this is heading* from present-tense news is a far larger inferential leap than asking what items have in common. It will confidently name transformations that nothing supports. | The `supports` vs `contextual` split makes the leap visible rather than hidden: a phenomenon whose evidence is all contextual scores `weak` and sits at the rim, which is the honest answer. Review the stance assignments, not just the prose. |
+| **Present-tense diagnoses slip through as phenomena.** They are easier to write, better evidenced, and read as more authoritative — so both the model and a tired reviewer will drift toward them. | Test 1 in *Two tests every phenomenon must pass*, quoted in the clustering prompt. `currentPressure` gives the diagnosis a legitimate home so it need not masquerade as the claim. |
 | **Editorial load exceeds one reviewer.** 30–40 phenomena × 2–5 implications, plus theses, paths and titles, all falling on one person. | Launch gate means quality sets the pace, not a schedule. Nothing precludes adding reviewers later; the accept gate is PR review, which already supports more than one. |
 | **Phenomena drift back into news.** Pressure to fill sectors or reach a count produces over-split, thin phenomena. | No bootstrap quota; `whatWouldChangeThis` and the two-implication minimum both resist thin entries. |
 | **Corpus bias persists despite work-centred sectors.** The news finder still returns technology-heavy material, so some dimensions may stay empty. | Empty sectors are visible and informative — they show where the project needs its own primary research rather than more news. |
