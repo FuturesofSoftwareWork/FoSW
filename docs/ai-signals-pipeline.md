@@ -87,6 +87,25 @@ Tune the lists at the top of `scripts/collect-candidates.mjs`:
 - `DEVTO_TAGS` — Dev.to tags (practitioner how-tos).
 - `SUBREDDITS` — subreddits where senior engineers report before blogging.
 - `GITHUB_REPOS` — dev-tool repos whose **releases lead the discourse** (a tool ships months before anyone studies it).
+- `LEADERSHIP_FEEDS` — RSS/Atom from leadership-facing publications (LeadDev, InfoQ Culture & Methods, Martin Fowler, Stack Overflow Blog).
+- `SUBSTACK_PUBS` — Substack newsletters via their public JSON archive (The Pragmatic Engineer, Engineering Leadership).
+
+### Why the leadership feeds exist
+
+The original four sources are all practitioner-technical. In the first supervised
+run every org-design, roles, hiring and reskilling signal had to be found by
+ad-hoc web search, because nothing in the pool covered that ground — which biased
+the run toward low-altitude tooling items (see the Altitude section of the finder
+prompt). These feeds cover the editorial themes the publication actually cares
+about: how work is organised and managed, how people reskill, and which tools
+matter.
+
+Feeds expose no engagement metric, so their `score` is `0` by design rather than
+invented. That is also why the pool is **interleaved by source** rather than
+sorted globally by score: points, reactions and hearts are not comparable across
+sources, and a global sort buried every feed item beneath Hacker News — exactly
+the bias the feeds were added to fix. Round-robin guarantees the top of the pool
+shows every source, strongest-first within each.
 
 Flags: `--days N` (window, default 10), `--out <file>` (output path),
 `--timeout MS` (per-request timeout, default 15000).
