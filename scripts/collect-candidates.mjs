@@ -67,6 +67,25 @@ const GITHUB_REPOS = [
   "All-Hands-AI/OpenHands",
 ];
 
+// Leadership-facing RSS/Atom feeds. The HN/Dev.to/GitHub sources above are
+// structurally biased toward the practitioner-technical end, so every org
+// design, roles, hiring and reskilling signal had to come from ad-hoc web
+// search. These feeds cover that ground directly.
+const LEADERSHIP_FEEDS = [
+  { name: "LeadDev", url: "https://leaddev.com/feed" },
+  { name: "InfoQ Culture & Methods", url: "https://feed.infoq.com/culture-methods/" },
+  { name: "Martin Fowler", url: "https://martinfowler.com/feed.atom" },
+  { name: "Stack Overflow Blog", url: "https://stackoverflow.blog/feed/" },
+];
+
+// Substack publications, via their public JSON archive endpoint. Newsletters
+// often carry engineering-management and hiring signals a quarter or two before
+// they reach conference talks or press.
+const SUBSTACK_PUBS = [
+  { name: "The Pragmatic Engineer", host: "newsletter.pragmaticengineer.com" },
+  { name: "Engineering Leadership", host: "newsletter.eng-leadership.com" },
+];
+
 const args = process.argv.slice(2);
 
 function numArg(flag, def) {
@@ -116,6 +135,82 @@ async function getJson(url, opts = {}) {
   }
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
   return res.json();
+}
+
+/** Same contract as getJson, but returns raw text (feeds are XML, not JSON). */
+async function getText(url) {
+  let res;
+  try {
+    res = await fetch(url, {
+      headers: { "User-Agent": "FoSW-signal-collector/1.0", Accept: "application/rss+xml, application/atom+xml, text/xml, */*" },
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+  } catch (err) {
+    if (err?.name === "TimeoutError" || err?.name === "AbortError") {
+      throw new Error(`timed out after ${TIMEOUT_MS}ms for ${url}`, { cause: err });
+    }
+    throw new Error(`${err?.message || err} for ${url}`, { cause: err });
+  }
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+  return res.text();
+}
+
+// ---------- minimal feed parsing (no dependencies) ----------
+
+// Some publishers pad titles with zero-width characters as a scraping
+// fingerprint (Stack Overflow does this). They survive JSON round-trips and make
+// titles look corrupted downstream, so strip them along with the entities.
+// Written as escapes, not literal characters — invisible bytes in source are
+// unreadable and unreviewable (and ESLint's no-irregular-whitespace rejects them).
+// ZWSP, ZWNJ, ZWJ, word joiner, BOM, soft hyphen.
+const INVISIBLE = /[\u200B-\u200D\u2060\uFEFF\u00AD]/g;
+
+const decodeEntities = (s) =>
+  s
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    // Numeric entities, decimal (&#39;) and hex (&#x27;) — feeds use both.
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    // &amp; last, so "&amp;#39;" does not become an entity we then re-decode.
+    .replace(/&amp;/g, "&")
+    .replace(INVISIBLE, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const tagText = (block, tag) => {
+  const m = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, "i"));
+  return m ? decodeEntities(m[1]) : "";
+};
+
+/**
+ * Parse RSS 2.0 <item> and Atom <entry> elements out of a feed document.
+ *
+ * Deliberately string-based rather than a real XML parse: the collector is
+ * zero-dependency by design, and we only need four fields per entry. Anything
+ * malformed yields an empty title or link and is dropped by the caller.
+ */
+function parseFeed(xml) {
+  const blocks = xml.match(/<(item|entry)\b[\s\S]*?<\/\1>/gi) || [];
+  return blocks
+    .map((b) => {
+      const title = tagText(b, "title");
+      // RSS puts the URL in <link>text</link>; Atom puts it in <link href="..."/>
+      let link = tagText(b, "link");
+      if (!link) {
+        const m = b.match(/<link[^>]*\bhref=["']([^"']+)["']/i);
+        link = m ? decodeEntities(m[1]) : "";
+      }
+      const raw = tagText(b, "pubDate") || tagText(b, "updated") || tagText(b, "published") || "";
+      const t = raw ? new Date(raw) : null;
+      const date = t && !Number.isNaN(t.getTime()) ? t.toISOString().slice(0, 10) : "";
+      return { title, link, date };
+    })
+    .filter((e) => e.title && e.link);
 }
 
 // ---------- source collectors (each returns candidate[] and never throws upward) ----------
@@ -222,11 +317,45 @@ async function collectGithubReleases() {
   });
 }
 
+async function collectLeadershipFeeds() {
+  return perItem("Leadership feeds", LEADERSHIP_FEEDS, async (feed) => {
+    const xml = await getText(feed.url);
+    return parseFeed(xml).map((e) => ({
+      title: e.title,
+      url: e.link,
+      source: feed.name,
+      sourceType: "article",
+      date: e.date,
+      // Feeds expose no engagement metric. Left at 0 deliberately rather than
+      // invented — the pool is interleaved by source, so these are not buried.
+      score: 0,
+      signals: { feed: feed.name },
+    }));
+  });
+}
+
+async function collectSubstack() {
+  return perItem("Substack", SUBSTACK_PUBS, async (pub) => {
+    const data = await getJson(`https://${pub.host}/api/v1/archive?sort=new&limit=20`);
+    return (data || []).map((p) => ({
+      title: p.title,
+      url: p.canonical_url || `https://${pub.host}/p/${p.slug}`,
+      source: pub.name,
+      sourceType: "social",
+      date: (p.post_date || "").slice(0, 10),
+      score: p.reaction_count || 0,
+      signals: { comments: p.comment_count || 0, publication: pub.name },
+    }));
+  });
+}
+
 const COLLECTORS = [
   ["Hacker News", collectHackerNews],
   ["Dev.to", collectDevto],
   ["Reddit", collectReddit],
   ["GitHub releases", collectGithubReleases],
+  ["Leadership feeds", collectLeadershipFeeds],
+  ["Substack", collectSubstack],
 ];
 
 // ---------- dedup + filter ----------
@@ -316,7 +445,29 @@ async function main() {
     pool.push(c);
   }
 
-  pool.sort((a, b) => (b.score || 0) - (a.score || 0));
+  // Interleave by source instead of sorting globally by score.
+  //
+  // Scores are not comparable across sources — Hacker News points, Dev.to
+  // reactions and Substack hearts measure different things, and RSS feeds expose
+  // no metric at all. A global score sort therefore ranked HN first and buried
+  // every leadership feed at the bottom, which is exactly the technical bias
+  // these sources were added to correct. Round-robin guarantees the top of the
+  // pool shows every source, with each source's strongest items first.
+  const groups = new Map();
+  for (const c of pool) {
+    if (!groups.has(c.source)) groups.set(c.source, []);
+    groups.get(c.source).push(c);
+  }
+  for (const list of groups.values()) {
+    list.sort((a, b) => (b.score || 0) - (a.score || 0) || String(b.date).localeCompare(String(a.date)));
+  }
+  const interleaved = [];
+  const lists = [...groups.values()];
+  for (let i = 0; interleaved.length < pool.length; i++) {
+    for (const list of lists) if (i < list.length) interleaved.push(list[i]);
+  }
+  pool.length = 0;
+  pool.push(...interleaved);
   mkdirSync(dirname(resolve(OUT)), { recursive: true });
   writeFileSync(resolve(OUT), JSON.stringify(pool, null, 2) + "\n", "utf8");
   console.log(
