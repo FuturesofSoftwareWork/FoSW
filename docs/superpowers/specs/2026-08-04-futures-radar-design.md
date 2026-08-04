@@ -265,7 +265,7 @@ phenomenon, fetched at runtime.
       "pathIds": ["verification-first-assurance"]
     },
     {
-      "dimension": "leadership-governance-and-responsibility",
+      "dimension": "leadership-governance-and-performance",
       "statement": "Accountability for defects moves from the author of a change toward whoever accepted the evidence for it.",
       "actors": ["technical-lead", "engineering-manager"],
       "pathIds": []
@@ -475,12 +475,20 @@ applied as SVG `fill` / `stroke` attributes and **not** as Tailwind class names,
 | `nature-and-division-of-work` | Nature & division of work | `#0EA5E9` |
 | `human-ai-collaboration-and-agency` | Human–AI collaboration & agency | `#22d3ee` |
 | `organisation-and-coordination` | Organisation & coordination | `#4ade80` |
-| `leadership-governance-and-responsibility` | Leadership, governance & responsibility | `#a3e635` |
+| `leadership-governance-and-performance` | Leadership, governance & performance | `#a3e635` |
 | `skills-knowledge-and-learning` | Skills, knowledge & learning | `#a855f7` |
 | `careers-occupations-and-labour-markets` | Careers, occupations & labour markets | `#f472b6` |
 | `worker-experience-identity-and-wellbeing` | Worker experience, identity & wellbeing | `#fb7185` |
 | `economics-productivity-and-value` | Economics, productivity & value distribution | `#F59E0B` |
 | `ethics-responsibility-and-society` | Ethics, responsibility & society | `#94a3b8` |
+
+The two senses of *responsibility* are kept apart on purpose, and each dimension
+names only one of them. `leadership-governance-and-performance` covers
+accountability **inside** an organisation — who answers for a defect, how
+performance is measured when authorship is shared with a machine.
+`ethics-responsibility-and-society` covers obligation **outward** — to users,
+regulators and the public. An earlier draft had "responsibility" in both labels,
+which made the boundary unreadable.
 
 **Why one taxonomy rather than two.** An earlier draft had technology-oriented
 domains as sectors (Agents & Autonomy, Tooling & Interfaces, Engineering Practice,
