@@ -54,8 +54,9 @@ by hand finds roughly 8–12 phenomena. Examples:
 - *AI is an amplifier; the org, not the tool, is the bottleneck* — ~10 items
 
 Publishing at ~15 news items per month, a one-blip-per-item radar reaches 240+
-blips within a year. A phenomenon radar stays at 10–20 indefinitely, and a year of
-collection makes it *better evidenced* rather than more crowded.
+blips within a year. A phenomenon radar grows to a bounded 30–40 and then mostly
+deepens: a year of further collection makes it *better evidenced* rather than more
+crowded.
 
 ## Goal
 
@@ -104,6 +105,8 @@ A radar of phenomena where:
 | Review gate | PR review of proposed draft JSON |
 | Reviewer model | Single reviewer now; nothing precludes more later |
 | Editions | Live current state + quarterly snapshots for movement |
+| Scale | ≥10 phenomena at launch, 30–40 at maturity |
+| Naming | `label` (blip) + `title` (headline) + `thesis` (precise claim) |
 
 ### Why radius is certainty, not time
 
@@ -151,6 +154,30 @@ The editorial rule, which should be quoted in the clustering prompt verbatim:
 > Signals describe what has been observed. A phenomenon interprets what may be
 > changing. Development paths express where that change could lead.
 
+## Scale
+
+**At least 10 phenomena at launch; 30–40 as the mature radar.**
+
+The lower bound is a real requirement on the bootstrap pass: fewer than 10 blips
+does not read as a radar, it reads as a list drawn in a circle. Hand-clustering the
+89 signals found 8–12 candidates, so 10 is reachable from the current corpus but
+not comfortably — the bootstrap should be prepared to split broader clusters, and
+some launch phenomena will legitimately sit at `weak` with two or three sources.
+That is honest, and the rim is where they belong.
+
+The upper end arrives as the corpus grows and as `primary-research` (interviews,
+workshops) starts contributing signals the news finder cannot see. Growth should
+come from evidence forcing a split, never from a target number.
+
+Design consequences of 30–40, all already accommodated:
+
+- Labels default **off** above 15 blips, so the mature radar is hover-driven and
+  the launch radar is directly labelled.
+- Sector count is config-driven, so seven domains at ~5 blips each stays legible.
+- Placement uses deterministic hashing with collision nudging rather than manual
+  angles, so no per-blip layout work accrues as the count rises.
+- The domain legend doubles as a filter, which is what makes 40 blips navigable.
+
 ## Data Model
 
 ### New content type: `public/content/radar-signals/`
@@ -161,7 +188,8 @@ phenomenon, fetched at runtime.
 ```jsonc
 {
   "id": "review-is-the-binding-constraint",
-  "title": "Review, not generation, is the binding constraint",
+  "label": "The review wall",
+  "title": "Writing code got cheap. Reading it didn't.",
   "thesis": "Generation capacity has outrun the human capacity to review it. Teams adopting AI coding see throughput rise and merge rates fall, and the queue moves from writing code to approving it.",
   "status": "published",
 
@@ -208,6 +236,8 @@ Field notes:
 
 | Field | Notes |
 | --- | --- |
+| `label` | 2–4 words. The radar blip label. Must be legible at a glance beside a dot. |
+| `title` | The headline, shown in the drawer and legend. Written to make a reader want the description. |
 | `thesis` | 2–4 sentences. The interpretive claim, stated so it could be wrong. |
 | `domain` | One value from the domains config. Drives sector placement. |
 | `impacts` | Zero or more work dimensions. Not rendered on the radar; drawer + filter. |
@@ -229,6 +259,34 @@ Field notes:
 Retired phenomena use `status: "retired"` plus `retiredAt` and `retiredReason` —
 they leave the radar but stay reachable, because "we thought this was happening and
 it wasn't" is a research finding, not something to quietly delete.
+
+### Naming: label, title, thesis
+
+Three fields, three jobs. A neutral restatement of the thesis makes a poor blip —
+nobody clicks "AI coding assistants affect code review workloads".
+
+| | Job | Example |
+| --- | --- | --- |
+| `label` | Fits beside a dot | *The review wall* |
+| `title` | Makes a reader want the description | *Writing code got cheap. Reading it didn't.* |
+| `thesis` | Precise enough to be wrong | *Generation capacity has outrun the human capacity to review it…* |
+
+More worked examples for the clustering prompt:
+
+| `label` | `title` |
+| --- | --- |
+| Harness over model | *The model isn't the product. The harness is.* |
+| AI as amplifier | *AI doesn't fix your organisation. It magnifies it.* |
+| The missing rung | *If AI does the junior work, where do seniors come from?* |
+| Token Jevons | *Prices fell 60%. The bill went up 18x.* |
+
+**The editorial constraint that keeps this honest: a title's confidence must match
+its ring.** A `weak` phenomenon asserted as bold fact contradicts its own position
+on the radar, and on a VTT / University of Helsinki site that is a credibility
+cost, not a growth tactic. Weak and contested phenomena are therefore phrased as
+questions or tensions — *"If AI does the junior work, where do seniors come from?"*
+— while established ones may assert. Vivid is fine; overclaiming is not. The
+validator cannot check this, so it belongs in the clustering prompt and in review.
 
 ### Development paths
 
@@ -550,6 +608,11 @@ npm run radar:apply -- data/_radar-proposal.json   # write draft phenomena, scor
 
 Review the PR diff, flip `status` to `published`, merge. That is the accept gate.
 
+The bootstrap must yield **at least 10 publishable phenomena**. If a first pass
+returns fewer, the fix is to split over-broad clusters rather than to lower the
+bar — a phenomenon that only reaches `weak` is a legitimate blip, and the rim is
+where it belongs.
+
 ### Ongoing (each finder run)
 
 After `signals:reconcile`, `radar:prepare --since <date>` digests only new items.
@@ -599,6 +662,8 @@ suite, and it already runs as the first step of `npm run build`. Extend it to:
 2. All new enums valid: `domain` in the config, `impacts` in the config, `stance`,
    `potentialImpact`, `signalType` (eight values), `status`.
 3. `index.json` ↔ file consistency and `id` ↔ filename agreement, as for signals.
+   Plus `label` present and ≤ 4 words (it has to fit beside a dot), and `title`
+   and `thesis` both present and distinct from each other.
 4. `strength` matches what `radar-score` computes, unless `strengthOverride` is set
    — catching hand-edited strengths.
 5. A coverage report — e.g. `62 of 89 signals map to a phenomenon` (illustrative
@@ -645,12 +710,10 @@ its confirmation that investments belong as their own genre.
 **Adopted as stubs:** indicators (modelled, not built); related phenomena (reduced
 from six relation types to three, no graph view).
 
-**Not adopted:** its 30–50 phenomenon target. Across 89 signals that is ~2 signals
-per phenomenon — barely a cluster, and a drift back toward phenomena being news
-items with better titles. It is read here as an **end-state ceiling the design must
-scale to**, not a target to hit. Phenomenon count should grow because evidence
-forced a split, never because a number said so. The label toggle and config-driven
-sectors already carry the design to 30–50.
+**Adopted with a lower bound:** its scale target, adjusted to **30–40 eventually,
+at least 10 at launch** (see *Scale*). Its 30–50 figure was not taken as-is because
+across 89 signals that is ~2 signals per phenomenon — barely a cluster, and a drift
+back toward phenomena being news items with better titles.
 
 **Retained over it:** the strength rubric, the eight genres with type-specific
 fields, the primary-vs-commentary distinction, freshness, derived and auditable
