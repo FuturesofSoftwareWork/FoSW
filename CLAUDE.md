@@ -25,7 +25,10 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 src/
   components/       # React components
     WhatIf/         # Carousel sub-components
+    Radar/          # Futures radar: canvas, blips, legend, section wrapper
+    drawer/         # Per-content-type drawer bodies (signal, insight, phenomenon)
   config/           # Radar vocabularies (work dimensions, actors)
+  lib/              # Pure logic shared by components and hooks (no React)
   data/             # Static fallback content
   hooks/            # Custom React hooks (useContent, useCarouselAutoplay)
   types/            # TypeScript interfaces and types
@@ -58,6 +61,8 @@ scripts/
 - **Fonts:** Inter (sans, UI/metadata), Merriweather (serif, article body/titles)
 - **Style patterns:** Glass-morphism (`backdrop-blur`, `bg-white/5`), dark theme, utility-first Tailwind classes
 - **Tailwind note:** Never use dynamic class interpolation (e.g., `` `text-${color}` ``). Always write full static class names so Tailwind can detect them.
+- **Drawer ownership:** `App` owns content fetching, the drawer stack, deep links and article meta, and renders `ContentDrawer` once. Sections receive data and an `onOpen` callback as props. Do not add a second `ContentDrawer` — two would fight over the URL.
+- **Radar visibility:** the radar section renders only when at least 10 phenomena are `published`, except in dev and in preview builds (`VITE_RADAR_PREVIEW=1`). Drafts are fetched in those same two cases and never in production.
 
 ## Content Schema
 
