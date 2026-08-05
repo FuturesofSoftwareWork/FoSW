@@ -6,7 +6,9 @@ import type {
   ExpertInsightIndexEntry,
   ContentIndex,
 } from "@/types/content";
+import type { Phenomenon, PhenomenonIndexEntry } from "@/types/phenomenon";
 import { defaultAISignals, defaultExpertInsights } from "@/data/defaultContent";
+import { includeDrafts } from "@/lib/phenomenon";
 
 interface UseContentOptions {
   maxInsights?: number;
@@ -15,6 +17,7 @@ interface UseContentOptions {
 interface UseContentReturn {
   signals: AISignal[];
   insights: ExpertInsight[];
+  phenomena: Phenomenon[];
   isLoading: boolean;
   error: string | null;
 }
@@ -24,6 +27,7 @@ export const useContent = ({
 }: UseContentOptions = {}): UseContentReturn => {
   const [signals, setSignals] = useState<AISignal[]>([]);
   const [insights, setInsights] = useState<ExpertInsight[]>([]);
+  const [phenomena, setPhenomena] = useState<Phenomenon[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,13 +48,14 @@ export const useContent = ({
     >(
       contentPath: string,
       maxItems: number,
+      statuses: readonly string[] = ["published"],
     ): Promise<TItem[]> => {
       const timestamp = new Date().getTime();
       const indexUrl = `${basePath}content/${contentPath}/index.json?t=${timestamp}`;
       const index = await fetchJson<ContentIndex<TIndex>>(indexUrl);
 
       const published = index.items
-        .filter((entry) => entry.status === "published")
+        .filter((entry) => statuses.includes(entry.status))
         .slice(0, maxItems);
 
       const results = await Promise.allSettled(
@@ -78,16 +83,22 @@ export const useContent = ({
       setIsLoading(true);
       setError(null);
 
-      const [signalResult, insightResult] = await Promise.allSettled([
-        fetchContentItems<AISignalIndexEntry, AISignal>(
-          "ai-signals",
-          Infinity,
-        ),
-        fetchContentItems<ExpertInsightIndexEntry, ExpertInsight>(
-          "expert-insights",
-          maxInsights,
-        ),
-      ]);
+      const [signalResult, insightResult, phenomenonResult] =
+        await Promise.allSettled([
+          fetchContentItems<AISignalIndexEntry, AISignal>(
+            "ai-signals",
+            Infinity,
+          ),
+          fetchContentItems<ExpertInsightIndexEntry, ExpertInsight>(
+            "expert-insights",
+            maxInsights,
+          ),
+          fetchContentItems<PhenomenonIndexEntry, Phenomenon>(
+            "phenomena",
+            Infinity,
+            includeDrafts() ? ["published", "draft"] : ["published"],
+          ),
+        ]);
 
       if (cancelled) return;
 
@@ -101,6 +112,9 @@ export const useContent = ({
           ? insightResult.value
           : defaultExpertInsights;
 
+      const fetchedPhenomena =
+        phenomenonResult.status === "fulfilled" ? phenomenonResult.value : [];
+
       if (
         signalResult.status === "rejected" ||
         insightResult.status === "rejected"
@@ -110,6 +124,7 @@ export const useContent = ({
 
       setSignals(fetchedSignals);
       setInsights(fetchedInsights);
+      setPhenomena(fetchedPhenomena);
       setIsLoading(false);
     };
 
@@ -120,5 +135,5 @@ export const useContent = ({
     };
   }, [maxInsights, fetchContentItems]);
 
-  return { signals, insights, isLoading, error };
+  return { signals, insights, phenomena, isLoading, error };
 };
