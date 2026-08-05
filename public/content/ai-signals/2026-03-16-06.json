@@ -26,5 +26,6 @@
     "The 15% to 7% junior hiring figure is an industry aggregate; causation is difficult to attribute solely to AI adoption versus broader economic factors (layoffs, budget constraints, remote work shifts).",
     "The 'preceptor model' adds mentoring overhead to senior engineers, which could reduce their individual output; organizations need to weigh mentoring investment against short-term velocity."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "study"
 }

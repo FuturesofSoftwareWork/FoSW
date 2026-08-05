@@ -36,5 +36,6 @@
     "Where the optimal budget sits is task- and model-specific; under-budgeting reasoning on genuinely hard problems can cut accuracy, so this is a tuning exercise, not a blanket 'turn thinking off.'",
     "Some corroborating cost figures are anecdotal single cases and vendor/practitioner blogs, useful as illustrations of magnitude rather than precise averages."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "study"
 }

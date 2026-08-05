@@ -40,5 +40,7 @@
     "Published June 10, 2026 — slightly outside the freshest window; included because the specific operating-model patterns remain live, under-adopted, and actionable rather than because of breaking novelty.",
     "Two named companies (Shopify, Ramp) are strong but limited evidence; these are emerging practices, not validated benchmarks, and may not transfer to orgs without their scale or customer base."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "field-report",
+"sponsor": "Bessemer Venture Partners"
 }

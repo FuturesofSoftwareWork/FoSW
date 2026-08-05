@@ -1,0 +1,122 @@
+{
+  "id": "the-vanishing-apprenticeship",
+  "label": "The vanishing apprenticeship",
+  "title": "If AI does the junior work, where do seniors come from?",
+  "thesis": "The tasks that historically taught new software engineers their judgement — small fixes, boilerplate, reading unfamiliar code slowly — are the tasks machines now absorb first. If entry to the profession stops running through that work, the field must either find another way to manufacture senior judgement or accept a narrowing pipeline into it. Evidence currently points in both directions, which is itself the finding.",
+  "currentPressure": "Entry-level postings and internships have fallen sharply while overall engineering demand has not, so the contraction is concentrated at the point where the profession recruits.",
+  "status": "draft",
+  "primaryDimension": "careers-occupations-and-labour-markets",
+  "potentialImpact": "transformative",
+  "implications": [
+    {
+      "dimension": "careers-occupations-and-labour-markets",
+      "statement": "The entry point to software work moves from doing simple tasks towards supervising machine output, a job that assumes judgement newcomers have not yet built.",
+      "actors": [
+        "new-entrant",
+        "engineering-manager"
+      ],
+      "pathIds": []
+    },
+    {
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Skill formation must be deliberately designed rather than acquired as a by-product of routine work.",
+      "actors": [
+        "new-entrant",
+        "technical-lead",
+        "organisation"
+      ],
+      "pathIds": [
+        "designed-apprenticeship"
+      ]
+    },
+    {
+      "dimension": "worker-experience-identity-and-wellbeing",
+      "statement": "Newcomers are evaluated on output they did not produce and may not fully understand, which unsettles what it means to be competent early in a career.",
+      "actors": [
+        "new-entrant",
+        "developer"
+      ],
+      "pathIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-03-06",
+      "stance": "supports",
+      "primary": true,
+      "note": "Seoul National University field interviews argue AI has absorbed the traditional apprenticeship work"
+    },
+    {
+      "signalId": "2026-03-16-06",
+      "stance": "supports",
+      "primary": true,
+      "note": "assistants lift seniors while making it harder for juniors to build engineering judgement"
+    },
+    {
+      "signalId": "2026-02-09-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "randomised trial: a two-minute speed-up correlated with a 17% drop in learning"
+    },
+    {
+      "signalId": "2026-03-30-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "67% fall in entry-level postings; 7.7% junior employment decline at AI-adopting firms"
+    },
+    {
+      "signalId": "2026-04-20-02",
+      "stance": "contextual",
+      "primary": true,
+      "note": "comprehension debt: the gap between code that exists and code anyone understands"
+    },
+    {
+      "signalId": "2026-04-13-08",
+      "stance": "counter",
+      "primary": true,
+      "note": "engineering roles doubled since the 2023 trough with 67,000+ positions open"
+    },
+    {
+      "signalId": "2026-06-29-05",
+      "stance": "counter",
+      "primary": true,
+      "note": "hiring tracked across 80 million companies shows engineering among the most resilient functions"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "The contraction in entry-level hiring is visible across independent labour-market datasets rather than at individual employers, and the learning mechanism now has field evidence behind it — but aggregate engineering demand has held up, so this has not become a settled change in how the profession recruits.",
+  "reachReviewedAt": "2026-08-05",
+  "contested": true,
+  "contestedNote": "Labour-market datasets disagree: entry-level postings and junior employment at AI-adopting firms are down sharply, while total engineering demand and role resilience are up. Both sets of evidence are independent and credible, and the disagreement may be a composition effect — fewer junior roles within a growing whole — rather than a contradiction.",
+  "firstObserved": "2026-02-02",
+  "latestEvidenceDate": "2026-07-28",
+  "whatWouldChangeThis": [
+    "Entry-level postings recover to their 2023 share of engineering hiring and hold for two quarters",
+    "Cohorts entering through AI-supervision roles reach senior-level judgement on the same timescale as earlier cohorts"
+  ],
+  "developmentPaths": [
+    {
+      "id": "designed-apprenticeship",
+      "title": "Apprenticeship gets designed",
+      "description": "Employers and educators build deliberate skill-formation paths to replace what routine work used to teach."
+    },
+    {
+      "id": "narrowing-pipeline",
+      "title": "The pipeline narrows",
+      "description": "Entry stays scarce, seniority becomes a scarce and expensive asset, and the field ages."
+    },
+    {
+      "id": "supervision-as-entry",
+      "title": "Supervision becomes the entry role",
+      "description": "Newcomers start by directing and checking machine output, and judgement forms differently rather than not at all."
+    }
+  ],
+  "related": [],
+  "indicators": [],
+  "evidenceProfile": {
+    "independentContexts": 4,
+    "evidenceTypes": 2,
+    "quartersSpanned": 2,
+    "counterEvidence": true
+  }
+}

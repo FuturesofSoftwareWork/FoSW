@@ -26,5 +26,7 @@
     "Comprehension debt is inherently difficult to measure in practice; unlike defect rates or cycle time, there is no widely adopted metric for 'how well does the team understand the codebase,' making governance challenging.",
     "The concept may be used to justify blanket restrictions on AI tool usage rather than addressing the real issue of interaction quality; the research suggests active AI use preserves comprehension, so banning tools would be counterproductive."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "Addy Osmani, writing on O'Reilly Radar"
 }

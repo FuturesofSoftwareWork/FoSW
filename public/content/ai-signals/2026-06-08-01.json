@@ -36,5 +36,7 @@
 "Organizations with heavy compliance or bespoke toolchains may still need framework-like composition work; “out-of-the-box harness” value varies by environment complexity.",
 "Trajectory-centric evaluation requires additional instrumentation and data handling, which can introduce privacy/security considerations and operational overhead."
 ],
-"decisionHorizon": "now"
+"decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "Laurie Voss, writing on LinkedIn Pulse"
 }

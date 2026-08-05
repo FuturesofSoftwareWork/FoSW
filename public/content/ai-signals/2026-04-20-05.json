@@ -26,5 +26,8 @@
     "The Builder/Shipper/Coaster archetypes are observational categories from survey responses, not validated psychological constructs; individual engineers may exhibit different modes depending on project context, deadlines, and team composition.",
     "Claude Code's top ranking may reflect the timing and audience of the survey (January-February 2026); the AI coding tools market is evolving rapidly, and tool preferences may shift significantly within months."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "field-report",
+"sponsor": "The Pragmatic Engineer",
+"sampleSize": "900+ software engineers and engineering leaders"
 }

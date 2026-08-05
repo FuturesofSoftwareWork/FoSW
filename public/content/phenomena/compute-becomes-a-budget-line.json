@@ -1,0 +1,116 @@
+{
+  "id": "compute-becomes-a-budget-line",
+  "label": "Managing machine spend",
+  "title": "Prices fell 60%. The bill went up 18x.",
+  "thesis": "Machine work is becoming a managed operating expense that engineering organisations plan, attribute and defend — the way they already do headcount. As consumption outruns falling unit prices, the questions shift from which model is best to what a resolved task costs, who is accountable for the spend, and which work is worth running a machine on at all.",
+  "currentPressure": "Per-developer token consumption has risen far faster than unit prices have fallen, so cheaper inference has produced larger bills rather than smaller ones.",
+  "status": "draft",
+  "primaryDimension": "economics-productivity-and-value",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "Engineering budgets acquire a variable, consumption-driven line item that behaves unlike either headcount or conventional infrastructure.",
+      "actors": [
+        "engineering-manager",
+        "executive",
+        "organisation"
+      ],
+      "pathIds": []
+    },
+    {
+      "dimension": "leadership-governance-and-performance",
+      "statement": "Leaders become accountable for cost per resolved task, not just for delivery speed, and need attribution they mostly do not yet have.",
+      "actors": [
+        "engineering-manager",
+        "executive"
+      ],
+      "pathIds": [
+        "managed-machine-expenditure"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Deciding whether a task is worth machine effort becomes a routine judgement developers make many times a day.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ],
+      "pathIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-07-02-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "~18x per-developer usage in nine months against a ~60% unit price fall"
+    },
+    {
+      "signalId": "2026-06-29-10",
+      "stance": "supports",
+      "primary": true,
+      "note": "a standards body forming around AI infrastructure economics, backed by ten large enterprises"
+    },
+    {
+      "signalId": "2026-07-02-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "two independent cost analyses converge on cost per resolved task as the right unit of account"
+    },
+    {
+      "signalId": "2026-07-02-01",
+      "stance": "contextual",
+      "primary": true,
+      "note": "more reasoning tokens rarely buy better code but always cost more"
+    },
+    {
+      "signalId": "2026-05-06-08",
+      "stance": "contextual",
+      "primary": true,
+      "note": "open-weight models at roughly a third of the inference cost change the price floor"
+    },
+    {
+      "signalId": "2026-04-20-05",
+      "stance": "contextual",
+      "primary": true,
+      "note": "near-universal weekly use with cost concerns rising among practitioners"
+    }
+  ],
+  "observedReach": "field-level-shift",
+  "reachRationale": "An institution has formed around this specifically — the Tokenomics Foundation, backed by ten large enterprises — and the unit of account is being renegotiated in public across independent analyses. Institutions forming is the clearest available marker that a change has moved past forerunners into the field's shared infrastructure.",
+  "reachReviewedAt": "2026-08-05",
+  "contested": false,
+  "contestedNote": null,
+  "whatWouldChangeThis": [
+    "Per-developer spend flattens for two consecutive quarters despite continued adoption, making the line item unremarkable",
+    "Vendors move decisively to flat per-seat pricing, removing the variable component that forces the management question"
+  ],
+  "developmentPaths": [
+    {
+      "id": "managed-machine-expenditure",
+      "title": "Managed machine expenditure",
+      "description": "Spend is attributed, budgeted and reviewed like any other operating cost, with named owners."
+    },
+    {
+      "id": "compute-abundance",
+      "title": "Compute abundance",
+      "description": "Prices fall far enough that the spend stops being worth managing and the question disappears."
+    },
+    {
+      "id": "two-tier-access",
+      "title": "Two-tier access",
+      "description": "Well-funded organisations run machine work freely while others ration it, widening capability gaps."
+    }
+  ],
+  "related": [],
+  "indicators": [],
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 3,
+    "quartersSpanned": 1,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-04-14",
+  "latestEvidenceDate": "2026-06-08"
+}

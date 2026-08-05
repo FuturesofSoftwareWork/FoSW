@@ -43,5 +43,7 @@
     "The strongest evidence today is directional (job postings, practitioner essays, convergent language), not a controlled study — this is an emerging-practice signal, not a proven productivity result.",
     "The claim is most established for teams building AI products; how far 'evals as spec' generalizes to conventional software with deterministic behavior is unproven."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "practitioner-account",
+"observer": "Ameya Bhatawdekar of Braintrust, corroborated by independent practitioner sources and evals-engineer job postings"
 }
