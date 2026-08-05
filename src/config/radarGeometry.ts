@@ -69,7 +69,7 @@ export function placeBlip(
 
   const safeIndex = Math.min(Math.max(0, dimensionIndex), dimensionCount - 1);
   const { start, end } = sectorAngles(dimensionCount)[safeIndex];
-  const angularInset = (end - start) * 0.12;
+  const angularInset = (end - start) * 0.22;
   const deg = start + angularInset + hash01(p.id, 2) * (end - start - angularInset * 2);
 
   // -90 so 0 degrees is 12 o'clock rather than 3 o'clock.
