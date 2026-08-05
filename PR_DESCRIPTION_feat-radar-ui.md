@@ -2,7 +2,7 @@
 
 ## What this delivers
 
-A "futures radar": a circle of nine sectors (dimensions of software work) and
+A "futures radar": a circle of seven sectors (dimensions of software work) and
 three rings (how far a change has reached — early manifestations, gaining
 traction, field-level shift), where each blip is a *phenomenon* — a claim
 about how software work may be changing, backed by dated news signals as
@@ -137,3 +137,30 @@ src/types/content.ts
 CLAUDE.md
 .gitignore
 ```
+
+## Late change: nine sectors became seven
+
+After reviewing the rendered radar, the owner judged the sectors too fine-grained
+and two boundaries as not carrying weight:
+
+- **`organisation-and-coordination` + `leadership-governance-and-performance` →
+  `organisation-and-leadership`.** They split "how work is arranged" from "who
+  directs it", and phenomena touching one almost always touched the other.
+- **`human-ai-collaboration-and-agency` → `nature-and-division-of-work`.** The
+  division of labour between human and machine now largely *is* what the nature of
+  work means. `Review becomes verification` and `Configuring the machine` are now
+  neighbours, which reads better than the split did.
+
+Fewer sectors also fixed a second complaint. At 40° each the rim labels had to be
+abbreviated until they lost meaning — "Economics/value" dropped *productivity*,
+"Wellbeing" dropped *worker experience, identity*. At 51° most of the full wording
+fits again.
+
+All six phenomena were migrated (`primaryDimension` and every
+`implications[].dimension`); the validator resolves each against the config, so a
+missed reference would have failed the build.
+
+The angular inset in `placeBlip` was raised from 12% to 22% at the same time, to
+stop blips in adjacent sectors converging on their shared boundary and running
+their labels together. Every blip is provably in the same ring as before: 21.5 /
+122.6 / 134.1 / 141.8 / 211.9 / 215.5 px against bands of 0–90, 90–165, 165–250.
