@@ -60,12 +60,14 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
         );
       })}
 
-      {/* Ring labels on the vertical spine, with a backing so they stay readable
-          over the gradient. The wording says evidence has spread, not that we are
-          certain — the axis is reach, not confidence. */}
+      {/* Ring labels sit on each band's outer boundary — where placeBlip's radial
+          inset structurally keeps blips at least ~13px clear — rather than at
+          the band midpoint, where blips are free to land. A backing rect keeps
+          them readable over the gradient. The wording says evidence has spread,
+          not that we are certain — the axis is reach, not confidence. */}
       {RINGS.map((ring, i) => {
-        const mid = (VIEWBOX.r * (RING_EDGES[i] + RING_EDGES[i + 1])) / 2;
-        const y = VIEWBOX.cy - mid;
+        const edge = VIEWBOX.r * RING_EDGES[i + 1];
+        const y = VIEWBOX.cy - edge;
         const label = RING_LABEL[ring];
         return (
           <g key={ring}>
