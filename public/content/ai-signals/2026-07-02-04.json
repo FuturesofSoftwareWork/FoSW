@@ -37,5 +37,7 @@
     "The figures come from practitioner leaderboards using assumed token profiles (~50k in / ~12k out per turn) and list prices; caching, harness quality, and your actual turn counts will move the numbers.",
     "Cheapest-per-task is not 'best': near-frontier accuracy can be worth far more than its token premium when a wrong or insecure patch is costly, so this optimizes cost, not quality, and must be balanced against risk."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "SSOJet and morphllm cost leaderboards, corroborated by the Holistic Agent Leaderboard"
 }

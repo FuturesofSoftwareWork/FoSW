@@ -36,5 +36,8 @@
     "Resilience at 'major tech companies' and funded startups may not generalize to non-tech enterprises or offshore/contract engineering pools.",
     "The report measures hiring counts, not role content; jobs can persist while day-to-day work and seniority mix change substantially underneath the title."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "field-report",
+"sponsor": "SignalFire",
+"sampleSize": "hiring data across 80 million companies"
 }

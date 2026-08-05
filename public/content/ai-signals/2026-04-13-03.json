@@ -25,5 +25,6 @@
     "The evaluation uses open-weight models (Qwen series) on limited sample sizes (25–100 instances); performance with commercial models or at production scale is not yet validated.",
     "TDAD requires an up-to-date code-test dependency graph, which adds build-time overhead and may be difficult to maintain in monorepos or projects with dynamic test generation."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "study"
 }

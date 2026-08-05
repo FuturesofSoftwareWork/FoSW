@@ -26,5 +26,7 @@
     "The 42% AI code share is a global average; actual percentages vary dramatically by team, language, project type, and organizational policy.",
     "Survey-based trust and verification data reflects self-reported behavior, which may differ from actual practice; developers may over-report verification frequency or under-report trust."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "field-report",
+"sponsor": "SonarSource"
 }

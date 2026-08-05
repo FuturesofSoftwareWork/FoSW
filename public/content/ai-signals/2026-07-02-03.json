@@ -36,5 +36,8 @@
     "The 18.6x usage growth reflects an early, rapid-adoption phase; growth may plateau as governance and tooling mature, changing the trajectory.",
     "Productivity-vs-token comparisons are correlational; attributing the 2x productivity purely to higher token spend risks overstating the causal link."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "market-event",
+"organisation": "AI coding tool market",
+"magnitude": "~18x per-developer token usage in nine months against a ~60% unit price fall"
 }

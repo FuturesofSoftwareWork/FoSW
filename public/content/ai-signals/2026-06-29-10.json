@@ -24,5 +24,9 @@
     "The foundation is industry-led, and founding members include both major AI providers and consumers — standards may reflect compromises that favor provider interests over consumer transparency.",
     "The 24x usage growth projection from Goldman Sachs assumes continued adoption acceleration, which could slow if cost governance tightens or AI ROI proves harder to demonstrate than expected."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "regulation-standard",
+"issuer": "Linux Foundation",
+"jurisdiction": "global",
+"effectiveDate": "2026-06-03"
 }

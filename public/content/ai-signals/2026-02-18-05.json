@@ -23,5 +23,7 @@
 "Results depend on the specific benchmark/tasks and harness implementation details; gains may vary by language and repo structure.",
 "Improving edit success doesn’t guarantee semantic correctness—verification (tests, review gates) still matters."
 ],
-"decisionHorizon": "now"
+"decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "Can Bölük, reporting his own harness experiments across 15 models"
 }

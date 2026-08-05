@@ -26,5 +26,8 @@
     "The survey population (Jellyfish newsletter subscribers and customers) skews toward engineering organizations already invested in measurement and analytics, potentially overstating industry-wide adoption maturity.",
     "The cost concern finding (42%) predates the full impact of usage-based billing shifts (GitHub Copilot, Claude pricing changes) — actual cost pressure in H2 2026 may be significantly higher."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "field-report",
+"sponsor": "Jellyfish",
+"sampleSize": "635+ CTOs, engineering managers and individual contributors"
 }

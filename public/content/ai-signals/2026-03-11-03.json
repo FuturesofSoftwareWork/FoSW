@@ -25,5 +25,6 @@
     "The benchmark deliberately used niche repositories to avoid memorization effects; for highly unusual or proprietary codebases, context files may provide greater value.",
     "A 138-task dataset, while substantial, may not capture the full range of scenarios where context files could help or hinder agent performance."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "study"
 }

@@ -38,5 +38,8 @@
     "Faros AI is a vendor of engineering intelligence tooling, so the report's framing may emphasize problems its products address; absolute figures should be treated as directional rather than universal benchmarks.",
     "Telemetry data captures activity and outcomes but not root causes — the quality degradation may partly reflect AI adoption correlating with other changes (faster hiring, new codebases, shifting practices) rather than AI being the sole cause."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "field-report",
+"sponsor": "Faros AI",
+"sampleSize": "telemetry from 22,000 developers"
 }

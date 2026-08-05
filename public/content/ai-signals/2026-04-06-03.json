@@ -25,5 +25,7 @@
     "Multi-agent orchestration adds complexity, latency, and cost (three separate agent invocations per iteration cycle, 5-15 cycles per session) — the ROI depends on task complexity and may not justify overhead for shorter or simpler development tasks.",
     "The evaluation criteria (design quality, originality, craft, functionality) are specific to frontend development; applicability to backend, infrastructure, or security-critical code generation may require significantly different evaluation frameworks."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "practitioner-account",
+"observer": "Anthropic, documenting its own three-agent harness architecture"
 }
