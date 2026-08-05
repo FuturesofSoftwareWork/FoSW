@@ -1,4 +1,11 @@
 {
   "lastUpdated": "2026-08-05",
-  "items": []
+  "items": [
+    {
+      "id": "review-shifts-to-verification",
+      "file": "review-shifts-to-verification.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    }
+  ]
 }

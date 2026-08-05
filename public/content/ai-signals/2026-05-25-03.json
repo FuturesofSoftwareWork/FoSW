@@ -25,5 +25,7 @@
     "'Acceptance rate' definitions vary across teams (merged, closed-without-merge, rewritten); cross-tool comparisons need caveats.",
     "It is not entirely clear when the data for the study were collected. The oldest survey data is from 2024, developer usage survey from November 2025, and Engineering leadership survey 2026."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "LinearB"
 }

@@ -85,6 +85,14 @@ Only include a type-specific field when its value is actually stated in the sour
 - Required: `id`, `title`, `author`, `authorRole`, `excerpt`, `paragraphs`, `date`, `status`
 - Optional: `tags`
 
+**Phenomenon** (`public/content/phenomena/*.json`):
+- Required (`REQUIRED_FIELDS`): `id`, `label`, `title`, `thesis`, `status`, `primaryDimension`, `implications`, `evidence`, `observedReach`, `reachRationale`, `reachReviewedAt`
+- `observedReach` must be one of: `early-manifestations`, `gaining-traction`, `field-level-shift`
+- Evidence `stance` must be one of: `supports`, `counter`, `contextual`
+- Work dimensions (nine): `nature-and-division-of-work`, `human-ai-collaboration-and-agency`, `organisation-and-coordination`, `leadership-governance-and-performance`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
+
+`observedReach` is a human judgment and must never be set by a script. `evidenceProfile`, `firstObserved` and `latestEvidenceDate` are derived and must never be hand-edited — the validator fails the build on either.
+
 ## Verification
 
-Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run signals:validate` checks AI-signal content against the schema above (enum values, required fields, id/index consistency); it now runs automatically as the first step of `npm run build`.
+Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run validate` runs both content validators — `npm run signals:validate` (AI-signal content against the schema above: enum values, required fields, id/index consistency) and `npm run validate:phenomena` (phenomenon content: required fields, enum values, cross-references to published signals, and that `evidenceProfile`/`firstObserved`/`latestEvidenceDate` match what the evidence derives) — and now runs automatically as the first step of `npm run build`. `npm test` runs the script unit tests (content loader, derivation library, config mirrors, and validator rules).

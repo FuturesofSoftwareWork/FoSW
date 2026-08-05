@@ -35,5 +35,7 @@
     "The report is published by Cloudflare about its own system, so the metrics reflect a best-case implementation; organizations with more heterogeneous codebases or less disciplined development practices may see different results.",
     "The system acknowledges limitations in architectural awareness, cross-system impact tracking, and subtle concurrency bugs — these remain human-review territory and represent areas where AI review creates false confidence if relied upon exclusively."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "Cloudflare"
 }

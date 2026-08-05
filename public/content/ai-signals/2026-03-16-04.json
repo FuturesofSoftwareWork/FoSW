@@ -26,5 +26,7 @@
     "The $15–25 per review cost could become significant at scale for high-PR-volume organizations; ROI depends on how many human review hours are actually displaced.",
     "Multi-agent review creates a dependency on an external service for a critical quality gate; organizations should evaluate availability, latency, and data privacy implications."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "tool-shift",
+  "availability": "GA"
 }
