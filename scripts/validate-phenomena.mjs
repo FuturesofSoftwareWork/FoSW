@@ -12,7 +12,10 @@
  * Exits 1 if any phenomenon is invalid.
  */
 
+import { readdirSync } from "fs";
+import { resolve } from "path";
 import { readIndex, readItems, indexById } from "./lib/content.mjs";
+import { deriveEvidenceProfile, deriveDates } from "./lib/derive.mjs";
 import {
   OBSERVED_REACH,
   EVIDENCE_STANCES,
@@ -34,10 +37,6 @@ const isBlank = (v) => typeof v !== "string" || v.trim() === "";
  * @param {{signalsById: Map, phenomenonIds: Set<string>}} ctx
  * @returns {string[]} one message per problem
  */
-// ctx is part of the exported interface Task 7's cross-reference and derived-value checks
-// read from; kept here now so the signature does not change between tasks and the CLI/tests
-// already pass it.
-// eslint-disable-next-line no-unused-vars
 export function validatePhenomenon(p, ctx) {
   const errors = [];
   const e = (msg) => errors.push(msg);
@@ -93,16 +92,66 @@ export function validatePhenomenon(p, ctx) {
     if (typeof ev?.primary !== "boolean") e(`evidence[${i}].primary must be true or false`);
   });
 
+  // A dangling reference is the most likely error here and the least visible on the
+  // page — the blip simply renders with less evidence than it claims.
+  evidence.forEach((ev, i) => {
+    const signal = ctx.signalsById.get(ev?.signalId);
+    if (!signal) {
+      e(`evidence[${i}].signalId ${JSON.stringify(ev?.signalId)} does not resolve to a known signal`);
+    } else if (signal.status !== "published") {
+      e(`evidence[${i}].signalId ${JSON.stringify(ev?.signalId)} refers to a signal that is not published`);
+    }
+  });
+
+  const pathIds = new Set((p.developmentPaths || []).map((d) => d?.id));
+  implications.forEach((im, i) => {
+    for (const pid of im?.pathIds || []) {
+      if (!pathIds.has(pid)) e(`implications[${i}].pathIds contains ${JSON.stringify(pid)}, which is not a declared developmentPath`);
+    }
+  });
+
   const related = Array.isArray(p.related) ? p.related : [];
   if (p.related !== undefined && !Array.isArray(p.related)) e("'related' must be an array");
   for (const r of related) {
     if (!RELATIONS.includes(r?.relation)) {
       e(`related relation ${JSON.stringify(r?.relation)} is not one of ${RELATIONS.join(" | ")}`);
     }
+    if (r?.id && !ctx.phenomenonIds.has(r.id)) {
+      e(`related id ${JSON.stringify(r.id)} does not resolve to a known phenomenon`);
+    }
   }
 
   if (p.contested === true && isBlank(p.contestedNote)) {
     e("contestedNote is required when contested is true");
+  }
+
+  // Derived values are written by the pipeline. A mismatch means someone hand-edited
+  // them, which would make the drawer's evidence sentence describe a corpus that
+  // does not exist.
+  const derivedProfile = deriveEvidenceProfile(p, ctx.signalsById);
+  if (p.evidenceProfile) {
+    for (const key of ["independentContexts", "evidenceTypes", "quartersSpanned", "counterEvidence"]) {
+      if (p.evidenceProfile[key] !== derivedProfile[key]) {
+        e(`evidenceProfile.${key} is ${JSON.stringify(p.evidenceProfile[key])} but derives to ${JSON.stringify(derivedProfile[key])}`);
+      }
+    }
+  }
+
+  const derivedDates = deriveDates(p, ctx.signalsById);
+  if (p.firstObserved && p.firstObserved !== derivedDates.firstObserved) {
+    e(`firstObserved is ${p.firstObserved} but derives to ${derivedDates.firstObserved}`);
+  }
+  if (p.latestEvidenceDate && p.latestEvidenceDate !== derivedDates.latestEvidenceDate) {
+    e(`latestEvidenceDate is ${p.latestEvidenceDate} but derives to ${derivedDates.latestEvidenceDate}`);
+  }
+
+  // Ring movement must always be auditable after the fact.
+  const history = p.reachHistory || [];
+  if (history.length > 0) {
+    const last = history[history.length - 1];
+    if (last?.observedReach !== p.observedReach) {
+      e(`observedReach is '${p.observedReach}' but the latest reachHistory entry records '${last?.observedReach}' — every reach change needs a history entry`);
+    }
   }
 
   // Editorial minimums apply to published phenomena only — drafts are work in
@@ -147,12 +196,44 @@ function main() {
     }
   }
 
+  for (const { file, data } of items) {
+    if (data.id && `${data.id}.json` !== file) {
+      problems.push(`${file}: id '${data.id}' does not match the filename`);
+    }
+  }
+
+  for (const file of readdirSync(resolve(PHENOMENA_DIR))) {
+    // Vite copies public/ into dist, so a pipeline working file left here would be
+    // published on the live site. Fail the build rather than deploy it.
+    if (file.startsWith("_")) {
+      problems.push(`${file}: pipeline working file found under public/ — move it to data/`);
+      continue;
+    }
+    if (file === "index.json" || file === "editions.json" || !file.endsWith(".json")) continue;
+    if (!items.some((it) => it.file === file)) {
+      problems.push(`${file}: exists on disk but is not listed in index.json (invisible to the site)`);
+    }
+  }
+
   if (problems.length) {
     console.error(`validate-phenomena: ${problems.length} problem(s) found\n`);
     problems.forEach((p) => console.error("  " + p));
     process.exit(1);
   }
-  console.log(`validate-phenomena: OK — ${items.length} phenomena valid`);
+
+  const publishedSignals = signalItems.filter(({ data }) => data.status === "published").length;
+  const covered = new Set();
+  for (const { data } of items) {
+    for (const ev of data.evidence || []) covered.add(ev.signalId);
+  }
+  const publishedCount = items.filter(({ data }) => data.status === "published").length;
+  const gate = publishedCount >= 10 ? "OPEN" : `closed (${10 - publishedCount} more needed)`;
+
+  console.log(
+    `validate-phenomena: OK — ${items.length} phenomena valid ` +
+      `(${publishedCount} published, launch gate ${gate})\n` +
+      `  coverage: ${covered.size} of ${publishedSignals} published signals map to a phenomenon`
+  );
 }
 
 // Only run the CLI when invoked directly, so importing this module for tests is safe.

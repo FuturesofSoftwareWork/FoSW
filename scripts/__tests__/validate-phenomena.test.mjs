@@ -120,3 +120,67 @@ test("related must be an array rather than throwing when it is not", () => {
   const p = { ...valid(), related: { id: "x", relation: "reinforces" } };
   assert.match(validatePhenomenon(p, ctx).join("\n"), /'related' must be an array/);
 });
+
+test("a dangling evidence signalId is an error", () => {
+  const p = valid();
+  p.evidence = [{ signalId: "does-not-exist", stance: "supports", primary: true }];
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /does-not-exist/);
+});
+
+test("evidence must reference a published signal", () => {
+  const draftSignals = new Map(signals);
+  draftSignals.set("s-draft", { id: "s-draft", date: "2026-05-01", signalType: "study", status: "draft" });
+  const p = valid();
+  p.evidence = [{ signalId: "s-draft", stance: "supports", primary: true }];
+  const errors = validatePhenomenon(p, { ...ctx, signalsById: draftSignals }).join("\n");
+  assert.match(errors, /not published/);
+});
+
+test("a stored evidenceProfile must match what the evidence derives", () => {
+  const p = { ...valid(), evidenceProfile: { independentContexts: 9, evidenceTypes: 9, quartersSpanned: 9, counterEvidence: true } };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /evidenceProfile/);
+});
+
+test("a correct evidenceProfile passes", () => {
+  const p = { ...valid(), evidenceProfile: { independentContexts: 1, evidenceTypes: 1, quartersSpanned: 1, counterEvidence: false } };
+  assert.deepEqual(validatePhenomenon(p, ctx), []);
+});
+
+test("stored dates must match the evidence", () => {
+  const p = { ...valid(), firstObserved: "2020-01-01", latestEvidenceDate: "2020-01-01" };
+  const errors = validatePhenomenon(p, ctx).join("\n");
+  assert.match(errors, /firstObserved/);
+  assert.match(errors, /latestEvidenceDate/);
+});
+
+test("pathIds must resolve to a declared development path", () => {
+  const p = valid();
+  p.developmentPaths = [{ id: "real-path", title: "Real", description: "…" }];
+  p.implications[0].pathIds = ["ghost-path"];
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /ghost-path/);
+});
+
+test("related ids must resolve to a known phenomenon", () => {
+  const p = { ...valid(), related: [{ id: "no-such-phenomenon", relation: "reinforces" }] };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /no-such-phenomenon/);
+});
+
+test("a reach change without a history entry is an error", () => {
+  const p = {
+    ...valid(),
+    observedReach: "field-level-shift",
+    reachHistory: [{ edition: "2026-Q1", observedReach: "early-manifestations", rationale: "…" }],
+  };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /reachHistory/);
+});
+
+test("reach matching the latest history entry is fine", () => {
+  const p = {
+    ...valid(),
+    reachHistory: [
+      { edition: "2026-Q1", observedReach: "early-manifestations", rationale: "…" },
+      { edition: "2026-Q3", observedReach: "gaining-traction", rationale: "…" },
+    ],
+  };
+  assert.deepEqual(validatePhenomenon(p, ctx), []);
+});
