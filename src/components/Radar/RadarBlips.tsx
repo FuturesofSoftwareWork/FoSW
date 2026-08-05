@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Phenomenon } from "@/types/phenomenon";
 import type { WorkDimensionId } from "@/config/radarDimensions";
 import { WORK_DIMENSIONS } from "@/config/radarDimensions";
-import { BLIP_RADIUS, RING_LABEL, placeBlip } from "@/config/radarGeometry";
+import { BLIP_RADIUS, RING_LABEL, VIEWBOX, placeBlip } from "@/config/radarGeometry";
 import { deriveImpacts, freshnessOf } from "@/lib/phenomenon";
 
 interface RadarBlipsProps {
@@ -28,6 +28,7 @@ const RadarBlips = ({ phenomena, showLabels, activeDimension, onOpen }: RadarBli
         const dimmed =
           activeDimension !== null && !deriveImpacts(p).includes(activeDimension);
         const isHovered = hovered === p.id;
+        const labelRight = x <= VIEWBOX.cx;
 
         return (
           <g
@@ -58,8 +59,9 @@ const RadarBlips = ({ phenomena, showLabels, activeDimension, onOpen }: RadarBli
             )}
             {showLabels && !dimmed && (
               <text
-                x={x + r + 5}
+                x={labelRight ? x + r + 5 : x - r - 5}
                 y={y + 3.5}
+                textAnchor={labelRight ? "start" : "end"}
                 fontSize="10.5"
                 fontFamily="monospace"
                 fill="#cbd5e1"

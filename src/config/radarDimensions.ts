@@ -24,17 +24,20 @@ export type WorkDimensionId =
 export interface WorkDimension {
   id: WorkDimensionId;
   label: string;
+  /** At most 16 characters. Used only for the radar rim, which has no room for
+   *  the full label — the legend and drawer keep `label`. */
+  shortLabel: string;
   colour: string;
 }
 
 export const WORK_DIMENSIONS: readonly WorkDimension[] = [
-  { id: "nature-and-division-of-work", label: "Nature & division of work", colour: "#0EA5E9" },
-  { id: "human-ai-collaboration-and-agency", label: "Human–AI collaboration & agency", colour: "#22d3ee" },
-  { id: "organisation-and-coordination", label: "Organisation & coordination", colour: "#4ade80" },
-  { id: "leadership-governance-and-performance", label: "Leadership, governance & performance", colour: "#a3e635" },
-  { id: "skills-knowledge-and-learning", label: "Skills, knowledge & learning", colour: "#a855f7" },
-  { id: "careers-occupations-and-labour-markets", label: "Careers, occupations & labour markets", colour: "#f472b6" },
-  { id: "worker-experience-identity-and-wellbeing", label: "Worker experience, identity & wellbeing", colour: "#fb7185" },
-  { id: "economics-productivity-and-value", label: "Economics, productivity & value distribution", colour: "#F59E0B" },
-  { id: "ethics-responsibility-and-society", label: "Ethics, responsibility & society", colour: "#94a3b8" },
+  { id: "nature-and-division-of-work", label: "Nature & division of work", shortLabel: "Nature/division", colour: "#0EA5E9" },
+  { id: "human-ai-collaboration-and-agency", label: "Human–AI collaboration & agency", shortLabel: "Human–AI agency", colour: "#22d3ee" },
+  { id: "organisation-and-coordination", label: "Organisation & coordination", shortLabel: "Organisation", colour: "#4ade80" },
+  { id: "leadership-governance-and-performance", label: "Leadership, governance & performance", shortLabel: "Leadership", colour: "#a3e635" },
+  { id: "skills-knowledge-and-learning", label: "Skills, knowledge & learning", shortLabel: "Skills/learning", colour: "#a855f7" },
+  { id: "careers-occupations-and-labour-markets", label: "Careers, occupations & labour markets", shortLabel: "Careers & labour", colour: "#f472b6" },
+  { id: "worker-experience-identity-and-wellbeing", label: "Worker experience, identity & wellbeing", shortLabel: "Wellbeing", colour: "#fb7185" },
+  { id: "economics-productivity-and-value", label: "Economics, productivity & value distribution", shortLabel: "Economics/value", colour: "#F59E0B" },
+  { id: "ethics-responsibility-and-society", label: "Ethics, responsibility & society", shortLabel: "Ethics & society", colour: "#94a3b8" },
 ] as const;

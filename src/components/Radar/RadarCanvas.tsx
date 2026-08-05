@@ -91,7 +91,7 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
             fill={d.colour}
             opacity="0.75"
           >
-            {d.label}
+            {d.shortLabel}
           </text>
         );
       })}

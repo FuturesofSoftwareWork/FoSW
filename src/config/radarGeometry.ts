@@ -21,7 +21,7 @@ export const BLIP_RADIUS = {
   stale: 4.5,
 } as const;
 
-export const VIEWBOX = { size: 560, cx: 280, cy: 280, r: 250 } as const;
+export const VIEWBOX = { size: 660, cx: 330, cy: 330, r: 250 } as const;
 
 /**
  * Ring boundaries as fractions of the outer radius, centre outwards. Exported
