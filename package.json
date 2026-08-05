@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "node scripts/validate-signals.mjs && tsc && vite build && node scripts/prerender.mjs",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "test": "node --test scripts/__tests__/*.test.mjs",
+    "test": "node --test scripts/__tests__/",
     "preview": "vite preview",
     "signals:prepare": "node scripts/ledger.mjs prepare",
     "signals:collect": "node scripts/collect-candidates.mjs",
