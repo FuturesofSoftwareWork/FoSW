@@ -1,13 +1,14 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bot, User, Newspaper, Sparkles } from "lucide-react";
-import { useContent } from "@/hooks/useContent";
-import { useDeepLink } from "@/hooks/useDeepLink";
-import { useArticleMeta } from "@/hooks/useArticleMeta";
 import { SignalSkeleton, InsightSkeleton } from "@/components/ContentSkeleton";
-import ContentDrawer from "@/components/ContentDrawer";
 import SignalControls from "@/components/SignalControls";
-import type { AISignalCategory, DrawerContent } from "@/types/content";
+import type {
+  AISignal,
+  AISignalCategory,
+  DrawerContent,
+  ExpertInsight,
+} from "@/types/content";
 
 const formatDetectedDate = (isoString: string): string => {
   const date = new Date(isoString);
@@ -28,26 +29,19 @@ const truncateWords = (text: string, maxWords: number) => {
   return words.slice(0, maxWords).join(" ") + "...";
 };
 
-const ContentStream = () => {
-  const { signals, insights, isLoading } = useContent({
-    maxInsights: Infinity,
-  });
+interface ContentStreamProps {
+  signals: AISignal[];
+  insights: ExpertInsight[];
+  isLoading: boolean;
+  onOpen: (content: DrawerContent) => void;
+}
 
-  const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(
-    null,
-  );
-  const closeDrawer = useCallback(() => setDrawerContent(null), []);
-
-  useDeepLink({
-    insights,
-    signals,
-    isLoading,
-    drawerContent,
-    setDrawerContent,
-  });
-
-  useArticleMeta(drawerContent);
-
+const ContentStream = ({
+  signals,
+  insights,
+  isLoading,
+  onOpen,
+}: ContentStreamProps) => {
   const [activeCategory, setActiveCategory] = useState<AISignalCategory | null>(
     null,
   );
@@ -158,7 +152,7 @@ const ContentStream = () => {
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ delay: index * 0.05 }}
                       onClick={() =>
-                        setDrawerContent({ type: "signal", data: signal })
+                        onOpen({ type: "signal", data: signal })
                       }
                       className="bg-black/40 border border-hologram-cyan/20 p-6 rounded-none border-l-4 border-l-hologram-cyan hover:bg-hologram-cyan/5 transition-[background-color] group cursor-pointer backdrop-blur-sm"
                     >
@@ -216,7 +210,7 @@ const ContentStream = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   onClick={() =>
-                    setDrawerContent({ type: "insight", data: insight })
+                    onOpen({ type: "insight", data: insight })
                   }
                   className="bg-white/5 p-8 rounded-xl border border-white/5 hover:border-neon-gold/30 transition-all hover:bg-white/10 cursor-pointer group"
                 >
@@ -249,8 +243,6 @@ const ContentStream = () => {
           )}
         </div>
       </div>
-
-      <ContentDrawer content={drawerContent} onClose={closeDrawer} />
     </section>
   );
 };
