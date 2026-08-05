@@ -93,7 +93,9 @@ export function validatePhenomenon(p, ctx) {
     if (typeof ev?.primary !== "boolean") e(`evidence[${i}].primary must be true or false`);
   });
 
-  for (const r of p.related || []) {
+  const related = Array.isArray(p.related) ? p.related : [];
+  if (p.related !== undefined && !Array.isArray(p.related)) e("'related' must be an array");
+  for (const r of related) {
     if (!RELATIONS.includes(r?.relation)) {
       e(`related relation ${JSON.stringify(r?.relation)} is not one of ${RELATIONS.join(" | ")}`);
     }

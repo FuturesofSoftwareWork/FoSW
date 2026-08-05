@@ -100,3 +100,23 @@ test("unknown dimensions, stances and actors are rejected", () => {
   badActor.implications = [{ ...valid().implications[0], actors: ["intern"] }, valid().implications[1]];
   assert.match(validatePhenomenon(badActor, ctx).join("\n"), /actors/);
 });
+
+test("an invalid related.relation is rejected", () => {
+  const p = { ...valid(), related: [{ id: "other-phenomenon", relation: "causes" }] };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /causes/);
+});
+
+test("an invalid potentialImpact is rejected", () => {
+  const p = { ...valid(), potentialImpact: "enormous" };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /potentialImpact/);
+});
+
+test("an invalid status is rejected", () => {
+  const p = { ...valid(), status: "archived" };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /status/);
+});
+
+test("related must be an array rather than throwing when it is not", () => {
+  const p = { ...valid(), related: { id: "x", relation: "reinforces" } };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /'related' must be an array/);
+});
