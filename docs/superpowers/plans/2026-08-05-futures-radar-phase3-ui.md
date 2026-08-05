@@ -1056,8 +1056,12 @@ export const BLIP_RADIUS = {
 
 export const VIEWBOX = { size: 560, cx: 280, cy: 280, r: 250 } as const;
 
-/** Ring boundaries as fractions of the outer radius. */
-const RING_EDGES = [0, 0.36, 0.66, 1] as const;
+/**
+ * Ring boundaries as fractions of the outer radius, centre outwards. Exported
+ * because the canvas draws these same boundaries — two copies would drift and
+ * put blips outside the rings that are meant to contain them.
+ */
+export const RING_EDGES = [0, 0.36, 0.66, 1] as const;
 
 /** Sector angular spans in degrees, measured clockwise from 12 o'clock. */
 export function sectorAngles(count: number): { start: number; end: number }[] {
@@ -1163,9 +1167,13 @@ Create `src/components/Radar/RadarCanvas.tsx`:
 ```tsx
 import type { ReactNode } from "react";
 import { WORK_DIMENSIONS } from "@/config/radarDimensions";
-import { RINGS, RING_LABEL, VIEWBOX, sectorAngles } from "@/config/radarGeometry";
-
-const RING_EDGES = [0.36, 0.66, 1];
+import {
+  RINGS,
+  RING_EDGES,
+  RING_LABEL,
+  VIEWBOX,
+  sectorAngles,
+} from "@/config/radarGeometry";
 
 const pointOnCircle = (deg: number, r: number) => {
   const rad = ((deg - 90) * Math.PI) / 180;
@@ -1193,7 +1201,7 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
 
       <circle cx={VIEWBOX.cx} cy={VIEWBOX.cy} r={VIEWBOX.r} fill="url(#radar-bg)" />
 
-      {RING_EDGES.map((e, i) => (
+      {RING_EDGES.slice(1).map((e, i) => (
         <circle
           key={e}
           cx={VIEWBOX.cx}
@@ -1201,7 +1209,7 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
           r={VIEWBOX.r * e}
           fill="none"
           stroke="#1e293b"
-          strokeDasharray={i === RING_EDGES.length - 1 ? undefined : "3 4"}
+          strokeDasharray={i === RING_EDGES.length - 2 ? undefined : "3 4"}
         />
       ))}
 
@@ -1223,7 +1231,7 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
           over the gradient. The wording says evidence has spread, not that we are
           certain — the axis is reach, not confidence. */}
       {RINGS.map((ring, i) => {
-        const mid = VIEWBOX.r * ((i === 0 ? 0 : RING_EDGES[i - 1]) + RING_EDGES[i]) / 2;
+        const mid = (VIEWBOX.r * (RING_EDGES[i] + RING_EDGES[i + 1])) / 2;
         const y = VIEWBOX.cy - mid;
         const label = RING_LABEL[ring];
         return (
