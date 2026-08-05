@@ -19,7 +19,7 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
   return (
     <svg
       viewBox={`0 0 ${VIEWBOX.size} ${VIEWBOX.size}`}
-      className="mx-auto block w-full max-w-2xl"
+      className="mx-auto block w-full max-w-3xl"
       role="group"
       aria-label="Futures radar: phenomena positioned by how far each change has reached"
     >

@@ -5,11 +5,11 @@
   "thesis": "The standard delivery unit in software may be shrinking. If a small group with machine support can carry work that previously needed a full team, the consequences run past headcount into how work is coordinated, how careers progress, and what a manager is for. The early reports come from forerunners and investors rather than from the field, so the size of the change is far less clear than its direction.",
   "currentPressure": "Organisations are reporting delivery from markedly smaller groups while overall demand for engineers has not fallen, so the pressure shows up in team composition rather than in total employment.",
   "status": "draft",
-  "primaryDimension": "organisation-and-coordination",
+  "primaryDimension": "organisation-and-leadership",
   "potentialImpact": "high",
   "implications": [
     {
-      "dimension": "organisation-and-coordination",
+      "dimension": "organisation-and-leadership",
       "statement": "Coordination overhead that justified larger teams shifts towards coordinating machine work instead of coordinating people.",
       "actors": [
         "technical-lead",
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "dimension": "leadership-governance-and-performance",
+      "dimension": "organisation-and-leadership",
       "statement": "Managing five people plus substantial machine capacity is a different job from managing ten people, and is not yet a defined one.",
       "actors": [
         "engineering-manager"

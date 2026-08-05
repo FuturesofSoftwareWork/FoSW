@@ -29,7 +29,7 @@
       ]
     },
     {
-      "dimension": "leadership-governance-and-performance",
+      "dimension": "organisation-and-leadership",
       "statement": "Sign-off moves from reviewing a change to accepting the evidence that a change satisfies its stated criteria.",
       "actors": [
         "technical-lead",

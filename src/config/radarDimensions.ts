@@ -12,9 +12,7 @@
 
 export type WorkDimensionId =
   | "nature-and-division-of-work"
-  | "human-ai-collaboration-and-agency"
-  | "organisation-and-coordination"
-  | "leadership-governance-and-performance"
+  | "organisation-and-leadership"
   | "skills-knowledge-and-learning"
   | "careers-occupations-and-labour-markets"
   | "worker-experience-identity-and-wellbeing"
@@ -24,20 +22,22 @@ export type WorkDimensionId =
 export interface WorkDimension {
   id: WorkDimensionId;
   label: string;
-  /** At most 16 characters. Used only for the radar rim, which has no room for
-   *  the full label — the legend and drawer keep `label`. */
+  /** As close to `label` as the radar rim has room for — the legend and drawer
+   *  keep `label` itself. Tune against the verify-radar.mjs bbox/overlap checks
+   *  rather than guessing a character count. */
   shortLabel: string;
   colour: string;
 }
 
 export const WORK_DIMENSIONS: readonly WorkDimension[] = [
-  { id: "nature-and-division-of-work", label: "Nature & division of work", shortLabel: "Nature/division", colour: "#0EA5E9" },
-  { id: "human-ai-collaboration-and-agency", label: "Human–AI collaboration & agency", shortLabel: "Human–AI agency", colour: "#22d3ee" },
-  { id: "organisation-and-coordination", label: "Organisation & coordination", shortLabel: "Organisation", colour: "#4ade80" },
-  { id: "leadership-governance-and-performance", label: "Leadership, governance & performance", shortLabel: "Leadership", colour: "#a3e635" },
-  { id: "skills-knowledge-and-learning", label: "Skills, knowledge & learning", shortLabel: "Skills/learning", colour: "#a855f7" },
-  { id: "careers-occupations-and-labour-markets", label: "Careers, occupations & labour markets", shortLabel: "Careers & labour", colour: "#f472b6" },
-  { id: "worker-experience-identity-and-wellbeing", label: "Worker experience, identity & wellbeing", shortLabel: "Wellbeing", colour: "#fb7185" },
-  { id: "economics-productivity-and-value", label: "Economics, productivity & value distribution", shortLabel: "Economics/value", colour: "#F59E0B" },
-  { id: "ethics-responsibility-and-society", label: "Ethics, responsibility & society", shortLabel: "Ethics & society", colour: "#94a3b8" },
+  // Merged with human-ai-collaboration-and-agency: the division of labour between
+  // human and machine — including machine agency — now largely is what "the
+  // nature of work" means, so it no longer earns a separate sector.
+  { id: "nature-and-division-of-work", label: "Nature & division of work", shortLabel: "Nature & division of work", colour: "#0EA5E9" },
+  { id: "organisation-and-leadership", label: "Organisation & leadership", shortLabel: "Organisation & leadership", colour: "#4ade80" },
+  { id: "skills-knowledge-and-learning", label: "Skills, knowledge & learning", shortLabel: "Skills, knowledge & learning", colour: "#a855f7" },
+  { id: "careers-occupations-and-labour-markets", label: "Careers, occupations & labour markets", shortLabel: "Careers & labour markets", colour: "#f472b6" },
+  { id: "worker-experience-identity-and-wellbeing", label: "Worker experience, identity & wellbeing", shortLabel: "Experience, identity & wellbeing", colour: "#fb7185" },
+  { id: "economics-productivity-and-value", label: "Economics, productivity & value", shortLabel: "Economics & productivity", colour: "#F59E0B" },
+  { id: "ethics-responsibility-and-society", label: "Ethics, responsibility & society", shortLabel: "Ethics, responsibility & society", colour: "#94a3b8" },
 ] as const;

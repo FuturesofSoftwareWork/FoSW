@@ -19,7 +19,7 @@
       "pathIds": []
     },
     {
-      "dimension": "leadership-governance-and-performance",
+      "dimension": "organisation-and-leadership",
       "statement": "Leaders become accountable for cost per resolved task, not just for delivery speed, and need attribution they mostly do not yet have.",
       "actors": [
         "engineering-manager",

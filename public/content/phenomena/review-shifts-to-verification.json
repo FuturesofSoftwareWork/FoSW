@@ -30,7 +30,7 @@
       ]
     },
     {
-      "dimension": "leadership-governance-and-performance",
+      "dimension": "organisation-and-leadership",
       "statement": "Accountability for defects moves from the author of a change toward whoever accepted the evidence for it.",
       "actors": [
         "technical-lead",

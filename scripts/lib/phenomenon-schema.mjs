@@ -14,9 +14,7 @@ export const PHENOMENON_STATUSES = ["published", "draft", "retired"];
 
 export const WORK_DIMENSION_IDS = [
   "nature-and-division-of-work",
-  "human-ai-collaboration-and-agency",
-  "organisation-and-coordination",
-  "leadership-governance-and-performance",
+  "organisation-and-leadership",
   "skills-knowledge-and-learning",
   "careers-occupations-and-labour-markets",
   "worker-experience-identity-and-wellbeing",

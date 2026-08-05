@@ -99,7 +99,7 @@ Only include a type-specific field when its value is actually stated in the sour
 - Required (`REQUIRED_FIELDS`): `id`, `label`, `title`, `thesis`, `status`, `primaryDimension`, `implications`, `evidence`, `observedReach`, `reachRationale`, `reachReviewedAt`
 - `observedReach` must be one of: `early-manifestations`, `gaining-traction`, `field-level-shift`
 - Evidence `stance` must be one of: `supports`, `counter`, `contextual`
-- Work dimensions (nine): `nature-and-division-of-work`, `human-ai-collaboration-and-agency`, `organisation-and-coordination`, `leadership-governance-and-performance`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
+- Work dimensions (seven): `nature-and-division-of-work`, `organisation-and-leadership`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
 
 `observedReach` is a human judgment and must never be set by a script. `evidenceProfile`, `firstObserved` and `latestEvidenceDate` are derived and must never be hand-edited — the validator fails the build on either.
 
