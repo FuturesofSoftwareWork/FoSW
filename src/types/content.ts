@@ -1,3 +1,5 @@
+import type { Phenomenon } from "@/types/phenomenon";
+
 export type AISignalCategory =
   | "AI Agents"
   | "AI Tools"
@@ -159,4 +161,5 @@ export interface ContentIndex<T> {
 
 export type DrawerContent =
   | { type: "signal"; data: AISignal }
-  | { type: "insight"; data: ExpertInsight };
+  | { type: "insight"; data: ExpertInsight }
+  | { type: "phenomenon"; data: Phenomenon };

@@ -182,11 +182,8 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
 
             {/* Content */}
             <div className="px-8 pb-12">
-              {content.type === "signal" ? (
-                <SignalContent data={content.data} />
-              ) : (
-                <InsightContent data={content.data} />
-              )}
+              {content.type === "signal" && <SignalContent data={content.data} />}
+              {content.type === "insight" && <InsightContent data={content.data} />}
             </div>
           </motion.div>
         </div>

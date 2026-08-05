@@ -10,7 +10,7 @@ import { useArticleMeta } from "@/hooks/useArticleMeta";
 import type { DrawerContent } from "@/types/content";
 
 function App() {
-  const { signals, insights, isLoading } = useContent({
+  const { signals, insights, phenomena, isLoading } = useContent({
     maxInsights: Infinity,
   });
 
@@ -26,6 +26,7 @@ function App() {
   useDeepLink({
     insights,
     signals,
+    phenomena,
     isLoading,
     drawerContent,
     setDrawerContent,
