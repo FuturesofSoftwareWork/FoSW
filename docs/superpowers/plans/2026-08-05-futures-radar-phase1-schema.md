@@ -561,7 +561,7 @@ git commit -m "feat: add work-dimension and actor vocabularies"
 
 **Files:**
 - Create: `src/types/phenomenon.ts`
-- Modify: `src/types/content.ts` (extend `DrawerContent`)
+- Do NOT modify: `src/types/content.ts` — see Step 2
 
 **Interfaces:**
 - Consumes: `WorkDimensionId` from `@/config/radarDimensions`, `ActorId` from `@/config/radarActors`.
@@ -678,20 +678,21 @@ export interface PhenomenonIndexEntry {
 }
 ```
 
-- [ ] **Step 2: Extend the drawer union**
+- [ ] **Step 2: Leave `DrawerContent` alone**
 
-In `src/types/content.ts`, add the import at the top and extend `DrawerContent` at the bottom:
+Do **not** extend `DrawerContent` in this phase, and do not import `Phenomenon` into
+`src/types/content.ts`. An earlier draft of this plan did, and it broke the build:
+`DrawerContent` has five consumers, several written for exactly two variants —
+`ContentDrawer.tsx:188` uses a two-way ternary that stops narrowing to
+`ExpertInsight`, and `useArticleMeta.ts` reads `.image` and `.date`, which a
+phenomenon does not have.
 
-```ts
-import type { Phenomenon } from "@/types/phenomenon";
-```
+Nothing in Phase 1 renders anything, so a third variant here would have no consumer
+and exist only to break `tsc`. The spec places the drawer extension in its
+*Interaction* section, which is **Phase 3** — it belongs there, alongside the
+components that consume it and with a phenomenon drawer actually in front of it.
 
-```ts
-export type DrawerContent =
-  | { type: "signal"; data: AISignal }
-  | { type: "insight"; data: ExpertInsight }
-  | { type: "phenomenon"; data: Phenomenon };
-```
+`src/types/phenomenon.ts` stands alone: exported, unimported, and checked by `tsc`.
 
 - [ ] **Step 3: Verify it compiles**
 
@@ -1765,7 +1766,7 @@ git commit -m "feat: add the phenomena content type with a worked fixture"
 No radar components, no drawer changes, no pipeline scripts, no preview deployment, and no published phenomena. Those are Phases 2–4, each of which gets its own plan written once this one lands:
 
 - **Phase 2 — Bootstrap pipeline:** `radar:prepare`, `radar:apply`, `radar:accept`, `radar:derive`, `docs/radar-clustering-prompt.md`, the machine-owned/human-owned field manifest, and the first reviewed batch of phenomena.
-- **Phase 3 — Radar UI:** `src/components/Radar/*`, the drawer stack, `?phenomenon=<id>` deep links, site placement, the launch gate.
+- **Phase 3 — Radar UI:** `src/components/Radar/*`, **extending `DrawerContent` with the phenomenon variant and narrowing its five existing consumers**, the drawer stack, `?phenomenon=<id>` deep links, site placement, the launch gate.
 - **Phase 4 — Preview deployment:** `VITE_RADAR_PREVIEW`, `deploy-preview.yml`, `clean-exclude: preview`, `noindex` on preview builds.
 
 One spec validation rule is deliberately absent from this phase: **rule 12**, that
