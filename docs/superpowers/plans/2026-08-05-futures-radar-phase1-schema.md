@@ -102,7 +102,7 @@ test("indexById maps ids to data", () => {
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-Run: `node --test scripts/__tests__/`
+Run: `node --test`
 Expected: FAIL — `Cannot find module '../lib/content.mjs'`
 
 - [ ] **Step 3: Write the implementation**
@@ -187,8 +187,21 @@ export function indexById(items) {
 In `package.json`, add to `scripts` (keep existing entries):
 
 ```json
-"test": "node --test scripts/__tests__/"
+"test": "node --test"
 ```
+
+**Use exactly this — no path argument.** Verified empirically on both runtimes this
+project sees:
+
+| form | Node 20.18.1 (CI) | Node 22.15.1 (local dev) |
+| --- | --- | --- |
+| `node --test scripts/__tests__/` | passes | **fails** — the path is loaded as a module, `MODULE_NOT_FOUND` |
+| `node --test scripts/__tests__/*.test.mjs` | **fails via `npm test` on Windows** — Node 20 has no CLI glob expansion (added in 22.6) and `cmd.exe` does not expand wildcards for external programs | passes |
+| `node --test` | passes | passes |
+
+Bare `--test` walks the working directory for files matching Node's default test
+naming convention (`**/*.test.mjs` among them), skipping `node_modules`, so it needs
+no change as Tasks 2, 3, 5 and 6 add files to `scripts/__tests__/`.
 
 - [ ] **Step 5: Run the tests to verify they pass**
 
