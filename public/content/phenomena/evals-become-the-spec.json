@@ -1,0 +1,114 @@
+{
+  "id": "evals-become-the-spec",
+  "label": "Evals become the spec",
+  "title": "What you write down stops being the code",
+  "thesis": "As machines write more of the implementation, the artifact that defines what \"done\" means shifts from the code and the product document toward an executable evaluation suite. Teams increasingly specify behaviour as acceptance criteria a machine can run, and the eval set rather than the source becomes the thing under deliberate human authorship.",
+  "currentPressure": "Generated implementations vary between runs and between models, so reading the code no longer tells a team whether the intended behaviour holds.",
+  "status": "draft",
+  "primaryDimension": "skills-knowledge-and-learning",
+  "potentialImpact": "transformative",
+  "implications": [
+    {
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Writing precise, falsifiable acceptance criteria becomes a more valuable skill than writing the implementation it constrains.",
+      "actors": [
+        "developer",
+        "new-entrant"
+      ],
+      "pathIds": []
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "The durable artifact a team maintains shifts from source code towards the evaluation suite that bounds it.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ],
+      "pathIds": [
+        "evals-as-primary-artifact"
+      ]
+    },
+    {
+      "dimension": "leadership-governance-and-performance",
+      "statement": "Sign-off moves from reviewing a change to accepting the evidence that a change satisfies its stated criteria.",
+      "actors": [
+        "technical-lead",
+        "engineering-manager"
+      ],
+      "pathIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-03-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "eval suites treated as the primary artifact; an 'evals engineer' role appearing in postings"
+    },
+    {
+      "signalId": "2026-04-13-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "structured pre-change impact analysis cuts agent regressions 70% — designed verification works where naive instruction does not"
+    },
+    {
+      "signalId": "2026-03-16-07",
+      "stance": "contextual",
+      "primary": true,
+      "note": "the verification gap: 96% do not fully trust generated code, under half always verify"
+    },
+    {
+      "signalId": "2026-08-03-09",
+      "stance": "contextual",
+      "primary": true,
+      "note": "newer models pass more checkpoints while emitting more unrequested change — pressure for tighter criteria"
+    },
+    {
+      "signalId": "2026-03-11-08",
+      "stance": "counter",
+      "primary": true,
+      "note": "agent-generated tests provide only marginal utility, undercutting the labour saving the practice depends on"
+    }
+  ],
+  "observedReach": "early-manifestations",
+  "reachRationale": "Named practitioner teams are treating eval suites as their primary specification and a dedicated role is appearing in job postings, but the practice is confined to teams building AI features and has not reached mainstream delivery.",
+  "reachReviewedAt": "2026-08-05",
+  "contested": false,
+  "contestedNote": null,
+  "whatWouldChangeThis": [
+    "Eval suites stay confined to AI-feature teams through 2027 while mainstream delivery remains document- and code-centric",
+    "Machine-generated evaluations prove no more trustworthy than machine-generated tests, removing the labour saving that makes the practice attractive"
+  ],
+  "developmentPaths": [
+    {
+      "id": "evals-as-primary-artifact",
+      "title": "Evals as the primary artifact",
+      "description": "The evaluation suite becomes the reviewed, versioned specification; code is treated as generated output."
+    },
+    {
+      "id": "evals-as-a-gate-only",
+      "title": "Evals as a gate, not a spec",
+      "description": "Eval suites are adopted purely as a release gate while intent continues to live in prose and code."
+    },
+    {
+      "id": "specification-stays-prose",
+      "title": "Specification stays prose",
+      "description": "Executable criteria prove too costly to author and maintain, and specification remains a human-to-human document."
+    }
+  ],
+  "related": [
+    {
+      "id": "review-shifts-to-verification",
+      "relation": "reinforces"
+    }
+  ],
+  "indicators": [],
+  "evidenceProfile": {
+    "independentContexts": 2,
+    "evidenceTypes": 2,
+    "quartersSpanned": 1,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-01-08",
+  "latestEvidenceDate": "2026-07-27"
+}
