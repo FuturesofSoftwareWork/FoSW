@@ -1773,3 +1773,22 @@ One spec validation rule is deliberately absent from this phase: **rule 12**, th
 `radar:apply` touched no human-owned field on a pre-existing phenomenon. It checks a
 manifest that `radar:apply` writes, and neither exists until Phase 2. It is listed in
 that phase's plan.
+
+---
+
+## Carry-Forward to Phases 2–4
+
+From the final whole-branch review. Each is something a later author could reasonably
+assume Phase 1 already handled. Items the fix wave closed are omitted.
+
+| # | Risk | Who handles it |
+| --- | --- | --- |
+| 1 | **`evidenceProfile` is optional even for published phenomena.** The validator checks it only `if (p.evidenceProfile)`, so deleting it passes silently. | Phase 2: `radar:apply` must always write it. Phase 3: render gracefully when absent. |
+| 2 | **`possibleReachChange` does not exist.** The spec puts it in the machine-owned column with `radar:derive` recording it, but it is absent from `Phenomenon`, from `phenomenon-schema.mjs` and from the validator. | Phase 2 adds all three — and must keep it strictly separate from `observedReach`, the one field automation may never touch. |
+| 3 | **`lastReviewed` is typed but unvalidated.** Nothing stops `radar:apply` stamping it; the spec is emphatic that only `radar:accept` may. | Phase 2, via the spec's validation rule 12 (the `radar:apply` write manifest). |
+| 4 | **`impacts` is specified as derived-never-stored, but no helper exists.** `derive.mjs` provides no `deriveImpacts()`, so an author with nothing in front of them may add an `impacts` field to the JSON — exactly what the spec forbids. | Phase 2: add `deriveImpacts()`, or a validator rule rejecting a stored `impacts` key. |
+| 5 | **Draft phenomena may still cite untyped evidence.** The fix wave requires `signalType` on `supports` evidence of *published* phenomena only. | Phase 2: `radar:apply` should type every attached signal, per the spec's bootstrap description. |
+| 6 | **`data/_finder-output.json`** (gitignored, on disk) still contains `"signalType": "weak-signal"`. The next publish from that pending finder output will fail `validate-signals` until remapped. | Whoever runs the next finder cycle. |
+| 7 | **`AGENTS.md`** at the repo root (untracked) still documents the old five genres and the old `observer` / `regulatory` guidance. If ever committed it will contradict this branch. | Whoever owns that file. |
+| 8 | **`DrawerContent` and its five consumers** — `ContentDrawer.tsx`'s two-way ternary, `useArticleMeta.ts`'s `.image`/`.date`, plus `ContentStream`, `deepLinkPath`, `useDeepLink`. Deferred here deliberately; see Task 4 Step 2. | Phase 3, alongside the phenomenon drawer. |
+| 9 | **`config.test.mjs`'s `"status:"` anchor is coincidentally unique.** It finds `Phenomenon.status` only because that declaration precedes `PhenomenonIndexEntry.status` in file order. A reordering, or a new `…status:` field appearing earlier, would silently retarget the test. | Any phase touching `src/types/phenomenon.ts`; prefer a more specific anchor when it next changes. |
