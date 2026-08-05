@@ -102,7 +102,9 @@ A radar of phenomena where:
   grants the `authenticated` role full insert/update/delete on every table, and
   any self-registered user holds that role.)
 - **Indicator timeseries.** Modelled here, not built. See *Indicators*.
-- **Any admin UI, auth, or hosted review tool.** The accept gate is PR review.
+- **Any admin UI, auth, or on-page commenting.** The accept gate is PR review; the
+  colleague review loop is a preview URL plus a shared document. See *Preview and
+  Review*.
 - **Changing the 13 `AISignalCategory` values** or anything about how the existing
   ContentStream renders.
 - **Backfilling `signalType` across the 84 untyped signals** as a prerequisite. The
@@ -912,6 +914,64 @@ if (published.length < 10 && import.meta.env.PROD) return null   // not launched
 failure. The radar instead **hides its section entirely**. A stale hardcoded
 research claim presented as current is worse than no radar.
 
+## Preview and Review
+
+Colleagues at VTT and the University of Helsinki review the radar before it is
+public. The preview is **not a separate site** — it is this site, from this repo,
+with two switches flipped by `VITE_RADAR_PREVIEW=1`:
+
+| | Production | Preview |
+| --- | --- | --- |
+| Radar section | hidden until 10 phenomena published | always visible |
+| `status: "draft"` phenomena | not fetched | fetched and shown |
+
+Everything else is identical, so what reviewers see is byte-for-byte what ships.
+Going live is not a migration: it is publishing the tenth phenomenon, after which
+the launch gate opens on its own. A design where the preview must later be *moved*
+to the main page would drift from it and the move would keep being deferred.
+
+### Deployment
+
+The site is a static SPA on GitHub Pages, built from `main` by
+`.github/workflows/deploy.yml` with `base: '/FoSW/'`. Pages serves folders, so the
+preview is a second folder in the same deployment:
+
+| URL | Build |
+| --- | --- |
+| `futuresofsoftwarework.fi/FoSW/` | production, unchanged |
+| `futuresofsoftwarework.fi/FoSW/preview/` | `vite build --base=/FoSW/preview/` with `VITE_RADAR_PREVIEW=1` |
+
+- A new `deploy-preview.yml` triggered on the radar branch, deploying with
+  `target-folder: preview`.
+- `deploy.yml` gains `clean-exclude: preview` so a production deploy does not wipe
+  it.
+- No new host, no new accounts, and the review link is on the project's own domain —
+  which matters when asking named researchers to review something.
+
+**Preview builds must not be indexed.** A `robots` meta tag of `noindex, nofollow`
+and a `Disallow` in a preview-only `robots.txt`. An unfinished research radar
+appearing in search results under the VTT domain is a real credibility risk and
+costs three lines to prevent. The URL is unlisted rather than access-controlled; the
+repository is public, so nothing here is secret.
+
+### The comment loop
+
+Nothing on the page collects comments — that needs a backend, which *Non-Goals*
+rules out. Instead:
+
+- Each blip is deep-linkable as `?phenomenon=<id>`, reusing the existing deep-link
+  handling. This is what makes asynchronous review workable: a reviewer links to the
+  exact phenomenon they disagree with rather than describing which one they mean.
+- Comments are collected in a shared document keyed by phenomenon `id`, and
+  accepted feedback is transcribed into the JSON through the normal PR gate.
+- GitHub PR review is deliberately **not** the mechanism for non-technical
+  reviewers. It would be more traceable and it will not happen.
+
+A structured review session is itself a `primary-research` signal (`method:
+workshop`). Colleague observations about their own work are not only QA on the
+radar — some of them are evidence for it, and the schema already has somewhere to
+put them.
+
 ## Pipeline
 
 Follows the principle already in `docs/ai-signals-pipeline.md` — *retrieve broadly
@@ -1192,12 +1252,16 @@ phases, each independently verifiable by `npm run build`:
    overstate, the second lets a routine run destroy authored research, and the third
    turns the radar's only axis back into a count of collected articles. All three
    are cheap to build now and expensive to retrofit.
-3. **Radar UI** — components, drawer extension, drawer stack, site placement.
-   `radar:snapshot` and editions come last, since there is nothing to snapshot
-   until phenomena exist.
+3. **Radar UI** — components, drawer extension, drawer stack, site placement,
+   `?phenomenon=<id>` deep links. `radar:snapshot` and editions come last, since
+   there is nothing to snapshot until phenomena exist.
+4. **Preview deployment** — `VITE_RADAR_PREVIEW`, `deploy-preview.yml`,
+   `clean-exclude` on the production workflow, `noindex` on preview builds. Small,
+   and it is what turns phases 1–3 into something colleagues can actually react to.
 
 Phase 1 is a prerequisite for 2, and 2 for 3. Nothing in 3 blocks the site as it
-stands today, since the radar is an added section.
+stands today, since the radar is an added section, and nothing is publicly visible
+until ten phenomena are published regardless of what has been merged.
 
 ## Open Questions
 
