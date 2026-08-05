@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Link2, Check } from "lucide-react";
+import { ArrowLeft, X, Link2, Check } from "lucide-react";
 import type { AISignal, DrawerContent } from "@/types/content";
 import type { Phenomenon } from "@/types/phenomenon";
 import SignalContent from "@/components/drawer/SignalContent";
@@ -54,6 +54,7 @@ interface ContentDrawerProps {
   phenomena: Phenomenon[];
   onOpenSignal: (signal: AISignal) => void;
   onOpenPhenomenon: (p: Phenomenon) => void;
+  onBack?: () => void;
 }
 
 const ContentDrawer = ({
@@ -63,6 +64,7 @@ const ContentDrawer = ({
   phenomena,
   onOpenSignal,
   onOpenPhenomenon,
+  onBack,
 }: ContentDrawerProps) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -158,6 +160,15 @@ const ContentDrawer = ({
           >
             {/* Close button */}
             <div className="sticky top-0 z-10 flex justify-between items-center p-4 bg-midnight/80 backdrop-blur-sm">
+              {onBack && (
+                <button
+                  onClick={onBack}
+                  className="flex items-center gap-1 rounded-full px-3 py-2 text-xs text-gray-400 transition-colors hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-electric-blue/50"
+                  aria-label="Back to the previous item"
+                >
+                  <ArrowLeft size={14} /> Back
+                </button>
+              )}
               <button
                 onClick={handleCopyLink}
                 className={`flex items-center gap-2 text-xs font-mono uppercase tracking-wider px-3 py-2 rounded-full transition-all focus:outline-none focus:ring-2 ${meta.copyButtonClassName}`}

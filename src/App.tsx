@@ -14,12 +14,22 @@ function App() {
     maxInsights: Infinity,
   });
 
-  const [drawerContent, setDrawerContent] = useState<DrawerContent | null>(
-    null,
-  );
-  const closeDrawer = useCallback(() => setDrawerContent(null), []);
+  const [stack, setStack] = useState<DrawerContent[]>([]);
+  const drawerContent = stack.length > 0 ? stack[stack.length - 1] : null;
+
+  const closeDrawer = useCallback(() => setStack([]), []);
   const openDrawer = useCallback(
-    (content: DrawerContent) => setDrawerContent(content),
+    (content: DrawerContent) => setStack([content]),
+    [],
+  );
+  const pushDrawer = useCallback(
+    (content: DrawerContent) => setStack((s) => [...s, content]),
+    [],
+  );
+  const popDrawer = useCallback(() => setStack((s) => s.slice(0, -1)), []);
+
+  const setDrawerContent = useCallback(
+    (content: DrawerContent | null) => setStack(content ? [content] : []),
     [],
   );
 
@@ -59,8 +69,9 @@ function App() {
         onClose={closeDrawer}
         signals={signals}
         phenomena={phenomena}
-        onOpenSignal={(signal) => openDrawer({ type: "signal", data: signal })}
+        onOpenSignal={(signal) => pushDrawer({ type: "signal", data: signal })}
         onOpenPhenomenon={(p) => openDrawer({ type: "phenomenon", data: p })}
+        onBack={stack.length > 1 ? popDrawer : undefined}
       />
     </div>
   );
