@@ -1580,11 +1580,11 @@ Add `signalType` to each of these existing files. Add `sponsor` only where the p
 
 | File id | `signalType` | Extra |
 | --- | --- | --- |
-| `2026-03-16-04` — Anthropic launches multi-agent Code Review | `tool-shift` | `"availability": "GA"` |
+| `2026-03-16-04` — Anthropic launches multi-agent Code Review | `tool-shift` | `"availability": "preview"` — its summary says "research preview", not GA |
 | `2026-05-06-11` — Cloudflare deploys across 5,169 repositories | `field-report` | `"sponsor": "Cloudflare"` |
 | `2026-03-16-05` — Opsera benchmark | `field-report` | `"sponsor": "Opsera"` |
 | `2026-05-25-03` — LinearB 2026 benchmarks | `field-report` | `"sponsor": "LinearB"` |
-| `2026-05-20-04` — Code review time up 91% | `practitioner-account` | `"observer": "DevEssence, synthesising Faros AI and Atlas data"` |
+| `2026-05-20-04` — Code review time up 91% | `practitioner-account` | `"observer": "DevEssence, synthesising Faros AI, Atlassian RovoDev and McKinsey data"` — match the file's own `source` field |
 | `2026-06-22-06` — Code review agents without humans | `study` | — |
 
 Find each file by id:
