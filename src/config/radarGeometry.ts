@@ -59,14 +59,16 @@ export function placeBlip(
   dimensionIndex: number,
   dimensionCount: number,
 ): { x: number; y: number } {
-  const ringIndex = Math.max(0, RINGS.indexOf(p.observedReach));
+  const foundRing = RINGS.indexOf(p.observedReach);
+  const ringIndex = foundRing === -1 ? RINGS.length - 1 : foundRing;
   const inner = RING_EDGES[ringIndex] * VIEWBOX.r;
   const outer = RING_EDGES[ringIndex + 1] * VIEWBOX.r;
 
   const radialInset = (outer - inner) * 0.18;
   const radius = inner + radialInset + hash01(p.id, 1) * (outer - inner - radialInset * 2);
 
-  const { start, end } = sectorAngles(dimensionCount)[Math.max(0, dimensionIndex)];
+  const safeIndex = Math.min(Math.max(0, dimensionIndex), dimensionCount - 1);
+  const { start, end } = sectorAngles(dimensionCount)[safeIndex];
   const angularInset = (end - start) * 0.12;
   const deg = start + angularInset + hash01(p.id, 2) * (end - start - angularInset * 2);
 
