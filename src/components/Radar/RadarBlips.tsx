@@ -36,15 +36,20 @@ const RadarBlips = ({ phenomena, showLabels, activeDimension, onOpen }: RadarBli
             opacity={dimmed ? 0.18 : 1}
             className="cursor-pointer focus:outline-none"
             role="button"
-            tabIndex={0}
+            tabIndex={dimmed ? -1 : 0}
+            aria-hidden={dimmed || undefined}
             aria-label={`${p.label} — ${RING_LABEL[p.observedReach]}`}
-            onClick={() => onOpen(p)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                onOpen(p);
-              }
-            }}
+            onClick={dimmed ? undefined : () => onOpen(p)}
+            onKeyDown={
+              dimmed
+                ? undefined
+                : (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onOpen(p);
+                    }
+                  }
+            }
             onMouseEnter={() => setHovered(p.id)}
             onMouseLeave={() => setHovered(null)}
             onFocus={() => setHovered(p.id)}
@@ -72,11 +77,33 @@ const RadarBlips = ({ phenomena, showLabels, activeDimension, onOpen }: RadarBli
             )}
             {isHovered && !showLabels && (
               <g pointerEvents="none">
-                <rect x={x + r + 4} y={y - 14} width={190} height={30} rx={3} fill="#0b1220" stroke="#334155" />
-                <text x={x + r + 10} y={y - 3} fontSize="8" fontFamily="monospace" fill="#e2e8f0">
+                <rect
+                  x={labelRight ? x + r + 4 : x - r - 4 - 190}
+                  y={y - 14}
+                  width={190}
+                  height={30}
+                  rx={3}
+                  fill="#0b1220"
+                  stroke="#334155"
+                />
+                <text
+                  x={labelRight ? x + r + 10 : x - r - 10}
+                  y={y - 3}
+                  textAnchor={labelRight ? "start" : "end"}
+                  fontSize="8"
+                  fontFamily="monospace"
+                  fill="#e2e8f0"
+                >
                   {p.label}
                 </text>
-                <text x={x + r + 10} y={y + 8} fontSize="7.5" fontFamily="monospace" fill="#64748b">
+                <text
+                  x={labelRight ? x + r + 10 : x - r - 10}
+                  y={y + 8}
+                  textAnchor={labelRight ? "start" : "end"}
+                  fontSize="7.5"
+                  fontFamily="monospace"
+                  fill="#64748b"
+                >
                   {RING_LABEL[p.observedReach]}
                   {p.contested ? " · contested" : ""}
                 </text>

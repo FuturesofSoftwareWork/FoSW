@@ -2,13 +2,23 @@ import type { Phenomenon } from "@/types/phenomenon";
 import type { WorkDimensionId } from "@/config/radarDimensions";
 
 /**
+ * True in dev and in preview builds. The single source of truth for "should
+ * unpublished research be visible here?" — both draft fetching and the radar's
+ * launch gate must answer this the same way, or one will silently disagree
+ * with the other.
+ */
+export function isPreviewContext(): boolean {
+  return import.meta.env.DEV || import.meta.env.VITE_RADAR_PREVIEW === "1";
+}
+
+/**
  * Drafts are shown in dev and in preview builds so work in progress stays
  * reviewable, and hidden in production so an unfinished research claim is never
  * published. `import.meta.env.DEV` covers `npm run dev`; the explicit flag covers
  * the preview deployment, which is a production build.
  */
 export function includeDrafts(): boolean {
-  return import.meta.env.DEV || import.meta.env.VITE_RADAR_PREVIEW === "1";
+  return isPreviewContext();
 }
 
 /**

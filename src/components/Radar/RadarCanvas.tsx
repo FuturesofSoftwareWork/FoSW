@@ -20,7 +20,7 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
     <svg
       viewBox={`0 0 ${VIEWBOX.size} ${VIEWBOX.size}`}
       className="mx-auto block w-full max-w-2xl"
-      role="img"
+      role="group"
       aria-label="Futures radar: phenomena positioned by how far each change has reached"
     >
       <defs>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Phenomenon } from "@/types/phenomenon";
 import type { WorkDimensionId } from "@/config/radarDimensions";
+import { deriveImpacts, isPreviewContext } from "@/lib/phenomenon";
 import RadarCanvas from "./RadarCanvas";
 import RadarBlips from "./RadarBlips";
 import RadarLegend from "./RadarLegend";
@@ -16,14 +17,20 @@ interface FuturesRadarProps {
 const FuturesRadar = ({ phenomena, onOpen }: FuturesRadarProps) => {
   const publishedCount = phenomena.filter((p) => p.status === "published").length;
   const [activeDimension, setActiveDimension] = useState<WorkDimensionId | null>(null);
-  const [showLabels, setShowLabels] = useState(phenomena.length <= LABELS_OFF_ABOVE);
+  const [labelsOverride, setLabelsOverride] = useState<boolean | null>(null);
+  const showLabels = labelsOverride ?? phenomena.length <= LABELS_OFF_ABOVE;
 
   // A stale research claim presented as current is worse than no radar, and an
   // unfinished one is worse than an absent one. Both guards live here.
   if (phenomena.length === 0) return null;
-  if (publishedCount < LAUNCH_THRESHOLD && import.meta.env.PROD && import.meta.env.VITE_RADAR_PREVIEW !== "1") {
+  if (publishedCount < LAUNCH_THRESHOLD && !isPreviewContext()) {
     return null;
   }
+
+  const matchCount =
+    activeDimension === null
+      ? phenomena.length
+      : phenomena.filter((p) => deriveImpacts(p).includes(activeDimension)).length;
 
   return (
     <section className="bg-midnight px-4 py-20" id="futures-radar">
@@ -48,7 +55,7 @@ const FuturesRadar = ({ phenomena, onOpen }: FuturesRadarProps) => {
 
         <div className="mb-4 flex justify-center">
           <button
-            onClick={() => setShowLabels((v) => !v)}
+            onClick={() => setLabelsOverride(!showLabels)}
             aria-pressed={showLabels}
             className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-gray-400 transition-colors hover:border-white/25 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-electric-blue/50"
           >
@@ -65,7 +72,12 @@ const FuturesRadar = ({ phenomena, onOpen }: FuturesRadarProps) => {
           />
         </RadarCanvas>
 
-        <RadarLegend active={activeDimension} onToggle={setActiveDimension} />
+        <RadarLegend
+          active={activeDimension}
+          onToggle={setActiveDimension}
+          matchCount={matchCount}
+          totalCount={phenomena.length}
+        />
       </div>
     </section>
   );
