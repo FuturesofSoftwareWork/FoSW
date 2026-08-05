@@ -1,16 +1,69 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Link2, Check } from "lucide-react";
-import type { DrawerContent } from "@/types/content";
+import type { AISignal, DrawerContent } from "@/types/content";
+import type { Phenomenon } from "@/types/phenomenon";
 import SignalContent from "@/components/drawer/SignalContent";
 import InsightContent from "@/components/drawer/InsightContent";
+import PhenomenonContent from "@/components/drawer/PhenomenonContent";
+
+// Full static Tailwind class strings — never interpolate (see CLAUDE.md).
+// Each drawer content type gets its own treatment rather than being folded
+// into either of the other two: a phenomenon is neither a signal nor an
+// insight, and had drifted into "insight" styling by default before this.
+const DRAWER_TYPE_META: Record<
+  DrawerContent["type"],
+  {
+    ariaLabel: string;
+    maxWidthClassName: string;
+    borderClassName: string;
+    copyButtonClassName: string;
+    closeButtonClassName: string;
+  }
+> = {
+  signal: {
+    ariaLabel: "AI Signal details",
+    maxWidthClassName: "max-w-2xl",
+    borderClassName: "border-l-hologram-cyan",
+    copyButtonClassName:
+      "text-hologram-cyan hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
+    closeButtonClassName: "hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
+  },
+  insight: {
+    ariaLabel: "Expert Insight article",
+    maxWidthClassName: "max-w-4xl",
+    borderClassName: "border-l-neon-gold",
+    copyButtonClassName:
+      "text-neon-gold hover:bg-neon-gold/20 focus:ring-neon-gold/50",
+    closeButtonClassName: "hover:bg-neon-gold/20 focus:ring-neon-gold/50",
+  },
+  phenomenon: {
+    ariaLabel: "Phenomenon details",
+    maxWidthClassName: "max-w-3xl",
+    borderClassName: "border-l-hologram-cyan",
+    copyButtonClassName:
+      "text-hologram-cyan hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
+    closeButtonClassName: "hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
+  },
+};
 
 interface ContentDrawerProps {
   content: DrawerContent | null;
   onClose: () => void;
+  signals: AISignal[];
+  phenomena: Phenomenon[];
+  onOpenSignal: (signal: AISignal) => void;
+  onOpenPhenomenon: (p: Phenomenon) => void;
 }
 
-const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
+const ContentDrawer = ({
+  content,
+  onClose,
+  signals,
+  phenomena,
+  onOpenSignal,
+  onOpenPhenomenon,
+}: ContentDrawerProps) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -74,8 +127,8 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
     return () => node.removeEventListener("scroll", handleScroll);
   }, [content]);
 
-  const isSignal = content?.type === "signal";
   const isInsight = content?.type === "insight";
+  const meta = content ? DRAWER_TYPE_META[content.type] : DRAWER_TYPE_META.signal;
 
   return (
     <AnimatePresence>
@@ -100,24 +153,14 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             role="dialog"
             aria-modal="true"
-            aria-label={
-              isSignal ? "AI Signal details" : "Expert Insight article"
-            }
-            className={`relative w-full ${
-              isSignal ? "max-w-2xl" : "max-w-4xl"
-            } bg-midnight/95 backdrop-blur-md border-l-4 overflow-y-auto ${
-              isSignal ? "border-l-hologram-cyan" : "border-l-neon-gold"
-            }`}
+            aria-label={meta.ariaLabel}
+            className={`relative w-full ${meta.maxWidthClassName} bg-midnight/95 backdrop-blur-md border-l-4 overflow-y-auto ${meta.borderClassName}`}
           >
             {/* Close button */}
             <div className="sticky top-0 z-10 flex justify-between items-center p-4 bg-midnight/80 backdrop-blur-sm">
               <button
                 onClick={handleCopyLink}
-                className={`flex items-center gap-2 text-xs font-mono uppercase tracking-wider px-3 py-2 rounded-full transition-all focus:outline-none focus:ring-2 ${
-                  isSignal
-                    ? "text-hologram-cyan hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50"
-                    : "text-neon-gold hover:bg-neon-gold/20 focus:ring-neon-gold/50"
-                }`}
+                className={`flex items-center gap-2 text-xs font-mono uppercase tracking-wider px-3 py-2 rounded-full transition-all focus:outline-none focus:ring-2 ${meta.copyButtonClassName}`}
                 aria-label="Copy link to this article"
               >
                 {copied ? (
@@ -133,11 +176,7 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                className={`p-2 rounded-full text-gray-400 hover:text-white transition-all focus:outline-none focus:ring-2 ${
-                  isSignal
-                    ? "hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50"
-                    : "hover:bg-neon-gold/20 focus:ring-neon-gold/50"
-                }`}
+                className={`p-2 rounded-full text-gray-400 hover:text-white transition-all focus:outline-none focus:ring-2 ${meta.closeButtonClassName}`}
                 aria-label="Close drawer"
               >
                 <X size={20} />
@@ -153,8 +192,42 @@ const ContentDrawer = ({ content, onClose }: ContentDrawerProps) => {
 
             {/* Content */}
             <div className="px-8 pb-12">
+              {content.type === "signal" &&
+                (() => {
+                  const partOf = phenomena.filter((p) =>
+                    p.evidence.some((e) => e.signalId === content.data.id),
+                  );
+                  if (partOf.length === 0) return null;
+                  return (
+                    <p className="mb-6 text-sm text-gray-400">
+                      Evidence for{" "}
+                      {partOf.map((p, i) => (
+                        <span key={p.id}>
+                          {i > 0 && ", "}
+                          <button
+                            onClick={() => onOpenPhenomenon(p)}
+                            className="text-hologram-cyan underline decoration-dotted underline-offset-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-hologram-cyan/50"
+                          >
+                            {p.label}
+                          </button>
+                        </span>
+                      ))}
+                    </p>
+                  );
+                })()}
               {content.type === "signal" && <SignalContent data={content.data} />}
               {content.type === "insight" && <InsightContent data={content.data} />}
+              {content.type === "phenomenon" && (
+                <PhenomenonContent
+                  data={content.data}
+                  signals={signals}
+                  onOpenSignal={onOpenSignal}
+                  related={(content.data.related ?? [])
+                    .map((r) => phenomena.find((p) => p.id === r.id))
+                    .filter((p): p is Phenomenon => p !== undefined)}
+                  onOpenPhenomenon={onOpenPhenomenon}
+                />
+              )}
             </div>
           </motion.div>
         </div>

@@ -54,7 +54,14 @@ function App() {
         </p>
       </footer>
 
-      <ContentDrawer content={drawerContent} onClose={closeDrawer} />
+      <ContentDrawer
+        content={drawerContent}
+        onClose={closeDrawer}
+        signals={signals}
+        phenomena={phenomena}
+        onOpenSignal={(signal) => openDrawer({ type: "signal", data: signal })}
+        onOpenPhenomenon={(p) => openDrawer({ type: "phenomenon", data: p })}
+      />
     </div>
   );
 }
