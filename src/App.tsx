@@ -4,6 +4,7 @@ import ContentStream from "./components/ContentStream";
 import ContentDrawer from "./components/ContentDrawer";
 import AboutProject from "./components/AboutProject";
 import WhatIfSection from "./components/WhatIf/WhatIfSection";
+import FuturesRadar from "./components/Radar/FuturesRadar";
 import { useContent } from "@/hooks/useContent";
 import { useDeepLink } from "@/hooks/useDeepLink";
 import { useArticleMeta } from "@/hooks/useArticleMeta";
@@ -48,6 +49,10 @@ function App() {
     <div className="bg-midnight min-h-screen text-white font-sans selection:bg-electric-blue selection:text-white">
       <Hero />
       <WhatIfSection />
+      <FuturesRadar
+        phenomena={phenomena}
+        onOpen={(p) => openDrawer({ type: "phenomenon", data: p })}
+      />
       <ContentStream
         signals={signals}
         insights={insights}
