@@ -24,3 +24,13 @@ test("responsibility appears in exactly one dimension label", () => {
   const withResponsibility = labels.filter((l) => /responsibilit/i.test(l));
   assert.equal(withResponsibility.length, 1, `found: ${withResponsibility.join(", ")}`);
 });
+
+import { WORK_DIMENSION_IDS, ACTOR_IDS } from "../lib/phenomenon-schema.mjs";
+
+test("the mjs dimension mirror matches the ts config", () => {
+  assert.deepEqual(WORK_DIMENSION_IDS, idsFrom("src/config/radarDimensions.ts"));
+});
+
+test("the mjs actor mirror matches the ts config", () => {
+  assert.deepEqual(ACTOR_IDS, idsFrom("src/config/radarActors.ts"));
+});
