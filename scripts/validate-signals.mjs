@@ -18,7 +18,16 @@ const INDEX_FILE = join(SIGNALS_DIR, "index.json");
 
 const DECISION_HORIZONS = ["now", "0,5 - 2 years", "2+ years"];
 const SOURCE_TYPES = ["academic", "article", "social", "video", "discussion", "release"];
-const SIGNAL_TYPES = ["weak-signal", "field-report", "study", "regulatory", "tool-shift"];
+export const SIGNAL_TYPES = [
+  "practitioner-account",
+  "field-report",
+  "study",
+  "tool-shift",
+  "regulation-standard",
+  "market-event",
+  "forecast",
+  "primary-research",
+];
 const SIGNAL_STRENGTHS = ["weak", "emerging", "established"];
 const SIGNAL_STAGES = ["leading", "concurrent", "lagging"];
 const AVAILABILITY = ["GA", "preview", "announced"];
@@ -47,99 +56,104 @@ function checkEnum(file, field, value, allowed) {
   }
 }
 
-let index;
-try {
-  index = JSON.parse(readFileSync(INDEX_FILE, "utf8"));
-} catch (e) {
-  // Report this in the script's own format rather than as a raw Node stack trace;
-  // this runs first in `npm run build`, so the message is what a failing CI shows.
-  console.error(`validate: could not read ${INDEX_FILE}\n  ${e.message}`);
-  process.exit(1);
-}
-
-const indexed = new Set();
-
-for (const entry of index.items || []) {
-  if (typeof entry?.file !== "string" || !entry.file) {
-    err(JSON.stringify(entry), "index entry has a missing or non-string 'file'");
-    continue;
-  }
-  indexed.add(entry.file);
-  const path = join(SIGNALS_DIR, entry.file);
-  if (!existsSync(path)) {
-    err(entry.file, "referenced by index.json but missing on disk");
-    continue;
-  }
-
-  let s;
+function main() {
+  let index;
   try {
-    s = JSON.parse(readFileSync(path, "utf8"));
+    index = JSON.parse(readFileSync(INDEX_FILE, "utf8"));
   } catch (e) {
-    err(entry.file, `invalid JSON: ${e.message}`);
-    continue;
+    // Report this in the script's own format rather than as a raw Node stack trace;
+    // this runs first in `npm run build`, so the message is what a failing CI shows.
+    console.error(`validate: could not read ${INDEX_FILE}\n  ${e.message}`);
+    process.exit(1);
   }
 
-  // A signal file whose root is null, an array, or a scalar would crash every
-  // field check below with a confusing error.
-  if (typeof s !== "object" || s === null || Array.isArray(s)) {
-    err(entry.file, "root value is not a JSON object");
-    continue;
-  }
+  const indexed = new Set();
 
-  for (const field of REQUIRED) {
-    if (s[field] == null || s[field] === "") err(entry.file, `missing required field '${field}'`);
-  }
+  for (const entry of index.items || []) {
+    if (typeof entry?.file !== "string" || !entry.file) {
+      err(JSON.stringify(entry), "index entry has a missing or non-string 'file'");
+      continue;
+    }
+    indexed.add(entry.file);
+    const path = join(SIGNALS_DIR, entry.file);
+    if (!existsSync(path)) {
+      err(entry.file, "referenced by index.json but missing on disk");
+      continue;
+    }
 
-  // The site maps over these directly. A string where an array is expected
-  // (e.g. "corroboration": "https://…") throws inside render and blanks the UI,
-  // so catch the shape here — this validator is the only gate on fetched content.
-  for (const field of ARRAY_FIELDS) {
-    if (s[field] !== undefined && !Array.isArray(s[field])) {
-      err(entry.file, `'${field}' must be an array, got ${typeof s[field]}`);
+    let s;
+    try {
+      s = JSON.parse(readFileSync(path, "utf8"));
+    } catch (e) {
+      err(entry.file, `invalid JSON: ${e.message}`);
+      continue;
+    }
+
+    // A signal file whose root is null, an array, or a scalar would crash every
+    // field check below with a confusing error.
+    if (typeof s !== "object" || s === null || Array.isArray(s)) {
+      err(entry.file, "root value is not a JSON object");
+      continue;
+    }
+
+    for (const field of REQUIRED) {
+      if (s[field] == null || s[field] === "") err(entry.file, `missing required field '${field}'`);
+    }
+
+    // The site maps over these directly. A string where an array is expected
+    // (e.g. "corroboration": "https://…") throws inside render and blanks the UI,
+    // so catch the shape here — this validator is the only gate on fetched content.
+    for (const field of ARRAY_FIELDS) {
+      if (s[field] !== undefined && !Array.isArray(s[field])) {
+        err(entry.file, `'${field}' must be an array, got ${typeof s[field]}`);
+      }
+    }
+
+    checkEnum(entry.file, "decisionHorizon", s.decisionHorizon, DECISION_HORIZONS);
+    checkEnum(entry.file, "sourceType", s.sourceType, SOURCE_TYPES);
+    checkEnum(entry.file, "signalType", s.signalType, SIGNAL_TYPES);
+    checkEnum(entry.file, "signalStrength", s.signalStrength, SIGNAL_STRENGTHS);
+    checkEnum(entry.file, "signalStage", s.signalStage, SIGNAL_STAGES);
+    checkEnum(entry.file, "availability", s.availability, AVAILABILITY);
+
+    const cats = Array.isArray(s.category) ? s.category : s.category ? [s.category] : [];
+    for (const c of cats) checkEnum(entry.file, "category", c, CATEGORIES);
+    if (cats.length > 3) err(entry.file, `category has ${cats.length} values (max 3)`);
+
+    if (s.status !== "published" && s.status !== "draft") {
+      err(entry.file, `status = ${JSON.stringify(s.status)} must be 'published' or 'draft'`);
+    }
+    if (s.signalType === "regulation-standard" && !s.effectiveDate) {
+      err(entry.file, "signalType 'regulation-standard' requires effectiveDate");
+    }
+    if (s.signalType === "practitioner-account" && !s.observer) {
+      err(entry.file, "signalType 'practitioner-account' requires observer");
     }
   }
 
-  checkEnum(entry.file, "decisionHorizon", s.decisionHorizon, DECISION_HORIZONS);
-  checkEnum(entry.file, "sourceType", s.sourceType, SOURCE_TYPES);
-  checkEnum(entry.file, "signalType", s.signalType, SIGNAL_TYPES);
-  checkEnum(entry.file, "signalStrength", s.signalStrength, SIGNAL_STRENGTHS);
-  checkEnum(entry.file, "signalStage", s.signalStage, SIGNAL_STAGES);
-  checkEnum(entry.file, "availability", s.availability, AVAILABILITY);
+  for (const file of readdirSync(SIGNALS_DIR)) {
+    // Pipeline working files must never sit under public/ — Vite copies public/
+    // into dist, so anything here is published on the live site. The ledger and
+    // the finder's rejected list record stories the team declined; they belong
+    // in data/. Fail the build rather than deploy them.
+    if (file.startsWith("_")) {
+      err(
+        file,
+        "pipeline working file found under public/ — it would be published on the live site. Move it to data/ (see docs/ai-signals-pipeline.md)"
+      );
+      continue;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}-\d+\.json$/.test(file)) continue;
+    if (!indexed.has(file)) err(file, "exists on disk but is not listed in index.json (invisible to the site)");
+  }
 
-  const cats = Array.isArray(s.category) ? s.category : s.category ? [s.category] : [];
-  for (const c of cats) checkEnum(entry.file, "category", c, CATEGORIES);
-  if (cats.length > 3) err(entry.file, `category has ${cats.length} values (max 3)`);
-
-  if (s.status !== "published" && s.status !== "draft") {
-    err(entry.file, `status = ${JSON.stringify(s.status)} must be 'published' or 'draft'`);
+  if (errors.length) {
+    console.error(`validate: ${errors.length} problem(s) found\n`);
+    errors.forEach((e) => console.error("  " + e));
+    process.exit(1);
   }
-  if (s.signalType === "regulatory" && !s.effectiveDate) {
-    err(entry.file, "signalType 'regulatory' requires effectiveDate");
-  }
-  if (s.signalType === "weak-signal" && !s.observer) {
-    err(entry.file, "signalType 'weak-signal' requires observer");
-  }
+  console.log(`validate: OK — ${index.items.length} signals valid`);
 }
 
-for (const file of readdirSync(SIGNALS_DIR)) {
-  // Pipeline working files must never sit under public/ — Vite copies public/
-  // into dist, so anything here is published on the live site. The ledger and
-  // the finder's rejected list record stories the team declined; they belong
-  // in data/. Fail the build rather than deploy them.
-  if (file.startsWith("_")) {
-    err(
-      file,
-      "pipeline working file found under public/ — it would be published on the live site. Move it to data/ (see docs/ai-signals-pipeline.md)"
-    );
-    continue;
-  }
-  if (!/^\d{4}-\d{2}-\d{2}-\d+\.json$/.test(file)) continue;
-  if (!indexed.has(file)) err(file, "exists on disk but is not listed in index.json (invisible to the site)");
-}
-
-if (errors.length) {
-  console.error(`validate: ${errors.length} problem(s) found\n`);
-  errors.forEach((e) => console.error("  " + e));
-  process.exit(1);
-}
-console.log(`validate: OK — ${index.items.length} signals valid`);
+// Only run the CLI when invoked directly, so importing this module for tests is safe.
+if (process.argv[1] && process.argv[1].endsWith("validate-signals.mjs")) main();

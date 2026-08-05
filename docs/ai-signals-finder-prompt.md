@@ -134,21 +134,31 @@ is genuinely known.
 
 | Type | Use when | Fields expected where known |
 | --- | --- | --- |
-| `weak-signal` | One named practitioner's firsthand, unvalidated observation | `observer` (hard-required) |
+| `practitioner-account` | One named practitioner's firsthand, unvalidated observation | `observer` (hard-required) |
 | `field-report` | Industry or vendor survey / benchmark report | `sampleSize`, `fieldworkPeriod`, `sponsor` |
 | `study` | Academic paper or formal benchmark | `dataCollectedPeriod`, `replicated` |
-| `regulatory` | Law, policy or standard with a real date | `effectiveDate` (hard-required), `jurisdiction` |
 | `tool-shift` | Release or capability change that alters practice | `version`, `availability` |
+| `regulation-standard` | Law, policy or standard with a real date | `effectiveDate` (hard-required), `jurisdiction`, `issuer` |
+| `market-event` | Layoffs, funding, acquisitions, hiring shifts | `organisation`, `magnitude` |
+| `forecast` | A prediction about the future, not an observation of the present | `forecaster`, `horizonDate` |
+| `primary-research` | This project's own interviews and workshops | `method` (`interview` \| `workshop` \| `other`), `participants`, `fieldworkPeriod` |
+
+A **forecast** is a prediction, not an observation. Emit it only when the
+prediction itself is the news, and never as evidence that something is already
+happening.
+
+**primary-research** covers this project's own interviews and workshops. Set
+`method` to `interview`, `workshop` or `other`.
 
 **Include every type-specific field whose value is stated in the source. If the
 source does not state it, OMIT the field — never invent a sample size,
 fieldwork window, or data-collection period.** This is a research-communication
 site; fabricating a figure to satisfy a schema is worse than leaving it out.
-Only `observer` (weak-signal) and `effectiveDate` (regulatory) are hard
-requirements — every other type-specific field above is expected where known,
-not mandatory.
+Only `observer` (practitioner-account) and `effectiveDate` (regulation-standard)
+are hard requirements — every other type-specific field above is expected where
+known, not mandatory.
 
-**`recommendedActions` may be `[]` for `weak-signal`.** An early firsthand report
+**`recommendedActions` may be `[]` for `practitioner-account`.** An early firsthand report
 does not support confident recommendations, and inventing them is worse than
 omitting them. Do not let the need to fill this field stop you surfacing an early
 signal — this is the single most important rule in this section.
@@ -159,7 +169,7 @@ week about 2025 data is a lagging indicator, and the reader must see that). If
 the source does not state the collection window, omit the field rather than
 guessing.
 
-For `regulatory`, compute `decisionHorizon` from `effectiveDate` rather than
+For `regulation-standard`, compute `decisionHorizon` from `effectiveDate` rather than
 judging it: within 6 months → `"now"`, within ~2 years → `"0,5 - 2 years"`,
 beyond → `"2+ years"`.
 
@@ -185,19 +195,26 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
   "source": "string (e.g. Practitioner Blog, Hacker News Discussion, Company Blog, arXiv Preprint)",
   "sourceUrl": "https://example.com",
   "sourceType": "academic | article | social | video | discussion | release",
-  "signalType": "weak-signal | field-report | study | regulatory | tool-shift",
+  "signalType": "practitioner-account | field-report | study | tool-shift | regulation-standard | market-event | forecast | primary-research",
   "signalStrength": "weak | emerging | established",
   "signalStage": "leading | concurrent | lagging",
-  "observer": "string (weak-signal only: who reported it and why credible)",
+  "observer": "string (practitioner-account only: who reported it and why credible)",
   "sampleSize": "string (field-report only)",
-  "fieldworkPeriod": "string (field-report only)",
+  "fieldworkPeriod": "string (field-report or primary-research only)",
   "sponsor": "string (field-report only; 'independent' if none)",
   "dataCollectedPeriod": "string (study only)",
   "replicated": false,
-  "effectiveDate": "YYYY-MM-DD (regulatory only)",
-  "jurisdiction": "string (regulatory only)",
   "version": "string (tool-shift only)",
   "availability": "GA | preview | announced (tool-shift only)",
+  "effectiveDate": "YYYY-MM-DD (regulation-standard only)",
+  "jurisdiction": "string (regulation-standard only)",
+  "issuer": "string (regulation-standard only, e.g. 'EU', 'OWASP')",
+  "organisation": "string (market-event only)",
+  "magnitude": "string (market-event only, e.g. '30,000 roles', '$50B')",
+  "forecaster": "string (forecast only)",
+  "horizonDate": "string (forecast only: the year or date the prediction is about)",
+  "method": "interview | workshop | other (primary-research only)",
+  "participants": "string (primary-research only)",
   "leadTimeEstimate": "string (how far ahead of mainstream, e.g. '~6-12 months', or 'confirms current practice')",
   "corroboration": ["https://other-source.example.com"],
   "detectedAt": "YYYY-MM-DD (today)",
@@ -217,7 +234,7 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
 ### Allowed values
 
 - `status`: `published` or `draft`
-- `signalType`: `weak-signal`, `field-report`, `study`, `regulatory`, `tool-shift`
+- `signalType`: `practitioner-account`, `field-report`, `study`, `tool-shift`, `regulation-standard`, `market-event`, `forecast`, `primary-research`
 - `decisionHorizon`: `now`, `0,5 - 2 years`, `2+ years` — use these exact strings, they render verbatim on the site
 - `sourceType`: `academic` (peer-reviewed or preprint), `article` (non-academic article), `social` (blogs, social posts), `video`, `discussion` (forum/comment threads), `release` (changelogs, release notes)
 - `category`: choose 1 primary plus up to 2 secondary (max 3) from: `AI Agents`, `AI Tools`, `Productivity`, `SDLC Change`, `Quality & Testing`, `Security & Risk`, `Org & Leadership`, `Skills & Learning`, `Work Wellbeing`, `Ethics & Policy`, `Business Impact`, `Costs & Economics`, `Other`

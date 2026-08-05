@@ -65,16 +65,19 @@ public/
 - `status` must be "published" or "draft" (only published items are fetched)
 
 Optional signal-typing / radar-provenance fields (all optional; render conditionally so untyped legacy signals are unaffected):
-- `signalType`: one of `weak-signal`, `field-report`, `study`, `regulatory`, `tool-shift`
+- `signalType`: one of `practitioner-account`, `field-report`, `study`, `tool-shift`, `regulation-standard`, `market-event`, `forecast`, `primary-research`
 - `signalStrength`: one of `weak`, `emerging`, `established`
 - `signalStage`: one of `leading`, `concurrent`, `lagging`
 - `leadTimeEstimate`: human-readable string, e.g. `"~6-12 months"`
 - `corroboration`: array of supporting source URLs
-- `observer`: who reported it and why credible (expected for `signalType: weak-signal`)
+- `observer`: who reported it and why credible (expected for `signalType: practitioner-account`)
 - `sampleSize`, `fieldworkPeriod`, `sponsor`: expected for `signalType: field-report`
 - `dataCollectedPeriod`, `replicated`: expected for `signalType: study`
-- `effectiveDate`, `jurisdiction`: expected for `signalType: regulatory`
 - `version`, `availability` (`GA` | `preview` | `announced`): expected for `signalType: tool-shift`
+- `effectiveDate`, `jurisdiction`, `issuer`: expected for `signalType: regulation-standard`
+- `organisation`, `magnitude`: expected for `signalType: market-event`
+- `forecaster`, `horizonDate`: expected for `signalType: forecast`
+- `method` (`interview` | `workshop` | `other`), `participants`, `fieldworkPeriod`: expected for `signalType: primary-research`
 
 Only include a type-specific field when its value is actually stated in the source — never invent a sample size, fieldwork window, or data-collection period to fill the schema.
 
