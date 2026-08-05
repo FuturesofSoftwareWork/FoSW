@@ -70,7 +70,7 @@ function App() {
         signals={signals}
         phenomena={phenomena}
         onOpenSignal={(signal) => pushDrawer({ type: "signal", data: signal })}
-        onOpenPhenomenon={(p) => openDrawer({ type: "phenomenon", data: p })}
+        onOpenPhenomenon={(p) => pushDrawer({ type: "phenomenon", data: p })}
         onBack={stack.length > 1 ? popDrawer : undefined}
       />
     </div>

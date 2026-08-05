@@ -129,6 +129,16 @@ const ContentDrawer = ({
     return () => node.removeEventListener("scroll", handleScroll);
   }, [content]);
 
+  // Scroll back to the top whenever the item itself changes — pushing,
+  // popping or replacing all land the reader on a different document, and
+  // staying mid-scroll from the previous item defeats the point of Back.
+  // Keyed on type + id (not the content object) so it fires only on a
+  // genuine item change, not on every re-render.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+    setScrollProgress(0);
+  }, [content?.type, content?.data.id]);
+
   const isInsight = content?.type === "insight";
   const meta = content ? DRAWER_TYPE_META[content.type] : DRAWER_TYPE_META.signal;
 
