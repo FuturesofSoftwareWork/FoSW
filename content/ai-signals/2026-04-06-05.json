@@ -26,5 +26,8 @@
     "Oracle's $50B AI infrastructure push is debt-financed, and the layoffs may be primarily driven by cash flow constraints rather than genuine AI-driven productivity gains — the AI framing may provide cover for financial restructuring.",
     "The Klarna precedent (covered in a prior signal) showed that aggressive AI-driven cuts can lead to quality degradation and rehiring within 18-24 months — the long-term sustainability of these workforce reductions is unproven."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "market-event",
+"organisation": "Oracle",
+"magnitude": "30,000 roles, 18% of workforce"
 }

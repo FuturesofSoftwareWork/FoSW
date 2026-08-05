@@ -26,5 +26,8 @@
     "Challenger data is based on publicly announced layoffs and employer-stated reasons, not independently verified automation metrics, so the true causal role of AI in each cut is uncertain.",
     "Q1 2026 total cuts (217,362) are actually the lowest Q1 since 2022 and down 56% from Q1 2025, complicating the narrative of an AI-driven job apocalypse."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "market-event",
+"organisation": "US employers, per Challenger, Gray & Christmas",
+"magnitude": "15,341 AI-attributed cuts, 25% of the monthly total"
 }

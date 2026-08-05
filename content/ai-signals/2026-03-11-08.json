@@ -25,5 +25,6 @@
     "Results are based on current-generation models; future agent architectures with improved planning may derive more value from test generation.",
     "The observation that GPT-5.2 succeeds without tests could reflect superior code generation rather than tests being universally unnecessary."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "study"
 }

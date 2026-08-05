@@ -26,5 +26,8 @@
     "The Harvard study's 7.7% figure is based on early AI adoption data and may not reflect current conditions as AI tools and organizational practices evolve.",
     "The Klarna example is a single case study in fintech; generalizability to other sectors and company sizes is uncertain."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "market-event",
+"organisation": "US entry-level software labour market",
+"magnitude": "67% drop in entry-level postings 2023-2024; 7.7% junior employment decline at AI-adopting firms"
 }

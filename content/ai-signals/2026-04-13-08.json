@@ -26,5 +26,8 @@
     "The demand surge is concentrated in companies with large AI infrastructure budgets; smaller firms and non-tech sectors may not see equivalent hiring growth.",
     "Entry-level hiring increases (e.g., IBM) may be partly driven by lower salary expectations for junior AI roles rather than genuine net job creation."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+"signalType": "market-event",
+"organisation": "US software engineering labour market",
+"magnitude": "67,000+ open positions; roles doubled since the mid-2023 trough"
 }

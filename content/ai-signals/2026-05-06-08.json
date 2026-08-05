@@ -34,5 +34,8 @@
     "Open-weight models require self-hosting infrastructure and expertise, which adds operational complexity and cost that partially offsets the lower inference price for organizations without existing GPU infrastructure.",
     "Geopolitical considerations around Chinese-origin AI models — including potential export controls, compliance requirements, and supply chain risks — may limit adoption in defense, government, and some regulated enterprise contexts."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "market-event",
+"organisation": "Z.ai, MiniMax, Moonshot, DeepSeek",
+"magnitude": "four frontier-class open-weight coding models within 12 days at roughly one-third the inference cost"
 }

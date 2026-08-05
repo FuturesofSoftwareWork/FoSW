@@ -35,5 +35,7 @@
 "Some organizations may still need framework-style composition for bespoke workflows; the harness/framework boundary can blur in complex environments.",
 "Vendor narratives can bias definitions; compare multiple sources and test whether the proposed harness components actually reduce incidents and cost in your environment."
 ],
-"decisionHorizon": "now"
+"decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "Arize, defining the agent harness from its own product work"
 }
