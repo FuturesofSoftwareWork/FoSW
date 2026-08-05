@@ -1134,7 +1134,14 @@ console.log('stable?', JSON.stringify(placeBlip(mk('a','gaining-traction'),0,9))
 
 Expected: distances increasing from centre ring to rim ring, all below 250; sectors spanning 0–40 through 320–360; `stable? true`.
 
-`tsx` is already a devDependency — do not install anything.
+**`tsx` is NOT a dependency of this repo** — an earlier draft of this plan said it
+was, conflating this repo with the sibling `futureOfSW`. `npx tsx` fetches it into
+npm's exec cache without touching `package.json` or `package-lock.json`; confirm
+with `git status` afterwards that neither changed. Do not add it as a dependency.
+
+Note also that `npx tsx -e "<multiline script>"` has been observed to exit 0 with no
+output under Git Bash on Windows. If that happens, write the script to a temporary
+`.ts` file, run it, and delete it before committing.
 
 - [ ] **Step 3: Commit**
 
