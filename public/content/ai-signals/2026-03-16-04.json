@@ -28,5 +28,5 @@
   ],
   "decisionHorizon": "now",
   "signalType": "tool-shift",
-  "availability": "GA"
+  "availability": "preview"
 }
