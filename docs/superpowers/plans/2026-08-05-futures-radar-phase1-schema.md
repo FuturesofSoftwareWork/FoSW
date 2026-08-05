@@ -255,9 +255,27 @@ test("the retired genre names are gone", () => {
 Run: `npm test`
 Expected: FAIL — `validate-signals.mjs` has no export named `SIGNAL_TYPES`.
 
-Note: importing the validator runs it, and it calls `process.exit(1)` on error. That is acceptable here because content is currently valid — but the import side effect is why Step 3 exports the constant rather than the test hard-coding it.
+- [ ] **Step 3: Make the validator safe to import**
 
-- [ ] **Step 3: Update the validator**
+`validate-signals.mjs` currently runs its whole validation at module load, so
+importing it for a test executes the CLI and can call `process.exit(1)` mid-test-run.
+Guard it the way `validate-phenomena.mjs` will be in Task 6.
+
+Wrap everything from `let index;` (line 50) to the end of the orphan-file loop
+(line 138) in a `function main() { … }`, then add at the end of the file:
+
+```js
+// Only run the CLI when invoked directly, so importing this module for tests is safe.
+if (process.argv[1] && process.argv[1].endsWith("validate-signals.mjs")) main();
+```
+
+The `errors` array and the `err`/`checkEnum` helpers stay at module scope; move only
+the code that reads files and exits. Verify the CLI still behaves:
+
+Run: `npm run signals:validate`
+Expected: `validate: OK — 89 signals valid`
+
+- [ ] **Step 4: Update the validator's genres**
 
 In `scripts/validate-signals.mjs`, replace line 21:
 
@@ -287,7 +305,7 @@ Replace the two required-field rules at lines 116-121:
 
 Do **not** add required-field rules for the other genres. `CLAUDE.md` states type-specific fields are included only when the source actually states them; a hard requirement would invite invented values.
 
-- [ ] **Step 4: Update the two content files**
+- [ ] **Step 5: Update the two content files**
 
 ```bash
 # 2026-08-03-03.json: "weak-signal" -> "practitioner-account"
@@ -299,7 +317,7 @@ Edit each file's `signalType` value directly. Confirm nothing else matches:
 Run: `grep -rn '"signalType": "weak-signal"\|"signalType": "regulatory"' public/content/ai-signals/`
 Expected: no output.
 
-- [ ] **Step 5: Update the TypeScript types**
+- [ ] **Step 6: Update the TypeScript types**
 
 In `src/types/content.ts`, replace the `SignalType` union:
 
@@ -346,12 +364,12 @@ In the `AISignal` interface, replace the `// --- regulatory ---` block and appen
 
 `fieldworkPeriod` already exists on the interface and is reused by `primary-research`; do not redeclare it.
 
-- [ ] **Step 6: Run tests, validator and build**
+- [ ] **Step 7: Run tests, validator and build**
 
 Run: `npm test && npm run signals:validate && npm run build`
 Expected: tests PASS; `validate: OK — 89 signals valid`; build succeeds.
 
-- [ ] **Step 7: Update the finder prompt and CLAUDE.md**
+- [ ] **Step 8: Update the finder prompt and CLAUDE.md**
 
 In `docs/ai-signals-finder-prompt.md`, replace the five signal types with the eight
 above. For each, copy the one-line definition and the type-specific field list from
@@ -366,7 +384,7 @@ Add these two rules verbatim:
 
 In `CLAUDE.md`, under *Content Schema*, update the `signalType` bullet to the eight values and add the new optional fields to the type-specific list.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
 git add src/types/content.ts scripts/validate-signals.mjs scripts/__tests__/validate-signals.test.mjs \
