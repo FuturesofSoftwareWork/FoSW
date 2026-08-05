@@ -20,8 +20,17 @@ export function quarterOf(date) {
 
 const resolve = (evidence, signalsById) =>
   (Array.isArray(evidence) ? evidence : [])
+    .filter((e) => e && typeof e === "object")
     .map((e) => ({ e, s: signalsById.get(e.signalId) }))
     .filter(({ s }) => s !== undefined);
+
+// "independent" is the documented value authors use to mean "no sponsor" — treating
+// it as a real sponsor name would collapse unrelated independent reports into one
+// context, the opposite of the rule's intent.
+const hasSponsor = (s) =>
+  typeof s.sponsor === "string" &&
+  s.sponsor.trim() !== "" &&
+  s.sponsor.trim().toLowerCase() !== "independent";
 
 export function deriveEvidenceProfile(phenomenon, signalsById) {
   const scoring = resolve(phenomenon.evidence, signalsById).filter(
@@ -35,7 +44,7 @@ export function deriveEvidenceProfile(phenomenon, signalsById) {
   for (const { e, s } of scoring) {
     if (!e.primary) continue;
     contexts.add(
-      s.signalType === "field-report" && s.sponsor ? `sponsor:${s.sponsor}` : `signal:${s.id}`
+      s.signalType === "field-report" && hasSponsor(s) ? `sponsor:${s.sponsor}` : `signal:${s.id}`
     );
     if (s.signalType) types.add(s.signalType);
   }

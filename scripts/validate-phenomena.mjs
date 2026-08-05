@@ -56,7 +56,7 @@ export function validatePhenomenon(p, ctx) {
     e(`potentialImpact ${JSON.stringify(p.potentialImpact)} is not one of ${POTENTIAL_IMPACTS.join(" | ")}`);
   }
   if (p.primaryDimension !== undefined && !WORK_DIMENSION_IDS.includes(p.primaryDimension)) {
-    e(`primaryDimension ${JSON.stringify(p.primaryDimension)} is not a known work dimension`);
+    e(`primaryDimension ${JSON.stringify(p.primaryDimension)} is not one of ${WORK_DIMENSION_IDS.join(" | ")}`);
   }
 
   // A ring position without a stated reason is unreviewable.
@@ -75,11 +75,15 @@ export function validatePhenomenon(p, ctx) {
   if (!Array.isArray(p.implications)) e("'implications' must be an array");
   implications.forEach((im, i) => {
     if (!WORK_DIMENSION_IDS.includes(im?.dimension)) {
-      e(`implications[${i}].dimension ${JSON.stringify(im?.dimension)} is not a known work dimension`);
+      e(`implications[${i}].dimension ${JSON.stringify(im?.dimension)} is not one of ${WORK_DIMENSION_IDS.join(" | ")}`);
     }
     if (isBlank(im?.statement)) e(`implications[${i}].statement must be a non-empty string`);
-    for (const a of im?.actors || []) {
-      if (!ACTOR_IDS.includes(a)) e(`implications[${i}].actors contains unknown actor ${JSON.stringify(a)}`);
+    const actors = Array.isArray(im?.actors) ? im.actors : [];
+    if (im?.actors !== undefined && !Array.isArray(im.actors)) e(`implications[${i}].actors must be an array`);
+    for (const a of actors) {
+      if (!ACTOR_IDS.includes(a)) {
+        e(`implications[${i}].actors contains unknown actor ${JSON.stringify(a)}, which is not one of ${ACTOR_IDS.join(" | ")}`);
+      }
     }
   });
 
@@ -103,9 +107,13 @@ export function validatePhenomenon(p, ctx) {
     }
   });
 
-  const pathIds = new Set((p.developmentPaths || []).map((d) => d?.id));
+  const developmentPaths = Array.isArray(p.developmentPaths) ? p.developmentPaths : [];
+  if (p.developmentPaths !== undefined && !Array.isArray(p.developmentPaths)) e("'developmentPaths' must be an array");
+  const pathIds = new Set(developmentPaths.map((d) => d?.id));
   implications.forEach((im, i) => {
-    for (const pid of im?.pathIds || []) {
+    const imPathIds = Array.isArray(im?.pathIds) ? im.pathIds : [];
+    if (im?.pathIds !== undefined && !Array.isArray(im.pathIds)) e(`implications[${i}].pathIds must be an array`);
+    for (const pid of imPathIds) {
       if (!pathIds.has(pid)) e(`implications[${i}].pathIds contains ${JSON.stringify(pid)}, which is not a declared developmentPath`);
     }
   });
@@ -146,7 +154,8 @@ export function validatePhenomenon(p, ctx) {
   }
 
   // Ring movement must always be auditable after the fact.
-  const history = p.reachHistory || [];
+  const history = Array.isArray(p.reachHistory) ? p.reachHistory : [];
+  if (p.reachHistory !== undefined && !Array.isArray(p.reachHistory)) e("'reachHistory' must be an array");
   if (history.length > 0) {
     const last = history[history.length - 1];
     if (last?.observedReach !== p.observedReach) {
@@ -166,6 +175,16 @@ export function validatePhenomenon(p, ctx) {
     if (!evidence.some((ev) => ev?.stance === "supports")) {
       e("a published phenomenon needs at least one 'supports' evidence item — with only contextual evidence this is a diagnosis of the present, not a transformation");
     }
+    // Both the forecast exclusion and the sponsor collapse in derive.mjs key off
+    // signalType. Untyped 'supports' evidence silently escapes both, so a published
+    // phenomenon must not cite it.
+    evidence.forEach((ev, i) => {
+      if (ev?.stance !== "supports") return;
+      const signal = ctx.signalsById.get(ev?.signalId);
+      if (signal && !signal.signalType) {
+        e(`evidence[${i}].signalId ${JSON.stringify(ev.signalId)} refers to a signal with no signalType — a published phenomenon's 'supports' evidence must reference a typed signal`);
+      }
+    });
   }
 
   return errors;

@@ -25,6 +25,7 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 src/
   components/       # React components
     WhatIf/         # Carousel sub-components
+  config/           # Radar vocabularies (work dimensions, actors)
   data/             # Static fallback content
   hooks/            # Custom React hooks (useContent, useCarouselAutoplay)
   types/            # TypeScript interfaces and types
@@ -33,6 +34,10 @@ public/
   content/
     ai-signals/     # JSON signal files + index.json
     expert-insights/# JSON insight files + index.json
+    phenomena/      # JSON phenomenon files + index.json
+scripts/
+  lib/              # content loader, phenomenon-schema mirror, derive.mjs
+  __tests__/        # node --test suite for the scripts above
 ```
 
 ## Key Conventions

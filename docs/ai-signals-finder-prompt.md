@@ -173,7 +173,11 @@ For `regulation-standard`, compute `decisionHorizon` from `effectiveDate` rather
 judging it: within 6 months → `"now"`, within ~2 years → `"0,5 - 2 years"`,
 beyond → `"2+ years"`.
 
-Set `sponsor` to `"independent"` when a report has no commercial backer.
+Omit `sponsor` entirely when a report has no commercial backer — do not write
+`"independent"`. Several genuinely unsponsored field reports are independent of
+each other; downstream tooling collapses reports that share one sponsor into a
+single context, so a placeholder value like `"independent"` would wrongly
+collapse them all into one.
 
 ## Output
 
@@ -201,7 +205,7 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
   "observer": "string (practitioner-account only: who reported it and why credible)",
   "sampleSize": "string (field-report only)",
   "fieldworkPeriod": "string (field-report or primary-research only)",
-  "sponsor": "string (field-report only; 'independent' if none)",
+  "sponsor": "string (field-report only; omit the field entirely if there is no sponsor)",
   "dataCollectedPeriod": "string (study only)",
   "replicated": false,
   "version": "string (tool-shift only)",

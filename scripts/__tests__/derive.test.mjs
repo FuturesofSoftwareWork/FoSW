@@ -101,3 +101,25 @@ test("deriveDates returns nulls rather than crashing when evidence is not an arr
     latestEvidenceDate: null,
   });
 });
+
+test("a null evidence element is ignored rather than crashing", () => {
+  const p = { evidence: [null, ev("s-tool", "supports")] };
+  assert.doesNotThrow(() => deriveEvidenceProfile(p, signals));
+  assert.equal(deriveEvidenceProfile(p, signals).independentContexts, 1);
+});
+
+test("field reports without a sponsor do not collapse into one context", () => {
+  const localSignals = new Map(signals);
+  localSignals.set("s-fr1", { id: "s-fr1", date: "2026-05-01", signalType: "field-report" });
+  localSignals.set("s-fr2", { id: "s-fr2", date: "2026-05-02", signalType: "field-report" });
+  const p = { evidence: [ev("s-fr1", "supports"), ev("s-fr2", "supports")] };
+  assert.equal(deriveEvidenceProfile(p, localSignals).independentContexts, 2);
+});
+
+test("sponsor: 'independent' (any case) is treated as no sponsor, not a shared one", () => {
+  const localSignals = new Map(signals);
+  localSignals.set("s-ind1", { id: "s-ind1", date: "2026-05-01", signalType: "field-report", sponsor: "independent" });
+  localSignals.set("s-ind2", { id: "s-ind2", date: "2026-05-02", signalType: "field-report", sponsor: "Independent" });
+  const p = { evidence: [ev("s-ind1", "supports"), ev("s-ind2", "supports")] };
+  assert.equal(deriveEvidenceProfile(p, localSignals).independentContexts, 2);
+});

@@ -6,7 +6,7 @@ Phase 1 of the "futures radar" feature: a new **Phenomenon** content type that
 represents a forward-looking claim about how software work may be changing,
 backed by dated evidence drawn from existing AI-signal content.
 
-- **Types:** `Phenomenon`, `PhenomenonEvidence`, `PhenomenonImplication`,
+- **Types:** `Phenomenon`, `PhenomenonEvidence`, `Implication`,
   `DevelopmentPath`, `EvidenceProfile` and related TypeScript interfaces.
 - **Config:** nine work-dimension vocabulary entries and seven actor entries
   (`src/config/radarDimensions.ts`, `src/config/radarActors.ts`), mirrored for
@@ -37,7 +37,7 @@ backed by dated evidence drawn from existing AI-signal content.
 - **Six signals newly typed** as the worked fixture's evidence, to prove the
   bootstrap-pass pattern the spec describes:
   - `2026-03-16-04` (Anthropic multi-agent Code Review) → `tool-shift`,
-    `availability: GA`
+    `availability: preview`
   - `2026-05-06-11` (Cloudflare, 5,169 repos) → `field-report`,
     `sponsor: Cloudflare`
   - `2026-03-16-05` (Opsera benchmark) → `field-report`, `sponsor: Opsera`

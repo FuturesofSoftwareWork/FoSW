@@ -184,3 +184,64 @@ test("reach matching the latest history entry is fine", () => {
   };
   assert.deepEqual(validatePhenomenon(p, ctx), []);
 });
+
+// --- malformed input: reports a clean message rather than throwing ------------
+
+test("a null evidence element is rejected without throwing", () => {
+  const p = { ...valid(), evidence: [null] };
+  let errors;
+  assert.doesNotThrow(() => { errors = validatePhenomenon(p, ctx); });
+  assert.match(errors.join("\n"), /evidence\[0\]\.stance/);
+});
+
+test("developmentPaths must be an array rather than throwing when it is not", () => {
+  const p = { ...valid(), developmentPaths: {} };
+  let errors;
+  assert.doesNotThrow(() => { errors = validatePhenomenon(p, ctx); });
+  assert.match(errors.join("\n"), /'developmentPaths' must be an array/);
+});
+
+test("implications[].pathIds must be an array rather than throwing when it is not", () => {
+  const p = valid();
+  p.implications[0].pathIds = {};
+  let errors;
+  assert.doesNotThrow(() => { errors = validatePhenomenon(p, ctx); });
+  assert.match(errors.join("\n"), /implications\[0\]\.pathIds must be an array/);
+});
+
+test("implications[].actors must be an array rather than throwing when it is not", () => {
+  const p = valid();
+  p.implications[0].actors = {};
+  let errors;
+  assert.doesNotThrow(() => { errors = validatePhenomenon(p, ctx); });
+  assert.match(errors.join("\n"), /implications\[0\]\.actors must be an array/);
+});
+
+test("reachHistory must be an array rather than silently accepted when it is not", () => {
+  const p = { ...valid(), reachHistory: {} };
+  assert.match(validatePhenomenon(p, ctx).join("\n"), /'reachHistory' must be an array/);
+});
+
+// --- published phenomena must cite typed evidence (FIX 5) ---------------------
+
+test("a published phenomenon's 'supports' evidence must reference a typed signal", () => {
+  const untypedSignals = new Map(signals);
+  untypedSignals.set("s-untyped", { id: "s-untyped", date: "2026-05-01", status: "published" });
+  const p = valid();
+  p.evidence = [
+    { signalId: "s-untyped", stance: "supports", primary: true },
+    { signalId: "s-b", stance: "contextual", primary: true },
+  ];
+  const errors = validatePhenomenon(p, { ...ctx, signalsById: untypedSignals }).join("\n");
+  assert.match(errors, /s-untyped/);
+  assert.match(errors, /signalType/);
+});
+
+test("a draft phenomenon may cite untyped 'supports' evidence", () => {
+  const untypedSignals = new Map(signals);
+  untypedSignals.set("s-untyped", { id: "s-untyped", date: "2026-05-01", status: "published" });
+  const p = { ...valid(), status: "draft" };
+  p.evidence = [{ signalId: "s-untyped", stance: "supports", primary: true }];
+  const errors = validatePhenomenon(p, { ...ctx, signalsById: untypedSignals }).join("\n");
+  assert.ok(!/signalType/.test(errors), errors);
+});
