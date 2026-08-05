@@ -19,7 +19,7 @@ export function quarterOf(date) {
 }
 
 const resolve = (evidence, signalsById) =>
-  (evidence || [])
+  (Array.isArray(evidence) ? evidence : [])
     .map((e) => ({ e, s: signalsById.get(e.signalId) }))
     .filter(({ s }) => s !== undefined);
 

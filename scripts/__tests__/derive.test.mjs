@@ -84,3 +84,20 @@ test("deriveDates returns nulls when nothing resolves", () => {
     latestEvidenceDate: null,
   });
 });
+
+test("deriveEvidenceProfile returns the zero profile rather than crashing when evidence is not an array", () => {
+  const p = { evidence: { signalId: "s-tool", stance: "supports", primary: true } };
+  assert.deepEqual(deriveEvidenceProfile(p, signals), {
+    independentContexts: 0,
+    evidenceTypes: 0,
+    quartersSpanned: 0,
+    counterEvidence: false,
+  });
+});
+
+test("deriveDates returns nulls rather than crashing when evidence is not an array", () => {
+  assert.deepEqual(deriveDates({ evidence: "nonsense" }, signals), {
+    firstObserved: null,
+    latestEvidenceDate: null,
+  });
+});
