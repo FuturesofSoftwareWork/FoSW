@@ -25,6 +25,7 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 src/
   components/       # React components
     WhatIf/         # Carousel sub-components
+  config/           # Radar vocabularies (work dimensions, actors)
   data/             # Static fallback content
   hooks/            # Custom React hooks (useContent, useCarouselAutoplay)
   types/            # TypeScript interfaces and types
@@ -33,6 +34,10 @@ public/
   content/
     ai-signals/     # JSON signal files + index.json
     expert-insights/# JSON insight files + index.json
+    phenomena/      # JSON phenomenon files + index.json
+scripts/
+  lib/              # content loader, phenomenon-schema mirror, derive.mjs
+  __tests__/        # node --test suite for the scripts above
 ```
 
 ## Key Conventions
@@ -65,16 +70,19 @@ public/
 - `status` must be "published" or "draft" (only published items are fetched)
 
 Optional signal-typing / radar-provenance fields (all optional; render conditionally so untyped legacy signals are unaffected):
-- `signalType`: one of `weak-signal`, `field-report`, `study`, `regulatory`, `tool-shift`
+- `signalType`: one of `practitioner-account`, `field-report`, `study`, `tool-shift`, `regulation-standard`, `market-event`, `forecast`, `primary-research`
 - `signalStrength`: one of `weak`, `emerging`, `established`
 - `signalStage`: one of `leading`, `concurrent`, `lagging`
 - `leadTimeEstimate`: human-readable string, e.g. `"~6-12 months"`
 - `corroboration`: array of supporting source URLs
-- `observer`: who reported it and why credible (expected for `signalType: weak-signal`)
+- `observer`: who reported it and why credible (expected for `signalType: practitioner-account`)
 - `sampleSize`, `fieldworkPeriod`, `sponsor`: expected for `signalType: field-report`
 - `dataCollectedPeriod`, `replicated`: expected for `signalType: study`
-- `effectiveDate`, `jurisdiction`: expected for `signalType: regulatory`
 - `version`, `availability` (`GA` | `preview` | `announced`): expected for `signalType: tool-shift`
+- `effectiveDate`, `jurisdiction`, `issuer`: expected for `signalType: regulation-standard`
+- `organisation`, `magnitude`: expected for `signalType: market-event`
+- `forecaster`, `horizonDate`: expected for `signalType: forecast`
+- `method` (`interview` | `workshop` | `other`), `participants`, `fieldworkPeriod`: expected for `signalType: primary-research`
 
 Only include a type-specific field when its value is actually stated in the source — never invent a sample size, fieldwork window, or data-collection period to fill the schema.
 
@@ -82,6 +90,14 @@ Only include a type-specific field when its value is actually stated in the sour
 - Required: `id`, `title`, `author`, `authorRole`, `excerpt`, `paragraphs`, `date`, `status`
 - Optional: `tags`
 
+**Phenomenon** (`public/content/phenomena/*.json`):
+- Required (`REQUIRED_FIELDS`): `id`, `label`, `title`, `thesis`, `status`, `primaryDimension`, `implications`, `evidence`, `observedReach`, `reachRationale`, `reachReviewedAt`
+- `observedReach` must be one of: `early-manifestations`, `gaining-traction`, `field-level-shift`
+- Evidence `stance` must be one of: `supports`, `counter`, `contextual`
+- Work dimensions (nine): `nature-and-division-of-work`, `human-ai-collaboration-and-agency`, `organisation-and-coordination`, `leadership-governance-and-performance`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
+
+`observedReach` is a human judgment and must never be set by a script. `evidenceProfile`, `firstObserved` and `latestEvidenceDate` are derived and must never be hand-edited — the validator fails the build on either.
+
 ## Verification
 
-Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run signals:validate` checks AI-signal content against the schema above (enum values, required fields, id/index consistency); it now runs automatically as the first step of `npm run build`.
+Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run validate` runs both content validators — `npm run signals:validate` (AI-signal content against the schema above: enum values, required fields, id/index consistency) and `npm run validate:phenomena` (phenomenon content: required fields, enum values, cross-references to published signals, and that `evidenceProfile`/`firstObserved`/`latestEvidenceDate` match what the evidence derives) — and now runs automatically as the first step of `npm run build`. `npm test` runs the script unit tests (content loader, derivation library, config mirrors, and validator rules).

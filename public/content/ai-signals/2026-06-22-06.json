@@ -34,5 +34,6 @@
     "Correlational: low merge rates may partly reflect which PRs get routed to CRA-only review, not solely agent quality.",
     "Preprint reflecting the specific 13 review agents available in early 2026; tools are improving quickly."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "study"
 }

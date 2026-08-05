@@ -26,5 +26,7 @@
     "The 15–18% vulnerability increase is an aggregate across languages and frameworks; specific vulnerability rates vary significantly by technology stack and AI tool configuration.",
     "Opsera is a DevOps platform vendor with a commercial interest in governance and measurement tooling; findings that emphasize governance needs should be read with this context."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "Opsera"
 }

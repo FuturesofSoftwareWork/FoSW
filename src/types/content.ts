@@ -24,13 +24,19 @@ export type AISignalSourceType =
   | "discussion"
   | "release";
 
-/** Evidence genre. Drives the radar marker shape. */
+/** Evidence genre. Determines which provenance fields apply. */
 export type SignalType =
-  | "weak-signal"
+  | "practitioner-account"
   | "field-report"
   | "study"
-  | "regulatory"
-  | "tool-shift";
+  | "tool-shift"
+  | "regulation-standard"
+  | "market-event"
+  | "forecast"
+  | "primary-research";
+
+/** How first-party research was gathered. Applies to `primary-research`. */
+export type PrimaryResearchMethod = "interview" | "workshop" | "other";
 
 /** Certainty. Drives the radar marker fill. */
 export type SignalStrength = "weak" | "emerging" | "established";
@@ -67,7 +73,7 @@ export interface AISignal {
   /** Supporting source URLs when multiple sources converge. */
   corroboration?: string[];
 
-  // --- weak-signal ---
+  // --- practitioner-account ---
   /** Who reported it and why they are credible. */
   observer?: string;
 
@@ -81,14 +87,30 @@ export interface AISignal {
   dataCollectedPeriod?: string;
   replicated?: boolean;
 
-  // --- regulatory ---
+  // --- regulation-standard ---
   /** YYYY-MM-DD when the obligation takes effect. */
   effectiveDate?: string;
   jurisdiction?: string;
+  /** The authority publishing the norm, e.g. "EU", "OWASP". */
+  issuer?: string;
 
   // --- tool-shift ---
   version?: string;
   availability?: "GA" | "preview" | "announced";
+
+  // --- market-event ---
+  organisation?: string;
+  /** Free text, e.g. "30,000 roles", "$50B". */
+  magnitude?: string;
+
+  // --- forecast ---
+  forecaster?: string;
+  /** The year or date the prediction is about. */
+  horizonDate?: string;
+
+  // --- primary-research ---
+  method?: PrimaryResearchMethod;
+  participants?: string;
 
   image?: string;
 }

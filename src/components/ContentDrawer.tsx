@@ -19,6 +19,9 @@ import {
   FlaskConical,
   Scale,
   Package,
+  TrendingUp,
+  Telescope,
+  Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Markdown from "react-markdown";
@@ -197,8 +200,8 @@ const SIGNAL_TYPE_META: Record<
   SignalType,
   { label: string; className: string; Icon: LucideIcon }
 > = {
-  "weak-signal": {
-    label: "Weak signal",
+  "practitioner-account": {
+    label: "Practitioner account",
     className: "border-neon-gold/40 text-neon-gold bg-neon-gold/10",
     Icon: Radio,
   },
@@ -212,15 +215,30 @@ const SIGNAL_TYPE_META: Record<
     className: "border-hologram-cyan/40 text-hologram-cyan bg-hologram-cyan/10",
     Icon: FlaskConical,
   },
-  regulatory: {
-    label: "Regulatory",
-    className: "border-rose-400/40 text-rose-300 bg-rose-400/10",
-    Icon: Scale,
-  },
   "tool-shift": {
     label: "Tool shift",
     className: "border-emerald-400/40 text-emerald-300 bg-emerald-400/10",
     Icon: Package,
+  },
+  "regulation-standard": {
+    label: "Regulation / standard",
+    className: "border-rose-400/40 text-rose-300 bg-rose-400/10",
+    Icon: Scale,
+  },
+  "market-event": {
+    label: "Market event",
+    className: "border-orange-400/40 text-orange-300 bg-orange-400/10",
+    Icon: TrendingUp,
+  },
+  forecast: {
+    label: "Forecast",
+    className: "border-purple-400/40 text-purple-300 bg-purple-400/10",
+    Icon: Telescope,
+  },
+  "primary-research": {
+    label: "Primary research",
+    className: "border-teal-400/40 text-teal-300 bg-teal-400/10",
+    Icon: Users,
   },
 };
 

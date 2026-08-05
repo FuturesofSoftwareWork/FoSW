@@ -125,7 +125,7 @@ data/_candidates.json
 data/_finder-output.json
 data/_finder-rejected.json
 
-# Brainstorming mockups (visual companion scratch space)
+# Brainstorming mockups (visual companion scratch space) and the implementation-ledger directory
 .superpowers/
 
 # Vite

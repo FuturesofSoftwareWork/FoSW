@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/validate-signals.mjs && tsc && vite build && node scripts/prerender.mjs",
+    "build": "npm run validate && tsc && vite build && node scripts/prerender.mjs",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "test": "node --test",
     "preview": "vite preview",
+    "validate": "node scripts/validate-signals.mjs && node scripts/validate-phenomena.mjs",
+    "validate:phenomena": "node scripts/validate-phenomena.mjs",
     "signals:prepare": "node scripts/ledger.mjs prepare",
     "signals:collect": "node scripts/collect-candidates.mjs",
     "signals:reconcile": "node scripts/ledger.mjs reconcile",

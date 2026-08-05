@@ -27,7 +27,7 @@
     "The boundary between 'AI-generated code as developer tooling' (generally exempt) and 'AI-generated content in user-facing products' (covered) may be ambiguous for products that expose AI-generated outputs to end users."
   ],
   "decisionHorizon": "now",
-  "signalType": "regulatory",
+  "signalType": "regulation-standard",
   "signalStrength": "established",
   "signalStage": "leading",
   "leadTimeEstimate": "fixed date",

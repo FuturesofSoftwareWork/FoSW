@@ -36,7 +36,7 @@
     "Practices are prescriptive guidance, not validated in a controlled trial."
   ],
   "decisionHorizon": "now",
-  "signalType": "weak-signal",
+  "signalType": "practitioner-account",
   "signalStrength": "weak",
   "signalStage": "leading",
   "leadTimeEstimate": "~6-12 months",

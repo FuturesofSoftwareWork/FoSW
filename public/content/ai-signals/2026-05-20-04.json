@@ -33,5 +33,7 @@
     "Effects vary by repo size, language, and review culture.",
     "Survey-based trust numbers reflect perception and may lag actual defect rates."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "practitioner-account",
+  "observer": "DevEssence, synthesising Faros AI, Atlassian RovoDev and McKinsey data"
 }
