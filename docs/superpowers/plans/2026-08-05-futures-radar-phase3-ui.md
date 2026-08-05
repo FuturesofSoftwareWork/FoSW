@@ -1613,3 +1613,23 @@ Two more are added by the Phase 3 fix wave, both obligations on Phase 4:
 
 - **The verification harness must be committed.** It currently lives at `.superpowers/verify-radar.mjs`, which is gitignored, so the two invariants it encodes — no SVG `<text>` outside the viewBox, no two `<text>` overlapping — exist nowhere a future author can find them. Both were discovered by defect and are this phase's most valuable regression guards. Phase 4 must commit it as `scripts/verify-radar.mjs` (puppeteer is already a devDependency and already installed in CI), **not** wired into `npm run build`, run explicitly against a `VITE_RADAR_PREVIEW=1` build. It must first gain an assertion that it found a nonzero number of `<text>` elements — against a production build the radar is absent, so both checks would otherwise pass vacuously over zero elements.
 - **`scripts/prerender.mjs` will break the preview build.** It hardcodes `ROUTE = "/FoSW/"` and strips `^/FoSW` from request paths. The spec builds the preview with `--base=/FoSW/preview/`, so assets will be requested at `/FoSW/preview/assets/…`, the server will look for `dist/preview/assets/…`, find nothing, serve the app shell, and the prerenderer's `waitForSelector` will time out and fail the build. The base path needs parameterising. Phase 4 will hit this on its first CI run.
+
+### Further obligations from the whole-branch review
+
+- **`placeBlip` has no collision handling, though the spec says it does.** *Scale and
+  the launch gate* states placement uses "deterministic hashing **with collision
+  nudging**". `radarGeometry.ts` has the hashing and no nudging. Invisible at six
+  blips; near-certain to produce overlapping blips and labels at the 30–40 the spec
+  targets, which is roughly four per sector. The only check that would catch it is
+  the harness's overlap assertion, which is not yet in the repo — so this and the
+  harness obligation should be closed together.
+- **Phenomenon deep links 404 on GitHub Pages.** `dist/` contains `insights/` only;
+  `PRERENDER_SIGNALS` is off and there is no `404.html` or SPA-redirect shim. So
+  `/FoSW/phenomena/<id>/` — the URL the drawer's Copy-link button hands out — hard
+  404s for the recipient. Pre-existing for signals, but Phase 3 is what makes people
+  share phenomenon links and Phase 4 puts those links in front of reviewers who will
+  paste them into email.
+- **Drafts and published phenomena are visually identical on the preview radar.**
+  Once some are published and others are not, both render as plain blips. The banner
+  reports a count; nothing marks *which* blips are provisional. Reviewers asked to
+  sign off on specific claims cannot tell which are already live.
