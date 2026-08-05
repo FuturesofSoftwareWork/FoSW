@@ -92,3 +92,34 @@ implementation plan: `docs/superpowers/plans/2026-08-05-futures-radar-phase1-sch
 - Manually broke the fixture (`observedReach: "established"`, blank
   `reachRationale`) and confirmed the validator fails with exit 1 and
   messages naming both fields, then reverted and confirmed it passes again.
+
+---
+
+## Follow-up: CI does not run the tests or the linter
+
+This branch adds 63 tests and a second content validator, but
+`.github/workflows/deploy.yml` still runs only `npm ci` and `npm run build`. The
+change that fixes it was dropped from this branch because pushing a workflow file
+needs an OAuth token with `workflow` scope, which the push credential lacks.
+
+**Apply it through GitHub's web editor** (which does not need that scope), in
+`.github/workflows/deploy.yml`, between the `Install Dependencies` and
+`Install Puppeteer system dependencies` steps:
+
+```yaml
+      - name: Test
+        run: npm test
+
+      - name: Lint
+        run: npm run lint
+```
+
+Deliberately **not** added to the `build` script itself — `build` is run locally for
+previews and should stay fast.
+
+Why it matters more than it looks: `scripts/__tests__/config.test.mjs` is the only
+thing holding the seven vocabularies duplicated between `src/config/*.ts`,
+`src/types/phenomenon.ts` and `scripts/lib/phenomenon-schema.mjs` in step. The
+scripts cannot import TypeScript, so the duplication is deliberate — but the drift
+test guarding it currently executes only when someone remembers to run `npm test`.
+Phase 2 starts writing content generators against those vocabularies.
