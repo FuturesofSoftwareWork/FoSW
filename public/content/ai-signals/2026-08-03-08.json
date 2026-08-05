@@ -5,7 +5,7 @@
   "source": "Hacker News discussions and practitioner projects (merge queue, Swift rewrite account, formally verified CSG)",
   "sourceUrl": "https://news.ycombinator.com/item?id=49104747",
   "sourceType": "discussion",
-  "signalType": "weak-signal",
+  "signalType": "practitioner-account",
   "signalStrength": "emerging",
   "signalStage": "leading",
   "leadTimeEstimate": "~12-18 months",
