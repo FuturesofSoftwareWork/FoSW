@@ -128,6 +128,9 @@ data/_finder-rejected.json
 # Brainstorming mockups (visual companion scratch space) and the implementation-ledger directory
 .superpowers/
 
+# Left behind by browser automation tooling (Playwright MCP)
+.playwright-mcp/
+
 # Vite
 dist-ssr
 *.local

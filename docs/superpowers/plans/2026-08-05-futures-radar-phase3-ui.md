@@ -1134,7 +1134,14 @@ console.log('stable?', JSON.stringify(placeBlip(mk('a','gaining-traction'),0,9))
 
 Expected: distances increasing from centre ring to rim ring, all below 250; sectors spanning 0–40 through 320–360; `stable? true`.
 
-`tsx` is already a devDependency — do not install anything.
+**`tsx` is NOT a dependency of this repo** — an earlier draft of this plan said it
+was, conflating this repo with the sibling `futureOfSW`. `npx tsx` fetches it into
+npm's exec cache without touching `package.json` or `package-lock.json`; confirm
+with `git status` afterwards that neither changed. Do not add it as a dependency.
+
+Note also that `npx tsx -e "<multiline script>"` has been observed to exit 0 with no
+output under Git Bash on Windows. If that happens, write the script to a temporary
+`.ts` file, run it, and delete it before committing.
 
 - [ ] **Step 3: Commit**
 
@@ -1601,3 +1608,28 @@ git commit -m "docs: document radar ownership, visibility rules and the phase 3 
 From the Phase 1 review, unchanged by this phase: `evidenceProfile` is optional even for published phenomena; `possibleReachChange` does not exist yet; `lastReviewed` is unvalidated; drafts may cite untyped evidence; `data/_finder-output.json` still holds a retired genre value; `AGENTS.md` is stale. See the table at the end of the Phase 1 plan.
 
 This phase closes one of them: **`deriveImpacts` now exists** (`src/lib/phenomenon.ts`), so Phase 2 has a helper to reuse and no author is tempted to store an `impacts` field.
+
+Two more are added by the Phase 3 fix wave, both obligations on Phase 4:
+
+- **The verification harness is committed.** It now lives at `scripts/verify-radar.mjs` and is run with `npm run verify:radar <baseUrl>` — not wired into `npm run build`, `npm test` or `npm run lint`, since it needs a live server and would fail spuriously in an unattended pipeline. It gained a nonzero-`<text>` assertion ahead of the two geometry checks, so a production build with the radar absent fails loudly instead of the geometry checks passing vacuously over zero elements. What remains for Phase 4 is wiring it into the preview workflow — the only build (`VITE_RADAR_PREVIEW=1`) where the radar renders and the harness is meaningful.
+- **`scripts/prerender.mjs` will break the preview build.** It hardcodes `ROUTE = "/FoSW/"` and strips `^/FoSW` from request paths. The spec builds the preview with `--base=/FoSW/preview/`, so assets will be requested at `/FoSW/preview/assets/…`, the server will look for `dist/preview/assets/…`, find nothing, serve the app shell, and the prerenderer's `waitForSelector` will time out and fail the build. The base path needs parameterising. Phase 4 will hit this on its first CI run.
+
+### Further obligations from the whole-branch review
+
+- **`placeBlip` has no collision handling, though the spec says it does.** *Scale and
+  the launch gate* states placement uses "deterministic hashing **with collision
+  nudging**". `radarGeometry.ts` has the hashing and no nudging. Invisible at six
+  blips; near-certain to produce overlapping blips and labels at the 30–40 the spec
+  targets, which is roughly four per sector. The only check that would catch it is
+  the harness's overlap assertion, which is not yet in the repo — so this and the
+  harness obligation should be closed together.
+- **Phenomenon deep links 404 on GitHub Pages.** `dist/` contains `insights/` only;
+  `PRERENDER_SIGNALS` is off and there is no `404.html` or SPA-redirect shim. So
+  `/FoSW/phenomena/<id>/` — the URL the drawer's Copy-link button hands out — hard
+  404s for the recipient. Pre-existing for signals, but Phase 3 is what makes people
+  share phenomenon links and Phase 4 puts those links in front of reviewers who will
+  paste them into email.
+- **Drafts and published phenomena are visually identical on the preview radar.**
+  Once some are published and others are not, both render as plain blips. The banner
+  reports a count; nothing marks *which* blips are provisional. Reviewers asked to
+  sign off on specific claims cannot tell which are already live.

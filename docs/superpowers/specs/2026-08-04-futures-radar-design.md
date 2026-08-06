@@ -123,7 +123,7 @@ A radar of phenomena where:
 | Evidence | An auditable **profile** in the drawer; does not determine position |
 | Contestation | Separate marker; does not affect the ring |
 | `potentialImpact` | Kept as a drawer field; the alternate radius mode is deferred to v2 |
-| Sectors | Work dimensions, config-driven, `360/N`, initially 9 |
+| Sectors | Work dimensions, config-driven, `360/N`, **7 as built** (9 as first specced) |
 | Taxonomy | One work-dimension vocabulary: primary = sector, rest = derived tags |
 | What changes | `implications[]` — statements, not just dimension tags |
 | Blip size | Freshness (how recently reinforced) |
@@ -257,7 +257,7 @@ Design consequences of 30–40, all already accommodated:
 
 - Labels default **off** above 15 blips, so the mature radar is hover-driven and
   the launch radar is directly labelled.
-- Sector count is config-driven, so nine dimensions at ~4 blips each stays legible.
+- Sector count is config-driven, so seven dimensions at ~5 blips each stays legible.
 - Placement uses deterministic hashing with collision nudging rather than manual
   angles, so no per-blip layout work accrues as the count rises.
 - The dimension legend doubles as a filter, which is what makes 40 blips navigable.
@@ -295,7 +295,7 @@ phenomenon, fetched at runtime.
       "pathIds": ["verification-first-assurance"]
     },
     {
-      "dimension": "leadership-governance-and-performance",
+      "dimension": "organisation-and-leadership",
       "statement": "Accountability for defects moves from the author of a change toward whoever accepted the evidence for it.",
       "actors": ["technical-lead", "engineering-manager"],
       "pathIds": []
@@ -509,9 +509,7 @@ applied as SVG `fill` / `stroke` attributes and **not** as Tailwind class names,
 | id | label | colour |
 | --- | --- | --- |
 | `nature-and-division-of-work` | Nature & division of work | `#0EA5E9` |
-| `human-ai-collaboration-and-agency` | Human–AI collaboration & agency | `#22d3ee` |
-| `organisation-and-coordination` | Organisation & coordination | `#4ade80` |
-| `leadership-governance-and-performance` | Leadership, governance & performance | `#a3e635` |
+| `organisation-and-leadership` | Organisation & leadership | `#4ade80` |
 | `skills-knowledge-and-learning` | Skills, knowledge & learning | `#a855f7` |
 | `careers-occupations-and-labour-markets` | Careers, occupations & labour markets | `#f472b6` |
 | `worker-experience-identity-and-wellbeing` | Worker experience, identity & wellbeing | `#fb7185` |
@@ -959,7 +957,9 @@ repository is public, so nothing here is secret.
 Nothing on the page collects comments — that needs a backend, which *Non-Goals*
 rules out. Instead:
 
-- Each blip is deep-linkable as `?phenomenon=<id>`, reusing the existing deep-link
+- Each blip is deep-linkable as `/phenomena/<id>/` (**path-based as built**; this spec
+  originally said `?phenomenon=<id>`, before the site's existing convention was
+  checked), reusing the existing deep-link
   handling. This is what makes asynchronous review workable: a reviewer links to the
   exact phenomenon they disagree with rather than describing which one they mean.
 - Comments are collected in a shared document keyed by phenomenon `id`, and
@@ -1200,7 +1200,10 @@ seven of its eight values duplicated the impact dimensions already in this spec,
 which would have produced two near-identical taxonomies — the very conflation that
 made the 13 `AISignalCategory` values ungroupable. Unifying into a single
 work-dimension vocabulary achieves the same goal with one list instead of three.
-Its `human-ai-collaboration-and-agency` was added as a dimension in its own right.
+Its `human-ai-collaboration-and-agency` was added as a dimension in its own right,
+and then **merged back into `nature-and-division-of-work` during Phase 3** — the
+division of labour between human and machine turned out to be what the nature of
+work now means, so the boundary was not carrying weight. See *As built*.
 
 **Retained over it:** the evidence rubric (now a drawer profile rather than a
 score), the eight genres with type-specific fields, the primary-vs-commentary
@@ -1253,7 +1256,7 @@ phases, each independently verifiable by `npm run build`:
    turns the radar's only axis back into a count of collected articles. All three
    are cheap to build now and expensive to retrofit.
 3. **Radar UI** — components, drawer extension, drawer stack, site placement,
-   `?phenomenon=<id>` deep links. `radar:snapshot` and editions come last, since
+   `/phenomena/<id>/` deep links. `radar:snapshot` and editions come last, since
    there is nothing to snapshot until phenomena exist.
 4. **Preview deployment** — `VITE_RADAR_PREVIEW`, `deploy-preview.yml`,
    `clean-exclude` on the production workflow, `noindex` on preview builds. Small,
@@ -1269,7 +1272,8 @@ None blocking. Three items flagged for spec review:
 
 1. `primary-research` as one genre with a `method` field, rather than separate
    `interview` and `workshop` genres.
-2. The nine work dimensions are a starting proposal and live in config specifically
+2. ~~The nine work dimensions are a starting proposal~~ **Resolved: reduced to seven
+   during Phase 3 (see *As built*).** They live in config specifically
    so they are cheap to change. `ethics-responsibility-and-society` is the least
    certain of them — it may prove to be a lens over the other eight rather than a
    dimension of work in its own right, in which case dropping it to eight sectors
@@ -1278,6 +1282,29 @@ None blocking. Three items flagged for spec review:
    incomplete list costs little, but it will need revisiting once the project's own
    interview and workshop material starts arriving and shows who the research
    actually distinguishes between.
+
+---
+
+## As Built — divergences from this spec
+
+This spec was written before implementation. Where the code and this document
+disagree, **the code is correct** and the reasons are recorded here. Phases 1 and 3
+are merged or in review; Phases 2 and 4 are not started.
+
+| This spec says | As built | Why |
+| --- | --- | --- |
+| Nine work dimensions | **Seven.** `human-ai-collaboration-and-agency` merged into `nature-and-division-of-work`; `organisation-and-coordination` + `leadership-governance-and-performance` merged into `organisation-and-leadership` | Reviewed against the rendered radar. Both boundaries split ideas that phenomena crossed constantly, and nine sectors squeezed rim labels until they lost meaning. |
+| Deep links as `?phenomenon=<id>` | **`/phenomena/<id>/`** | The site already used paths for signals and insights. Consistency won. |
+| `DrawerContent` extended in Phase 1 | **Deferred to Phase 3** | It breaks `tsc` until all five consumers are narrowed, which is not a types-only task. |
+| `radar:score` | **`radar-derive.mjs`** | Not cosmetic: the old name implied it decided ring placement. It computes facts only. |
+| `separate interview / workshop genres` | **One `primary-research` genre with a `method` field** | Extensible to further first-party methods without a new enum value each time. |
+| Placement uses "deterministic hashing **with collision nudging**" | **Hashing only.** Angular inset raised 12% → 22% as a partial mitigation | Real nudging is still owed; recorded as a carry-forward in the Phase 3 plan. Invisible at six blips, near-certain to matter at 30–40. |
+
+**Not yet built at all:** Phase 2's pipeline (`radar:prepare` / `apply` / `accept` /
+`derive`, the clustering prompt, editions and `reachHistory` rendering) and Phase 4's
+preview deployment. The six phenomena currently in `public/content/phenomena/` were
+authored by hand, which is why Phase 2 is not on the critical path to seeing the
+radar.
 
 ## Risks
 

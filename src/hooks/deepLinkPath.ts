@@ -1,6 +1,9 @@
 import type { DrawerContent } from "@/types/content";
 
-export type PathMatch = { type: "insight" | "signal"; id: string };
+export type PathMatch = {
+  type: "insight" | "signal" | "phenomenon";
+  id: string;
+};
 
 function normalizeBase(baseUrl: string): string {
   return baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
@@ -20,6 +23,7 @@ export function matchPath(pathname: string, baseUrl: string): PathMatch | null {
   if (!id) return null;
   if (kind === "insights") return { type: "insight", id };
   if (kind === "signals") return { type: "signal", id };
+  if (kind === "phenomena") return { type: "phenomenon", id };
   return null;
 }
 
@@ -30,6 +34,11 @@ export function itemPath(
 ): string {
   const base = normalizeBase(baseUrl);
   if (!content) return base;
-  const kind = content.type === "insight" ? "insights" : "signals";
+  const kind =
+    content.type === "insight"
+      ? "insights"
+      : content.type === "phenomenon"
+        ? "phenomena"
+        : "signals";
   return `${base}${kind}/${content.data.id}/`;
 }

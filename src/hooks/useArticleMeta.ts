@@ -44,17 +44,32 @@ export function useArticleMeta(content: DrawerContent | null): void {
       return;
     }
 
-    const isInsight = content.type === "insight";
-    const kind = isInsight ? "insights" : "signals";
     const { data } = content;
+    const kind =
+      content.type === "insight"
+        ? "insights"
+        : content.type === "phenomenon"
+          ? "phenomena"
+          : "signals";
+
     const title = data.title;
-    const description = isInsight
-      ? (data as { excerpt: string }).excerpt
-      : (data as { summary: string }).summary;
+    const description =
+      content.type === "insight"
+        ? content.data.excerpt
+        : content.type === "phenomenon"
+          ? content.data.thesis
+          : content.data.summary;
+    const datePublished =
+      content.type === "phenomenon"
+        ? (content.data.latestEvidenceDate ?? content.data.reachReviewedAt)
+        : content.data.date;
+    const author = content.type === "insight" ? content.data.author : "VTT";
+    const image =
+      content.type !== "phenomenon" && content.data.image
+        ? absoluteUrl(content.data.image)
+        : `${SITE_URL}/hero-bg.png`;
+
     const url = `${SITE_URL}/${kind}/${data.id}/`;
-    const image = data.image
-      ? absoluteUrl(data.image)
-      : `${SITE_URL}/hero-bg.png`;
 
     document.title = `${title} — ${SITE_DEFAULTS.title}`;
     setAttr('meta[name="description"]', "content", description);
@@ -75,9 +90,9 @@ export function useArticleMeta(content: DrawerContent | null): void {
       description,
       author: {
         "@type": "Person",
-        name: isInsight ? (data as { author: string }).author : "VTT",
+        name: author,
       },
-      datePublished: data.date,
+      datePublished,
       image,
       url,
       inLanguage: "en",

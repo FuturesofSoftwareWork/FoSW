@@ -1,4 +1,9 @@
-# CLAUDE.md
+# AGENTS.md
+
+> **This file mirrors `CLAUDE.md`.** They are kept identical apart from this
+> note and the heading. If you change one, change the other — this file fell a
+> full feature behind once already, and a stale copy is worse than no copy
+> because an agent reading it will act on retired vocabulary.
 
 ## Project Overview
 
