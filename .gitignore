@@ -120,10 +120,14 @@ dist
 # AI-signals pipeline working files live in data/, never in public/ — Vite copies
 # public/ into dist, so anything there is published on the live site.
 # These are per-run artifacts, regenerated each run.
+# Globs, not exact paths: sector runs suffix the filename with the work dimension
+# (data/_finder-rejected-worker-experience-identity-and-wellbeing.json), and this
+# repo is public — the rejected list names stories the editorial team declined.
 # (data/_seen-ledger.jsonl is committed state and is intentionally NOT ignored.)
-data/_candidates.json
-data/_finder-output.json
-data/_finder-rejected.json
+data/_candidates*.json
+data/_finder-output*.json
+data/_finder-rejected*.json
+data/_finder-report*.md
 
 # Brainstorming mockups (visual companion scratch space) and the implementation-ledger directory
 .superpowers/
