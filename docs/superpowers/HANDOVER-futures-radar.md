@@ -29,56 +29,67 @@ disagrees with itself.
 | **1 — Schema and validation** | Merged (PR #15, plus #16 fixing a semantic merge conflict) |
 | **Content — 27 typed signals, 6 phenomena** | Merged (PR #17) |
 | **3 — Radar UI** | Merged (PR #18) |
-| **4 — Preview deployment** | **Built and CI installed; not merged, not deployed.** Draft PR #19, branch `radar-phase4-preview` |
-| **2 — Bootstrap pipeline** | Not started |
+| **4 — Preview deployment** | **Merged (PR #19) and deployed.** Live at `/FoSW/preview/`, verified 15/15 against the real deployment |
+| **2 — Bootstrap pipeline** | Not started — **this is the next phase** |
 
 Phases were built out of order deliberately: Phase 2's pipeline is not on the
 critical path to seeing a radar, so the first phenomena were hand-authored instead.
 
 ## What is unfinished — read this before starting anything
 
-**There is no preview URL yet.** `futuresofsoftwarework.github.io/FoSW/preview/`
-does not exist. Phase 4 built everything needed to produce it and it is not yet
-live. If you are here to "check the preview", it is not there — that is the state,
-not a bug you have hit.
+**Phase 4 is done, merged and live.** The preview is at
+`https://futuresofsoftwarework.github.io/FoSW/preview/`. All three blockers the
+previous version of this section listed are cleared, and everything it listed as
+"asserted but unproven" has now been checked against the real deployment.
 
-The blockers, in the order they must be cleared. **Only one is left: merging PR #19.**
+### What the first real deploy settled — 2026-08-06
 
-| # | What | Who can do it |
-| --- | --- | --- |
-| 1 | ~~The two workflow files are not installed.~~ **Done 2026-08-06.** Both are at `.github/workflows/`; `docs/pending-workflows/` is deleted. | Was blocked on `workflow` token scope — see *How the token was fixed* below. |
-| 2 | **PR #19 is a draft and unmerged.** | A human reviews and merges. |
-| 3 | **The preview deploy has never run,** so nothing about it is confirmed against real GitHub Pages — only against a local simulation. | Follows automatically from 2. |
+All three open questions are answered. **Read #1 before touching the 404 code.**
 
-The `pull_request` CI trigger now exists on the branch but **is not yet in effect** —
-GitHub reads workflows for a `pull_request` event from the *base* branch, so it only
-starts guarding PRs once this one merges to `main`. PR #19 itself is therefore still
-checked the old way, after the fact.
+1. **Pages answers a `/preview/` miss with the ROOT `404.html`, not
+   `preview/404.html`.** So the `sessionStorage` forwarder is **load-bearing — do not
+   delete it.** The previous version of this document said it might be dead code; it
+   is the opposite. Proof: the body served for
+   `/FoSW/preview/phenomena/<id>/` carries the *production* asset base
+   (`/FoSW/assets/…`), the production `robots` meta (`index, follow`) and the
+   `radarDeepLink` snippet — all three are root-404 markers, and
+   `preview/404.html` exists but is never reached. The full round trip
+   (root 404 → stash → `location.replace` → preview shell → `history.replaceState`)
+   was then confirmed in a real browser: the URL is restored and the phenomenon
+   drawer opens.
+2. **`clean-exclude: preview` works.** The production deploy finished at 09:38:13,
+   after the preview deploy finished at 09:37:26, and `preview/` is still on
+   `gh-pages`.
+3. **The shared `concurrency` group holds.** `Deploy to GitHub Pages` was observed
+   sitting in `pending` while `Deploy Radar Preview` ran, then completed after it.
+
+Two further things were confirmed on the live deployment:
+
+- **`npm run verify:radar https://futuresofsoftwarework.github.io/FoSW/preview/`
+  passes 15/15** against the deployed artefact — six dashed draft blips, drawer
+  opens, deep-link URL correct, no clipping, no overlaps.
+- **Production deep links resolve too** — `/FoSW/insights/<id>/` opens its drawer.
+  Note these return HTTP **404 by status** while serving the app shell; that is how
+  the Pages SPA fallback is designed to work and is not a fault.
+
+### The `pull_request` trigger fired on PR #19 itself
+
+The previous version of this document predicted it would not, on the reasoning that
+GitHub reads `pull_request` workflows from the base branch. **That was wrong** —
+GitHub evaluates them from the PR's *merge ref*, so a workflow added by the PR guards
+that same PR. Run 31089529655 on `radar-phase4-preview` ran Test, Lint and Build to
+success with **Deploy correctly skipped** by `if: github.event_name == 'push'`. The
+guard is therefore proven, not merely asserted, and the CI gap is closed.
 
 ### How the token was fixed
 
 The credential had `gist`, `read:org`, `repo` and the push was rejected outright.
 `gh auth refresh -h github.com -s workflow` added the missing scope in place, on the
 `artwall4` account, which is already a repo admin — so the permissions were never the
-problem, only the OAuth scope. **No web-editor step is needed any more.** Note the
-SSH route is not a workaround: the key on this machine authenticates as
-`Arto-Wallin_vttfi`, which is not a collaborator on the repo.
-
-### To verify once it does deploy
-
-Three things are asserted but unproven outside a local simulation. Check them on
-the first real deploy:
-
-1. **Does Pages serve a nested `404.html`?** If `/FoSW/preview/<anything-missing>/`
-   is answered by `preview/404.html`, the `sessionStorage` forwarder injected into
-   the production `404.html` is dead code and should be deleted. If it is answered
-   by the *root* `404.html`, the forwarder is what makes preview deep links work.
-   Both paths were tested locally and both land correctly; which one fires is only
-   observable in production.
-2. **Does `clean-exclude: preview` actually spare the folder?** A production deploy
-   running after a preview deploy must not empty it.
-3. **Does the shared `concurrency` group hold?** Both workflows trigger on a push to
-   `main` and both commit to `gh-pages`.
+problem, only the OAuth scope. **If you hit this again, run that command rather than
+reaching for the web editor**; two earlier workflow changes on this project went
+through the web editor unnecessarily. The SSH route is not a workaround: the key on
+this machine authenticates as `Arto-Wallin_vttfi`, which is not a collaborator here.
 
 ### Known, unfixed, and not blocking
 
@@ -152,21 +163,18 @@ Phase 3 carry-forwards.
   settled claim from one still being written.
 - **Blips no longer overlap.** `placeBlips` nudges colliding pairs apart within
   their own cell.
-- **A `pull_request` CI trigger was written** and is installed at
-  `.github/workflows/deploy.yml` — but it only starts guarding PRs once this branch
-  merges, since GitHub reads `pull_request` workflows from the base branch.
+- **A `pull_request` CI trigger** is installed at `.github/workflows/deploy.yml` and
+  is in effect. It fired on PR #19 itself — see above.
 
-All of the above is verified locally: `npm test` 69/69, `npm run lint` clean,
-`npm run verify:radar` 15/15 against a preview build, deep links exercised by both
-fallback routes against a simulated Pages tree, and nudging exercised by forcing five
-phenomena into one cell (three genuine seed collisions before, none after). None of
-it has been exercised by a real deployment.
+Verified locally first: `npm test` 69/69, `npm run lint` clean, `npm run verify:radar`
+15/15 against a preview build, deep links exercised by both fallback routes against a
+simulated Pages tree, and nudging exercised by forcing five phenomena into one cell
+(three genuine seed collisions before, none after). **Then re-verified against the
+real deployment** — see *What the first real deploy settled*.
 
 ## Start here for Phase 2
 
-**Only after the three blockers above are cleared** — otherwise Phase 4 quietly
-never ships, which is exactly how a preview that must later be "moved" gets
-deferred forever.
+Phase 4 is shipped, so nothing gates this any more.
 
 The pipeline: `radar:prepare` / `apply` / `accept` / `derive`, the clustering
 prompt, the machine-owned vs human-owned field manifest, editions and
@@ -207,8 +215,10 @@ those are the only two contexts where the harness is meaningful.
 
 ## CI
 
-Both files are installed at `.github/workflows/`, but **nothing they do has run yet**
-— they take effect when this branch merges to `main`.
+Both files are installed at `.github/workflows/` and both have run successfully on
+`main`. There is a third file, `static.yml`, which is **inert** — pinned to
+`branches: ["disabled"]` and superseded by `deploy.yml`. It is easy to miss and it
+also deploys to Pages, so check it before debugging a mystery deployment.
 
 `deploy.yml` also triggers on `pull_request`, with an
 `if: github.event_name == 'push'` guard on the Deploy step, so `npm test` and
@@ -217,9 +227,8 @@ builds and publishes `/FoSW/preview/` from `main`. Both share the
 `github-pages-deploy` concurrency group, because both commit to `gh-pages` on a push
 to `main` and would otherwise interleave.
 
-Until this branch merges, the CI gap the previous handover recorded is **still open**
-on `main`: nothing there listens for `pull_request`, so no PR — including #19 — is
-checked before it lands.
+The CI gap earlier versions of this document recorded is **closed**: PRs are now
+checked before they land.
 
 **Pushing workflow changes needs a token with `workflow` scope.** The credential here
 lacked it and the push was rejected outright; `gh auth refresh -h github.com -s
@@ -232,6 +241,14 @@ authenticates as `Arto-Wallin_vttfi`, which is not a collaborator here.
 
 ## How to see it
 
+**The deployed preview, with the radar and all six drafts, is live:**
+
+```
+https://futuresofsoftwarework.github.io/FoSW/preview/
+```
+
+It redeploys from `main` on every push. Locally:
+
 ```bash
 npm run dev          # http://localhost:5173/FoSW/  — note the /FoSW/ base, the root 404s
 ```
@@ -239,12 +256,18 @@ npm run dev          # http://localhost:5173/FoSW/  — note the /FoSW/ base, th
 Drafts and the radar both appear in dev. `npm run build && npx vite preview` shows
 the production behaviour: **no radar at all**, which is correct at 0 of 10 published.
 
-For the deployed preview:
+To reproduce the preview build locally:
 
 ```bash
 VITE_RADAR_PREVIEW=1 npm run build:preview     # PowerShell on Windows, or MSYS_NO_PATHCONV=1
 npx vite preview --base=/FoSW/preview/ --port 5199 --strictPort
 npm run verify:radar http://localhost:5199/FoSW/preview/
+```
+
+The harness also runs against the deployed site, which is the stronger check:
+
+```bash
+npm run verify:radar https://futuresofsoftwarework.github.io/FoSW/preview/
 ```
 
 **On Windows, do not run the `--base=` build from Git Bash without

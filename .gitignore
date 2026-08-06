@@ -135,6 +135,12 @@ data/_finder-report*.md
 # Left behind by browser automation tooling (Playwright MCP)
 .playwright-mcp/
 
+# Claude Code session state. Note .claude/worktrees/ holds *git worktrees* —
+# full checkouts of this repo. Without this rule `git add -A` commits them as
+# embedded git repositories, and ESLint lints them as if they were source,
+# which reports every finding several times over.
+.claude/
+
 # Vite
 dist-ssr
 *.local
