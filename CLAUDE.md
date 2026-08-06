@@ -20,8 +20,19 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 - `npm run lint` — ESLint (zero warnings allowed)
 - `npm run preview` — preview production build
 - `npm run verify:radar <baseUrl>` — 15 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
+- `npm run signals:promote` — move reviewed drafts from `data/signal-drafts/accepted/` into `public/content/ai-signals/`, append their `index.json` entries, and record every decision in the seen-ledger. See the pipeline section below.
 
 **On Windows, run the `--base=` builds from PowerShell, or prefix with `MSYS_NO_PATHCONV=1` in Git Bash.** MSYS rewrites `/FoSW/preview/` into a Windows path, and the build then succeeds with a silently wrong base.
+
+## AI-signals pipeline
+
+Full detail in [`docs/ai-signals-pipeline.md`](docs/ai-signals-pipeline.md). What matters when working in this repo:
+
+- **`data/` is never published; `public/` is.** Vite copies `public/` into `dist`, so any working file kept there is served on the live site. `validate-signals.mjs` fails the build on any file under `public/content/ai-signals/` whose name starts with `_`.
+- **The finder agent writes its own drafts** to `data/signal-drafts/<id>.json` with `status: "draft"`, and assigns ids by scanning `index.json` plus all three draft folders. It never writes into `public/` or edits `index.json`.
+- **Review is a folder move.** `data/signal-drafts/` is the unreviewed queue; you move each file into `accepted/` or `rejected/`. `signals:promote` acts only on those two and never touches the queue, so an interrupted review cannot publish something nobody read.
+- **`signals:promote` is the only schema gate** between the agent and the live site. It validates the whole batch and moves nothing if any file fails, and it refuses to overwrite an existing published file.
+- The whole `data/signal-drafts/` tree is gitignored: this repo is public, and a draft is by definition unreviewed.
 
 ## Project Structure
 
@@ -112,6 +123,8 @@ Only include a type-specific field when its value is actually stated in the sour
 
 ## Verification
 
-Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run validate` runs both content validators — `npm run signals:validate` (AI-signal content against the schema above: enum values, required fields, id/index consistency) and `npm run validate:phenomena` (phenomenon content: required fields, enum values, cross-references to published signals, and that `evidenceProfile`/`firstObserved`/`latestEvidenceDate` match what the evidence derives) — and now runs automatically as the first step of `npm run build`. `npm test` runs the script unit tests (content loader, derivation library, config mirrors, base-path detection, and validator rules).
+Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run validate` runs both content validators — `npm run signals:validate` (AI-signal content against the schema above: enum values, required fields, id/index consistency) and `npm run validate:phenomena` (phenomenon content: required fields, enum values, cross-references to published signals, and that `evidenceProfile`/`firstObserved`/`latestEvidenceDate` match what the evidence derives) — and now runs automatically as the first step of `npm run build`. `npm test` runs the script unit tests (content loader, derivation library, config mirrors, base-path detection, signal-schema rules, promote, and validator rules).
+
+The signal schema lives in `scripts/lib/signal-schema.mjs` and has two consumers: `validate-signals.mjs` checks what is already published, `promote-signals.mjs` checks drafts before they can become published. Change the rules there, not in either caller.
 
 `npm run build` also emits `dist/404.html`. A preview build additionally replaces `robots.txt` with a disallow-all and removes `sitemap.xml`. The prerenderer derives its base path from the built bundle (`scripts/lib/prerender-base.mjs`) rather than hardcoding one, so there is no second place to keep in sync.
