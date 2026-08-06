@@ -1,13 +1,21 @@
 import { createServer } from "http";
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from "fs";
 import { resolve, join, extname } from "path";
 import puppeteer from "puppeteer";
+import { detectBase } from "./lib/prerender-base.mjs";
 
 const DIST_DIR = resolve("dist");
-const ROUTE = "/FoSW/";
 const PORT = 4173;
 const SITE_URL = "https://futuresofsoftwarework.github.io/FoSW"; // must match src/config.ts
 const PRERENDER_SIGNALS = false; // toggle AI-signal pages (Task 7)
+
+// Read back off the built bundle, so the server strips exactly the prefix the
+// bundle asks for: `/FoSW/` in a production build, `/FoSW/preview/` in a
+// preview one. Hardcoding it made the preview build request every asset from a
+// path that did not exist, so nothing rendered and waitForSelector timed out.
+// See scripts/lib/prerender-base.mjs.
+const ROUTE = detectBase(readFileSync(join(DIST_DIR, "index.html"), "utf-8"));
+const IS_PREVIEW = ROUTE.includes("/preview/");
 
 const MIME_TYPES = {
   ".html": "text/html",
@@ -24,8 +32,12 @@ const MIME_TYPES = {
 function startServer() {
   return new Promise((resolvePromise) => {
     const server = createServer((req, res) => {
-      // Strip the /FoSW/ base path and query string so files resolve from dist/
-      const urlPath = req.url.replace(/^\/FoSW/, "").split("?")[0] || "/";
+      // Strip the build's own base path and query string so files resolve from
+      // dist/. ROUTE is whatever the bundle was built with, not a literal.
+      const withoutBase = req.url.startsWith(ROUTE)
+        ? `/${req.url.slice(ROUTE.length)}`
+        : req.url;
+      const urlPath = withoutBase.split("?")[0] || "/";
       const rawPath = urlPath === "/" ? "index.html" : urlPath;
       const wasExtensionless = !extname(rawPath);
       let filePath = join(DIST_DIR, rawPath);
