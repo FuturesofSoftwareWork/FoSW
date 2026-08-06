@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-06-02",
+  "title": "Judging instead of making: four unrelated practitioners describe the same loss of cognitive recovery time",
+  "summary": "Between February and May 2026, four credible and unconnected practitioners independently described the same mechanism, and none of them frames it as ordinary overwork. The claim is not that AI-assisted work is more work; it is that AI removed the low-stakes intervals that used to sit between hard judgments. Siddhant Khare, a core maintainer of OpenFGA, reports shipping more code in a quarter than in any quarter of his career while feeling more drained than in any quarter of his career: 'My brain was full. Not from writing code — from judging code.' Engineering leader Jono Herrington names the same mechanism from the manager's side, first in one-on-ones and then in himself: 'The build runs in 45 seconds now. Those four minutes are gone. And they've been replaced with four minutes of reviewing what the model generated.' Simon Willison, Django's co-creator, describes running four agents in parallel and being 'wiped out' by 11 a.m., saying that using coding agents well takes every inch of twenty-five years of experience. A team discussion published by consultancy Evil Martians reaches the same place from a third direction — 'we remove the part that we like, and replace it with a part that we really don't' — and adds that supervising output you did not reason your way to is itself the expensive part. The convergence across four independent vantage points is the signal; no one of these accounts would carry weight alone.",
+  "source": "Practitioner Blog",
+  "sourceUrl": "https://siddhantkhare.com/writing/ai-fatigue-is-real",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Siddhant Khare, core maintainer of OpenFGA (CNCF Incubating) and builder of AI agent infrastructure tooling, writing a firsthand account of his own burnout in late 2025 and the quarter that followed. Corroborating observers are Jono Herrington (engineering leader, writing from one-on-ones with his own team), Simon Willison (co-creator of Django and Datasette, 25 years' experience) and the engineering staff of consultancy Evil Martians.",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://www.jonoherrington.com/blog/ai-cognitive-load",
+    "https://www.lennysnewsletter.com/p/an-ai-state-of-the-union",
+    "https://evilmartians.com/chronicles/ai-assisted-engineers-are-burning-out-is-this-fine"
+  ],
+  "detectedAt": "2026-08-06",
+  "date": "2026-02-08",
+  "status": "published",
+  "tags": [
+    "cognitive load",
+    "recovery",
+    "review burden",
+    "burnout",
+    "craft"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "This is a different problem from workload, and workload remedies will not touch it. If the mechanism is that recovery intervals were removed rather than that hours increased, then headcount, deadline relief and time-off policy all leave the cause in place.",
+    "It predicts that the most capable and most AI-fluent engineers deplete fastest, because running agents well is what costs. That inverts the usual assumption that tooling proficiency protects people from strain.",
+    "The enjoyable part of the work is what got automated first. Leaders reading retention risk off compensation and career ladders will miss a motivation problem that sits in the substance of the day."
+  ],
+  "recommendedActions": [
+    "Track review and supervision hours as a distinct load category rather than folding them into general engineering time — the burden described here is invisible in throughput metrics by construction.",
+    "Treat uninterrupted low-stakes work as capacity to be protected rather than slack to be reclaimed, and check whether agent adoption has quietly eliminated it."
+  ],
+  "risksAndCaveats": [
+    "All four sources are self-published or self-selected. Engineers write reflective posts when something is wrong; the colleague whose experience quietly improved writes nothing. The absence of positive accounts in this group is not evidence of their absence in the population — see the counter-evidence item in this run.",
+    "Khare's account is from February 2026 and Herrington's from March; the mechanism was restated independently through May and again in July 2026, but no source here measures how widely it holds. There is no sample, no distribution and no comparison group in any of the four.",
+    "Evil Martians is a consultancy that sells engineering services, and its piece synthesises internal conversations without attributing them to named individuals or presenting original data. It is used here only as a fourth independent statement of the mechanism."
+  ],
+  "decisionHorizon": "now"
+}

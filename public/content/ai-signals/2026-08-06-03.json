@@ -1,0 +1,43 @@
+{
+  "id": "2026-08-06-03",
+  "title": "An engineering lead reports mid-level engineers resigning over verification work that earns no credit",
+  "summary": "Sreenivasa Reddy, a lead software engineer at AT&T, published a firsthand account of three mid-level engineers who left his organisation within a six-to-eight week window, and of what they told him on the way out. His summary of one exit conversation is the specific part: 'I cannot handle this pressure of making things right without any credit for it.' He pairs it with a concrete case — an L5 engineer who spent three days preventing an AI-generated authentication flaw that carried compliance exposure, work that produced no shipped feature and appeared in no delivery metric. The mechanism he describes is not overwork but an accounting failure: AI moved the centre of gravity of engineering effort onto catching what the machine got wrong, while recognition systems continued to reward what got shipped. This matters as an early indicator because it names a consequence — voluntary attrition — that the wellbeing literature has so far mostly predicted rather than observed.",
+  "source": "LeadDev",
+  "sourceUrl": "https://leaddev.com/ai/ai-productivity-is-burning-out-your-best-engineers",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Sreenivasa Reddy, Lead Software Engineer at AT&T, reporting exit conversations with three engineers on his own teams and a specific incident on a system he is accountable for. Credible as a direct witness to the events described; the piece is his own narrative rather than reporting on others.",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-08-06",
+  "date": "2026-07-06",
+  "status": "published",
+  "tags": [
+    "attrition",
+    "recognition",
+    "verification labour",
+    "mid-level engineers",
+    "retention"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "If verification work is genuinely uncounted, then promotion and performance systems are now systematically misaligned with where engineering value is created — and the people most exposed are the ones doing the catching.",
+    "Mid-level engineers are the group with the least protection here: senior engineers convert the same work into visible architectural influence, juniors are not yet accountable for it. Retention risk concentrates in the middle of the ladder.",
+    "The three-day authentication fix is the shape of the problem in miniature. A team optimising on shipped output would read that engineer as having had an unproductive week."
+  ],
+  "recommendedActions": [
+    "Audit whether prevented defects, rejected AI output and verification effort appear anywhere in performance review inputs, and add them if they do not.",
+    "Ask departing engineers specifically about verification and review load in exit interviews — the standard prompts about workload and management will not surface this mechanism."
+  ],
+  "risksAndCaveats": [
+    "Three departures on one lead's teams, reported by that lead, with no comparison group and no way to separate the AI mechanism from ordinary attrition drivers at one employer. This is a single credible witness, not evidence of a rate.",
+    "The author is describing conversations he participated in and interpreting the reasons people gave him; exit-conversation attributions are known to be partial and diplomatic.",
+    "The article's only external support is a GitLab survey from September 2023, which predates agentic tooling entirely and is characterised without figures. The firsthand portion is the evidence here; the surrounding argument is not independently supported."
+  ],
+  "decisionHorizon": "now"
+}
