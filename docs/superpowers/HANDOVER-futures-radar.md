@@ -75,10 +75,11 @@ Two items will fail immediately if you do not handle them first.
    but Phase 4 is what puts those links in front of reviewers who will paste them into
    email.
 
-Also owed, in the Phase 3 plan's carry-forward section: commit the verification
-harness; add collision nudging to `placeBlip`; mark drafts distinctly from published
-on the preview radar; a preview build will bake drafts into static HTML and
-regenerate `sitemap.xml`.
+Also owed, in the Phase 3 plan's carry-forward section: add collision nudging to
+`placeBlip`; mark drafts distinctly from published on the preview radar; a preview
+build will bake drafts into static HTML and regenerate `sitemap.xml`. (The
+verification harness is committed — see below — with wiring it into the preview
+workflow still open.)
 
 ## The verification harness — read this
 
@@ -86,19 +87,20 @@ There is **no frontend test runner**. The 63 `node --test` tests cover
 `scripts/` only. Phase 3 was verified by a **headless Puppeteer harness** built from
 the project's own devDependency, because MCP browser tools were unavailable.
 
-It lives at `.superpowers/verify-radar.mjs`, which is **gitignored — it is not in the
-repo**. It runs 12 checks. Three exist because *screenshots caught defects the DOM
-checks had missed*:
+It lives at `scripts/verify-radar.mjs`, **committed to the repo**, and is run with
+`npm run verify:radar <baseUrl>` — not wired into `npm run build`, `npm test` or
+`npm run lint`, since it needs a server already running and would fail spuriously in
+an unattended pipeline. It runs 13 checks. Four exist because *screenshots or a
+whole-branch review caught defects the DOM checks had missed*:
 
+- the radar SVG contains a nonzero number of `<text>` elements — added because, run against a production build, there is no radar at all, so the next two checks would otherwise pass vacuously over an empty list
 - no SVG `<text>` may fall outside the viewBox — added after six rim labels shipped clipped while the harness reported 9/9
 - labels sharing a line need 6px of clearance; labels on different lines need only not overlap — added after ring labels were struck through by blip labels
 - no hover card may leave the viewBox with labels off — a state no other check enters
 
-**Committing it is an obligation, not an intention.** Move it to
-`scripts/verify-radar.mjs` (puppeteer is already a devDependency and already in CI),
-not wired into `npm run build`, run against a `VITE_RADAR_PREVIEW=1` build. **Add a
-nonzero-`<text>` assertion first** — against a production build the radar is absent,
-so both geometry checks would otherwise pass vacuously over zero elements.
+Run it against `npm run dev`, or a production build made with `VITE_RADAR_PREVIEW=1` —
+the radar is hidden below ten published phenomena in every other production build, so
+those are the only two contexts where the harness is meaningful.
 
 ## CI gap worth closing
 
