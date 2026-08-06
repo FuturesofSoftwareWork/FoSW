@@ -60,8 +60,29 @@ All three open questions are answered. **Read #1 before touching the 404 code.**
 2. **`clean-exclude: preview` works.** The production deploy finished at 09:38:13,
    after the preview deploy finished at 09:37:26, and `preview/` is still on
    `gh-pages`.
-3. **The shared `concurrency` group holds.** `Deploy to GitHub Pages` was observed
-   sitting in `pending` while `Deploy Radar Preview` ran, then completed after it.
+3. **The shared `concurrency` group holds — with one sharp edge.** `Deploy to GitHub
+   Pages` was observed sitting in `pending` while `Deploy Radar Preview` ran, then
+   completing after it. Neither ever raced for `gh-pages`.
+
+   **But a queued run can be cancelled rather than merely delayed.** GitHub allows
+   only **one pending run per concurrency group**, and both workflows share
+   `github-pages-deploy`. Two pushes landing close together put four runs in
+   contention for that single pending slot, and one loses. This was observed: the
+   preview run for `295302b` was cancelled while production's succeeded, leaving the
+   preview one commit behind `main`.
+
+   It was harmless that time — the commit only moved a docs file, so the built output
+   was identical. **It will not always be harmless.** A preview that silently lags
+   `main` undercuts the reason the preview exists. Two things to know:
+
+   - **Check before trusting a preview.** Compare the `gh-pages` head commit with
+     `main`; a `Deploy Radar Preview` run with conclusion `cancelled` is the tell.
+   - **Resync with `gh workflow run deploy-preview.yml --ref main`.** The
+     `workflow_dispatch` trigger is already on the file for exactly this. It was used
+     once, on 2026-08-06, and worked.
+
+   The `paths-ignore` idea listed under *Known, unfixed* is the real fix: docs-only
+   pushes are what create the contention in the first place.
 
 Two further things were confirmed on the live deployment:
 
@@ -107,8 +128,11 @@ this machine authenticates as `Arto-Wallin_vttfi`, which is not a collaborator h
   import `src/config.ts` and the comment says so, but the two can still drift. A
   `node --test` reading both files and comparing the literals would close it; the
   pattern already exists in `scripts/__tests__/config.test.mjs`.
-- **The preview will redeploy on every push to `main`,** including documentation-only
-  commits. Add `paths-ignore` for `docs/**` and `*.md` if that becomes noisy.
+- **The preview redeploys on every push to `main`,** including documentation-only
+  commits — *except* when a second push cancels its queued run, see the concurrency
+  note above. Adding `paths-ignore` for `docs/**` and `*.md` fixes both the noise and
+  the cancellation, since docs-only pushes are what create the contention. This is
+  now the highest-value unclaimed CI change.
 - **Only 6 phenomena exist and all are `draft`.** The radar stays invisible in
   production until ten are `published` — that gate is the point, not an obstacle.
   Publishing the tenth is what launches it.
@@ -123,7 +147,8 @@ this machine authenticates as `Arto-Wallin_vttfi`, which is not a collaborator h
 | `docs/superpowers/plans/2026-08-05-futures-radar-phase1-schema.md` | Phase 1, done. Its carry-forward table is still live. |
 | `docs/superpowers/plans/2026-08-05-futures-radar-phase3-ui.md` | Phase 3, done. Its carry-forward section listed the Phase 4 obligations; all are now closed. |
 | `docs/superpowers/plans/2026-08-06-futures-radar-phase4-preview.md` | Phase 4, executed. One step was corrected mid-execution and says so inline — the forced-collision test called for twenty blips in one cell, which is four times what a cell physically holds. |
-| `PR_DESCRIPTION_radar-phase4-preview.md` | The PR #19 body. Current. |
+| `docs/archive/merged_PRs/PR_DESCRIPTION_radar-phase4-preview.md` | The PR #19 body. Archived on merge, per the CLAUDE.md convention — it is **no longer at the project root**. |
+| `docs/archive/merged_PRs/PR_DESCRIPTION_docs-phase4-postdeploy.md` | PR #20 — the post-deploy record: what the first real deploy proved, and the `.claude/` lint fix. |
 | ~~`docs/pending-workflows/README.md`~~ | Deleted 2026-08-06 — the workflows it described are now installed at `.github/workflows/`. |
 | `CLAUDE.md` / `AGENTS.md` | Current, and identical apart from the heading and mirror note. Carry the two conventions below. |
 
@@ -136,11 +161,14 @@ all of it, so a sibling radar section could not open the drawer, and a second
 `ContentDrawer` would fight it for `window.history`. **Do not add a second one.**
 
 **The radar is invisible until ten phenomena are published.** `FuturesRadar` returns
-`null` in a production build below that threshold, except in dev and preview
-(`VITE_RADAR_PREVIEW=1`). Drafts are fetched in those same two cases and never in
-production. One predicate, `isPreviewContext()` in `src/lib/phenomenon.ts`, answers
-that question for both the fetch and the gate — they used to be separate expressions
-at opposite polarity, which would have desynchronised silently. This is the mechanism
+`null` in a production build below that threshold. One predicate,
+`isPreviewContext()` in `src/lib/phenomenon.ts`, answers that question for both the
+draft fetch and the gate — they used to be separate expressions at opposite polarity,
+which would have desynchronised silently. It is true in **three** cases: dev, when
+`VITE_RADAR_PREVIEW=1`, **and when `BASE_URL` contains `/preview/`**. The third is a
+backstop added in Phase 4 so a build deployed to the preview folder cannot silently
+render as production if the environment variable is ever dropped from the workflow.
+Drafts are fetched in exactly those cases and never otherwise. This is the mechanism
 that keeps unreviewed research claims off a VTT / University of Helsinki site.
 
 ## What Phase 4 did
@@ -155,8 +183,9 @@ Phase 3 carry-forwards.
 - **Deep links resolve.** Every build emits `dist/404.html`, a copy of the
   prerendered shell. Pages serves it *without redirecting*, so `useDeepLink` still
   sees the requested path. The production copy also forwards `/preview/` paths
-  through `sessionStorage`, covering the case where Pages answers a preview miss
-  with the root 404 page. Both routes were tested against a simulated Pages tree.
+  through `sessionStorage` — and that forwarder is **not a fallback, it is the path
+  every preview deep link actually takes**, since Pages answers a preview miss with
+  the root 404 page. See finding #1 above before touching it.
 - **`/FoSW/preview/` is `noindex`,** applied by the `previewNoindex` plugin in
   `vite.config.ts`, keyed on the base rather than an environment variable.
 - **Drafts render as dashed outlines** with a legend key, so a reviewer can tell a
@@ -190,7 +219,7 @@ layout is not.
 
 ## The verification harness — read this
 
-There is **no frontend test runner**. The 63 `node --test` tests cover
+There is **no frontend test runner**. The 69 `node --test` tests cover
 `scripts/` only. Phase 3 was verified by a **headless Puppeteer harness** built from
 the project's own devDependency, because MCP browser tools were unavailable.
 
@@ -247,7 +276,8 @@ authenticates as `Arto-Wallin_vttfi`, which is not a collaborator here.
 https://futuresofsoftwarework.github.io/FoSW/preview/
 ```
 
-It redeploys from `main` on every push. Locally:
+It redeploys from `main` on every push — unless a closely-following push cancels its
+queued run, so confirm the `gh-pages` head matches `main` before trusting it. Locally:
 
 ```bash
 npm run dev          # http://localhost:5173/FoSW/  — note the /FoSW/ base, the root 404s
