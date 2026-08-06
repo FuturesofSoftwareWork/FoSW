@@ -126,8 +126,14 @@ dist
 # (data/_seen-ledger.jsonl is committed state and is intentionally NOT ignored.)
 data/_candidates*.json
 data/_finder-output*.json
-data/_finder-rejected*.json
+data/_finder-rejected*
 data/_finder-report*.md
+
+# Staged signal drafts awaiting review, and the accepted/ and rejected/ folders
+# the reviewer moves them into. Local scratch: this repo is public, and a draft
+# is by definition unreviewed. Only what `signals:promote` moves into
+# public/content/ai-signals/ is ever committed.
+data/signal-drafts/
 
 # Brainstorming mockups (visual companion scratch space) and the implementation-ledger directory
 .superpowers/

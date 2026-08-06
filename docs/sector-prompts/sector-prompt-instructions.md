@@ -29,9 +29,12 @@ citation of a landmark study they have already seen.
    line: `{key, claim, url, firstSeen, lastSeen, timesSeen, status, id}`. This is
    your do-not-repeat list. If the file is missing or empty, treat this as the
    first run.
-2. `public/content/ai-signals/index.json` — existing published items. Read it to
-   find which `id` values for today's date are already taken, so your new ids do
-   not collide.
+2. `public/content/ai-signals/index.json` — existing published items, so you know
+   what has already been covered. It is also one of the four places you check for
+   taken ids; see *Assigning ids* under Output.
+3. `data/_finder-rejected-<dimension-id>.jsonl`, if it exists — what earlier runs
+   of this sector evaluated and declined, and why. Do not re-litigate a rejection
+   unless something has genuinely changed.
 
 **You are doing the deduplication yourself on this run.** In a generic run a
 candidate collector strips already-seen URLs before the model ever sees them.
@@ -113,23 +116,81 @@ reports.
 
 ## Output
 
-Write your results to THREE files, and also print the main array so it appears in
-the run log.
+You write three things: one file per selected signal, one appended line per
+rejected item, and the retrieval report. Also print a one-line summary of each
+selected item so the run log is readable.
 
-**1. `data/_finder-output-<dimension-id>.json`** — a JSON array of selected items
-using the schema below. Write `[]` if nothing qualifies. Valid JSON only, no
-markdown, no commentary.
+### 1. One file per selected signal
 
-**2. `data/_finder-rejected-<dimension-id>.json`** — a JSON array of notable
-items you evaluated and deliberately rejected, so future runs do not re-evaluate
-them. Max ~10, limited to items that looked plausible but failed your criteria.
-Format: `[{"claim": "...", "url": "..."}]`. `[]` if none.
+Write each selected item to its own file at
+**`data/signal-drafts/<id>.json`**, using the schema below, with
+`"status": "draft"`.
 
-**3. `data/_finder-report-<dimension-id>.md`** — the retrieval report. See below.
-This one is not optional.
+Create these directories if they do not exist — the reviewer needs all three:
 
-Do not create individual signal files and do not edit `index.json`. Publishing is
-a separate, reviewed step.
+```
+data/signal-drafts/            your output goes here
+data/signal-drafts/accepted/   leave empty; the reviewer moves files in
+data/signal-drafts/rejected/   leave empty; the reviewer moves files in
+```
+
+Write nothing into `accepted/` or `rejected/` yourself. Those two folders record
+a human decision, and a run that pre-empts it destroys the only review step
+between you and a published research site.
+
+**Never write into `public/` and never edit `index.json`.** A separate promote
+step moves reviewed drafts there. If nothing qualifies, write no signal files at
+all — that is a valid run, and the retrieval report explains it.
+
+### Assigning ids
+
+`id` is `YYYY-MM-DD-NN`: today's date plus a two-digit sequence. Before writing,
+find the highest `NN` already used for today across **all four** of:
+
+- `public/content/ai-signals/index.json`
+- `data/signal-drafts/`
+- `data/signal-drafts/accepted/`
+- `data/signal-drafts/rejected/`
+
+and continue past it. Check all four every time. A generic run and a sector run
+on the same day will both reach for `-01`, and drafts are not listed in
+`index.json`, so the index alone will not tell you an id is taken. The filename
+must match the `id` field inside the file.
+
+### 2. Rejected items — append, never overwrite
+
+Append one JSON object per line to
+**`data/_finder-rejected-<dimension-id>.jsonl`**. This file is append-only and
+accumulates across runs: never truncate it, never rewrite earlier lines.
+
+Record notable items you evaluated and deliberately rejected — the ones that
+looked plausible but failed your criteria. Roughly 10 per run is right; do not
+log the obviously irrelevant.
+
+```json
+{"run":"2026-08-06","claim":"…","url":"https://…","reason":"…","rejectedUnder":"stale-fieldwork","reviewable":false}
+```
+
+- **`reason`** — why you rejected it, specifically. Name the disqualifying fact:
+  "fieldwork traces to Survation 2021 and predates any AI mechanism", not "not
+  relevant". A reviewer must be able to judge your call without re-reading the
+  source.
+- **`rejectedUnder`** — the rule that disqualified it. One of:
+  `out-of-sector`, `too-vague`, `stale-fieldwork`, `no-original-data`,
+  `overlaps-published`, `unverifiable-source`, `not-primary-source`,
+  `commercial-intent`, `already-in-ledger`.
+- **`reviewable`** — `true` when the call was genuinely arguable and you want a
+  second opinion; `false` when it was clear-cut. Be honest and be sparing: this
+  field exists so the reviewer can read two items instead of ten. An item you
+  rejected only because it overlapped something published, or whose source you
+  could not verify but whose substance was strong, is `reviewable: true`.
+
+The reviewer reads this file and may ask you to write up an item you rejected.
+That is the point of recording it.
+
+### 3. The retrieval report
+
+**`data/_finder-report-<dimension-id>.md`** — see below. Not optional.
 
 ### Schema
 
@@ -165,7 +226,7 @@ a separate, reviewed step.
   "corroboration": ["https://other-source.example.com"],
   "detectedAt": "YYYY-MM-DD (today)",
   "date": "YYYY-MM-DD (when the source was published)",
-  "status": "published",
+  "status": "draft",
   "tags": ["string"],
   "category": ["string"],
   "whyItMatters": ["string (2-4 bullets, leadership implications)"],
@@ -175,9 +236,9 @@ a separate, reviewed step.
 }
 ```
 
-`id` uses today's date plus a two-digit sequence (`2026-08-06-01`, `-02`, …).
-Check `index.json` and continue past any ids already used for today.
-`corroboration` may be `[]` if there is only one source.
+Every item you write is `"status": "draft"` — promotion to `published` is the
+reviewer's decision, made by moving the file, not yours. `corroboration` may be
+`[]` if there is only one source. For `id`, see *Assigning ids* above.
 
 There is **no work-dimension field**. The sector is a lens on the search, not
 something recorded in published signal JSON. Do not add one.

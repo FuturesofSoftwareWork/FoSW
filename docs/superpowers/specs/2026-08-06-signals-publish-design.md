@@ -1,10 +1,11 @@
 # Signal publishing — design
 
-Two commands, `signals:publish` and `signals:promote`, that turn a finder run's
-JSON output into signal files under `public/content/ai-signals/` with a human
-review step in between.
+One command, `signals:promote`, that moves reviewed signal drafts into
+`public/content/ai-signals/` and updates `index.json`. The finder agent writes
+the drafts itself; the reviewer sorts them; `promote` does the rest.
 
-Written 2026-08-06. Nothing here is built yet.
+Written 2026-08-06. Revised the same day after the first real sector run — see
+*Revision: the publish step was removed* at the end. Nothing here is built yet.
 
 ## The gap
 
@@ -31,7 +32,6 @@ time.
 | Path | What |
 |------|------|
 | `scripts/lib/signal-schema.mjs` | Enums + `validateSignal(item)`, lifted out of `validate-signals.mjs` |
-| `scripts/publish-signals.mjs` | Stages finder output as drafts. `npm run signals:publish` |
 | `scripts/promote-signals.mjs` | Moves reviewed drafts into `public/`, writes the ledger. `npm run signals:promote` |
 
 `scripts/ledger.mjs` gains exports so the two new scripts can reuse its
@@ -116,17 +116,20 @@ and it contains exactly what was kept.
 
 ```bash
 npm run signals:prepare
-#  run the sector prompt → data/_finder-output-<dim>.json
-#                          data/_finder-rejected-<dim>.json
-#                          data/_finder-report-<dim>.md
-npm run signals:publish -- data/_finder-output-<dim>.json \
-  --rejected data/_finder-rejected-<dim>.json
+#  run the sector prompt. It writes, itself:
+#    data/signal-drafts/<id>.json           one file per selected signal
+#    data/_finder-rejected-<dim>.jsonl      appended, one line per rejection
+#    data/_finder-report-<dim>.md           retrieval report
 #  review data/signal-drafts/ ; mv each file into accepted/ or rejected/
 npm run signals:promote
 ```
 
 The generic weekly run is identical minus the sector suffixes, and gains
-`npm run signals:collect` at step 2 as it has today.
+`npm run signals:collect` before the prompt as it has today.
+
+There is no staging script. The agent writes the drafts where they belong, which
+is what makes the folder tree the whole interface between the run and the
+reviewer.
 
 ### The organising rule
 
@@ -134,7 +137,7 @@ The generic weekly run is identical minus the sector suffixes, and gains
 
 | Decision | Made by | Recorded by | Ledger status |
 |----------|---------|-------------|---------------|
-| The finder evaluated and declined it | the model, at output time | `publish` | `rejected` |
+| The finder evaluated and declined it | the model, in the `.jsonl` | `promote` | `rejected` |
 | You declined it during review | you, in `rejected/` | `promote` | `rejected` |
 | It went live | you, in `accepted/` | `promote` | `published` |
 
@@ -149,77 +152,71 @@ Retiring it is out of scope.
 
 `scripts/ledger.mjs` gains **exports only, no behaviour change**: `readLedger`
 (line 106), `recordFromSignal` (line 145) and an `appendRecords(records)`
-extracted from the append block inside `cmdReconcile`, so `publish` and `promote`
-write the ledger through the same key-dedup path rather than reimplementing it.
-`prepare` and `reconcile` keep working exactly as they do now, and
-`scripts/__tests__` must show that. `keyFor`, `normalizeUrl` and `normalizeText`
-are already exported.
+extracted from the append block inside `cmdReconcile`, so `promote` writes the
+ledger through the same key-dedup path rather than reimplementing it. `prepare`
+and `reconcile` keep working exactly as they do now, and `scripts/__tests__` must
+show that. `keyFor`, `normalizeUrl` and `normalizeText` are already exported.
 
-## `publish` — stage drafts
+## What the agent writes
 
-`node scripts/publish-signals.mjs <finder-output.json> [--rejected <file>]`
+Specified in full in `docs/sector-prompts/sector-prompt-instructions.md`;
+summarised here because `promote` depends on it.
 
-1. Read the finder-output array. **Validate every item** via `signal-schema.mjs`.
-   On any failure, write nothing and exit 1, listing per-item errors.
-2. Assign ids (below).
-3. Write one file per item to `data/signal-drafts/<id>.json` with
-   `status: "draft"`.
-4. Append `--rejected` items to the ledger as `rejected`, reusing the existing
-   key-dedup so a re-run is a no-op.
-5. Print the id mapping.
+- **One file per selected signal** at `data/signal-drafts/<id>.json`, with
+  `"status": "draft"`. The agent creates `accepted/` and `rejected/` empty and
+  writes nothing into them — those two folders record a human decision.
+- **Ids** are `YYYY-MM-DD-NN`, assigned by scanning all four of `index.json`,
+  `signal-drafts/`, `accepted/` and `rejected/` for the highest sequence used
+  today. All four matter: a sector run and a generic run on the same day both
+  reach for `-01`, and drafts are not listed in `index.json`.
+- **Rejections** append one line per item to
+  `data/_finder-rejected-<dimension-id>.jsonl` — append-only, never truncated —
+  carrying `reason`, `rejectedUnder` and `reviewable` alongside `claim` and
+  `url`.
 
-Nothing under `public/` is touched, and `index.json` is not read for writing —
-only for id scanning.
+### Why rejections carry a reason and a reviewable flag
 
-### Id assignment
+The first run's rejected list was ten `{claim, url}` pairs with no reason field,
+and the agent responded by cramming its justification into the `claim` string
+("fieldwork traces to Survation 2021 and predates any AI mechanism"). It wanted
+somewhere to put the reason, so the format should give it one.
 
-`publish` owns ids. The prompt's `id` values are treated as suggestions and
-discarded.
+Reading those reasons showed why it matters: eight of ten were sound calls a
+reviewer would endorse, and two were arguable — a 1,154-post qualitative study
+rejected for overlapping an already-published signal, and a positive firsthand
+account rejected on unverifiable authorship, in a sector whose prompt explicitly
+asks for disconfirming positive accounts. Neither was visible without reading the
+raw file, and the next run would have overwritten it.
 
-The prompt picks `YYYY-MM-DD-NN` by reading `index.json`, but staged drafts are
-not in `index.json`. A sector run and the generic weekly run on the same day
-would therefore both assign `2026-08-06-01`, and the second `publish` would
-silently overwrite the first one's draft.
-
-So `publish` scans `index.json`, `data/signal-drafts/`,
-`data/signal-drafts/accepted/` and `data/signal-drafts/rejected/` for the highest
-sequence already used on each item's `detectedAt` date, and assigns the next free
-ids in array order. Scanning the rejected folder too means a rejected id is never
-reused, so a ledger line always points at one item.
-
-This follows the pipeline's own stated principle: state lives in deterministic
-code, not in model discipline. The alternative — teaching the prompt to read the
-drafts folder — is exactly the failure mode the ledger was built in code to
-avoid.
-
-`_finder-output.json` is **not** rewritten. `promote` reads ids from the staged
-files themselves, so there is nothing to keep in sync, and the finder output
-stays an honest record of what the model actually said.
-
-### Why the batch is all-or-nothing
-
-A schema failure in one item almost always means a systematic prompt problem, not
-one bad apple. Staging the valid half consumes ids and leaves a state that has to
-be unpicked by hand before a re-run. Failing the batch keeps the fix in one
-place: correct the finder output, run again.
+`reviewable: true` is the agent's own flag for a call it thinks is arguable. It
+exists so the reviewer reads two items rather than ten. `rejectedUnder` gives a
+fixed vocabulary so patterns are countable across runs — if a sector keeps
+rejecting under `unverifiable-source`, that is a finding about retrieval, not
+about the sector.
 
 ## `promote` — go live
 
 `node scripts/promote-signals.mjs`
 
 1. Validate every file in `data/signal-drafts/accepted/`. Any failure → nothing
-   moves, exit 1.
+   moves, exit 1, listing per-file errors.
 2. Move each into `public/content/ai-signals/<id>.json`, rewriting `status` to
-   `"published"`. **Never overwrite an existing file.** `publish` should have
-   made a collision impossible, so one here means something was hand-edited —
-   abort the whole run and name the file rather than clobbering published
-   content.
+   `"published"`. **Never overwrite an existing file.** A collision means the
+   agent's id scan missed something or a file was hand-edited — abort the whole
+   run and name the file rather than clobbering published content.
 3. Append one `index.json` entry per item to the end of `items`; bump
    `lastUpdated`.
-4. Ledger: promoted items as `published`, everything in `rejected/` as
-   `rejected`. Rejected files stay where they are.
+4. Ledger: promoted items as `published`; everything in `rejected/` and every
+   line of `data/_finder-rejected-*.jsonl` as `rejected`. Rejected files and
+   lines stay where they are.
 5. Run `validate-signals.mjs` last, so a bad promote fails now rather than at the
    next build.
+
+**`promote` is the only schema gate.** With the agent writing drafts directly
+there is no script between it and the folder, so step 1 has to be strict: whole
+batch or nothing. A partial move would leave `accepted/` half-emptied with no
+record of which failures were real, and the reviewer would have to reconstruct
+the split by hand.
 
 `promote` **never touches the root queue.** It reports the count as a reminder
 and exits 0. An empty `accepted/` and empty `rejected/` is a clean no-op, not an
@@ -233,7 +230,7 @@ gives the smallest diff and has no effect on display order.
 
 ## Error handling
 
-Both commands are all-or-nothing at the batch level.
+`promote` is all-or-nothing at the batch level.
 
 `promote` writes signal files **before** `index.json`. A crash between the two
 leaves orphan files, which `validate-signals.mjs` catches loudly — *"exists on
@@ -247,53 +244,57 @@ Ledger appends are idempotent through the existing `keyFor` dedup, so re-running
 
 ## Testing
 
-`node --test`, three suites alongside the existing six.
+`node --test`, two suites alongside the existing six.
 
 - `signal-schema.test.mjs` — every enum, required fields, the array-shape rules,
   the `regulation-standard` / `practitioner-account` conditional requirements.
   Must also assert the extraction changed nothing: the same rules
   `validate-signals.mjs` enforced before.
-- `publish.test.mjs` — id reassignment past both `index.json` and all three
-  folders; a same-day collision between two runs; an invalid item blocking the
-  whole batch; `--rejected` items reaching the ledger; the finder output being
-  left untouched.
 - `promote.test.mjs` — `accepted/` moves and `rejected/` does not; the root queue
-  is untouched and reported; `index.json` gains exactly one entry per item;
-  `status` is flipped to `published`; a second run is a no-op; an empty run
-  exits 0.
+  is untouched and reported; one invalid file in `accepted/` blocks the whole
+  batch and moves nothing; a target that already exists in `public/` aborts
+  rather than overwriting; `index.json` gains exactly one entry per item;
+  `status` is flipped to `published`; `.jsonl` rejection lines reach the ledger;
+  a second run is a no-op; an empty run exits 0.
+
+The agent's side — id scanning, draft placement, the rejection format — has no
+script to test. It is prompt-specified, so the check is the run itself: the
+first run produced five schema-valid items with correctly sequenced,
+non-colliding ids, which is the evidence this design rests on. A run that
+regresses on that is the signal to reconsider.
 
 ## Also in scope
 
-**`.gitignore` fix.** It currently lists three exact paths:
-
-```
-data/_candidates.json
-data/_finder-output.json
-data/_finder-rejected.json
-```
-
-Sector runs write sector-suffixed filenames, so
-`data/_finder-rejected-worker-experience-identity-and-wellbeing.json` — a list of
-stories the editorial team declined, on a public repo — is **not ignored** and
-would be committed. Replace with globs and add the drafts folder:
+**`.gitignore`** — done ahead of the rest, because a sector run could be launched
+before this is built. Sector runs write sector-suffixed filenames, so the three
+original exact paths missed `data/_finder-rejected-<dimension-id>.json` entirely.
+Note `data/_finder-rejected*` carries **no `.json` suffix** in the pattern: the
+rejection store is `.jsonl`, and `data/_finder-rejected*.json` does not match a
+name ending in `.jsonl`.
 
 ```
 data/_candidates*.json
 data/_finder-output*.json
-data/_finder-rejected*.json
+data/_finder-rejected*
 data/_finder-report*.md
 data/signal-drafts/
 ```
 
 **Documentation.** `docs/ai-signals-pipeline.md` (run order, the file table, a
-staging section), both finder prompts (run-order block; soften the id instruction
-to say `publish` reassigns), `CLAUDE.md` and `AGENTS.md` (commands and the
-`public/` vs `data/` boundary).
+staging section), `CLAUDE.md` and `AGENTS.md` (commands and the `public/` vs
+`data/` boundary).
+
+The prompt side is already done: `docs/sector-prompts/sector-prompt-instructions.md`
+carries the draft-writing, id-scanning and rejection format.
 
 ## Deliberately not done
 
 - `--dimension` on `collect-candidates.mjs`, and `scripts/lib/radar-sectors.mjs`.
-  Still gated on the first sector run's retrieval report.
+  No longer gated — the first sector run's retrieval report came back
+  *"yes, decisively"*, naming the feeds (Reddit JSON sorted by comment count, HN
+  Algolia, a curated practitioner blogroll, arXiv `cs.HC`/`cs.SE`, a survey-release
+  watchlist). Out of scope **here** only because it is a separate piece of work,
+  not because the question is open.
 - The other six sector prompts.
 - Retiring `reconcile`.
 - Any change to the AI Signal schema, including a `workDimensions` field. The
@@ -308,11 +309,40 @@ to say `publish` reassigns), `CLAUDE.md` and `AGENTS.md` (commands and the
 - **`data/` is never published; `public/` is.** No pipeline working file goes
   under `public/`. `validate-signals.mjs` already fails the build on any file
   under `public/content/ai-signals/` whose name starts with `_`.
-- **The prompt's ids are not the final ids.** Anything referring to an item by
-  the id in `_finder-output.json` — including the retrieval report — is naming a
-  suggestion, not a file.
+- **The agent owns ids, so a bad id scan is a silent overwrite.** If it checks
+  only `index.json` and a draft with that id is already queued, it writes over
+  it. This is the one place the design depends on the model following an
+  instruction, and it is why `promote` refuses to overwrite anything in
+  `public/` — that refusal is the backstop.
 - **`rm` is not a rejection.** Removing a file from the queue records nothing and
   the item can come back. Move it to `rejected/`.
+- **The rejection store is append-only.** A run that truncates
+  `_finder-rejected-<dimension-id>.jsonl` destroys every earlier run's reasoning,
+  which is exactly what the first version of this pipeline did.
 - **Signals are not phenomena.** A good run produces evidence; someone still has
   to write the phenomenon, and `observedReach` is a human judgment no script may
   set. The radar's ten-phenomenon gate is unaffected by any of this.
+
+## Revision: the publish step was removed
+
+The first version of this spec had two scripts. `publish` read a single
+`_finder-output-<dimension-id>.json` array, assigned ids, and split it into
+per-item draft files; the prompts carried a matching instruction, *"Do not create
+individual signal files."*
+
+That was wrong against the original request — *"it would be good that it
+automatically adds files in right places in repo"* — and it was justified on a
+premise the first run disproved. The argument for script-side ids was that the
+pipeline's own principle keeps state in deterministic code rather than model
+discipline. But the run assigned five sequential ids with no collision against a
+96-entry `index.json` and produced a fully schema-valid payload unprompted. The
+splitting step was doing work the agent was already doing correctly, at the cost
+of a script, a file format, and an instruction telling the agent not to do the
+thing that was wanted.
+
+What survives from that argument is the id-scan requirement — all four
+locations, not just `index.json` — which moved into the prompt, and `promote`'s
+refusal to overwrite, which is now the backstop rather than a redundancy.
+
+`_finder-output-<dimension-id>.json` is dropped entirely: with per-item drafts on
+disk it would be a second copy of the same content, free to drift.

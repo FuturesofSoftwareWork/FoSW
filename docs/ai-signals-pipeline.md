@@ -162,25 +162,38 @@ Currently written:
 |--------|--------|
 | `worker-experience-identity-and-wellbeing` | [`sector-prompts/worker-experience-identity-and-wellbeing.md`](./sector-prompts/worker-experience-identity-and-wellbeing.md) |
 
+Each sector prompt is launched on its own and reads
+[`sector-prompts/sector-prompt-instructions.md`](./sector-prompts/sector-prompt-instructions.md)
+first — the shared half, carrying the schema, output contract, dedup rules and
+retrieval-report format. The sector file carries only scope, altitude, source mix,
+hunting grounds and hazards. The two are disjoint: nothing in one overrides the
+other.
+
 Run order — note there is **no `signals:collect` step**, because the collector's
 feeds are not sector-aware yet:
 
 ```bash
 npm run signals:prepare
-#  run the sector prompt (web search; no candidate pool)
-npm run signals:reconcile -- data/_finder-output-<dimension-id>.json \
-  --rejected data/_finder-rejected-<dimension-id>.json
+#  run the sector prompt (web search; no candidate pool). It writes, itself:
+#    data/signal-drafts/<id>.json          one file per selected signal
+#    data/_finder-rejected-<dim>.jsonl     appended, one line per rejection
+#    data/_finder-report-<dim>.md          retrieval report
+#  review data/signal-drafts/, mv each file into accepted/ or rejected/
+npm run signals:promote                  # NOT BUILT YET — see the design below
 ```
 
-Output filenames are sector-suffixed so a sector run can never overwrite the
-generic run's output. `reconcile` already takes a path, so no script change was
-needed.
+Until `signals:promote` exists, the drafts have to be placed by hand. The
+staging folders and the append-only rejection store are specified in
+[the publishing design](./superpowers/specs/2026-08-06-signals-publish-design.md).
 
-Sector prompts also write a retrieval report to
-`data/_finder-report-<dimension-id>.md` recording what was searched, what could
-not be reached, and whether a sector-aware candidate collector would have helped.
-That report is the input to the decision on whether to build one — see
-[the design](./superpowers/specs/2026-08-06-radar-sector-signal-search-design.md)
+Working filenames are sector-suffixed so a sector run can never overwrite the
+generic run's output.
+
+The retrieval report records what was searched, what could not be reached, and
+whether a sector-aware candidate collector would have helped. **The first run
+answered that: yes, decisively** — three of the sector's own named hunting
+grounds (Reddit, Hacker News, Blind) were unreachable through general search.
+See [the design](./superpowers/specs/2026-08-06-radar-sector-signal-search-design.md)
 and [the handover](./superpowers/HANDOVER-sector-signal-search.md).
 
 The sector is a **run-time lens only**: it shapes the search and the output
