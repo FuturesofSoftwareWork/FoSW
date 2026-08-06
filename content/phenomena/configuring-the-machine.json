@@ -5,11 +5,11 @@
   "thesis": "The engineering work that determines what a coding agent can actually do is moving out of the model and into the harness around it — the control loop, tool definitions, context management, retries and isolation. Capability starts to look less like a property a team buys and more like a system a team builds, which relocates the scarce skill from writing code to designing the conditions the machine works in.",
   "currentPressure": "Teams running the same model against the same tasks get materially different results depending on the scaffolding around it, so model choice stops explaining outcomes.",
   "status": "draft",
-  "primaryDimension": "human-ai-collaboration-and-agency",
+  "primaryDimension": "nature-and-division-of-work",
   "potentialImpact": "high",
   "implications": [
     {
-      "dimension": "human-ai-collaboration-and-agency",
+      "dimension": "nature-and-division-of-work",
       "statement": "Engineers increasingly shape machine behaviour by designing its environment rather than by instructing it directly.",
       "actors": [
         "developer",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "dimension": "organisation-and-coordination",
+      "dimension": "organisation-and-leadership",
       "statement": "Organisations standardise on a shared gateway and harness rather than on a single vendor's tool, changing what has to be agreed centrally.",
       "actors": [
         "organisation",
