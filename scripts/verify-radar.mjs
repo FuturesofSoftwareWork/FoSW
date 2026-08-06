@@ -35,6 +35,15 @@
  *   11    No hover card may leave the viewBox with labels off. Added because
  *         this is a state no other check ever enters, and hover cards were
  *         never exercised by anything above.
+ *   12    No two blip circles may overlap. `placeBlip` hashes each id
+ *         independently, so two ids in the same ring-and-sector cell could
+ *         land on top of each other; `placeBlips` nudges them apart. Note
+ *         that at six phenomena across seven sectors this rarely fires — the
+ *         load-bearing verification is the forced-collision run described in
+ *         the Phase 4 plan, which packs twenty blips into one cell.
+ *   13    Every `draft` phenomenon renders with the dashed outline. Drafts and
+ *         published phenomena used to be identical blips, so a reviewer could
+ *         not tell whether the claim they were commenting on was settled.
  */
 /* global document, MouseEvent -- this file runs in Node, but the callbacks
    passed to page.evaluate()/page.$eval() are serialised and executed inside
@@ -365,6 +374,51 @@ try {
       : hoverViolations
           .map((v) => `${v.label}: ${v.tag} "${v.text}" x=${v.x.toFixed(1)}..${v.xEnd.toFixed(1)} y=${v.y.toFixed(1)}..${v.yEnd.toFixed(1)}`)
           .join("; "),
+  );
+  // 12. No two blips may overlap.
+  const blipOverlaps = await page.evaluate(() => {
+    const svg = document.querySelector('svg[aria-label^="Futures radar"]');
+    const circles = [...svg.querySelectorAll("g[data-status] > circle[data-blip]")];
+    const out = [];
+    for (let i = 0; i < circles.length; i++) {
+      for (let j = i + 1; j < circles.length; j++) {
+        const a = circles[i];
+        const b = circles[j];
+        const ax = +a.getAttribute("cx");
+        const ay = +a.getAttribute("cy");
+        const ar = +a.getAttribute("r");
+        const bx = +b.getAttribute("cx");
+        const by = +b.getAttribute("cy");
+        const br = +b.getAttribute("r");
+        const d = Math.hypot(bx - ax, by - ay);
+        if (d < ar + br) out.push(`pair ${i}/${j}: ${d.toFixed(1)} < ${(ar + br).toFixed(1)}`);
+      }
+    }
+    return { count: circles.length, out };
+  });
+  check(
+    "no two blips overlap",
+    blipOverlaps.count > 0 && blipOverlaps.out.length === 0,
+    blipOverlaps.out.length === 0
+      ? `all pairs clear across ${blipOverlaps.count} blips`
+      : blipOverlaps.out.join("; "),
+  );
+
+  // 13. Every draft phenomenon is drawn as a draft.
+  const draftMarks = await page.evaluate(() => {
+    const svg = document.querySelector('svg[aria-label^="Futures radar"]');
+    const drafts = [...svg.querySelectorAll('g[data-status="draft"]')];
+    return {
+      count: drafts.length,
+      unmarked: drafts.filter(
+        (g) => g.querySelector("circle[data-blip]")?.getAttribute("stroke-dasharray") !== "3 2",
+      ).length,
+    };
+  });
+  check(
+    "every draft blip carries the dashed draft mark",
+    draftMarks.count > 0 && draftMarks.unmarked === 0,
+    `${draftMarks.count} draft(s), ${draftMarks.unmarked} unmarked`,
   );
 } catch (e) {
   check("harness ran without throwing", false, e.stack || e.message);

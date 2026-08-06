@@ -6,9 +6,19 @@ interface RadarLegendProps {
   onToggle: (id: WorkDimensionId | null) => void;
   matchCount: number;
   totalCount: number;
+  /** How many of the rendered phenomena are still drafts. Zero in production,
+   *  where drafts are never fetched — the key below is then pointless and is
+   *  not rendered at all. */
+  draftCount: number;
 }
 
-const RadarLegend = ({ active, onToggle, matchCount, totalCount }: RadarLegendProps) => {
+const RadarLegend = ({
+  active,
+  onToggle,
+  matchCount,
+  totalCount,
+  draftCount,
+}: RadarLegendProps) => {
   const activeLabel = WORK_DIMENSIONS.find((d) => d.id === active)?.label ?? "";
 
   return (
@@ -34,6 +44,23 @@ const RadarLegend = ({ active, onToggle, matchCount, totalCount }: RadarLegendPr
           </button>
         );
       })}
+      {draftCount > 0 && (
+        <p className="mt-2 flex w-full items-center justify-center gap-2 font-mono text-xs text-gray-500">
+          <svg width="14" height="14" aria-hidden="true" className="shrink-0">
+            <circle
+              cx="7"
+              cy="7"
+              r="5"
+              fill="#94a3b8"
+              fillOpacity="0.15"
+              stroke="#94a3b8"
+              strokeWidth="1.5"
+              strokeDasharray="3 2"
+            />
+          </svg>
+          dashed outline — draft, not yet published ({draftCount} of {totalCount})
+        </p>
+      )}
       <p aria-live="polite" className="sr-only">
         {active
           ? `Filtered to ${matchCount} of ${totalCount} phenomena affecting ${activeLabel}.`
