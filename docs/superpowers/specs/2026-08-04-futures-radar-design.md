@@ -1288,8 +1288,8 @@ None blocking. Three items flagged for spec review:
 ## As Built — divergences from this spec
 
 This spec was written before implementation. Where the code and this document
-disagree, **the code is correct** and the reasons are recorded here. Phases 1 and 3
-are merged or in review; Phases 2 and 4 are not started.
+disagree, **the code is correct** and the reasons are recorded here. Phases 1, 3
+and 4 are built; Phase 2 is not started.
 
 | This spec says | As built | Why |
 | --- | --- | --- |
@@ -1298,13 +1298,23 @@ are merged or in review; Phases 2 and 4 are not started.
 | `DrawerContent` extended in Phase 1 | **Deferred to Phase 3** | It breaks `tsc` until all five consumers are narrowed, which is not a types-only task. |
 | `radar:score` | **`radar-derive.mjs`** | Not cosmetic: the old name implied it decided ring placement. It computes facts only. |
 | `separate interview / workshop genres` | **One `primary-research` genre with a `method` field** | Extensible to further first-party methods without a new enum value each time. |
-| Placement uses "deterministic hashing **with collision nudging**" | **Hashing only.** Angular inset raised 12% → 22% as a partial mitigation | Real nudging is still owed; recorded as a carry-forward in the Phase 3 plan. Invisible at six blips, near-certain to matter at 30–40. |
+| Placement uses "deterministic hashing **with collision nudging**" | **Both, as of Phase 4.** `placeBlips` seeds from the hash, then relaxes overlapping pairs apart, clamped to each blip's own cell | The seed math is unchanged, so existing blips did not move. A cell holds about five blips at this spacing; past that it stays crowded deliberately, because nudging a blip out of its cell would misstate how far that change has reached. |
+| Preview built "on the radar branch" | **Built from `main`** | PR #18 merged and `feat-radar-ui` is gone — the radar *is* main. Building the preview from anywhere else would break this spec's own guarantee that reviewers see byte-for-byte what ships. |
+| Preview keyed on `VITE_RADAR_PREVIEW=1` | **That, or a base containing `/preview/`** | A missed environment variable would deploy a preview that renders as production: an empty page where the radar belongs, with nothing anywhere to explain it. |
+| Preview-only `robots.txt` with a `Disallow` | **Written, and noted in the code as symbolic** | Crawlers read `robots.txt` from the domain root only, and this site is published under `/FoSW/` — so neither the preview file nor the existing production one is ever fetched. The `noindex, nofollow` meta is the control that actually works. |
+| — | **`dist/404.html` in every build** | Not in this spec at all. Without it the deep links this spec's review loop depends on hard-404 for whoever receives them. |
+| Phenomenon pages prerendered alongside insights | **Not prerendered** | Static pages carrying Open Graph cards for unreviewed research claims are precisely what `noindex` exists to prevent, and the files would outlive the drafts. The 404 shim serves those links instead. |
 
 **Not yet built at all:** Phase 2's pipeline (`radar:prepare` / `apply` / `accept` /
-`derive`, the clustering prompt, editions and `reachHistory` rendering) and Phase 4's
-preview deployment. The six phenomena currently in `public/content/phenomena/` were
-authored by hand, which is why Phase 2 is not on the critical path to seeing the
-radar.
+`derive`, the clustering prompt, editions and `reachHistory` rendering). The six
+phenomena currently in `public/content/phenomena/` were authored by hand, which is
+why Phase 2 is not on the critical path to seeing the radar.
+
+**Known limitation, unfixed:** blip *labels* still crowd well before blips do. With
+eleven phenomena on the radar, labels visibly overlap each other and strike through
+the ring labels, while every blip is cleanly separated. Labels default to on below
+sixteen phenomena, so this is reachable with five more published. Blip placement is
+solved; label layout is not.
 
 ## Risks
 

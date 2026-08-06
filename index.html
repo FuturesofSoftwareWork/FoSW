@@ -32,6 +32,29 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Paired with the forwarder injected into 404.html by
+      // scripts/prerender.mjs. GitHub Pages serves 404.html for unknown paths
+      // without redirecting, so a shared deep link usually arrives with its own
+      // URL intact and this does nothing. The exception is a /preview/ deep
+      // link that Pages answers with the *root* 404 page: that one has to bounce
+      // through the preview shell, and the path it was aiming at travels here.
+      // Runs before the module script, so useDeepLink still sees the right
+      // pathname on its first read.
+      (function () {
+        try {
+          var target = sessionStorage.getItem("radarDeepLink");
+          if (target) {
+            sessionStorage.removeItem("radarDeepLink");
+            if (target !== location.pathname + location.search) {
+              history.replaceState({}, "", target);
+            }
+          }
+        } catch (e) {
+          /* sessionStorage unavailable — the deep link degrades to the home page */
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

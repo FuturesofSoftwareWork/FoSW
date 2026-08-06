@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run validate && tsc && vite build && node scripts/prerender.mjs",
+    "build:preview": "npm run validate && tsc && vite build --base=/FoSW/preview/ && node scripts/prerender.mjs",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "test": "node --test",
     "preview": "vite preview",

@@ -6,9 +6,19 @@ import type { WorkDimensionId } from "@/config/radarDimensions";
  * unpublished research be visible here?" — both draft fetching and the radar's
  * launch gate must answer this the same way, or one will silently disagree
  * with the other.
+ *
+ * Two independent signals, deliberately OR'd. `VITE_RADAR_PREVIEW` is the
+ * documented switch and the one CI sets. A `BASE_URL` containing `/preview/`
+ * is the backstop: a build deployed to the preview folder without the flag
+ * would otherwise render as production — an empty page where the radar should
+ * be, with no error anywhere to explain it.
  */
 export function isPreviewContext(): boolean {
-  return import.meta.env.DEV || import.meta.env.VITE_RADAR_PREVIEW === "1";
+  return (
+    import.meta.env.DEV ||
+    import.meta.env.VITE_RADAR_PREVIEW === "1" ||
+    import.meta.env.BASE_URL.includes("/preview/")
+  );
 }
 
 /**

@@ -77,6 +77,7 @@ const FuturesRadar = ({ phenomena, onOpen }: FuturesRadarProps) => {
           onToggle={setActiveDimension}
           matchCount={matchCount}
           totalCount={phenomena.length}
+          draftCount={phenomena.length - publishedCount}
         />
       </div>
     </section>
