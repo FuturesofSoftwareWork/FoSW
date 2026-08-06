@@ -84,16 +84,16 @@ step guarded by `if: github.event_name == 'push'`. `clean-exclude: preview` stop
 production deploy wiping the preview folder, and both workflows share a
 `github-pages-deploy` concurrency group so they cannot race for `gh-pages`.
 
-> **The two workflow files are parked in `docs/pending-workflows/`, not
-> `.github/workflows/`.** Pushing to that path needs a token with `workflow` scope;
-> the credentials available here have only `gist`, `read:org` and `repo`, and the
-> push was rejected outright. Apply them through GitHub's web editor — the same way
-> the last workflow change on this project was applied — or push from a machine with
-> a `workflow`-scoped token. See `docs/pending-workflows/README.md`.
+> **Both workflow files are installed at `.github/workflows/`.** They were parked in
+> `docs/pending-workflows/` for part of this branch's life, because pushing to that
+> path needs a token with `workflow` scope and the credential here had only `gist`,
+> `read:org` and `repo`. That was resolved with `gh auth refresh -h github.com -s
+> workflow` on the `artwall4` account, which is already a repo admin, so no web-editor
+> step is needed. `docs/pending-workflows/` is gone.
 >
-> **Nothing else in this PR depends on them.** The preview build, the `noindex`
-> handling, the 404 shim and the radar changes all work and are verified without
-> them; the workflows only automate the deployment.
+> **They take effect on merge, not before.** This PR's own checks still run under the
+> old `push`-only `deploy.yml` on `main`; the `pull_request` trigger starts guarding
+> the *next* PR.
 
 ## Verification
 

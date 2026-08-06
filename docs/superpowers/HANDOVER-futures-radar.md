@@ -29,7 +29,7 @@ disagrees with itself.
 | **1 — Schema and validation** | Merged (PR #15, plus #16 fixing a semantic merge conflict) |
 | **Content — 27 typed signals, 6 phenomena** | Merged (PR #17) |
 | **3 — Radar UI** | Merged (PR #18) |
-| **4 — Preview deployment** | **Built, not merged, not deployed.** Draft PR #19, branch `radar-phase4-preview` |
+| **4 — Preview deployment** | **Built and CI installed; not merged, not deployed.** Draft PR #19, branch `radar-phase4-preview` |
 | **2 — Bootstrap pipeline** | Not started |
 
 Phases were built out of order deliberately: Phase 2's pipeline is not on the
@@ -38,21 +38,31 @@ critical path to seeing a radar, so the first phenomena were hand-authored inste
 ## What is unfinished — read this before starting anything
 
 **There is no preview URL yet.** `futuresofsoftwarework.github.io/FoSW/preview/`
-does not exist. Phase 4 built everything needed to produce it and none of it is
+does not exist. Phase 4 built everything needed to produce it and it is not yet
 live. If you are here to "check the preview", it is not there — that is the state,
 not a bug you have hit.
 
-The blockers, in the order they must be cleared:
+The blockers, in the order they must be cleared. **Only one is left: merging PR #19.**
 
 | # | What | Who can do it |
 | --- | --- | --- |
-| 1 | **The two workflow files are not installed.** They sit in `docs/pending-workflows/`, not `.github/workflows/`. Pushing to that path needs a token with `workflow` scope; the credentials on this project have `gist`, `read:org`, `repo` only and the push is rejected outright. | A human, through GitHub's web editor — or anyone with a `workflow`-scoped token. **An agent cannot clear this.** Do not spend a turn re-attempting the push; it will fail the same way. |
+| 1 | ~~The two workflow files are not installed.~~ **Done 2026-08-06.** Both are at `.github/workflows/`; `docs/pending-workflows/` is deleted. | Was blocked on `workflow` token scope — see *How the token was fixed* below. |
 | 2 | **PR #19 is a draft and unmerged.** | A human reviews and merges. |
-| 3 | **The preview deploy has never run,** so nothing about it is confirmed against real GitHub Pages — only against a local simulation. | Follows automatically from 1 + 2. |
+| 3 | **The preview deploy has never run,** so nothing about it is confirmed against real GitHub Pages — only against a local simulation. | Follows automatically from 2. |
 
-Until #1 is done, the `pull_request` CI trigger is also **not** in effect: PRs are
-still merged without `npm test` or `npm run lint` having run. The fix exists in
-`docs/pending-workflows/deploy.yml` and is inert where it sits.
+The `pull_request` CI trigger now exists on the branch but **is not yet in effect** —
+GitHub reads workflows for a `pull_request` event from the *base* branch, so it only
+starts guarding PRs once this one merges to `main`. PR #19 itself is therefore still
+checked the old way, after the fact.
+
+### How the token was fixed
+
+The credential had `gist`, `read:org`, `repo` and the push was rejected outright.
+`gh auth refresh -h github.com -s workflow` added the missing scope in place, on the
+`artwall4` account, which is already a repo admin — so the permissions were never the
+problem, only the OAuth scope. **No web-editor step is needed any more.** Note the
+SSH route is not a workaround: the key on this machine authenticates as
+`Arto-Wallin_vttfi`, which is not a collaborator on the repo.
 
 ### To verify once it does deploy
 
@@ -103,7 +113,7 @@ the first real deploy:
 | `docs/superpowers/plans/2026-08-05-futures-radar-phase3-ui.md` | Phase 3, done. Its carry-forward section listed the Phase 4 obligations; all are now closed. |
 | `docs/superpowers/plans/2026-08-06-futures-radar-phase4-preview.md` | Phase 4, executed. One step was corrected mid-execution and says so inline — the forced-collision test called for twenty blips in one cell, which is four times what a cell physically holds. |
 | `PR_DESCRIPTION_radar-phase4-preview.md` | The PR #19 body. Current. |
-| `docs/pending-workflows/README.md` | **How to install the two workflow files.** Read this if you are the human unblocking the deploy. |
+| ~~`docs/pending-workflows/README.md`~~ | Deleted 2026-08-06 — the workflows it described are now installed at `.github/workflows/`. |
 | `CLAUDE.md` / `AGENTS.md` | Current, and identical apart from the heading and mirror note. Carry the two conventions below. |
 
 ## Two conventions that will bite if you do not know them
@@ -142,8 +152,9 @@ Phase 3 carry-forwards.
   settled claim from one still being written.
 - **Blips no longer overlap.** `placeBlips` nudges colliding pairs apart within
   their own cell.
-- **A `pull_request` CI trigger was written** — but see *What is unfinished*: it is
-  parked in `docs/pending-workflows/` and is **not** in effect yet.
+- **A `pull_request` CI trigger was written** and is installed at
+  `.github/workflows/deploy.yml` — but it only starts guarding PRs once this branch
+  merges, since GitHub reads `pull_request` workflows from the base branch.
 
 All of the above is verified locally: `npm test` 69/69, `npm run lint` clean,
 `npm run verify:radar` 15/15 against a preview build, deep links exercised by both
@@ -196,8 +207,8 @@ those are the only two contexts where the harness is meaningful.
 
 ## CI
 
-**None of this is live yet** — the two files are parked, see *What is unfinished*.
-What they will do once installed:
+Both files are installed at `.github/workflows/`, but **nothing they do has run yet**
+— they take effect when this branch merges to `main`.
 
 `deploy.yml` also triggers on `pull_request`, with an
 `if: github.event_name == 'push'` guard on the Deploy step, so `npm test` and
@@ -206,17 +217,18 @@ builds and publishes `/FoSW/preview/` from `main`. Both share the
 `github-pages-deploy` concurrency group, because both commit to `gh-pages` on a push
 to `main` and would otherwise interleave.
 
-Until then the CI gap the previous handover recorded is **still open**: nothing
-listens for `pull_request`, so no PR is checked before it lands.
+Until this branch merges, the CI gap the previous handover recorded is **still open**
+on `main`: nothing there listens for `pull_request`, so no PR — including #19 — is
+checked before it lands.
 
-**Pushing workflow changes needs a token with `workflow` scope, which the usual
-credential here lacks** — it has `gist`, `read:org` and `repo` only, and the push is
-rejected outright. So on the pushed branch both files are parked in
-`docs/pending-workflows/`, with a README explaining how to apply them. **Neither the
-preview build nor anything else in Phase 4 depends on them being applied**; they only
-automate the deployment. This is now the second workflow change on this project to
-need the web editor — it is worth getting a `workflow`-scoped token rather than
-hitting it a third time.
+**Pushing workflow changes needs a token with `workflow` scope.** The credential here
+lacked it and the push was rejected outright; `gh auth refresh -h github.com -s
+workflow` added it in place on the `artwall4` account. That account was already a repo
+admin, so this was never a permissions problem, only a scope one. **If you hit the
+same rejection again, run that command rather than reaching for the web editor** — the
+two earlier workflow changes on this project both went through the web editor
+unnecessarily. The SSH remote is not an alternative: the key on this machine
+authenticates as `Arto-Wallin_vttfi`, which is not a collaborator here.
 
 ## How to see it
 

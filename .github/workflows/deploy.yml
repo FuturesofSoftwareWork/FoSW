@@ -3,6 +3,16 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Nothing used to run on a pull request, so test and lint only ever executed
+  # after a merge — no PR was ever checked before it landed. The Deploy step
+  # below is guarded so this trigger validates without publishing.
+  pull_request:
+    branches: [main]
+
+# Shared with deploy-preview.yml: both commit to gh-pages on a push to main.
+concurrency:
+  group: github-pages-deploy
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -35,6 +45,10 @@ jobs:
         run: npm run build
 
       - name: Deploy
+        if: github.event_name == 'push'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
+          # A production deploy must not wipe the preview folder that
+          # deploy-preview.yml publishes into the same branch.
+          clean-exclude: preview
