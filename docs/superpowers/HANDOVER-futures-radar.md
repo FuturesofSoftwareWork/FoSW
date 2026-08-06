@@ -29,11 +29,70 @@ disagrees with itself.
 | **1 — Schema and validation** | Merged (PR #15, plus #16 fixing a semantic merge conflict) |
 | **Content — 27 typed signals, 6 phenomena** | Merged (PR #17) |
 | **3 — Radar UI** | Merged (PR #18) |
-| **4 — Preview deployment** | Built on branch `worktree-radar-phase4-preview` |
+| **4 — Preview deployment** | **Built, not merged, not deployed.** Draft PR #19, branch `radar-phase4-preview` |
 | **2 — Bootstrap pipeline** | Not started |
 
 Phases were built out of order deliberately: Phase 2's pipeline is not on the
 critical path to seeing a radar, so the first phenomena were hand-authored instead.
+
+## What is unfinished — read this before starting anything
+
+**There is no preview URL yet.** `futuresofsoftwarework.github.io/FoSW/preview/`
+does not exist. Phase 4 built everything needed to produce it and none of it is
+live. If you are here to "check the preview", it is not there — that is the state,
+not a bug you have hit.
+
+The blockers, in the order they must be cleared:
+
+| # | What | Who can do it |
+| --- | --- | --- |
+| 1 | **The two workflow files are not installed.** They sit in `docs/pending-workflows/`, not `.github/workflows/`. Pushing to that path needs a token with `workflow` scope; the credentials on this project have `gist`, `read:org`, `repo` only and the push is rejected outright. | A human, through GitHub's web editor — or anyone with a `workflow`-scoped token. **An agent cannot clear this.** Do not spend a turn re-attempting the push; it will fail the same way. |
+| 2 | **PR #19 is a draft and unmerged.** | A human reviews and merges. |
+| 3 | **The preview deploy has never run,** so nothing about it is confirmed against real GitHub Pages — only against a local simulation. | Follows automatically from 1 + 2. |
+
+Until #1 is done, the `pull_request` CI trigger is also **not** in effect: PRs are
+still merged without `npm test` or `npm run lint` having run. The fix exists in
+`docs/pending-workflows/deploy.yml` and is inert where it sits.
+
+### To verify once it does deploy
+
+Three things are asserted but unproven outside a local simulation. Check them on
+the first real deploy:
+
+1. **Does Pages serve a nested `404.html`?** If `/FoSW/preview/<anything-missing>/`
+   is answered by `preview/404.html`, the `sessionStorage` forwarder injected into
+   the production `404.html` is dead code and should be deleted. If it is answered
+   by the *root* `404.html`, the forwarder is what makes preview deep links work.
+   Both paths were tested locally and both land correctly; which one fires is only
+   observable in production.
+2. **Does `clean-exclude: preview` actually spare the folder?** A production deploy
+   running after a preview deploy must not empty it.
+3. **Does the shared `concurrency` group hold?** Both workflows trigger on a push to
+   `main` and both commit to `gh-pages`.
+
+### Known, unfixed, and not blocking
+
+- **Blip labels crowd well before blips do.** At eleven phenomena labels overlap
+  each other and strike through the ring labels, while every blip is cleanly
+  separated. Labels default to on below sixteen, so this is five publications away.
+  Blip placement is solved; label layout is not. This is the most likely next
+  visible defect.
+- **Nudging is unverified above ~5 blips in one cell.** A cell is roughly 64 × 48
+  viewBox units and a blip needs ~380 sq units at the required spacing, so a cell
+  holds about five. Beyond that it stays crowded by design — moving a blip out of
+  its cell would misstate how far that change has reached. If 30–40 phenomena
+  cluster into few dimensions, revisit the insets rather than the relaxation.
+- **`scripts/prerender.mjs` still keeps its own copy of `SITE_URL`.** It cannot
+  import `src/config.ts` and the comment says so, but the two can still drift. A
+  `node --test` reading both files and comparing the literals would close it; the
+  pattern already exists in `scripts/__tests__/config.test.mjs`.
+- **The preview will redeploy on every push to `main`,** including documentation-only
+  commits. Add `paths-ignore` for `docs/**` and `*.md` if that becomes noisy.
+- **Only 6 phenomena exist and all are `draft`.** The radar stays invisible in
+  production until ten are `published` — that gate is the point, not an obstacle.
+  Publishing the tenth is what launches it.
+- **Spec rule 12 is unimplemented** — that `radar:apply` touched no human-owned field
+  on a pre-existing phenomenon. It belongs to Phase 2.
 
 ## The documents, and which to trust
 
@@ -41,8 +100,11 @@ critical path to seeing a radar, so the first phenomena were hand-authored inste
 | --- | --- |
 | `docs/superpowers/specs/2026-08-04-futures-radar-design.md` | The design record. **Read its *As Built* section** — it lists every place the code deliberately diverges. Where they disagree, the code is right. |
 | `docs/superpowers/plans/2026-08-05-futures-radar-phase1-schema.md` | Phase 1, done. Its carry-forward table is still live. |
-| `docs/superpowers/plans/2026-08-05-futures-radar-phase3-ui.md` | Phase 3, done. Its carry-forward section holds the Phase 4 obligations. |
-| `CLAUDE.md` | Current. Carries the two conventions below. |
+| `docs/superpowers/plans/2026-08-05-futures-radar-phase3-ui.md` | Phase 3, done. Its carry-forward section listed the Phase 4 obligations; all are now closed. |
+| `docs/superpowers/plans/2026-08-06-futures-radar-phase4-preview.md` | Phase 4, executed. One step was corrected mid-execution and says so inline — the forced-collision test called for twenty blips in one cell, which is four times what a cell physically holds. |
+| `PR_DESCRIPTION_radar-phase4-preview.md` | The PR #19 body. Current. |
+| `docs/pending-workflows/README.md` | **How to install the two workflow files.** Read this if you are the human unblocking the deploy. |
+| `CLAUDE.md` / `AGENTS.md` | Current, and identical apart from the heading and mirror note. Carry the two conventions below. |
 
 ## Two conventions that will bite if you do not know them
 
@@ -80,9 +142,20 @@ Phase 3 carry-forwards.
   settled claim from one still being written.
 - **Blips no longer overlap.** `placeBlips` nudges colliding pairs apart within
   their own cell.
-- **PRs are checked before merging** — see below.
+- **A `pull_request` CI trigger was written** — but see *What is unfinished*: it is
+  parked in `docs/pending-workflows/` and is **not** in effect yet.
+
+All of the above is verified locally: `npm test` 69/69, `npm run lint` clean,
+`npm run verify:radar` 15/15 against a preview build, deep links exercised by both
+fallback routes against a simulated Pages tree, and nudging exercised by forcing five
+phenomena into one cell (three genuine seed collisions before, none after). None of
+it has been exercised by a real deployment.
 
 ## Start here for Phase 2
+
+**Only after the three blockers above are cleared** — otherwise Phase 4 quietly
+never ships, which is exactly how a preview that must later be "moved" gets
+deferred forever.
 
 The pipeline: `radar:prepare` / `apply` / `accept` / `derive`, the clustering
 prompt, the machine-owned vs human-owned field manifest, editions and
@@ -123,12 +196,18 @@ those are the only two contexts where the harness is meaningful.
 
 ## CI
 
-`deploy.yml` now also triggers on `pull_request`, with an
+**None of this is live yet** — the two files are parked, see *What is unfinished*.
+What they will do once installed:
+
+`deploy.yml` also triggers on `pull_request`, with an
 `if: github.event_name == 'push'` guard on the Deploy step, so `npm test` and
 `npm run lint` finally run *before* a merge rather than after. `deploy-preview.yml`
 builds and publishes `/FoSW/preview/` from `main`. Both share the
 `github-pages-deploy` concurrency group, because both commit to `gh-pages` on a push
 to `main` and would otherwise interleave.
+
+Until then the CI gap the previous handover recorded is **still open**: nothing
+listens for `pull_request`, so no PR is checked before it lands.
 
 **Pushing workflow changes needs a token with `workflow` scope, which the usual
 credential here lacks** — it has `gist`, `read:org` and `repo` only, and the push is
