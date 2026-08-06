@@ -1,0 +1,43 @@
+{
+  "id": "2026-08-06-01",
+  "title": "The autonomy paradox: junior developers report feeling more capable and less like the author of their own work",
+  "summary": "A qualitative study of thirteen interns and junior developers finds that what decides whether a newcomer uses AI or works by hand is neither deadline nor task difficulty but whether they can check the result — the authors call this 'verification-conditioned use'. Two findings bear directly on how the work is experienced. The first is an autonomy paradox: participants describe feeling more capable while feeling less ownership of what they produce. The second is a first-person denial of dependence — newcomers readily identify AI dependence in peers while rejecting it in themselves, a gap between actual reliance and self-perception. The authors join these into a 'formative paradox': the shallow learning AI induces makes it harder to build the critical-judgment competence that participants say the market has begun to demand of them. What participants themselves report makes their AI use sustainable is a set of personal disciplines — reviewing before accepting, refusing to use output they do not understand, asking the tool for explanations, and keeping deliberate practice outside AI-assisted work.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2607.24606",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "replicated": false,
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-08-06",
+  "date": "2026-07-27",
+  "status": "published",
+  "tags": [
+    "autonomy",
+    "ownership",
+    "junior developers",
+    "self-perception",
+    "verification"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "Ownership is usually managed as an org-design property — who is on the rota, whose name is on the service. This finds it eroding at the level of felt authorship even where formal ownership is unchanged, which no team-structure change will fix.",
+    "The denial-of-dependence finding means self-report is an unreliable instrument here. Leaders asking juniors whether they rely on AI too much will get a systematically reassuring answer, including from those most affected.",
+    "The disciplines participants credit for sustainable use — reviewing before accepting, refusing output they do not understand, practising outside AI-assisted work — are currently individual coping strategies carried by the least senior people. Whether they become team norms is a leadership choice."
+  ],
+  "recommendedActions": [
+    "Measure junior competence through work that cannot be verification-conditioned — unassisted debugging, design reasoning, code explanation — rather than through throughput or self-assessment.",
+    "Make 'refuse output you do not understand' an explicit, protected team norm rather than a personal discipline, so that acting on it does not read as being slow."
+  ],
+  "risksAndCaveats": [
+    "Thirteen participants, qualitative and self-reported, single study, not replicated. The interview window is not stated in the abstract, so how current the accounts are cannot be established from the source.",
+    "Participants who volunteer for interviews about AI and their careers are plausibly those with the strongest feelings about it; the sample is not a cross-section of junior developers.",
+    "The study spans learning, autonomy and market entry. Its learning and hiring findings belong to other sectors; only the autonomy, ownership and self-perception themes are the basis for surfacing it here."
+  ],
+  "decisionHorizon": "0,5 - 2 years"
+}

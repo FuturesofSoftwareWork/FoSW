@@ -1,0 +1,42 @@
+{
+  "id": "2026-08-06-04",
+  "title": "Counter-evidence: two senior engineers who stopped writing code report being happier for it",
+  "summary": "The reflective-writing genre on this topic runs heavily negative, which makes credible accounts in the other direction worth surfacing on their own terms. Chris Wellons, a C and systems programmer of nearly two decades' standing and a long-time sceptic of tooling fashions, wrote in March 2026 that 'as of March, in my professional capacity I no longer write code myself,' describing the role as 'more like being a manager, orchestrating a nebulous team of inhumanly-fast, nameless assistants' — and concluding 'I'm happier and better for it.' He is explicit about the cost rather than silent on it: 'a small part of me is sad at what is lost,' and he is candid that the tools are buggier than industry average and weak on C. David Crawshaw, writing in February 2026 after eight months of daily agent use, reports his reading-to-writing ratio moving from roughly 50-50 to 95-5 and says 'I am having more fun programming than I ever have, because so many more of the programs I wish I could find the time to write actually exist.' Both accounts describe the same displacement of authorship that the negative accounts describe — supervision replacing production — and reach the opposite verdict on what it does to the person. The disagreement is about valence, not mechanism, which is the useful part.",
+  "source": "Practitioner Blog",
+  "sourceUrl": "https://nullprogram.com/blog/2026/03/29/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "concurrent",
+  "observer": "Chris Wellons, author of nullprogram.com, a systems programmer with nearly two decades at one employer and a long public track record of scepticism toward tooling trends — which makes a positive account from him more informative than one from an enthusiast. Corroborated by David Crawshaw, an experienced engineer at both large companies and startups and an active open-source contributor, writing after eight months of daily agent use.",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://crawshaw.io/blog/eight-more-months-of-agents"
+  ],
+  "detectedAt": "2026-08-06",
+  "date": "2026-03-29",
+  "status": "published",
+  "tags": [
+    "craft",
+    "satisfaction",
+    "counter-evidence",
+    "authorship",
+    "autonomy"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "The same structural change — supervision displacing production — produces opposite experiences in different people. That points at moderating conditions (choice, pace, control over the work) rather than at the tooling, and moderating conditions are what leaders can actually set.",
+    "Both accounts describe autonomy expanding, not contracting: work previously abandoned as too tedious became feasible. That is the mirror image of the ownership loss juniors report, and the difference in seniority is the obvious variable to test.",
+    "Any internal read on developer sentiment built only from the people writing about it will be biased toward distress. Leaders should assume their qualitative signal is skewed and instrument accordingly."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "Two accounts, both self-published, neither generalisable. They are surfaced as a deliberate check on selection bias in the surrounding evidence, not as counter-proof — and the same self-selection critique applies to them.",
+    "Both authors are highly experienced engineers with unusual control over what they work on. Neither is reporting from inside a mandated rollout with imposed throughput expectations, which is the condition most of the negative accounts describe.",
+    "Wellons changed employer specifically to one supporting AI adoption, so his account is of a chosen transition; it says little about how the same shift lands on people who did not choose it."
+  ],
+  "decisionHorizon": "now"
+}

@@ -1,0 +1,45 @@
+{
+  "id": "2026-08-06-05",
+  "title": "Longitudinal survey: productivity holds steady while developer experience degrades underneath it",
+  "summary": "Annie Vella and Kelly Blincoe of the University of Auckland ran two survey waves six months apart and matched 95 respondents across both, which is rare in this literature — almost all evidence on AI and developer experience is a single snapshot. Self-reported productivity was flat and high: 84% reported improvement at both points. Experience moved the other way. The share of matched participants reporting a worsened experience on at least one dimension nearly doubled, from 14% to 27%. Flow state and cognitive load both declined, while feedback loops improved — meaning the gains and losses landed on different dimensions rather than cancelling out. 82% reported spending less time writing code, which the authors characterise as a shift toward 'supervisory engineering work'. The finding that matters for leaders is the decoupling itself: the authors' 'productivity-experience paradox' means the metric most organisations watch would show nothing while the thing that predicts attrition moved.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2605.23135",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "lagging",
+  "dataCollectedPeriod": "October 2024 to April 2025 (two waves, six months apart)",
+  "replicated": false,
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-08-06",
+  "date": "2026-05-22",
+  "status": "published",
+  "tags": [
+    "longitudinal",
+    "flow state",
+    "cognitive load",
+    "supervisory work",
+    "developer experience"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "Productivity and experience moved independently over six months in the same people. Any dashboard tracking only output would have reported a healthy period, which is a direct argument for measuring experience separately rather than inferring it.",
+    "The deterioration accelerated between waves rather than appearing at adoption. Organisations that surveyed once at rollout and saw nothing alarming should assume that reading has expired.",
+    "Feedback loops improved while flow and cognitive load worsened. Composite developer-experience scores will net these against each other and show stability that is not there."
+  ],
+  "recommendedActions": [
+    "Run developer-experience measurement on a repeated matched-cohort basis rather than as one-off snapshots, and report flow, cognitive load and feedback loops separately instead of as a single index.",
+    "Stop treating stable productivity as evidence that an AI rollout is going well; pair it with an experience measure before drawing that conclusion."
+  ],
+  "risksAndCaveats": [
+    "Fieldwork ran October 2024 to April 2025 and predates the agentic tooling most teams now use. It is evidence that the decoupling can happen, not a current reading of its size; the mechanism has almost certainly intensified since.",
+    "Voluntary online survey with 60% retention between waves. Attrition between waves is plausibly non-random — participants whose experience worsened most may be over- or under-represented among those who returned, and the direction is unknowable.",
+    "All measures are self-reported perceptions, including the productivity measure. The paradox is between two self-reports, not between an objective metric and a felt one.",
+    "Lead author Annie Vella also writes publicly on this theme; her essay on the software engineering identity crisis is already on this radar (2026-02-19-01). This item is the separate empirical study, not a restatement of that piece."
+  ],
+  "decisionHorizon": "now"
+}
