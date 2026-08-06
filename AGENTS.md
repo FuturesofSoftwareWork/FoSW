@@ -4,6 +4,7 @@
 > note and the heading. If you change one, change the other — this file fell a
 > full feature behind once already, and a stale copy is worse than no copy
 > because an agent reading it will act on retired vocabulary.
+# CLAUDE.md
 
 ## Project Overview
 
@@ -21,8 +22,12 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 
 - `npm run dev` — start dev server
 - `npm run build` — type-check and build for production
+- `npm run build:preview` — the same build based at `/FoSW/preview/`; set `VITE_RADAR_PREVIEW=1` alongside it to force drafts and the radar on
 - `npm run lint` — ESLint (zero warnings allowed)
 - `npm run preview` — preview production build
+- `npm run verify:radar <baseUrl>` — 15 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
+
+**On Windows, run the `--base=` builds from PowerShell, or prefix with `MSYS_NO_PATHCONV=1` in Git Bash.** MSYS rewrites `/FoSW/preview/` into a Windows path, and the build then succeeds with a silently wrong base.
 
 ## Project Structure
 
@@ -67,7 +72,10 @@ scripts/
 - **Style patterns:** Glass-morphism (`backdrop-blur`, `bg-white/5`), dark theme, utility-first Tailwind classes
 - **Tailwind note:** Never use dynamic class interpolation (e.g., `` `text-${color}` ``). Always write full static class names so Tailwind can detect them.
 - **Drawer ownership:** `App` owns content fetching, the drawer stack, deep links and article meta, and renders `ContentDrawer` once. Sections receive data and an `onOpen` callback as props. Do not add a second `ContentDrawer` — two would fight over the URL.
-- **Radar visibility:** the radar section renders only when at least 10 phenomena are `published`, except in dev and in preview builds (`VITE_RADAR_PREVIEW=1`). Drafts are fetched in those same two cases and never in production.
+- **Radar visibility:** the radar section renders only when at least 10 phenomena are `published`, except in dev and in preview builds. `isPreviewContext()` in `src/lib/phenomenon.ts` is the single predicate behind both the draft fetch and the gate; it is true in dev, when `VITE_RADAR_PREVIEW=1`, **or when `BASE_URL` contains `/preview/`** — the last so a build deployed to the preview folder cannot silently render as production. Drafts are fetched in exactly those cases and never otherwise.
+- **Preview deployment:** `/FoSW/preview/` is the same commit as `/FoSW/`, built by `.github/workflows/deploy-preview.yml` with a different base and drafts on, so going live is publishing the tenth phenomenon rather than migrating anything. It is `noindex, nofollow` (applied by the `previewNoindex` plugin in `vite.config.ts`, keyed on the base) and ships no sitemap. `deploy.yml` carries `clean-exclude: preview`; both workflows share the `github-pages-deploy` concurrency group so they cannot race for `gh-pages`. Note that `robots.txt` under `/FoSW/` is never actually fetched — crawlers read it from the domain root only — so the meta tag is the control that works.
+- **SPA fallback:** every build emits `dist/404.html`, a copy of the prerendered shell. GitHub Pages serves it *without redirecting*, so `/FoSW/<kind>/<id>/` deep links — the URLs the drawer's Copy-link button hands out — resolve instead of hard-404ing. The production copy also forwards `/preview/` paths via `sessionStorage["radarDeepLink"]`, restored by the inline snippet in `index.html`, for the case where Pages answers a preview miss with the root 404 page.
+- **Blip placement:** `placeBlips` in `src/config/radarGeometry.ts` seeds from the per-id hash and then nudges overlapping pairs apart, clamped to each blip's own ring band and sector wedge. A cell holds about five blips at this spacing; beyond that it stays crowded on purpose, because moving a blip out of its cell would misstate how far that change has reached.
 
 ## Content Schema
 
@@ -110,4 +118,6 @@ Only include a type-specific field when its value is actually stated in the sour
 
 ## Verification
 
-Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run validate` runs both content validators — `npm run signals:validate` (AI-signal content against the schema above: enum values, required fields, id/index consistency) and `npm run validate:phenomena` (phenomenon content: required fields, enum values, cross-references to published signals, and that `evidenceProfile`/`firstObserved`/`latestEvidenceDate` match what the evidence derives) — and now runs automatically as the first step of `npm run build`. `npm test` runs the script unit tests (content loader, derivation library, config mirrors, and validator rules).
+Always run `npm run build` after changes to catch TypeScript errors before considering work complete. `npm run validate` runs both content validators — `npm run signals:validate` (AI-signal content against the schema above: enum values, required fields, id/index consistency) and `npm run validate:phenomena` (phenomenon content: required fields, enum values, cross-references to published signals, and that `evidenceProfile`/`firstObserved`/`latestEvidenceDate` match what the evidence derives) — and now runs automatically as the first step of `npm run build`. `npm test` runs the script unit tests (content loader, derivation library, config mirrors, base-path detection, and validator rules).
+
+`npm run build` also emits `dist/404.html`. A preview build additionally replaces `robots.txt` with a disallow-all and removes `sitemap.xml`. The prerenderer derives its base path from the built bundle (`scripts/lib/prerender-base.mjs`) rather than hardcoding one, so there is no second place to keep in sync.

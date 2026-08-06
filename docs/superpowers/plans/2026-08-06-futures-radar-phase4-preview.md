@@ -1153,7 +1153,9 @@ Expected: `13/13 passed`.
 
 - [ ] **Step 5: Force a collision and confirm the nudging actually runs**
 
-Six blips across seven sectors will not collide, so the check above proves nothing yet. Create twenty synthetic phenomena in a scratch copy, run the harness against them, then throw them away.
+Six blips across seven sectors will not collide, so the check above proves nothing yet. Create synthetic phenomena in a scratch copy, run the harness against them, then throw them away.
+
+> **Corrected during execution.** This step originally called for twenty synthetic phenomena in one cell. One cell is about 64 × 48 viewBox units and a blip needs ~380 sq units at the required spacing, so a cell holds roughly **five** blips — twenty is four times over capacity and no algorithm that respects cell boundaries can separate them. Use **five**, which is the realistic worst case for 30–40 phenomena spread over 21 cells. Five was verified: three genuine seed collisions, none after nudging.
 
 ```bash
 node -e "
@@ -1161,18 +1163,18 @@ const fs=require('fs'), path='public/content/phenomena/';
 const idx=JSON.parse(fs.readFileSync(path+'index.json','utf8'));
 fs.copyFileSync(path+'index.json', path+'index.json.bak');
 const seed=JSON.parse(fs.readFileSync(path+idx.items[0].file,'utf8'));
-for(let i=0;i<20;i++){
+for(let i=0;i<5;i++){
   const id='zz-synthetic-'+i;
   const p={...seed,id,label:'SYN'+i,title:'Synthetic '+i,status:'draft'};
   fs.writeFileSync(path+id+'.json', JSON.stringify(p,null,2));
   idx.items.push({id,file:id+'.json',status:'draft'});
 }
 fs.writeFileSync(path+'index.json', JSON.stringify(idx,null,2));
-console.log('added 20 synthetic phenomena');
+console.log('added 5 synthetic phenomena');
 "
 ```
 
-All twenty share one `primaryDimension` and one `observedReach` — a single cell holding twenty blips, the worst case this code exists for.
+All five share one `primaryDimension` and one `observedReach` — a single cell holding five blips — the realistic worst case for 30-40 phenomena across 21 cells, and about what a cell physically holds.
 
 With `npm run dev` running, run: `npm run verify:radar http://localhost:5173/FoSW/`
 

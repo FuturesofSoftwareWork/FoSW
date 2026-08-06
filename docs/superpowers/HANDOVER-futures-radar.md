@@ -28,9 +28,9 @@ disagrees with itself.
 | --- | --- |
 | **1 — Schema and validation** | Merged (PR #15, plus #16 fixing a semantic merge conflict) |
 | **Content — 27 typed signals, 6 phenomena** | Merged (PR #17) |
-| **3 — Radar UI** | **PR #18 open**, branch `feat-radar-ui` |
+| **3 — Radar UI** | Merged (PR #18) |
+| **4 — Preview deployment** | Built on branch `worktree-radar-phase4-preview` |
 | **2 — Bootstrap pipeline** | Not started |
-| **4 — Preview deployment** | Not started |
 
 Phases were built out of order deliberately: Phase 2's pipeline is not on the
 critical path to seeing a radar, so the first phenomena were hand-authored instead.
@@ -60,26 +60,41 @@ that question for both the fetch and the gate — they used to be separate expre
 at opposite polarity, which would have desynchronised silently. This is the mechanism
 that keeps unreviewed research claims off a VTT / University of Helsinki site.
 
-## Start here for Phase 4
+## What Phase 4 did
 
-Two items will fail immediately if you do not handle them first.
+Both of the items that used to head this section are fixed, along with the three
+Phase 3 carry-forwards.
 
-1. **`scripts/prerender.mjs` will break the preview build.** It hardcodes
-   `ROUTE = "/FoSW/"` and strips `^/FoSW` from request paths. The spec builds preview
-   with `--base=/FoSW/preview/`, so assets are requested at `/FoSW/preview/assets/…`,
-   the server looks for `dist/preview/assets/…`, finds nothing, serves the app shell,
-   and `waitForSelector` times out and fails the build. Parameterise the base path.
-2. **Phenomenon deep links 404 on GitHub Pages.** `dist/` contains `insights/` only;
-   there is no `404.html` or SPA shim. `/FoSW/phenomena/<id>/` — the URL the drawer's
-   Copy-link button hands out — hard-404s for the recipient. Pre-existing for signals,
-   but Phase 4 is what puts those links in front of reviewers who will paste them into
-   email.
+- **`scripts/prerender.mjs` no longer hardcodes the base.** It reads the base back
+  off the built bundle's own asset URLs (`scripts/lib/prerender-base.mjs`), so the
+  preview build — `--base=/FoSW/preview/` — prerenders instead of timing out at
+  `waitForSelector`. There is no second place to keep in sync.
+- **Deep links resolve.** Every build emits `dist/404.html`, a copy of the
+  prerendered shell. Pages serves it *without redirecting*, so `useDeepLink` still
+  sees the requested path. The production copy also forwards `/preview/` paths
+  through `sessionStorage`, covering the case where Pages answers a preview miss
+  with the root 404 page. Both routes were tested against a simulated Pages tree.
+- **`/FoSW/preview/` is `noindex`,** applied by the `previewNoindex` plugin in
+  `vite.config.ts`, keyed on the base rather than an environment variable.
+- **Drafts render as dashed outlines** with a legend key, so a reviewer can tell a
+  settled claim from one still being written.
+- **Blips no longer overlap.** `placeBlips` nudges colliding pairs apart within
+  their own cell.
+- **PRs are checked before merging** — see below.
 
-Also owed, in the Phase 3 plan's carry-forward section: add collision nudging to
-`placeBlip`; mark drafts distinctly from published on the preview radar; a preview
-build will bake drafts into static HTML and regenerate `sitemap.xml`. (The
-verification harness is committed — see below — with wiring it into the preview
-workflow still open.)
+## Start here for Phase 2
+
+The pipeline: `radar:prepare` / `apply` / `accept` / `derive`, the clustering
+prompt, the machine-owned vs human-owned field manifest, editions and
+`reachHistory` rendering. `deriveImpacts` in `src/lib/phenomenon.ts` already exists
+for it to reuse. Spec rule 12 — that `radar:apply` touched no human-owned field on a
+pre-existing phenomenon — is still unimplemented and belongs there.
+
+**Still owed, and visible today:** blip *labels* crowd well before blips do. At
+eleven phenomena the labels overlap each other and strike through the ring labels
+while every blip is cleanly separated. Labels default to on below sixteen
+phenomena, so this is five publications away. Blip placement is solved; label
+layout is not.
 
 ## The verification harness — read this
 
@@ -90,26 +105,34 @@ the project's own devDependency, because MCP browser tools were unavailable.
 It lives at `scripts/verify-radar.mjs`, **committed to the repo**, and is run with
 `npm run verify:radar <baseUrl>` — not wired into `npm run build`, `npm test` or
 `npm run lint`, since it needs a server already running and would fail spuriously in
-an unattended pipeline. It runs 13 checks. Four exist because *screenshots or a
-whole-branch review caught defects the DOM checks had missed*:
+an unattended pipeline. It *is* wired into `deploy-preview.yml`, which starts a
+server first and verifies the artefact it is about to deploy. It runs 15 checks.
+Six exist because *screenshots or a whole-branch review caught defects the DOM
+checks had missed*:
 
 - the radar SVG contains a nonzero number of `<text>` elements — added because, run against a production build, there is no radar at all, so the next two checks would otherwise pass vacuously over an empty list
 - no SVG `<text>` may fall outside the viewBox — added after six rim labels shipped clipped while the harness reported 9/9
 - labels sharing a line need 6px of clearance; labels on different lines need only not overlap — added after ring labels were struck through by blip labels
 - no hover card may leave the viewBox with labels off — a state no other check enters
+- no two blips may overlap — note this passes vacuously at six blips across seven sectors; the load-bearing check was a forced-collision run with five phenomena in one cell, which had three genuine seed collisions before nudging and none after
+- every `draft` blip carries the dashed mark — added with the draft styling, since identical blips hid exactly the thing a reviewer needs to know
 
 Run it against `npm run dev`, or a production build made with `VITE_RADAR_PREVIEW=1` —
 the radar is hidden below ten published phenomena in every other production build, so
 those are the only two contexts where the harness is meaningful.
 
-## CI gap worth closing
+## CI
 
-`.github/workflows/deploy.yml` triggers only on `push: branches: [main]`, and nothing
-listens for `pull_request`. So `npm test` and `npm run lint` run *after* a merge, not
-before — **no PR is ever checked**. Adding a `pull_request` trigger with an
-`if: github.event_name == 'push'` guard on the Deploy step fixes it. Note that
-pushing workflow changes needs a token with `workflow` scope, which the usual
-credential here lacks; the last one was applied through GitHub's web editor.
+`deploy.yml` now also triggers on `pull_request`, with an
+`if: github.event_name == 'push'` guard on the Deploy step, so `npm test` and
+`npm run lint` finally run *before* a merge rather than after. `deploy-preview.yml`
+builds and publishes `/FoSW/preview/` from `main`. Both share the
+`github-pages-deploy` concurrency group, because both commit to `gh-pages` on a push
+to `main` and would otherwise interleave.
+
+**Pushing workflow changes needs a token with `workflow` scope, which the usual
+credential here lacks.** The last one was applied through GitHub's web editor; expect
+to do the same with these two files if the push is rejected.
 
 ## How to see it
 
@@ -119,6 +142,19 @@ npm run dev          # http://localhost:5173/FoSW/  — note the /FoSW/ base, th
 
 Drafts and the radar both appear in dev. `npm run build && npx vite preview` shows
 the production behaviour: **no radar at all**, which is correct at 0 of 10 published.
+
+For the deployed preview:
+
+```bash
+VITE_RADAR_PREVIEW=1 npm run build:preview     # PowerShell on Windows, or MSYS_NO_PATHCONV=1
+npx vite preview --base=/FoSW/preview/ --port 5199 --strictPort
+npm run verify:radar http://localhost:5199/FoSW/preview/
+```
+
+**On Windows, do not run the `--base=` build from Git Bash without
+`MSYS_NO_PATHCONV=1`.** MSYS rewrites `/FoSW/preview/` into `C:/Program Files/Git/...`
+and the build then succeeds with a silently wrong base. This cost a debugging cycle
+during Phase 4 — the symptom looks exactly like a code defect.
 
 ## Things worth knowing about how this went
 
