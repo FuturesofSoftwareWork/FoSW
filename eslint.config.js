@@ -13,7 +13,12 @@ import reactRefresh from "eslint-plugin-react-refresh";
 export default tseslint.config(
   {
     // Build output, deps, and generated pipeline artifacts.
-    ignores: ["dist/**", "node_modules/**", "data/**", "public/**"],
+    // `.claude/**` holds git worktrees — full checkouts of this repo. Without
+    // it, ESLint lints every worktree's src/ as well as this one's and fails
+    // with "multiple candidate TSConfigRootDirs", so `npm run lint` breaks
+    // locally for anyone with a worktree open. CI never saw it: a fresh
+    // checkout has no worktrees.
+    ignores: ["dist/**", "node_modules/**", "data/**", "public/**", ".claude/**"],
   },
 
   // --- Browser React + TypeScript ---
