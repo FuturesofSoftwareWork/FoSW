@@ -141,6 +141,57 @@ ${entries.join("\n")}
   console.log(`Sitemap refreshed with ${entries.length} URLs at ${sitemapPath}`);
 }
 
+/**
+ * GitHub Pages has no SPA rewrite. Without a 404 page, `/FoSW/phenomena/<id>/`
+ * — the URL the drawer's Copy-link button produces — is a hard 404 for whoever
+ * receives it. Pages serves 404.html *without redirecting*, so a copy of the
+ * prerendered shell boots the app with the requested path still in the address
+ * bar and `useDeepLink` opens the right drawer.
+ *
+ * Production additionally forwards preview paths. If Pages answers a miss under
+ * /FoSW/preview/ with the root 404 page rather than the preview folder's own,
+ * the production bundle would boot at a preview URL, fail to match the path
+ * against its own base, and quietly show the home page instead of the
+ * phenomenon someone was sent. The forwarder stashes the intended path and
+ * bounces to the preview shell, which restores it — see the snippet in
+ * index.html.
+ */
+function writeFallbackPage(shellHtml) {
+  let html = shellHtml;
+  if (!IS_PREVIEW) {
+    const forwarder = `<script>(function(){var p=location.pathname;var pre=${JSON.stringify(
+      `${ROUTE}preview/`,
+    )};if(p.indexOf(pre)===0&&p!==pre){try{sessionStorage.setItem("radarDeepLink",p+location.search);}catch(e){}location.replace(pre);}})();</script>`;
+    if (!html.includes("<body>")) {
+      throw new Error("prerender: no <body> in the shell — cannot inject the 404 forwarder");
+    }
+    html = html.replace("<body>", `<body>${forwarder}`);
+  }
+  const outPath = join(DIST_DIR, "404.html");
+  writeFileSync(outPath, html, "utf-8");
+  console.log(`SPA fallback written to ${outPath}`);
+}
+
+/**
+ * Preview builds advertise nothing. Note that this file is largely symbolic:
+ * crawlers fetch robots.txt from the domain root only, and this site lives at
+ * /FoSW/, so neither this file nor the existing production one is ever read.
+ * The control that actually works is the `noindex, nofollow` meta applied by
+ * the previewNoindex plugin in vite.config.ts. This is written anyway because
+ * it states the intent where a human looking at the deployment will see it.
+ */
+function writePreviewRobots() {
+  const outPath = join(DIST_DIR, "robots.txt");
+  writeFileSync(
+    outPath,
+    `# Preview build — unreviewed research drafts. Not for indexing.\n` +
+      `# The effective control is the noindex meta tag; see vite.config.ts.\n` +
+      `User-agent: *\nDisallow: /\n`,
+    "utf-8",
+  );
+  console.log(`Preview robots.txt written to ${outPath}`);
+}
+
 async function prerender() {
   // 1. Start a local server to serve the built files
   const server = await startServer();
@@ -167,6 +218,9 @@ async function prerender() {
     const outputPath = join(DIST_DIR, "index.html");
     writeFileSync(outputPath, html, "utf-8");
     console.log(`Pre-rendered HTML written to ${outputPath}`);
+
+    // 5b. …and as the SPA fallback, so shared item URLs resolve.
+    writeFallbackPage(html);
 
     // Prerender one physical page per published insight.
     const insightItems = readPublishedIndex("expert-insights");
@@ -226,7 +280,19 @@ async function prerender() {
     if (PRERENDER_SIGNALS) {
       verifyItemPages("signals", signalItems, "ai-signals");
     }
-    refreshSitemap([...insightUrls, ...signalUrls]);
+    if (IS_PREVIEW) {
+      // A sitemap of production URLs served from the preview folder is at best
+      // noise and at worst an invitation to index it. Remove the copy Vite made
+      // from public/ rather than rewriting it.
+      const staleSitemap = join(DIST_DIR, "sitemap.xml");
+      if (existsSync(staleSitemap)) {
+        rmSync(staleSitemap);
+        console.log("Preview build: removed sitemap.xml");
+      }
+      writePreviewRobots();
+    } else {
+      refreshSitemap([...insightUrls, ...signalUrls]);
+    }
 
     await browser.close();
   } finally {
