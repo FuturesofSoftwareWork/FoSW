@@ -1,5 +1,13 @@
 # Futures Radar Phase 4 — Preview Deployment Implementation Plan
 
+> **STATUS: EXECUTED AND SHIPPED.** Merged as PR #19 on 2026-08-06 and deployed to
+> `https://futuresofsoftwarework.github.io/FoSW/preview/`. The unchecked boxes below
+> are how this repo's plans are archived — no plan here is ever ticked off, so an
+> empty checklist does **not** mean unstarted. For current state read
+> `docs/superpowers/HANDOVER-futures-radar.md`; for what the first real deploy proved
+> (including one conclusion this plan invited that turned out backwards) read its
+> *What the first real deploy settled* section.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Publish the futures radar to `futuresofsoftwarework.github.io/FoSW/preview/` — the same site, same repo, with drafts visible and the launch gate open — so VTT and University of Helsinki colleagues can review phenomena by URL before anything is public.
