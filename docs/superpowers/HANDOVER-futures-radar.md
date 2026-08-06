@@ -28,12 +28,81 @@ disagrees with itself.
 | --- | --- |
 | **1 — Schema and validation** | Merged (PR #15, plus #16 fixing a semantic merge conflict) |
 | **Content — 27 typed signals, 6 phenomena** | Merged (PR #17) |
-| **3 — Radar UI** | **PR #18 open**, branch `feat-radar-ui` |
+| **3 — Radar UI** | Merged (PR #18) |
+| **4 — Preview deployment** | **Built and CI installed; not merged, not deployed.** Draft PR #19, branch `radar-phase4-preview` |
 | **2 — Bootstrap pipeline** | Not started |
-| **4 — Preview deployment** | Not started |
 
 Phases were built out of order deliberately: Phase 2's pipeline is not on the
 critical path to seeing a radar, so the first phenomena were hand-authored instead.
+
+## What is unfinished — read this before starting anything
+
+**There is no preview URL yet.** `futuresofsoftwarework.github.io/FoSW/preview/`
+does not exist. Phase 4 built everything needed to produce it and it is not yet
+live. If you are here to "check the preview", it is not there — that is the state,
+not a bug you have hit.
+
+The blockers, in the order they must be cleared. **Only one is left: merging PR #19.**
+
+| # | What | Who can do it |
+| --- | --- | --- |
+| 1 | ~~The two workflow files are not installed.~~ **Done 2026-08-06.** Both are at `.github/workflows/`; `docs/pending-workflows/` is deleted. | Was blocked on `workflow` token scope — see *How the token was fixed* below. |
+| 2 | **PR #19 is a draft and unmerged.** | A human reviews and merges. |
+| 3 | **The preview deploy has never run,** so nothing about it is confirmed against real GitHub Pages — only against a local simulation. | Follows automatically from 2. |
+
+The `pull_request` CI trigger now exists on the branch but **is not yet in effect** —
+GitHub reads workflows for a `pull_request` event from the *base* branch, so it only
+starts guarding PRs once this one merges to `main`. PR #19 itself is therefore still
+checked the old way, after the fact.
+
+### How the token was fixed
+
+The credential had `gist`, `read:org`, `repo` and the push was rejected outright.
+`gh auth refresh -h github.com -s workflow` added the missing scope in place, on the
+`artwall4` account, which is already a repo admin — so the permissions were never the
+problem, only the OAuth scope. **No web-editor step is needed any more.** Note the
+SSH route is not a workaround: the key on this machine authenticates as
+`Arto-Wallin_vttfi`, which is not a collaborator on the repo.
+
+### To verify once it does deploy
+
+Three things are asserted but unproven outside a local simulation. Check them on
+the first real deploy:
+
+1. **Does Pages serve a nested `404.html`?** If `/FoSW/preview/<anything-missing>/`
+   is answered by `preview/404.html`, the `sessionStorage` forwarder injected into
+   the production `404.html` is dead code and should be deleted. If it is answered
+   by the *root* `404.html`, the forwarder is what makes preview deep links work.
+   Both paths were tested locally and both land correctly; which one fires is only
+   observable in production.
+2. **Does `clean-exclude: preview` actually spare the folder?** A production deploy
+   running after a preview deploy must not empty it.
+3. **Does the shared `concurrency` group hold?** Both workflows trigger on a push to
+   `main` and both commit to `gh-pages`.
+
+### Known, unfixed, and not blocking
+
+- **Blip labels crowd well before blips do.** At eleven phenomena labels overlap
+  each other and strike through the ring labels, while every blip is cleanly
+  separated. Labels default to on below sixteen, so this is five publications away.
+  Blip placement is solved; label layout is not. This is the most likely next
+  visible defect.
+- **Nudging is unverified above ~5 blips in one cell.** A cell is roughly 64 × 48
+  viewBox units and a blip needs ~380 sq units at the required spacing, so a cell
+  holds about five. Beyond that it stays crowded by design — moving a blip out of
+  its cell would misstate how far that change has reached. If 30–40 phenomena
+  cluster into few dimensions, revisit the insets rather than the relaxation.
+- **`scripts/prerender.mjs` still keeps its own copy of `SITE_URL`.** It cannot
+  import `src/config.ts` and the comment says so, but the two can still drift. A
+  `node --test` reading both files and comparing the literals would close it; the
+  pattern already exists in `scripts/__tests__/config.test.mjs`.
+- **The preview will redeploy on every push to `main`,** including documentation-only
+  commits. Add `paths-ignore` for `docs/**` and `*.md` if that becomes noisy.
+- **Only 6 phenomena exist and all are `draft`.** The radar stays invisible in
+  production until ten are `published` — that gate is the point, not an obstacle.
+  Publishing the tenth is what launches it.
+- **Spec rule 12 is unimplemented** — that `radar:apply` touched no human-owned field
+  on a pre-existing phenomenon. It belongs to Phase 2.
 
 ## The documents, and which to trust
 
@@ -41,8 +110,11 @@ critical path to seeing a radar, so the first phenomena were hand-authored inste
 | --- | --- |
 | `docs/superpowers/specs/2026-08-04-futures-radar-design.md` | The design record. **Read its *As Built* section** — it lists every place the code deliberately diverges. Where they disagree, the code is right. |
 | `docs/superpowers/plans/2026-08-05-futures-radar-phase1-schema.md` | Phase 1, done. Its carry-forward table is still live. |
-| `docs/superpowers/plans/2026-08-05-futures-radar-phase3-ui.md` | Phase 3, done. Its carry-forward section holds the Phase 4 obligations. |
-| `CLAUDE.md` | Current. Carries the two conventions below. |
+| `docs/superpowers/plans/2026-08-05-futures-radar-phase3-ui.md` | Phase 3, done. Its carry-forward section listed the Phase 4 obligations; all are now closed. |
+| `docs/superpowers/plans/2026-08-06-futures-radar-phase4-preview.md` | Phase 4, executed. One step was corrected mid-execution and says so inline — the forced-collision test called for twenty blips in one cell, which is four times what a cell physically holds. |
+| `PR_DESCRIPTION_radar-phase4-preview.md` | The PR #19 body. Current. |
+| ~~`docs/pending-workflows/README.md`~~ | Deleted 2026-08-06 — the workflows it described are now installed at `.github/workflows/`. |
+| `CLAUDE.md` / `AGENTS.md` | Current, and identical apart from the heading and mirror note. Carry the two conventions below. |
 
 ## Two conventions that will bite if you do not know them
 
@@ -60,26 +132,53 @@ that question for both the fetch and the gate — they used to be separate expre
 at opposite polarity, which would have desynchronised silently. This is the mechanism
 that keeps unreviewed research claims off a VTT / University of Helsinki site.
 
-## Start here for Phase 4
+## What Phase 4 did
 
-Two items will fail immediately if you do not handle them first.
+Both of the items that used to head this section are fixed, along with the three
+Phase 3 carry-forwards.
 
-1. **`scripts/prerender.mjs` will break the preview build.** It hardcodes
-   `ROUTE = "/FoSW/"` and strips `^/FoSW` from request paths. The spec builds preview
-   with `--base=/FoSW/preview/`, so assets are requested at `/FoSW/preview/assets/…`,
-   the server looks for `dist/preview/assets/…`, finds nothing, serves the app shell,
-   and `waitForSelector` times out and fails the build. Parameterise the base path.
-2. **Phenomenon deep links 404 on GitHub Pages.** `dist/` contains `insights/` only;
-   there is no `404.html` or SPA shim. `/FoSW/phenomena/<id>/` — the URL the drawer's
-   Copy-link button hands out — hard-404s for the recipient. Pre-existing for signals,
-   but Phase 4 is what puts those links in front of reviewers who will paste them into
-   email.
+- **`scripts/prerender.mjs` no longer hardcodes the base.** It reads the base back
+  off the built bundle's own asset URLs (`scripts/lib/prerender-base.mjs`), so the
+  preview build — `--base=/FoSW/preview/` — prerenders instead of timing out at
+  `waitForSelector`. There is no second place to keep in sync.
+- **Deep links resolve.** Every build emits `dist/404.html`, a copy of the
+  prerendered shell. Pages serves it *without redirecting*, so `useDeepLink` still
+  sees the requested path. The production copy also forwards `/preview/` paths
+  through `sessionStorage`, covering the case where Pages answers a preview miss
+  with the root 404 page. Both routes were tested against a simulated Pages tree.
+- **`/FoSW/preview/` is `noindex`,** applied by the `previewNoindex` plugin in
+  `vite.config.ts`, keyed on the base rather than an environment variable.
+- **Drafts render as dashed outlines** with a legend key, so a reviewer can tell a
+  settled claim from one still being written.
+- **Blips no longer overlap.** `placeBlips` nudges colliding pairs apart within
+  their own cell.
+- **A `pull_request` CI trigger was written** and is installed at
+  `.github/workflows/deploy.yml` — but it only starts guarding PRs once this branch
+  merges, since GitHub reads `pull_request` workflows from the base branch.
 
-Also owed, in the Phase 3 plan's carry-forward section: add collision nudging to
-`placeBlip`; mark drafts distinctly from published on the preview radar; a preview
-build will bake drafts into static HTML and regenerate `sitemap.xml`. (The
-verification harness is committed — see below — with wiring it into the preview
-workflow still open.)
+All of the above is verified locally: `npm test` 69/69, `npm run lint` clean,
+`npm run verify:radar` 15/15 against a preview build, deep links exercised by both
+fallback routes against a simulated Pages tree, and nudging exercised by forcing five
+phenomena into one cell (three genuine seed collisions before, none after). None of
+it has been exercised by a real deployment.
+
+## Start here for Phase 2
+
+**Only after the three blockers above are cleared** — otherwise Phase 4 quietly
+never ships, which is exactly how a preview that must later be "moved" gets
+deferred forever.
+
+The pipeline: `radar:prepare` / `apply` / `accept` / `derive`, the clustering
+prompt, the machine-owned vs human-owned field manifest, editions and
+`reachHistory` rendering. `deriveImpacts` in `src/lib/phenomenon.ts` already exists
+for it to reuse. Spec rule 12 — that `radar:apply` touched no human-owned field on a
+pre-existing phenomenon — is still unimplemented and belongs there.
+
+**Still owed, and visible today:** blip *labels* crowd well before blips do. At
+eleven phenomena the labels overlap each other and strike through the ring labels
+while every blip is cleanly separated. Labels default to on below sixteen
+phenomena, so this is five publications away. Blip placement is solved; label
+layout is not.
 
 ## The verification harness — read this
 
@@ -90,26 +189,46 @@ the project's own devDependency, because MCP browser tools were unavailable.
 It lives at `scripts/verify-radar.mjs`, **committed to the repo**, and is run with
 `npm run verify:radar <baseUrl>` — not wired into `npm run build`, `npm test` or
 `npm run lint`, since it needs a server already running and would fail spuriously in
-an unattended pipeline. It runs 13 checks. Four exist because *screenshots or a
-whole-branch review caught defects the DOM checks had missed*:
+an unattended pipeline. It *is* wired into `deploy-preview.yml`, which starts a
+server first and verifies the artefact it is about to deploy. It runs 15 checks.
+Six exist because *screenshots or a whole-branch review caught defects the DOM
+checks had missed*:
 
 - the radar SVG contains a nonzero number of `<text>` elements — added because, run against a production build, there is no radar at all, so the next two checks would otherwise pass vacuously over an empty list
 - no SVG `<text>` may fall outside the viewBox — added after six rim labels shipped clipped while the harness reported 9/9
 - labels sharing a line need 6px of clearance; labels on different lines need only not overlap — added after ring labels were struck through by blip labels
 - no hover card may leave the viewBox with labels off — a state no other check enters
+- no two blips may overlap — note this passes vacuously at six blips across seven sectors; the load-bearing check was a forced-collision run with five phenomena in one cell, which had three genuine seed collisions before nudging and none after
+- every `draft` blip carries the dashed mark — added with the draft styling, since identical blips hid exactly the thing a reviewer needs to know
 
 Run it against `npm run dev`, or a production build made with `VITE_RADAR_PREVIEW=1` —
 the radar is hidden below ten published phenomena in every other production build, so
 those are the only two contexts where the harness is meaningful.
 
-## CI gap worth closing
+## CI
 
-`.github/workflows/deploy.yml` triggers only on `push: branches: [main]`, and nothing
-listens for `pull_request`. So `npm test` and `npm run lint` run *after* a merge, not
-before — **no PR is ever checked**. Adding a `pull_request` trigger with an
-`if: github.event_name == 'push'` guard on the Deploy step fixes it. Note that
-pushing workflow changes needs a token with `workflow` scope, which the usual
-credential here lacks; the last one was applied through GitHub's web editor.
+Both files are installed at `.github/workflows/`, but **nothing they do has run yet**
+— they take effect when this branch merges to `main`.
+
+`deploy.yml` also triggers on `pull_request`, with an
+`if: github.event_name == 'push'` guard on the Deploy step, so `npm test` and
+`npm run lint` finally run *before* a merge rather than after. `deploy-preview.yml`
+builds and publishes `/FoSW/preview/` from `main`. Both share the
+`github-pages-deploy` concurrency group, because both commit to `gh-pages` on a push
+to `main` and would otherwise interleave.
+
+Until this branch merges, the CI gap the previous handover recorded is **still open**
+on `main`: nothing there listens for `pull_request`, so no PR — including #19 — is
+checked before it lands.
+
+**Pushing workflow changes needs a token with `workflow` scope.** The credential here
+lacked it and the push was rejected outright; `gh auth refresh -h github.com -s
+workflow` added it in place on the `artwall4` account. That account was already a repo
+admin, so this was never a permissions problem, only a scope one. **If you hit the
+same rejection again, run that command rather than reaching for the web editor** — the
+two earlier workflow changes on this project both went through the web editor
+unnecessarily. The SSH remote is not an alternative: the key on this machine
+authenticates as `Arto-Wallin_vttfi`, which is not a collaborator here.
 
 ## How to see it
 
@@ -119,6 +238,19 @@ npm run dev          # http://localhost:5173/FoSW/  — note the /FoSW/ base, th
 
 Drafts and the radar both appear in dev. `npm run build && npx vite preview` shows
 the production behaviour: **no radar at all**, which is correct at 0 of 10 published.
+
+For the deployed preview:
+
+```bash
+VITE_RADAR_PREVIEW=1 npm run build:preview     # PowerShell on Windows, or MSYS_NO_PATHCONV=1
+npx vite preview --base=/FoSW/preview/ --port 5199 --strictPort
+npm run verify:radar http://localhost:5199/FoSW/preview/
+```
+
+**On Windows, do not run the `--base=` build from Git Bash without
+`MSYS_NO_PATHCONV=1`.** MSYS rewrites `/FoSW/preview/` into `C:/Program Files/Git/...`
+and the build then succeeds with a silently wrong base. This cost a debugging cycle
+during Phase 4 — the symptom looks exactly like a code defect.
 
 ## Things worth knowing about how this went
 
