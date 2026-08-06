@@ -28,7 +28,7 @@ disagrees with itself.
 | --- | --- |
 | **1 — Schema and validation** | Merged (PR #15, plus #16 fixing a semantic merge conflict) |
 | **Content — 27 typed signals, 6 phenomena** | Merged (PR #17) |
-| **3 — Radar UI** | **PR #18 open**, branch `feat-radar-ui`, 20 commits |
+| **3 — Radar UI** | **PR #18 open**, branch `feat-radar-ui` |
 | **2 — Bootstrap pipeline** | Not started |
 | **4 — Preview deployment** | Not started |
 
