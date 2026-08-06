@@ -46,7 +46,12 @@ const results = [];
 const check = (name, pass, detail = "") =>
   results.push({ name, pass, detail });
 
-const browser = await puppeteer.launch({ headless: true });
+// --no-sandbox in CI for the same reason prerender.mjs needs it: Chrome's
+// sandbox does not come up in the Actions container.
+const browser = await puppeteer.launch({
+  headless: true,
+  args: process.env.CI ? ["--no-sandbox", "--disable-setuid-sandbox"] : [],
+});
 const page = await browser.newPage();
 await page.setViewport({ width: 1280, height: 900 });
 
@@ -128,9 +133,16 @@ try {
     dialogLabel === "Phenomenon details",
     `clicked "${clickResult}", dialog label "${dialogLabel}"`,
   );
+  // The expected prefix comes from the base this run was pointed at, not from a
+  // literal: against the preview deployment the correct URL is
+  // /FoSW/preview/phenomena/<id>/, and a hardcoded /FoSW/ would fail a radar
+  // that is behaving perfectly.
+  const basePath = new URL(BASE).pathname.replace(/\/$/, "");
   check(
-    "URL becomes /FoSW/phenomena/<id>/",
-    /\/FoSW\/phenomena\/[a-z0-9-]+\/?$/.test(page.url()),
+    `URL becomes ${basePath}/phenomena/<id>/`,
+    new RegExp(`${basePath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/phenomena/[a-z0-9-]+/?$`).test(
+      page.url(),
+    ),
     page.url(),
   );
 
