@@ -4,10 +4,38 @@ Written 2026-08-06, at the end of a session that designed the feature and wrote
 the MVP. **Nothing here has been run yet.** Read this first if you are picking
 the work up cold.
 
+## Where we stopped (session ended 2026-08-06)
+
+The session ended here deliberately — a display bug made long output unreadable,
+so we committed the work and restarted rather than continuing.
+
+| | |
+| --- | --- |
+| **Commit** | `350f81b` — "docs: add sector-specific signal search with a wellbeing MVP prompt" |
+| **Branch** | `worktree-sector-signal-search`, pushed to `origin`, tracking set |
+| **Based on** | `main` at `bca671f` (already contains the radar merge, PR #18) |
+| **Changed** | 5 files, +978 lines, **documentation only** — no code, no schema, nothing under `public/` |
+| **PR** | **Not opened.** `PR_DESCRIPTION_worktree-sector-signal-search.md` is written and ready to use as the body |
+| **The prompt** | **Written, never run.** No finder output, no retrieval report, no ledger entries exist yet |
+
+What was done: brainstormed the design, made the four decisions below, wrote the
+wellbeing sector prompt, the spec, this handover, the PR description, and a
+"Sector runs" section in `docs/ai-signals-pipeline.md`.
+
+What was verified before committing: every path cited in the docs exists; the
+phenomenon counts in the spec match the repo (6 total, two sectors at 0);
+`ledger.mjs` accepts `reconcile <output.json> [--rejected <file>]` exactly as the
+documented run order uses it. No code changed, so `npm test` and `npm run build`
+are unaffected — neither was run in the worktree, which has no `node_modules`.
+
+**Pick up at:** *The immediate next action*, below. Nothing is half-finished;
+the next step is running the prompt for the first time.
+
 ## Where the work lives
 
 - **Branch:** `worktree-sector-signal-search`, branched from `origin/main`
-  (which already contains the radar merge, PR #18).
+  (which already contains the radar merge, PR #18). Pushed — the work is safe on
+  the remote regardless of what happens locally.
 - **Created in a git worktree** at `.claude/worktrees/sector-signal-search`. That
   directory may be gone by the time you read this; the branch is not. From the
   main checkout: `git checkout worktree-sector-signal-search`, or merge it into
