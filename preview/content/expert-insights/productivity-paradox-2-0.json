@@ -1,0 +1,11 @@
+{
+  "id": "productivity-paradox-2-0",
+  "title": "Productivity Paradox 2.0: Measuring Software Work When AI Writes the Code.",
+  "author": "Arto Wallin",
+  "authorRole": "Project Manager & Senior Scientist @ VTT",
+  "excerpt": "AI is changing software work faster than our metrics can keep up. Productivity looks explosive in day-to-day practice, yet barely moves in the stats—Solow Paradox, again. This post explains the shift and introduces the AI Productivity Triangle: efficiency, effectiveness, and sustainability.",
+  "markdownFile": "productivity-paradox-2-0.md",
+  "date": "2026-02-24",
+  "status": "published",
+  "tags": ["productivity", "measurement", "AI-impact"]
+}

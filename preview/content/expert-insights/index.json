@@ -1,0 +1,41 @@
+{
+  "lastUpdated": "2026-07-03T00:00:00Z",
+  "items": [
+    {
+      "id": "productivity-systems-lens",
+      "file": "productivity-systems-lens.json",
+      "date": "2026-07-03",
+      "status": "published"
+    },
+    {
+      "id": "ai-adoption-joins-agility",
+      "file": "ai-adoption-joins-agility.json",
+      "date": "2026-05-22",
+      "status": "published"
+    },
+    {
+      "id": "comprehension-debt",
+      "file": "comprehension-debt.json",
+      "date": "2026-05-15",
+      "status": "published"
+    },
+    {
+      "id": "productivity-paradox-2-0",
+      "file": "productivity-paradox-2-0.json",
+      "date": "2026-02-24",
+      "status": "published"
+    },
+    {
+      "id": "antti-klemetti-thesis",
+      "file": "antti-klemetti-thesis.json",
+      "date": "2026-02-18",
+      "status": "published"
+    },
+    {
+      "id": "curation-as-cognitive-load-balancing",
+      "file": "curation-as-cognitive-load-balancing.json",
+      "date": "2026-02-18",
+      "status": "published"
+    }
+  ]
+}

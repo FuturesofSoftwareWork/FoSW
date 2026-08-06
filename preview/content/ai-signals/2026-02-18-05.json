@@ -1,0 +1,29 @@
+{
+"id": "2026-02-18-05",
+"title": "I Improved 15 LLMs at Coding in One Afternoon. Only the Harness Changed.",
+"summary": "Can Bölük argues that debates about “best coding model” miss a dominant variable: the harness (edit tools, schemas, error handling, state management) that sits between model tokens and real code changes. The post describes improving success rates across 15 models primarily by changing the edit tool mechanism, framing harness engineering as the key lever for reliability. For software orgs, this reinforces that workflow/tooling design (patch application, context packaging, retries) is where productivity and quality gains will be won.",
+"source": "Developer Blog",
+"sourceUrl": "https://blog.can.ac/2026/02/12/the-harness-problem/",
+"detectedAt": "2026-02-18T10:00:00Z",
+"date": "2026-02-12",
+"status": "published",
+"tags": ["harness-engineering", "agent-reliability", "edit-tools"],
+"category": "SDLC Change",
+"whyItMatters": [
+"Model selection alone won’t stabilize agent output; teams need to engineer the “last mile” from intent to safe code edits.",
+"Harness improvements are often cheaper and faster than swapping models, and can be standardized org-wide.",
+"Better edit application reduces rework, review burden, and CI churn—directly affecting cycle time and compute cost."
+],
+"recommendedActions": [
+"Audit your agent toolchain for failure points (patch application, file targeting, conflict handling) and instrument error rates.",
+"Standardize an internal “agent harness” with versioned prompts, tool schemas, and deterministic edit/verify steps.",
+"Treat harness work as platform engineering with SLOs (e.g., patch success rate, test-pass rate per agent run)."
+],
+"risksAndCaveats": [
+"Results depend on the specific benchmark/tasks and harness implementation details; gains may vary by language and repo structure.",
+"Improving edit success doesn’t guarantee semantic correctness—verification (tests, review gates) still matters."
+],
+"decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "Can Bölük, reporting his own harness experiments across 15 models"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-30-02",
+  "title": "AI coding velocity outpaces delivery maturity, 69% of frequent AI users report persistent deployment problems",
+  "summary": "Harness's State of DevOps Modernization 2026, based on a Coleman Parkes survey of 700 engineers and technical managers across five countries (February 2026), documents what Harness calls the 'AI Velocity Paradox': AI coding tools accelerate code production but downstream delivery systems — testing, security scanning, and deployment — have not kept pace. Among very frequent AI coding tool users, 45% deploy daily or faster, but 69% report persistent deployment problems with AI-generated code. Incident recovery averages 7.6 hours for frequent users versus 6.3 hours for occasional users. Developer burnout is acute: 96% of very frequent AI users work evenings or weekends multiple times monthly, compared to 66% of occasional users. Developers spend 36% of their time on repetitive manual tasks. Standardization is severely lacking: 73% of teams have no golden paths or standardized templates, and only 21% can stand up functioning build-and-deploy pipelines in under two hours.",
+  "source": "Harness / Coleman Parkes",
+  "sourceUrl": "https://www.harness.io/state-of-devops-modernization-2026",
+  "sourceType": "article",
+  "detectedAt": "2026-03-30",
+  "date": "2026-03-11",
+  "status": "published",
+  "tags": ["DevOps", "AI-velocity-paradox", "deployment-problems", "developer-burnout", "platform-engineering", "golden-paths", "delivery-maturity"],
+  "category": ["SDLC Change", "Productivity", "Work Wellbeing"],
+  "whyItMatters": [
+    "The 69% deployment problem rate among frequent AI users provides concrete evidence that AI-driven productivity gains are being consumed by downstream delivery failures, undermining the business case for AI tool investments.",
+    "The 96% after-hours work rate among frequent AI users signals a burnout crisis that engineering leaders cannot ignore — faster code production is translating directly into operational burden, not team efficiency.",
+    "The 73% standardization gap reveals that most organizations lack the infrastructure to absorb AI-accelerated development, making platform engineering and golden paths an urgent investment rather than a nice-to-have."
+  ],
+  "recommendedActions": [
+    "Audit your deployment pipeline end-to-end for bottlenecks exposed by increased AI-assisted commit velocity: test execution time, security scan queues, approval gates, and environment provisioning.",
+    "Invest in golden path templates and standardized pipelines to reduce the 36% of developer time spent on manual delivery tasks.",
+    "Track developer after-hours work and incident recovery time as leading indicators of AI-driven burnout before attrition accelerates.",
+    "Pair AI coding tool rollouts with proportional investment in delivery automation — the report suggests organizations that modernize testing, security, and deployment in parallel with coding see better outcomes."
+  ],
+  "risksAndCaveats": [
+    "The survey was commissioned by Harness, a DevOps platform vendor, creating potential bias toward findings that emphasize delivery automation gaps.",
+    "The 69% deployment problem figure is self-reported and may conflate pre-existing delivery issues with AI-specific problems.",
+    "The burnout correlation (96% frequent users vs. 66% occasional) does not establish causation — frequent AI users may already be in higher-pressure roles or organizations."
+  ],
+  "decisionHorizon": "now"
+}

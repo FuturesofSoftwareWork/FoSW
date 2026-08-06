@@ -1,0 +1,30 @@
+{
+  "id": "2026-04-20-04",
+  "title": "98% of executives expect agentic AI to accelerate software delivery, but only 9% anticipate game-changing improvements",
+  "summary": "A survey of 300 senior software engineering, data, and technology executives across seven industries and six countries reveals a nuanced picture of agentic AI expectations in enterprise software delivery. While 98% of respondents expect their teams' delivery to accelerate with agentic AI, the expected average speed improvement is a moderate 37%, and only 9% anticipate 'game-changing' gains. Currently, 51% of software teams use agentic AI in mostly limited deployments, with another 45% planning adoption within 12 months. Half of organizations already consider agentic AI a top investment priority for software engineering today, rising to 84% by 2029. The most anticipated new roles are AI engineers (51%), software architects (32%), and data engineers (29%), signaling a shift toward AI-native job families. The survey suggests enterprise leaders are moving past the hype cycle into pragmatic expectations: widespread adoption is coming, but transformative impact is expected to be incremental rather than revolutionary.",
+  "source": "MIT Technology Review / SoftServe",
+  "sourceUrl": "https://www.technologyreview.com/2026/04/14/1134397/redefining-the-future-of-software-engineering/",
+  "sourceType": "article",
+  "detectedAt": "2026-04-20",
+  "date": "2026-04-14",
+  "status": "published",
+  "tags": ["enterprise-survey", "agentic-AI", "software-delivery", "executive-expectations", "AI-adoption", "workforce-roles", "MIT-Technology-Review"],
+  "category": ["Business Impact", "Org & Leadership"],
+  "whyItMatters": [
+    "The gap between near-universal expectation of acceleration (98%) and rare expectation of transformation (9%) suggests enterprise leaders are converging on a realistic view: agentic AI is a meaningful productivity enhancer, not a paradigm shift that eliminates the need for engineering talent.",
+    "The emergence of AI engineer as the top anticipated new role (51%) signals that organizations expect AI tool orchestration and governance to become a dedicated function, not just a skill layered onto existing engineering roles.",
+    "With 84% of organizations planning to make agentic AI a top investment priority by 2029, engineering leaders who delay adoption face competitive disadvantage, while those who over-invest based on 'game-changing' expectations risk misallocated budgets."
+  ],
+  "recommendedActions": [
+    "Calibrate your agentic AI business case to the 37% average speed improvement rather than outlier productivity claims; this aligns with what 300 peer executives are planning around.",
+    "Start building or recruiting for the AI engineer role now: 51% of executives anticipate this as their top new hire, meaning competition for this talent will intensify rapidly.",
+    "If your team is among the 45% planning to adopt agentic AI within 12 months, begin with the limited-scope approach that 51% of current adopters are using rather than attempting a comprehensive rollout.",
+    "Use this survey data to set board and stakeholder expectations: widespread adoption with moderate improvement is the realistic baseline, not the transformative narratives that dominate media coverage."
+  ],
+  "risksAndCaveats": [
+    "The survey covers only senior executives, not practitioners; there may be a significant gap between leadership expectations and frontline developer experience with agentic AI tools.",
+    "The 37% average speed improvement is a self-reported expectation, not a measured outcome; actual results may differ significantly once organizations move from pilot to production deployment.",
+    "The survey was co-produced with SoftServe (a technology services company), which may introduce bias toward findings that support agentic AI investment and services adoption."
+  ],
+  "decisionHorizon": "0,5 - 2 years"
+}

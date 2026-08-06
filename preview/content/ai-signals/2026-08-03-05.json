@@ -1,0 +1,49 @@
+{
+  "id": "2026-08-03-05",
+  "title": "Evals are becoming the spec: 'eval-driven development' and a first-class 'evals engineer' role are crystallizing as the way AI features get defined and shipped",
+  "summary": "A pattern that was fringe a year ago is converging fast across independent practitioner sources: for AI-powered features, the evaluation suite — not the PRD or the unit-test file — is becoming the primary artifact that defines done. Braintrust's Ameya Bhatawdekar ('Evals are the new PRD', Mar 27, 2026) reframes the loop from Problem→Spec→Design→Build→Ship to Problem→Eval→Hillclimb→Ship, with the eval serving as 'the spec, the acceptance criteria, and the roadmap all at once', and quotes OpenAI CPO Kevin Weil that 'writing evals is the most important thing a PM can do in the AI era.' The corroborating signal is organizational, not just rhetorical: a distinct 'evals engineer' role — barely existent in 2023 — is now an early technical hire at applied-AI companies (Cursor, Harvey, Sierra, Decagon, Cognition) and is being staffed into evals teams at enterprises like Stripe, Shopify, and Databricks to vet third-party model use, with open reqs at Anthropic, OpenAI, and Scale. The mechanism is simple and durable: because frontier models change underneath a prompt every few weeks, a versioned eval suite that gates every PR is the only thing that catches silent regressions — so evals inherit the role tests played in deterministic software. Lead time: this is roughly 6-12 months ahead of where mainstream engineering orgs are; most still treat evals as an ML-team concern rather than a core SDLC gate and an emerging job family.",
+  "source": "Braintrust blog ('Evals are the new PRD', Ameya Bhatawdekar), with corroborating role/hiring evidence",
+  "sourceUrl": "https://www.braintrust.dev/blog/evals-are-the-new-prd",
+  "sourceType": "article",
+  "detectedAt": "2026-08-03",
+  "date": "2026-03-27",
+  "status": "published",
+  "signalStrength": "emerging",
+  "corroboration": [
+    "https://vercel.com/blog/eval-driven-development-build-better-ai-faster",
+    "https://futureagi.com/blog/what-is-evals-engineering-2026/",
+    "https://scale.com/careers/4629589005"
+  ],
+  "tags": [
+    "eval-driven-development",
+    "evals-engineer",
+    "definition-of-done",
+    "testing-shift",
+    "new-roles",
+    "sdlc"
+  ],
+  "category": [
+    "Quality & Testing",
+    "SDLC Change",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "For any team shipping LLM-backed features, the release gate is moving from deterministic tests to eval suites — leaders who leave evals as an informal ML-team activity will ship silent quality regressions every time a model updates underneath them.",
+    "A new job family ('evals engineer' / 'evals eng') is forming and being hired as a first-ten technical role at AI-native companies; workforce and skills planning should account for it now rather than after competitors have staffed it.",
+    "Reframing product specs as evals shifts what PMs and engineers actually do — from writing prose requirements to curating labeled failure cases — which changes hiring criteria, onboarding, and how 'done' is negotiated."
+  ],
+  "recommendedActions": [
+    "Pick one AI-backed feature and require a versioned eval suite to pass in CI before merge; treat model or prompt changes as changes that must clear the same gate.",
+    "Stand up a lightweight 'eval flywheel': have PMs/engineers curate a handful of real production failures into new eval cases each week, and track eval pass-rate as a first-class release metric.",
+    "Decide deliberately whether evals ownership sits with a dedicated hire, the platform team, or product engineers — and write it into role definitions before the gap becomes an incident.",
+    "Audit third-party model usage: enterprises are spinning up evals teams specifically to vet vendor models — define the eval bar a model must clear before it touches production."
+  ],
+  "risksAndCaveats": [
+    "Several anchor sources are vendors selling eval tooling (Braintrust, Vercel, FutureAGI, Scale); the practice is real but the framing carries commercial intent, and no source provides hard outcome data that EDD beats traditional methods.",
+    "The strongest evidence today is directional (job postings, practitioner essays, convergent language), not a controlled study — this is an emerging-practice signal, not a proven productivity result.",
+    "The claim is most established for teams building AI products; how far 'evals as spec' generalizes to conventional software with deterministic behavior is unproven."
+  ],
+  "decisionHorizon": "0,5 - 2 years",
+"signalType": "practitioner-account",
+"observer": "Ameya Bhatawdekar of Braintrust, corroborated by independent practitioner sources and evals-engineer job postings"
+}

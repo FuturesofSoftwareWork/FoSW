@@ -1,0 +1,122 @@
+{
+  "id": "configuring-the-machine",
+  "label": "Configuring the machine",
+  "title": "The model isn't the product. The harness is.",
+  "thesis": "The engineering work that determines what a coding agent can actually do is moving out of the model and into the harness around it — the control loop, tool definitions, context management, retries and isolation. Capability starts to look less like a property a team buys and more like a system a team builds, which relocates the scarce skill from writing code to designing the conditions the machine works in.",
+  "currentPressure": "Teams running the same model against the same tasks get materially different results depending on the scaffolding around it, so model choice stops explaining outcomes.",
+  "status": "draft",
+  "primaryDimension": "nature-and-division-of-work",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Engineers increasingly shape machine behaviour by designing its environment rather than by instructing it directly.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ],
+      "pathIds": []
+    },
+    {
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Control-loop and context design become a distinct competence, closer to systems engineering than to prompt craft.",
+      "actors": [
+        "developer",
+        "new-entrant"
+      ],
+      "pathIds": [
+        "harness-as-engineering-discipline"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Organisations standardise on a shared gateway and harness rather than on a single vendor's tool, changing what has to be agreed centrally.",
+      "actors": [
+        "organisation",
+        "technical-lead"
+      ],
+      "pathIds": [
+        "standardise-the-gateway"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-02-18-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "same 15 models, materially better coding results with only the harness changed"
+    },
+    {
+      "signalId": "2026-04-06-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "a published three-agent harness separating planning, generation and evaluation for multi-hour runs"
+    },
+    {
+      "signalId": "2026-08-03-07",
+      "stance": "supports",
+      "primary": true,
+      "note": "named companies standardising the gateway rather than mandating one vendor's tool"
+    },
+    {
+      "signalId": "2026-06-08-01",
+      "stance": "supports",
+      "primary": false,
+      "note": "practitioner synthesis: the engineering surface moves from prompts and frameworks to the control loop"
+    },
+    {
+      "signalId": "2026-06-08-02",
+      "stance": "contextual",
+      "primary": true,
+      "note": "the term is being defined in public, which is itself a sign the concept is unsettled"
+    },
+    {
+      "signalId": "2026-03-11-03",
+      "stance": "counter",
+      "primary": true,
+      "note": "systematic evaluation across 138 tasks finds repository context files often hinder rather than help"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "Harness design is being practised and published independently by tool vendors, platform teams and named adopting companies, and standardising the gateway is appearing as an operating-model choice — but the vocabulary is still being argued over in public, which is not what a settled practice looks like.",
+  "reachReviewedAt": "2026-08-05",
+  "contested": false,
+  "contestedNote": null,
+  "whatWouldChangeThis": [
+    "A model generation arrives whose results are insensitive to harness design, collapsing the difference back into model choice",
+    "Harness construction is absorbed entirely into vendor products, so that few teams build or reason about one"
+  ],
+  "developmentPaths": [
+    {
+      "id": "harness-as-engineering-discipline",
+      "title": "Harness design becomes a discipline",
+      "description": "Control-loop and context engineering develop their own patterns, roles and review practices."
+    },
+    {
+      "id": "standardise-the-gateway",
+      "title": "Standardise the gateway",
+      "description": "Organisations converge on a shared access and policy layer while leaving tool choice to teams."
+    },
+    {
+      "id": "harness-absorbed-by-vendors",
+      "title": "The harness disappears into products",
+      "description": "Vendors ship good-enough harnesses and the skill stops being one most teams need."
+    }
+  ],
+  "related": [
+    {
+      "id": "evals-become-the-spec",
+      "relation": "reinforces"
+    }
+  ],
+  "indicators": [],
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 2,
+    "quartersSpanned": 2,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-02-12",
+  "latestEvidenceDate": "2026-06-10"
+}

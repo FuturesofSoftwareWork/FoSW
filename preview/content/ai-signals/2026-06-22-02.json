@@ -1,0 +1,40 @@
+{
+  "id": "2026-06-22-02",
+  "title": "OWASP's 2026 agentic security report: coding agents are now the fastest-growing attack surface, with prompt injection an architectural flaw",
+  "summary": "OWASP's GenAI Security Project released v2.01 of its State of Agentic AI Security and Governance, and the 2026 edition shifts from theoretical risk to documented incidents — tracking CVEs, vendor advisories, and breach reports across nearly every category of agentic risk. Coding agents are the standout exposure: 28 of 53 tracked agentic projects are coding agents, and the repositories with the most security advisories are all semi-autonomous coding systems (n8n, Claude Code, AutoGPT, Dify, Roo-Code). The report frames prompt injection as an architectural limitation, not a patchable bug, because LLMs cannot reliably separate trusted instructions from untrusted data in a single token stream — it maps to six of OWASP's ten agentic risk categories. It elevates two practical design heuristics: Simon Willison's 'Lethal Trifecta' (private data + untrusted content + external communication = exfiltration risk) and Meta's 'Agents Rule of Two' (an unsupervised agent should hold at most two of those three). Crucially for engineering leaders, it argues safety and security must converge: the Replit production-data-deletion incident and prompt-injection attacks exploit the same over-broad permission models. Compressed regulatory reporting windows (DORA's 4 hours, NIS2's 24 hours) raise the stakes, while shadow-AI deployments remain undetected in 63% of surveyed organizations.",
+  "source": "OWASP GenAI Security Project (via Help Net Security)",
+  "sourceUrl": "https://www.helpnetsecurity.com/2026/06/11/owasp-prompt-injection-ai-security-failures/",
+  "sourceType": "article",
+  "detectedAt": "2026-06-22",
+  "date": "2026-06-11",
+  "status": "published",
+  "tags": [
+    "prompt injection",
+    "agentic security",
+    "OWASP",
+    "coding agents",
+    "permissions",
+    "governance"
+  ],
+  "category": [
+    "Security & Risk"
+  ],
+  "whyItMatters": [
+    "Coding agents have become the leading agentic attack surface, so security review of the tools that build your software is now as important as reviewing the software itself.",
+    "If prompt injection is architectural rather than patchable, defense must come from constraining agent capabilities and permissions ('Rule of Two', isolation, human approval) — not from waiting for a vendor fix.",
+    "The same over-broad permissions that cause accidental damage (e.g. agents deleting production data) are what attackers weaponize, so safety and security teams should govern agent permissions jointly.",
+    "Shadow-AI invisibility (undetected in 63% of orgs) plus compressed breach-reporting windows means undiscovered agent deployments are a live compliance and incident-response risk."
+  ],
+  "recommendedActions": [
+    "Inventory which coding agents and MCP tools have access to repos, secrets, and production systems, and apply the 'Rule of Two' to any agent acting without human approval.",
+    "Default coding agents to least-privilege, sandboxed execution with explicit allow/deny rules and mandatory human gates for destructive or external-communication actions.",
+    "Treat agent permission models as a joint safety+security control and add agentic incidents to your DORA/NIS2 reporting playbooks.",
+    "Run discovery for shadow-AI agent usage and bring it under governance before expanding autonomous workflows."
+  ],
+  "risksAndCaveats": [
+    "The report aggregates public CVEs, advisories, and survey data of varying rigor; advisory counts partly reflect project popularity and scrutiny, not only relative insecurity.",
+    "Heuristics like the Lethal Trifecta and Rule of Two are useful design guidance, not formal guarantees; they reduce but do not eliminate exfiltration risk.",
+    "Survey figures (e.g. 63% shadow-AI) depend on self-reporting and sample composition and may not generalize across sectors."
+  ],
+  "decisionHorizon": "now"
+}

@@ -1,0 +1,36 @@
+{
+"id": "2026-02-19-02",
+"title": "Beyond Greenfield: The D³ Framework for AI-Driven Productivity in Brownfield Engineering",
+"summary": "This arXiv preprint proposes a structured LLM-assisted workflow for “brownfield” engineering (legacy codebases with incomplete docs and fragmented context): Discover–Define–Deliver (D³). The core mechanism is role-separated prompting plus a dual-agent setup (a Builder model generates artifacts like research notes, plans, code; a Reviewer model critiques for gaps/risks), with explicit human approval gates between phases. The author reports an exploratory two-phase (baseline vs post-intervention) survey of 52 practitioners using D³ on real tasks (legacy exploration, documentation reconstruction, refactoring), finding self-reported improvements such as ~26.9% weighted average productivity gain, reduced cognitive load for ~77% of participants, and less rework for ~83% due to better upfront planning. The main practical claim is that brownfield gains come less from faster code generation and more from reducing ambiguity and review churn via better context-building and pre-review critique loops. Evidence is preliminary (self-reported survey), but the workflow is concrete enough for leadership teams to trial as a process change rather than a tool-only rollout.",
+"source": "arXiv Preprint",
+"sourceType": "academic",
+"sourceUrl": "https://arxiv.org/abs/2512.01155",
+"detectedAt": "2026-02-19T10:00:00Z",
+"date": "2025-12-01",
+"status": "published",
+"tags": [
+"brownfield-engineering",
+"workflow",
+"dual-agent",
+"documentation",
+"code-review"
+],
+"category": "SDLC Change",
+"whyItMatters": [
+"Because most enterprise engineering time is spent understanding and safely changing legacy systems, a structured “context → plan → execute” AI workflow may deliver more value than ad-hoc code generation.",
+"Because the framework formalizes AI critique (Reviewer) before human review, leaders can target review-cycle cost and defect risk, not just coding speed.",
+"Because D³ adds explicit human gates and artifact checkpoints, it is easier to operationalize in regulated or high-risk environments than free-form prompting."
+],
+"recommendedActions": [
+"Pilot D³ on 2–3 brownfield initiatives (e.g., refactor + documentation + dependency change) and require the Discover artifact (RESEARCH.md equivalent), Define plan, and AI pre-review notes as deliverables.",
+"Instrument outcomes beyond dev time: review rounds, PR comment volume, escaped defects, and time-to-first-accurate-design to see if the workflow reduces coordination/rework.",
+"Create a lightweight policy for “human gates” (what must be reviewed/approved by a staff engineer vs team lead) to keep accountability clear when AI is used.",
+"Standardize prompt templates for Builder/Reviewer roles and store them with the repo (or internal wiki) to make practices repeatable across teams."
+],
+"risksAndCaveats": [
+"Reported gains are self-estimated from an exploratory survey (not a controlled experiment), so they should not be treated as causal or generalizable.",
+"Dual-agent critique can create extra process overhead if teams treat artifacts as bureaucracy; benefits likely depend on choosing the right task types and keeping artifacts lean.",
+"Effectiveness may hinge on access to sufficient internal context (repos, tickets, runbooks); without that, LLM outputs can be confidently wrong and increase verification load."
+],
+"decisionHorizon": "0,5 - 2 years"
+}

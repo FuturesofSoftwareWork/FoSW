@@ -1,0 +1,30 @@
+{
+  "id": "2026-04-06-06",
+  "title": "JetBrains survey of 10,000+ developers finds 90% use AI tools at work, Claude Code satisfaction leads at 91% while GitHub Copilot growth plateaus",
+  "summary": "JetBrains published its AI Pulse survey analysis in April 2026, drawing on data from over 10,000 professional developers across eight programming language communities, supplemented by raking weighting against the 2025 Developer Ecosystem Survey for representativeness. The headline finding: 90% of developers regularly use at least one AI tool at work, with 74% using specialized AI coding tools (beyond general chatbots). GitHub Copilot remains the most widely recognized tool (76% awareness, 29% work adoption) but its growth has plateaued. Claude Code shows the strongest momentum, with awareness jumping from 31% (mid-2025) to 57% (January 2026) and work adoption reaching 18% globally (24% in North America), tying with Cursor for second place. Claude Code leads satisfaction metrics with 91% CSAT and a Net Promoter Score of 54 — the highest recorded for any AI coding tool. Google Antigravity, launched November 2025, has already reached 6% adoption. The multi-tool pattern is notable: most developers use 2-4 AI tools simultaneously rather than standardizing on one, suggesting the market has not yet consolidated.",
+  "source": "JetBrains Research Blog",
+  "sourceUrl": "https://blog.jetbrains.com/research/2026/04/which-ai-coding-tools-do-developers-actually-use-at-work/",
+  "sourceType": "article",
+  "detectedAt": "2026-04-06",
+  "date": "2026-04-03",
+  "status": "published",
+  "tags": ["AI-tool-adoption", "developer-survey", "Claude-Code", "GitHub-Copilot", "Cursor", "tool-satisfaction", "market-dynamics"],
+  "category": ["AI Tools", "Productivity", "Skills & Learning"],
+  "whyItMatters": [
+    "The 90% workplace adoption rate and multi-tool usage pattern (2-4 tools per developer) means engineering leaders face both a standardization challenge and a cost management problem — ad hoc tool proliferation can create inconsistent code quality, security policy gaps, and duplicative licensing costs.",
+    "GitHub Copilot's plateauing growth despite market-leading awareness suggests that early-mover advantage in AI coding tools is eroding fast, and organizations locked into Copilot enterprise agreements should evaluate whether newer tools (Claude Code at 91% CSAT, Cursor at 18% adoption) better serve their teams.",
+    "The rapid market share shifts (Claude Code from 0 to 18% adoption in 8 months) indicate that AI coding tool switching costs are low and developer preferences volatile — engineering leaders should avoid long-term enterprise commitments and maintain the flexibility to switch tools as the market matures."
+  ],
+  "recommendedActions": [
+    "Audit your organization's actual AI tool usage across teams: the multi-tool pattern suggests developers are self-selecting tools regardless of enterprise agreements, creating shadow IT risk and potential security policy gaps.",
+    "Evaluate Claude Code and Cursor as alternatives or complements to GitHub Copilot based on your team's workflow patterns — the satisfaction gap (Claude Code 91% CSAT vs. Copilot's lower scores) may translate to higher developer engagement and retention.",
+    "Establish a quarterly AI tool review process rather than annual procurement cycles — the pace of market change (new entrants reaching meaningful adoption within months) requires more agile evaluation cadences.",
+    "Track tool-specific productivity and quality metrics (not just adoption rates) to inform enterprise standardization decisions with outcome data rather than developer sentiment alone."
+  ],
+  "risksAndCaveats": [
+    "The survey methodology relies on JetBrains' developer community panels, which may over-represent developers already engaged with JetBrains products and undercount developers working primarily in ecosystems like VS Code or terminal-first environments.",
+    "Satisfaction scores (CSAT, NPS) reflect developer sentiment, not measured productivity or code quality impact — high satisfaction with a tool does not guarantee better business outcomes.",
+    "The rapid adoption figures for newer tools (Claude Code, Cursor) may reflect early-adopter enthusiasm that normalizes as broader, less technically engaged developer populations adopt these tools."
+  ],
+  "decisionHorizon": "now"
+}

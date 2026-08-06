@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-29-13",
+  "title": "Pragmatic Engineer survey of 900+ developers: AI amplifies existing engineering culture rather than fixing it",
+  "summary": "The Pragmatic Engineer's third annual AI impact survey (900+ respondents, published May 19, 2026) finds that AI tools amplify an organization's pre-existing engineering culture rather than transforming it. Teams with strong engineering practices — rigorous testing, documentation, quality codebases — see greater productivity benefits from AI adoption, while teams with weak foundations experience amplified dysfunction. The survey reveals that codebase quality is declining due to AI-generated verbose, duplicate code ('slop'), but management at most organizations does not prioritize quality over output velocity. Code review quality is also deteriorating under volume pressure. Junior engineers face a compounding challenge: AI amplifies inexperience rather than developing skills, with less experienced developers spending more tokens on unproductive tasks. Senior engineers increasingly use AI instead of mentoring juniors, and some respondents report 'addiction-like' feedback loops with rapid AI response cycles. The survey finds workflows are deeply idiosyncratic — what makes one developer '10x more productive' may not work for another — making org-wide AI mandates counterproductive.",
+  "source": "The Pragmatic Engineer (Gergely Orosz)",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/ai-impact-on-software-engineers-part-2",
+  "sourceType": "social",
+  "detectedAt": "2026-06-29",
+  "date": "2026-05-19",
+  "status": "published",
+  "tags": ["engineering culture", "AI amplification", "code quality", "junior developers", "mentoring", "developer experience"],
+  "category": ["Org & Leadership", "Skills & Learning"],
+  "whyItMatters": [
+    "The culture-amplification finding undermines the common assumption that AI tools will 'level up' weaker teams. Leaders investing in AI to fix engineering quality problems will likely see those problems worsen — the fix must come from culture, not tooling.",
+    "Declining code quality combined with management indifference creates a technical debt time bomb: the maintenance burden is concentrating among fewer engineers who still understand the codebase, and those engineers are the most likely to leave if overloaded.",
+    "The finding that AI displaces mentoring (seniors use AI instead of teaching juniors) has long-term workforce implications: if the industry does not deliberately preserve mentoring practices, the next generation of senior engineers will lack the judgment that current seniors developed through human mentorship."
+  ],
+  "recommendedActions": [
+    "Assess your engineering culture maturity (testing discipline, documentation norms, code review rigor) before scaling AI adoption — address cultural gaps first, as AI will amplify whatever exists.",
+    "Establish code quality metrics that are tracked alongside velocity metrics, and make quality degradation visible to management to counter the volume-over-quality bias the survey identifies.",
+    "Protect mentoring time explicitly: create structured mentorship programs that cannot be displaced by AI tooling, and set expectations that senior engineers maintain teaching responsibilities.",
+    "Allow individual workflow flexibility rather than mandating org-wide AI tool configurations — the survey finds that forced standardization reduces rather than increases productivity."
+  ],
+  "risksAndCaveats": [
+    "The survey population (Pragmatic Engineer newsletter subscribers) skews toward experienced, opinionated practitioners at well-known tech companies and may not represent the broader industry.",
+    "Self-reported workflow effectiveness is subjective; the survey does not include controlled productivity measurements to validate whether respondents' preferred workflows actually produce better outcomes.",
+    "The 'culture amplification' finding may partly reflect selection bias: organizations with strong cultures may also be better at adopting any new tool, not just AI tools."
+  ],
+  "decisionHorizon": "now"
+}

@@ -1,0 +1,41 @@
+{
+  "lastUpdated": "2026-08-05",
+  "items": [
+    {
+      "id": "review-shifts-to-verification",
+      "file": "review-shifts-to-verification.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    },
+    {
+      "id": "evals-become-the-spec",
+      "file": "evals-become-the-spec.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    },
+    {
+      "id": "the-vanishing-apprenticeship",
+      "file": "the-vanishing-apprenticeship.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    },
+    {
+      "id": "configuring-the-machine",
+      "file": "configuring-the-machine.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    },
+    {
+      "id": "compute-becomes-a-budget-line",
+      "file": "compute-becomes-a-budget-line.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    },
+    {
+      "id": "teams-get-smaller",
+      "file": "teams-get-smaller.json",
+      "date": "2026-08-05",
+      "status": "draft"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "2026-04-13-12",
+  "title": "Vibe Coding's Hidden Costs: AI-Generated Code Carries 1.7x More Issues, 45% Contains Security Vulnerabilities",
+  "summary": "Multiple independent analyses published in early 2026 converge on a troubling picture of AI-generated production code quality. A December 2025 analysis of 470 GitHub pull requests found AI-generated code is 1.7x more likely to contain major issues such as logic errors and 2.74x more prone to security vulnerabilities than human-written code. Trend Micro's research finds 45% of AI-generated code contains vulnerabilities including command injection and hardcoded secrets. Forrester predicts that by end of 2026, 75% of enterprises will face moderate to high severity technical debt directly attributable to AI-driven rapid development. Vibe-coded projects accumulate technical debt 3x faster than traditionally developed software. Open source maintainers report being overwhelmed by a flood of low-quality AI-generated contributions that strain review capacity.",
+  "source": "TechStack",
+  "sourceUrl": "https://tech-stack.com/blog/state-of-ai-report-2026/",
+  "sourceType": "article",
+  "detectedAt": "2026-04-13",
+  "date": "2026-03-15",
+  "status": "published",
+  "tags": ["vibe coding", "technical debt", "security vulnerabilities", "code quality", "open source", "AI-generated code"],
+  "category": ["Quality & Testing", "Security & Risk"],
+  "whyItMatters": [
+    "The convergence of multiple independent studies on AI code quality defects suggests this is a systemic pattern, not isolated incidents, and the problem is compounding as AI-generated code volume increases.",
+    "The 3x faster tech debt accumulation rate means organizations adopting AI coding tools without proportional investment in quality gates are building a maintenance burden that will constrain future development velocity.",
+    "Open source ecosystem health is at risk: if maintainers cannot absorb the volume of AI-generated contributions, critical projects may close to outside contributions or degrade in quality.",
+    "CTOs and VPs of Engineering must weigh short-term velocity gains against long-term maintenance costs when evaluating AI coding tool ROI."
+  ],
+  "recommendedActions": [
+    "Establish mandatory security scanning and static analysis gates specifically for AI-generated code before it enters review, reducing the burden on human reviewers.",
+    "Implement tech debt tracking that distinguishes AI-generated from human-written code to measure the true cost of AI-assisted development.",
+    "Set clear organizational policies on when vibe coding is acceptable (prototypes, internal tools) versus when it requires full engineering rigor (production, customer-facing, security-sensitive).",
+    "For teams contributing to open source, develop AI-contribution guidelines that include quality requirements and disclosure of AI assistance."
+  ],
+  "risksAndCaveats": [
+    "The 470 PR analysis is a relatively small sample and may not represent the full range of AI coding tool capabilities, especially as models have improved significantly in early 2026.",
+    "Forrester's 75% prediction is a forecast, not observed data; actual tech debt impact will depend heavily on organizational practices and tool maturity.",
+    "The 'vibe coding' label encompasses a wide range of practices from casual prototyping to production development; aggregating them may overstate the risk for disciplined AI-assisted workflows."
+  ],
+  "decisionHorizon": "now"
+}

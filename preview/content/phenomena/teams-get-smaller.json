@@ -1,0 +1,120 @@
+{
+  "id": "teams-get-smaller",
+  "label": "Teams get smaller",
+  "title": "The unit of delivery stops being the team of eight",
+  "thesis": "The standard delivery unit in software may be shrinking. If a small group with machine support can carry work that previously needed a full team, the consequences run past headcount into how work is coordinated, how careers progress, and what a manager is for. The early reports come from forerunners and investors rather than from the field, so the size of the change is far less clear than its direction.",
+  "currentPressure": "Organisations are reporting delivery from markedly smaller groups while overall demand for engineers has not fallen, so the pressure shows up in team composition rather than in total employment.",
+  "status": "draft",
+  "primaryDimension": "organisation-and-leadership",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Coordination overhead that justified larger teams shifts towards coordinating machine work instead of coordinating people.",
+      "actors": [
+        "technical-lead",
+        "engineering-manager",
+        "organisation"
+      ],
+      "pathIds": []
+    },
+    {
+      "dimension": "careers-occupations-and-labour-markets",
+      "statement": "Fewer, broader roles replace narrow specialisms, and the rungs a career climbs through get further apart.",
+      "actors": [
+        "developer",
+        "new-entrant"
+      ],
+      "pathIds": [
+        "fewer-broader-roles"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Managing five people plus substantial machine capacity is a different job from managing ten people, and is not yet a defined one.",
+      "actors": [
+        "engineering-manager"
+      ],
+      "pathIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-03-10",
+      "stance": "supports",
+      "primary": true,
+      "note": "engineering teams reported shrinking from 8-10 to five or fewer"
+    },
+    {
+      "signalId": "2026-06-29-12",
+      "stance": "contextual",
+      "primary": true,
+      "note": "635+ leaders report the challenge shifting from adoption to accountability"
+    },
+    {
+      "signalId": "2026-04-06-05",
+      "stance": "contextual",
+      "primary": true,
+      "note": "30,000 roles cut to fund infrastructure — restructuring driven by AI spend, not by team-level productivity"
+    },
+    {
+      "signalId": "2026-04-13-07",
+      "stance": "contextual",
+      "primary": true,
+      "note": "AI becomes the leading stated reason for US job cuts, at 25% of the monthly total"
+    },
+    {
+      "signalId": "2026-04-13-08",
+      "stance": "counter",
+      "primary": true,
+      "note": "engineering roles doubled since the 2023 trough with 67,000+ open positions"
+    },
+    {
+      "signalId": "2026-06-29-05",
+      "stance": "counter",
+      "primary": true,
+      "note": "engineering among the most resilient functions across 80 million companies tracked"
+    }
+  ],
+  "observedReach": "early-manifestations",
+  "reachRationale": "A single investor field writeup reports teams shrinking to five or fewer, and the surrounding layoff data is driven by infrastructure spending rather than by team-level productivity. This is a forerunner observation that has not been replicated across independent contexts, and the counter-evidence on aggregate demand is strong.",
+  "reachReviewedAt": "2026-08-05",
+  "contested": true,
+  "contestedNote": "The supporting evidence is a single investor observation of forerunner teams, while independent labour-market datasets show engineering demand growing. These are not necessarily incompatible — smaller teams inside more teams would produce both — but nothing currently distinguishes that reading from the simpler one, that the shrinkage is not general.",
+  "whatWouldChangeThis": [
+    "Independent survey data from outside the investor and consultancy circuit reports median team size falling",
+    "Median team size holds steady through 2027 while delivery volume rises, indicating the change is in output rather than in team shape"
+  ],
+  "developmentPaths": [
+    {
+      "id": "fewer-broader-roles",
+      "title": "Fewer, broader roles",
+      "description": "Small teams of generalists with machine support replace larger teams of specialists."
+    },
+    {
+      "id": "same-teams-more-output",
+      "title": "Same teams, more output",
+      "description": "Team size holds and the gain shows up as throughput rather than as headcount reduction."
+    },
+    {
+      "id": "forerunner-only",
+      "title": "A forerunner pattern only",
+      "description": "Very small teams remain characteristic of well-resourced startups and do not generalise."
+    }
+  ],
+  "related": [
+    {
+      "id": "the-vanishing-apprenticeship",
+      "relation": "reinforces"
+    }
+  ],
+  "indicators": [],
+  "evidenceProfile": {
+    "independentContexts": 1,
+    "evidenceTypes": 1,
+    "quartersSpanned": 1,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-03-31",
+  "latestEvidenceDate": "2026-07-17"
+}

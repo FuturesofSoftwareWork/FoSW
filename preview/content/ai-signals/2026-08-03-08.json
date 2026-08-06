@@ -1,0 +1,49 @@
+{
+  "id": "2026-08-03-08",
+  "title": "Code review is quietly being replaced by verification as parallel agents outrun human reading speed",
+  "summary": "Four unrelated sources this fortnight point at the same shift: when agents generate code faster than humans can read it, teams stop reviewing and start verifying. A solo developer running 4-5 parallel Claude Code agents at roughly 90 commits a day built a local merge queue so commits land one at a time and fully tested, and states plainly that there is no code review at that velocity — a 3-4 minute test suite gates quality instead, at about 15 commits an hour. In the same thread another practitioner reports ten parallel agent sessions on comparable hardware. Separately, Boris Cherny's account of having Claude Code rewrite the Claude desktop app in Swift over about two weeks relied on screenshotting the running app and comparing pixel-by-pixel against the original, and the thread's consensus was that verification is 'the single most important thing that people do not get right'. A Show HN in the same window makes the argument structurally: trust a 93-line formal specification rather than the 1000 lines of AI-generated code it constrains. The common move is to replace reading code with proving properties about it.",
+  "source": "Hacker News discussions and practitioner projects (merge queue, Swift rewrite account, formally verified CSG)",
+  "sourceUrl": "https://news.ycombinator.com/item?id=49104747",
+  "sourceType": "discussion",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "leadTimeEstimate": "~12-18 months",
+  "corroboration": [
+    "https://github.com/funador/claude-code-merge-queue",
+    "https://news.ycombinator.com/item?id=49149800",
+    "https://news.ycombinator.com/item?id=49083239"
+  ],
+  "observer": "funador, a solo developer reporting his own throughput (4-5 parallel agents, ~90 commits/day, 8GB MacBook Air), corroborated independently by other practitioners in the same thread and by Boris Cherny's firsthand rewrite account",
+  "detectedAt": "2026-08-03",
+  "date": "2026-07-30",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "parallel-agents",
+    "verification",
+    "merge-queue",
+    "formal-methods"
+  ],
+  "category": [
+    "Quality & Testing",
+    "SDLC Change",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "Because the reviewable-throughput ceiling is human, not technical, leaders should decide deliberately what replaces review — test gates, formal specs, property checks — rather than discovering that review has silently become a rubber stamp.",
+    "Review is where much tacit knowledge transfer and onboarding happens; removing it without a substitute has consequences for team capability that no test suite covers.",
+    "If quality gating moves into the test suite, the test suite becomes the production-critical asset and needs the investment and scrutiny that review used to get."
+  ],
+  "recommendedActions": [
+    "Measure your actual review throughput against agent-authored commit volume; if reviewers are approving more than they can read, name that explicitly.",
+    "Decide which changes still require human review (auth, data handling, migrations, public interfaces) and which can be gated by automated verification alone.",
+    "Fund test-suite quality and speed as the new gate before agent volume forces the issue, and treat a slow suite as a throughput risk."
+  ],
+  "risksAndCaveats": [
+    "The strongest numbers come from solo developers with no team-collaboration or compliance constraints; they may not generalise to regulated or multi-team environments.",
+    "One commenter attributes the original author's problems to his build pipeline rather than to parallel agents as such, so the throughput ceiling described is not universal.",
+    "This is convergence across independent anecdotes, not measurement — no study here establishes how widely review is actually being dropped, and self-selected forum posts overweight enthusiasts."
+  ],
+  "decisionHorizon": "0,5 - 2 years"
+}

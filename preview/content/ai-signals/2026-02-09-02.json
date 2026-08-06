@@ -1,0 +1,27 @@
+{
+"id": "2026-02-03-01",
+"title": "BNY Mellon study argues AI coding assistant ROI needs long-term, human-centered productivity metrics (not just commits/time saved)",
+"summary": "An arXiv paper reports mixed-method findings from BNY Mellon: 2,989 developer survey responses plus 11 interviews on how AI coding assistants affect productivity. The authors find that commonly used productivity proxies (e.g., commits, output volume) can miss important effects, because developers describe productivity as multi-dimensional and spanning short- and long-term factors. Interviewees surfaced six factors that include longer-horizon themes like technical expertise growth and ownership of work, not just speed. For engineering leaders, the practical implication is that “we shipped more” can be a misleading success signal if it coincides with reduced codebase understanding or diffuse accountability. The paper effectively pushes orgs toward instrumentation and governance that measure durable outcomes rather than short-term throughput.",
+"source": "arXiv Preprint (ICSE SEIP submission)",
+"sourceUrl": "https://www.arxiv.org/abs/2602.03593",
+"detectedAt": "2026-02-09T09:57:47Z",
+"date": "2026-02-03",
+"status": "published",
+"tags": ["developer-productivity", "metrics", "ai-coding-assistants", "engineering-leadership"],
+"category": "SDLC Change",
+"whyItMatters": [
+"Because AI tools can shift work (verification, ownership, learning) rather than simply reduce it, leaders should avoid equating velocity metrics with net productivity.",
+"Because long-term factors like expertise and ownership affect reliability and maintainability, productivity measurement needs to include durable engineering outcomes, not just activity counts.",
+"Because developer sentiment is conflicting, rollout decisions should incorporate qualitative signals (interviews/pulse checks) alongside telemetry."
+],
+"recommendedActions": [
+"Update your AI-assistant success scorecard to include long-horizon signals (ownership clarity, on-call outcomes, code review rework, and learning/competency measures).",
+"Run a lightweight internal study (survey + structured interviews) to identify which productivity dimensions your teams feel are improving vs. degrading.",
+"Add guardrails so “faster” does not mean “less understood”: require design notes/ownership attribution for AI-assisted changes above a size threshold."
+],
+"risksAndCaveats": [
+"Results are from one enterprise context (BNY Mellon) and may not generalize across org structures and codebases.",
+"The paper emphasizes measurement validity; it does not claim a single universal metric set that works for all teams."
+],
+"decisionHorizon": "now"
+}

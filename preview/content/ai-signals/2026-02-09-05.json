@@ -1,0 +1,28 @@
+{
+"id": "2025-08-20-01",
+"title": "AI can worsen the workplace empathy gap—raising retention and burnout risks if leaders don’t compensate",
+"summary": "Harvard Business Review argues that as work becomes more mediated by AI and digital tooling, organizations risk an “empathy crisis” unless leaders intentionally reinforce human understanding and connection. The piece frames empathy as a performance variable (not a nicety), with implications for burnout, motivation, and retention. The practical takeaway is that efficiency gains from automation can be offset by cultural and managerial deficits if teams experience work as colder, more transactional, or less psychologically safe. For leaders, it’s a warning to pair AI-driven productivity initiatives with stronger managerial practices and norms that preserve trust and context.",
+"source": "Harvard Business Review",
+"sourceType": "article",
+"sourceUrl": "https://hbr.org/2025/08/ai-is-making-the-workplace-empathy-crisis-worse",
+"detectedAt": "2026-02-09T12:00:00Z",
+"date": "2025-08-20",
+"status": "published",
+"tags": ["employee motivation", "empathy", "AI at work", "burnout", "retention"],
+"category": "Work Wellbeing",
+"whyItMatters": [
+"AI can increase throughput while reducing human signal—leaders must deliberately preserve context, recognition, and psychological safety to sustain motivation.",
+"Empathy gaps show up operationally: more friction, misalignment, and churn, especially during change programs and performance cycles.",
+"Treat empathy as a system design problem (rituals, feedback loops, leadership expectations), not an individual personality trait."
+],
+"recommendedActions": [
+"Add explicit empathy/connection routines to AI-heavy workflows (e.g., decision context write-ups, recognition norms, conflict-resolution paths).",
+"Train managers to spot “cold system” failure modes (silent disengagement, reduced help-seeking, rising blame) during AI rollouts.",
+"Measure burnout/psych safety alongside productivity metrics during automation initiatives to detect negative tradeoffs early."
+],
+"risksAndCaveats": [
+"The argument is primarily synthesis and interpretation; organizations should validate locally with engagement, attrition, and incident data.",
+"Causality between AI mediation and empathy outcomes will vary by role, culture, and how tools are deployed."
+],
+"decisionHorizon": "now"
+}

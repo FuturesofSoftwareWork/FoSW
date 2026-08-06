@@ -1,0 +1,29 @@
+{
+  "id": "2026-04-13-02",
+  "title": "AI agent code has significantly higher churn than human-authored code",
+  "summary": "A new empirical study constructed a dataset of approximately 110,000 open-source pull requests to investigate how autonomous coding agents contribute to real-world software projects. The researchers compared five prominent coding agents — OpenAI Codex, Claude Code, GitHub Copilot, Google Jules, and Devin — examining differences in merge frequency, edited file types, developer interaction patterns, and code longevity. The findings reveal that while agent activity in open-source projects is increasing rapidly, agent-authored code is associated with significantly more churn over time compared to human-authored code. The longitudinal survival analysis shows that agent-generated code is more likely to be rewritten, reverted, or substantially modified in subsequent commits, raising questions about the net productivity benefit when factoring in downstream maintenance costs.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2604.00917",
+  "sourceType": "academic",
+  "detectedAt": "2026-04-13",
+  "date": "2026-04-01",
+  "status": "published",
+  "tags": ["coding-agents", "code-churn", "open-source", "pull-requests", "code-quality", "maintainability", "empirical-study"],
+  "category": ["AI Tools", "Productivity"],
+  "whyItMatters": [
+    "Higher code churn for agent-authored contributions means that raw throughput metrics (PRs merged, lines written) may overstate the actual productivity benefit — leaders need to track net retained code, not just gross output.",
+    "The comparative analysis across five major agents provides the first head-to-head empirical data on agent quality differences, which is critical for vendor selection and tool investment decisions.",
+    "The survival analysis methodology offers engineering organizations a replicable framework for measuring their own agent code longevity, enabling data-driven agent adoption policies."
+  ],
+  "recommendedActions": [
+    "Track code churn rate as a key metric for agent-authored contributions alongside throughput metrics — high initial velocity that requires frequent rework may not represent a net gain.",
+    "Implement agent-attribution tagging in your version control workflow (e.g., commit trailers or PR labels) so you can run your own survival analysis on agent vs. human code longevity.",
+    "Use the study's comparative findings to inform agent tool evaluation: if you are selecting between agent platforms, request vendor-specific churn and retention data from pilot deployments."
+  ],
+  "risksAndCaveats": [
+    "The study covers open-source repositories, where agent usage patterns, reviewer scrutiny, and contribution norms may differ significantly from enterprise/proprietary development contexts.",
+    "Agent detection in open-source PRs relies on bot signatures and metadata — some agent contributions may be misclassified as human-authored or vice versa.",
+    "Higher churn does not necessarily indicate lower quality in all cases — some churn may reflect intentional iteration, rapid prototyping, or evolving requirements rather than defects."
+  ],
+  "decisionHorizon": "now"
+}

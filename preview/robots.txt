@@ -1,0 +1,4 @@
+# Preview build — unreviewed research drafts. Not for indexing.
+# The effective control is the noindex meta tag; see vite.config.ts.
+User-agent: *
+Disallow: /

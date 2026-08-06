@@ -1,0 +1,139 @@
+{
+  "id": "review-shifts-to-verification",
+  "label": "Review becomes verification",
+  "title": "From reading code to verifying evidence",
+  "thesis": "As AI-generated changes exceed the capacity for line-by-line human review, software assurance shifts from inspecting code towards verifying intended behaviour, test evidence, security properties and architectural constraints. Automated systems take over routine checking, while human attention concentrates on intent, high-risk decisions, exceptions and accountability.",
+  "currentPressure": "Generation capacity is growing faster than review capacity, producing longer queues and lower acceptance rates for AI-authored changes.",
+  "status": "draft",
+  "primaryDimension": "nature-and-division-of-work",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Reviewing shifts from reading diffs to judging whether the evidence accompanying a change is sufficient.",
+      "actors": [
+        "developer",
+        "reviewer",
+        "technical-lead"
+      ],
+      "pathIds": []
+    },
+    {
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Specifying acceptance criteria and interpreting verification output become more valuable than close reading of code.",
+      "actors": [
+        "developer",
+        "new-entrant"
+      ],
+      "pathIds": [
+        "verification-first-assurance"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Accountability for defects moves from the author of a change toward whoever accepted the evidence for it.",
+      "actors": [
+        "technical-lead",
+        "engineering-manager"
+      ],
+      "pathIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-03-16-05",
+      "stance": "contextual",
+      "primary": true,
+      "note": "4.6x longer review waits — establishes the pressure, not the shift"
+    },
+    {
+      "signalId": "2026-05-25-03",
+      "stance": "contextual",
+      "primary": true,
+      "note": "AI PRs accepted 32.7% vs 84.4% — pressure only"
+    },
+    {
+      "signalId": "2026-05-20-04",
+      "stance": "contextual",
+      "primary": false,
+      "note": "synthesis of other reports on review time"
+    },
+    {
+      "signalId": "2026-03-16-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "routine checking automated ahead of humans"
+    },
+    {
+      "signalId": "2026-05-06-11",
+      "stance": "supports",
+      "primary": true,
+      "note": "gating 5,169 repositories, 131,000 reviews"
+    },
+    {
+      "signalId": "2026-06-22-06",
+      "stance": "counter",
+      "primary": true,
+      "note": "review agents without humans: 45% vs 68% merge rate, most feedback noise"
+    },
+    {
+      "signalId": "2026-08-03-08",
+      "stance": "supports",
+      "primary": true,
+      "note": "a practitioner reporting his own shift from reading diffs to checking machine-produced evidence"
+    },
+    {
+      "signalId": "2026-08-03-03",
+      "stance": "contextual",
+      "primary": true,
+      "note": "review named as the most leveraged engineering skill — direction of pressure, not evidence of the shift"
+    },
+    {
+      "signalId": "2026-06-29-04",
+      "stance": "contextual",
+      "primary": true,
+      "note": "telemetry from 22,000 developers: the constraint has moved past throughput"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "Automated first-pass review is running in production at several unrelated organisations and tooling vendors are building for it, but assurance practice outside those forerunners is still diff-centric.",
+  "reachReviewedAt": "2026-08-05",
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 3,
+    "quartersSpanned": 3,
+    "counterEvidence": true
+  },
+  "contested": false,
+  "contestedNote": null,
+  "firstObserved": "2026-01-29",
+  "latestEvidenceDate": "2026-07-30",
+  "whatWouldChangeThis": [
+    "Review practice stays diff-centric through 2027 despite sustained volume growth",
+    "Automated reviewers are rolled back after escaped-defect rates rise"
+  ],
+  "developmentPaths": [
+    {
+      "id": "verification-first-assurance",
+      "title": "Verification-first assurance",
+      "description": "Machine-generated evidence and behavioural checks displace most routine line-by-line review."
+    },
+    {
+      "id": "ai-reviews-ai",
+      "title": "AI reviews AI",
+      "description": "Reviewing is delegated to separate models, with humans supervising exceptions."
+    },
+    {
+      "id": "persistent-review-wall",
+      "title": "The review wall persists",
+      "description": "Output continues to exceed validation capacity, producing queues, fatigue and escaped defects."
+    },
+    {
+      "id": "risk-tiered-review",
+      "title": "Risk-tiered review",
+      "description": "Routine changes verified automatically; critical paths receive intensified human scrutiny."
+    }
+  ],
+  "related": [],
+  "indicators": []
+}

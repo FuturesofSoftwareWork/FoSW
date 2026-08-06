@@ -1,0 +1,29 @@
+{
+  "id": "2026-05-25-01",
+  "title": "Gartner: enterprise AI coding agent market enters competitive realignment phase",
+  "summary": "Gartner declared on May 20 that the enterprise AI coding agent market has shifted from assistant-style autocomplete into orchestrated, multi-agent workflows spanning planning, coding, testing and review. Frontier model providers are moving up-stack, pricing and ROI models are fragmenting, and the analyst firm predicts that by 2027 over 65% of engineering teams using agentic coding will treat IDEs as optional, with control and governance moving to automated platforms. Gartner separately warned that more than 40% of agentic AI projects will be canceled by end of 2027 over cost, value or risk-control problems, and McKinsey data referenced in the same cycle shows under 10% of enterprises that have piloted agents have scaled them to measurable value. For engineering leaders this signals that vendor selection, identity/logging/incident controls, and ROI measurement are now the binding constraints — not raw code-generation quality.",
+  "source": "Gartner Press Release",
+  "sourceUrl": "https://www.gartner.com/en/newsroom/press-releases/2026-05-20-gartner-says-the-market-for-enterprise-ai-coding-agents-is-entering-a-new-phase-of-expansion-and-competitive-realignment",
+  "sourceType": "article",
+  "detectedAt": "2026-05-25",
+  "date": "2026-05-25",
+  "status": "published",
+  "tags": ["coding-agents", "market", "gartner", "governance", "ROI"],
+  "category": ["AI Agents", "Business Impact"],
+  "whyItMatters": [
+    "The IDE-as-optional prediction reframes platform engineering: investment shifts from editor plugins to agent control planes (identity, audit, sandboxing).",
+    "A 40% projected cancellation rate plus <10% scaled adoption means most leaders should plan for a portfolio of pilots, not a single bet.",
+    "Pricing and ROI dynamics are now the differentiator — leaders need a defensible measurement framework before procurement, not after."
+  ],
+  "recommendedActions": [
+    "Stand up an agent control plane (identity, logging, code-review gates, incident playbooks) before scaling any agent beyond a single team.",
+    "Define explicit kill-criteria and ROI thresholds for each agent pilot to avoid drift toward the 40% cancellation cohort.",
+    "Re-baseline vendor contracts against multi-agent orchestration scenarios, not single-tool seat licenses."
+  ],
+  "risksAndCaveats": [
+    "Gartner forecasts reflect analyst judgment, not empirical study; treat percentages as directional.",
+    "Vendor positioning in the same cycle (OpenAI/Anthropic/Google) may bias the framing toward agent maturity.",
+    "Market is moving faster than research cycles — six-month-old vendor capability assessments are likely stale."
+  ],
+  "decisionHorizon": "now"
+}

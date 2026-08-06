@@ -1,0 +1,37 @@
+{
+  "id": "2026-02-19-01",
+  "title": "The Software Engineering Identity Crisis",
+  "summary": "Annie Vella argues that AI coding assistants are not just accelerating coding, but shifting the software engineer’s professional identity from “builder” to “orchestrator/overseer.” The post links this to concrete signals (e.g., large reported shares of AI-generated code) and to day-to-day workflow changes where engineers spend less time writing code and more time specifying intent, reviewing outputs, and steering tools. Vella frames this as an identity and career-ladder disruption: engineers who valued craftsmanship may feel pushed toward management-like work (communication, problem framing, coordination). She also highlights a quality tradeoff risk from AI-generated code at scale (duplication, churn), implying teams will need stronger technical governance and refactoring discipline. The takeaway for leaders is that AI adoption changes motivation, skill development paths, and team structure—not just productivity metrics.",
+  "source": "Company Blog",
+  "sourceType": "article",
+  "sourceUrl": "https://annievella.com/posts/the-software-engineering-identity-crisis/",
+  "detectedAt": "2026-02-19T11:30:50Z",
+  "date": "2025-03-21",
+  "status": "published",
+  "tags": [
+    "developer productivity",
+    "org design",
+    "career ladders",
+    "AI coding assistants",
+    "code quality"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Work Wellbeing"
+  ],
+  "whyItMatters": [
+    "Because AI-assisted development shifts engineers toward specification, review, and system-level thinking, leaders should revisit role definitions and expectations (IC vs. manager-like work).",
+    "Because identity and motivation are tied to hands-on building, aggressive AI rollout can create retention and engagement risk—especially among senior craft-oriented engineers.",
+    "Because AI can increase duplication and churn, productivity gains may be offset by maintainability costs unless teams strengthen quality gates and refactoring practices."
+  ],
+  "recommendedActions": [
+    "Update engineering career ladders to explicitly value AI-era work (problem framing, architecture, review quality, risk management) without forcing a management track.",
+    "Instrument code health metrics (duplication, churn, defect escape rate) alongside AI usage to detect when speed is degrading maintainability.",
+    "Run a targeted pilot where senior engineers define “acceptable AI usage” norms (review standards, testing expectations, ownership) and then codify them into team guidelines."
+  ],
+  "risksAndCaveats": [
+    "Several supporting statistics in the post are secondhand references; treat them as directional signals rather than universal baselines.",
+    "The impact varies widely by domain (e.g., safety/security-critical systems vs. typical SaaS), so org changes should be validated with team-specific data."
+  ],
+  "decisionHorizon": "now"
+}

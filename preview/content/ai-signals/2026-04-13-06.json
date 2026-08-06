@@ -1,0 +1,29 @@
+{
+  "id": "2026-04-13-06",
+  "title": "OWASP 2026 Framework Identifies 10 Critical Risk Categories for Agentic Applications",
+  "summary": "The OWASP Foundation published its Top 10 for Agentic Applications 2026, a peer-reviewed framework developed with over 100 industry experts, researchers, and practitioners to identify the most critical security risks in autonomous AI agent systems. The framework identifies ten risk categories including Agent Goal Hijacking (attackers manipulating agent objectives), Rogue Agents (compromised agents operating covertly), Uncontrolled Tool Use (agents calling tools with destructive parameters), Supply Chain Compromise (poisoned plugins and agent cards), Privilege Escalation, Data Leakage, Dangerous Code Generation, Data Poisoning, Human-Agent Trust Exploitation (agents leveraging perceived authority to manipulate users), and Cascading Failures across multi-agent systems. The framework introduces the principle of 'Least Agency' — extending the traditional Least Privilege concept to include autonomy as a variable, recommending organizations grant agents only the minimum autonomy required for safe, bounded tasks. Microsoft, Palo Alto Networks, and Auth0/Okta have already published implementation guides aligned with this framework.",
+  "source": "OWASP Gen AI Security Project",
+  "sourceUrl": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+  "sourceType": "article",
+  "detectedAt": "2026-04-13",
+  "date": "2026-02-15",
+  "status": "published",
+  "tags": ["OWASP", "agentic-AI", "security-framework", "least-agency", "agent-governance", "supply-chain-security", "trust-exploitation", "goal-hijacking"],
+  "category": ["Security & Risk", "AI Agents"],
+  "whyItMatters": [
+    "This framework creates a shared vocabulary and risk taxonomy for AI agent security",
+    "The 'Least Agency' principle reframes security governance: it is no longer sufficient to restrict what data or systems an agent can access (Least Privilege); organizations must also govern how much autonomous decision-making authority an agent is granted.",
+    "Major vendors (Microsoft, Palo Alto Networks, Auth0) are already aligning products and guidance to this framework, signaling that OWASP Agentic Top 10 compliance may become an industry expectation"
+  ],
+  "recommendedActions": [
+    "Conduct a gap analysis of your current AI agent deployments against all 10 OWASP agentic risk categories — identify which risks are currently unmitigated and prioritize remediation.",
+    "Adopt the Least Agency principle in your agent deployment policies: for each autonomous agent, document and justify the level of autonomy granted and establish approval workflows for expanding agent authority.",
+    "Add OWASP agentic risk categories to your threat modeling process for any new AI agent features or integrations, particularly for agents that access production systems, customer data, or financial operations.",
+    "Brief your security and compliance teams on the framework and begin mapping it to your existing compliance requirements (SOC2, EU AI Act, HIPAA) to anticipate regulatory alignment."
+  ],
+  "risksAndCaveats": [
+    "Implementation guidance varies by vendor and may introduce vendor-specific bias — organizations should evaluate multiple implementation approaches rather than adopting a single vendor's interpretation.",
+    "The framework addresses known risk patterns but cannot anticipate emergent behaviors in novel multi-agent architectures or agent-to-agent interaction patterns that have not yet been observed at scale."
+  ],
+  "decisionHorizon": "now"
+}

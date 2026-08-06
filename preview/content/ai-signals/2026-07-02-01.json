@@ -1,0 +1,41 @@
+{
+  "id": "2026-07-02-01",
+  "title": "The overthinking tax: more reasoning tokens rarely buy better code, but always cost more — the reasoning dial is the hidden budget leak",
+  "summary": "A wave of 2026 research is puncturing the 'more thinking = better answers' assumption that underpins how most teams configure reasoning models. The arXiv paper 'When More Thinking Hurts' shows that past a task-dependent threshold, extra reasoning tokens produce diminishing returns and can actively degrade accuracy — accuracy plateaus while cost climbs linearly with the reasoning budget. The economic asymmetry is brutal: because reasoning tokens are billed output tokens, they are the most expensive tokens in the request, and generating 8,000 of them costs roughly 16x a 500-token response. One documented pipeline ran extended thinking on trivial snippets and paid ~30x its expected bill (≈1,200 thinking tokens for a 30-token task). The non-obvious insight for engineering leaders: reasoning effort is a cost dial most teams leave pinned at maximum by default, paying premium output rates for compute that, on the majority of routine coding and tool-use tasks, changes nothing in the result. The right unit of account is cost-per-correct-outcome, and the right control is per-task-class reasoning budgets — not a blanket 'use the smartest, highest-effort setting everywhere' policy.",
+  "source": "arXiv Preprint ('When More Thinking Hurts: Overthinking in LLM Test-Time Compute Scaling'), with corroborating practitioner cost analyses",
+  "sourceUrl": "https://arxiv.org/abs/2604.10739",
+  "sourceType": "academic",
+  "detectedAt": "2026-07-02",
+  "date": "2026-04-14",
+  "status": "published",
+  "tags": [
+    "reasoning tokens",
+    "test-time compute",
+    "overthinking",
+    "inference cost",
+    "cost per outcome",
+    "model configuration"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Tools"
+  ],
+  "whyItMatters": [
+    "Reasoning tokens are billed at the (expensive) output rate, so a default 'high effort everywhere' setting can multiply cost several-fold while accuracy has already plateaued — a pure loss most dashboards never attribute to the reasoning dial.",
+    "The optimal reasoning budget is task-dependent and often low; treating reasoning effort as a per-task-class configuration, not a global default, is a concrete lever that cuts spend without touching model choice or output quality.",
+    "This reframes vendor 'smarter reasoning' upsells: for routine, well-scoped coding and tool-calls, more thinking is often paying premium rates for motion, not results."
+  ],
+  "recommendedActions": [
+    "Audit where extended/high-effort reasoning is enabled by default and measure accuracy-vs-cost at 2-3 reasoning budgets per task class to find the plateau point.",
+    "Route simple, deterministic, or tool-heavy tasks to low or no extended reasoning; reserve high-effort settings for genuinely hard, ambiguous problems.",
+    "Track a cost-per-correct-outcome metric (not cost-per-token) so overthinking shows up as wasted spend rather than hiding inside aggregate usage.",
+    "Set explicit max-reasoning-token caps in agent harnesses to prevent runaway 'thinking' on trivial calls."
+  ],
+  "risksAndCaveats": [
+    "The core paper studies reasoning tasks broadly, not exclusively coding/agentic work, so the exact plateau thresholds may differ for software tasks; the coding-cost specifics come partly from practitioner reports.",
+    "Where the optimal budget sits is task- and model-specific; under-budgeting reasoning on genuinely hard problems can cut accuracy, so this is a tuning exercise, not a blanket 'turn thinking off.'",
+    "Some corroborating cost figures are anecdotal single cases and vendor/practitioner blogs, useful as illustrations of magnitude rather than precise averages."
+  ],
+  "decisionHorizon": "now",
+"signalType": "study"
+}

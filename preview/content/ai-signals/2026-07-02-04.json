@@ -1,0 +1,43 @@
+{
+  "id": "2026-07-02-04",
+  "title": "Cost-per-token is the wrong number: measured per resolved task, coding-model economics reorder — and the priciest model is almost never optimal",
+  "summary": "Two independent June 2026 cost analyses converge on an insight that quietly overturns how teams pick coding models: the right unit of account is cost per resolved task, not cost per token, and switching units reshuffles the ranking. Because a weaker model retries more and burns more tokens to reach a passing patch, headline per-token price systematically mis-ranks value. Modeling a representative agentic turn at ~50k input and ~12k output tokens and dividing attempt cost by each model's SWE-bench Verified solve rate, one analysis (SSOJet, Jun 8) put DeepSeek V3.2 at ~$0.028 per resolved task versus Claude Opus 4.5 at ~$0.68 — a 24x spread for about 13 accuracy points — while Kimi K2.6 emerged as the accuracy-per-dollar sweet spot (80.2% at ~$0.075). A separate leaderboard (morphllm, Jun 28) reached the same conclusion via cost-per-benchmark-point, with Claude Haiku 4.5 leading Opus by nearly 4x on value. Academic work sharpens the point: on holistic agent leaderboards the most expensive model sits on the accuracy/cost Pareto frontier in only ~1 of 9 benchmarks, and fewer than a third of models are on the frontier at all — meaning most model choices are strictly dominated and 'buy the top of the leaderboard' is usually the wrong default. For leaders, model selection becomes a task-tiered portfolio decision keyed to cost-per-outcome and downstream risk, not a single 'best model' standard.",
+  "source": "Practitioner cost leaderboards (SSOJet; morphllm), corroborated by agent-evaluation research (Holistic Agent Leaderboard / cost-of-pass)",
+  "sourceUrl": "https://ssojet.com/blog/cheapest-ai-coding-models",
+  "sourceType": "article",
+  "detectedAt": "2026-07-02",
+  "date": "2026-06-08",
+  "status": "published",
+  "tags": [
+    "cost per task",
+    "cost-of-pass",
+    "model selection",
+    "SWE-bench",
+    "pareto frontier",
+    "unit economics"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Tools"
+  ],
+  "whyItMatters": [
+    "Ranking models by per-token price mis-ranks real cost: weak-but-cheap models retry more, so cost-per-resolved-task can invert the leaderboard and is the only unit that maps to money spent per unit of shipped work.",
+    "The most expensive model is on the cost/accuracy Pareto frontier in only ~1 of 9 benchmarks, so defaulting to the top-of-leaderboard model is usually paying a premium for a dominated choice.",
+    "Optimal selection is task-tiered, not global: high-volume, well-scoped work routes to cheap-but-capable models, while the accuracy points near the frontier are worth their premium mainly where a wrong patch is expensive (security-critical or hard-to-review changes).",
+    "This turns 'which model' from a standardization decision into a routing/portfolio policy that finance and engineering can jointly optimize on cost-per-outcome."
+  ],
+  "recommendedActions": [
+    "Adopt cost-per-resolved-task (attempt cost ÷ solve rate) as the internal model-comparison metric instead of per-token price or raw benchmark rank.",
+    "Tier model routing by task class and risk: cheapest capable model for high-volume scoped work; frontier models reserved for hard or security-critical changes where defect cost dominates token cost.",
+    "Benchmark candidate models on your own repositories and task mix, since public solve rates and token profiles may not match your codebase.",
+    "Re-evaluate routing on a cadence — the value frontier is sparse and shifts with each model release, so today's sweet-spot model can be dominated within a cycle."
+  ],
+  "risksAndCaveats": [
+    "Cost-per-resolved-task on SWE-bench is a benchmark proxy; it excludes review, rework, and integration cost, so 'resolved on benchmark' is not 'merged and correct in your repo' — real cost-per-shipped-change can differ.",
+    "The figures come from practitioner leaderboards using assumed token profiles (~50k in / ~12k out per turn) and list prices; caching, harness quality, and your actual turn counts will move the numbers.",
+    "Cheapest-per-task is not 'best': near-frontier accuracy can be worth far more than its token premium when a wrong or insecure patch is costly, so this optimizes cost, not quality, and must be balanced against risk."
+  ],
+  "decisionHorizon": "now",
+"signalType": "practitioner-account",
+"observer": "SSOJet and morphllm cost leaderboards, corroborated by the Holistic Agent Leaderboard"
+}

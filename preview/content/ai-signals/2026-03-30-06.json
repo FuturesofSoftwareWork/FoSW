@@ -1,0 +1,30 @@
+{
+  "id": "2026-03-30-06",
+  "title": "45% of AI-generated code contains vulnerabilities, vibe coding amplifies supply chain and automation complacency risks",
+  "summary": "A converging body of evidence from Databricks, Veracode, Wiz, and security researchers paints an increasingly detailed picture of vibe coding's security risks. Veracode's GenAI Code Security Report found that 45% of AI-generated code introduces security vulnerabilities, with LLMs choosing insecure methods nearly half the time. A Wiz study found 20% of vibe-coded applications have serious vulnerabilities or configuration errors. Databricks highlights that vibe coding — where developers describe intent in natural language and accept AI output with minimal scrutiny — creates a weak human link where code is trusted by default rather than verified. Key vulnerability classes include arbitrary code execution, memory corruption, XSS, SQL injection, and improper input validation. Beyond code quality, AI-generated code automatically introduces open-source packages, frameworks, and libraries without validation, expanding supply chain attack surface. Automation complacency compounds the problem: when AI consistently produces functional output, developers stop checking for security flaws. The startup Enrichlead provides a cautionary case — launched with vibe-coded features full of newbie-level security flaws, it was shut down after failing to remediate.",
+  "source": "Databricks / Veracode / Wiz / Checkmarx",
+  "sourceUrl": "https://www.databricks.com/blog/passing-security-vibe-check-dangers-vibe-coding",
+  "sourceType": "article",
+  "detectedAt": "2026-03-30",
+  "date": "2026-03-18",
+  "status": "published",
+  "tags": ["vibe-coding", "security-vulnerabilities", "supply-chain", "automation-complacency", "XSS", "SQL-injection", "dependency-risk"],
+  "category": ["Security & Risk", "Quality & Testing", "Skills & Learning"],
+  "whyItMatters": [
+    "The 45% vulnerability rate in AI-generated code means that nearly half of all AI-assisted development introduces security risk by default — organizations relying on AI coding without mandatory security review are accepting unquantified risk.",
+    "Automation complacency is a documented psychological effect that worsens over time: as developers grow accustomed to functional AI output, verification discipline erodes precisely when the codebase's attack surface is expanding.",
+    "The supply chain dimension is underappreciated: AI tools silently introduce dependencies that expand the attack surface beyond the generated code itself, creating risk that existing SCA tools may not catch if they are not configured to flag AI-introduced packages."
+  ],
+  "recommendedActions": [
+    "Mandate security review gates for AI-generated code paths, with specific attention to input validation, authentication handling, and dependency introduction.",
+    "Implement automated dependency auditing that flags packages introduced by AI tools, not just those explicitly added by developers.",
+    "Train development teams on automation complacency as a recognized cognitive bias — make it part of security awareness programs alongside traditional vulnerability education.",
+    "Establish a policy requiring vibe-coded prototypes to pass full security review before any production deployment, regardless of perceived simplicity."
+  ],
+  "risksAndCaveats": [
+    "The 45% vulnerability rate (Veracode) and 20% serious vulnerability rate (Wiz) use different methodologies and definitions of severity, making direct comparison difficult.",
+    "The Enrichlead case is anecdotal and represents an extreme scenario (solo founder, no code review); established teams with review processes would likely catch many of these issues.",
+    "AI model capabilities are improving rapidly — vulnerability rates measured on 2024–2025 models may not reflect current performance, though the March 2026 CVE trend suggests significant risks persist."
+  ],
+  "decisionHorizon": "now"
+}

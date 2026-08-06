@@ -1,0 +1,27 @@
+{
+"id": "2026-02-18-04",
+"title": "One Shot Prompting is Dead",
+"summary": "Block’s Goose project argues that the key skill is shifting from prompt engineering to context engineering: shaping persistent, structured context so agents can reliably do multi-step work. The post emphasizes that AI changes the definition of “done” from “code runs” to “workflows verified and operationalized,” pushing engineers toward end-to-end thinking. The business impact is that high performers become those who can orchestrate context, tools, and verification—not just implement features.",
+"source": "Company Engineering Blog",
+"sourceUrl": "https://block.github.io/goose/blog/2026/02/07/context-engineering/",
+"detectedAt": "2026-02-18T10:00:00Z",
+"date": "2026-02-07",
+"status": "published",
+"tags": ["context-engineering", "agentic-workflows", "devex"],
+"category": "Skills & Learning",
+"whyItMatters": [
+"AI adoption shifts skill demand toward writing durable context (docs, runbooks, interfaces) that compounds across work.",
+"Teams with strong context practices can scale agent usage while reducing hallucinations and rework.",
+"This reframes documentation and platform engineering as direct productivity multipliers."
+],
+"recommendedActions": [
+"Create a “context budget” initiative: upgrade runbooks, architecture notes, and operational docs used by agents.",
+"Standardize repo-level agent guidance (agents.md/CLAUDE.md) and keep it current via code review.",
+"Train engineers on verification loops (tests, staging checks, observability) as part of agent-first workflows."
+],
+"risksAndCaveats": [
+"“Context engineering” can become a buzzword; ensure changes are tied to measurable failure/retry reductions.",
+"More context can also mean more noise if not curated—quality and structure matter."
+],
+"decisionHorizon": "now"
+}

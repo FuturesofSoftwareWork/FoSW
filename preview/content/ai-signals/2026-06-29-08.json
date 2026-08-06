@@ -1,0 +1,40 @@
+{
+  "id": "2026-06-29-08",
+  "title": "Agent-written code outlives human code in open source — the bottleneck is governance, not generation quality",
+  "summary": "A large-scale survival analysis on arXiv ('Will It Survive?') tracks more than 200,000 code units across 201 open-source projects to ask how long AI-agent-authored code actually persists once merged. Counter to the common assumption that AI output is disposable scaffolding, agent-authored lines are modified less often than human-written ones — a 15.8 percentage-point lower modification rate and a 16% lower hazard of being changed (HR = 0.842, p < 0.001). The nuance: agent code shows slightly higher corrective (bug-fix) churn, while human code shows more adaptive change, and simple text features can flag which code is modification-prone (AUC-ROC 0.671) but cannot predict when changes happen. The authors' conclusion is the leadership takeaway: the constraint on AI-generated code's long-term value is not raw generation quality but the organizational practices that govern its evolution — review depth, ownership, and how teams decide to revisit code. It reframes 'is the AI code good enough?' as 'do we have the maintenance and ownership discipline to steward it?'",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2601.16809",
+  "sourceType": "academic",
+  "detectedAt": "2026-06-29",
+  "date": "2026-01-23",
+  "status": "published",
+  "tags": [
+    "code maintainability",
+    "AI-generated code",
+    "survival analysis",
+    "technical debt",
+    "code ownership",
+    "open source"
+  ],
+  "category": [
+    "SDLC Change",
+    "Quality & Testing",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "If agent code persists longer than human code, the durable risk is not throwaway output but under-reviewed code quietly accumulating as long-lived dependency — making review depth and ownership the decisive controls.",
+    "Framing the bottleneck as organizational evolution practices, not model quality, shifts the leadership lever from 'pick a better model' to 'fix how we steward merged code.'",
+    "Slightly elevated corrective churn in agent code suggests latent defects surface later, arguing for stronger post-merge monitoring rather than one-time review at the gate."
+  ],
+  "recommendedActions": [
+    "Assign clear human ownership for merged agent-authored code so long-lived AI contributions are not orphaned in the codebase.",
+    "Strengthen review depth and post-merge defect tracking specifically for AI-generated changes, given their longer persistence and corrective-churn profile.",
+    "Periodically audit long-lived AI-authored modules rather than assuming they will be naturally refactored away."
+  ],
+  "risksAndCaveats": [
+    "Evidence is from public open-source repositories and a preprint (not yet peer-reviewed); enterprise monorepos with different review and ownership norms may behave differently.",
+    "Lower modification rate is not by itself a quality verdict — code can persist because it is correct, or because no one is maintaining it; the study cannot fully separate the two.",
+    "Data reflects a January 2026 snapshot of agent behavior and tooling, which continues to evolve."
+  ],
+  "decisionHorizon": "0,5 - 2 years"
+}

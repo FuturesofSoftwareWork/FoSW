@@ -1,0 +1,36 @@
+{
+  "id": "2026-06-29-15",
+  "title": "EU AI Act transparency obligations take effect August 2, 2026: software teams face new disclosure and labeling requirements",
+  "summary": "The EU AI Act's Article 50 transparency obligations will take effect on August 2, 2026, requiring organizations to disclose when users interact with AI systems (chatbots, AI-generated content) and implement machine-readable marks in generative AI systems for detecting synthetic content. On June 16, 2026, the European Parliament approved amendments that delay high-risk AI system obligations (Annex III categories including employment, education, and critical infrastructure) from August 2026 to December 2027, and product safety components to August 2028 — providing partial relief for some software organizations. Supporting enforcement infrastructure is advancing: the EU Commission appointed a 60-member Scientific Panel and Advisory Forum on June 1, and published the Code of Practice on Transparency of AI-Generated Content on June 10. For software development teams specifically, AI-generated code generally does not trigger high-risk obligations since developer tooling is not listed in Annex III, but organizations using AI in user-facing products, customer interactions, or content generation must comply with transparency rules or face fines up to EUR 35 million or 7% of global annual turnover.",
+  "source": "Sidley Austin Data Matters Blog / EU Commission",
+  "sourceUrl": "https://datamatters.sidley.com/2026/06/24/eu-ai-act-transparency-obligations-preparing-for-compliance-by-2-august-2026/",
+  "sourceType": "article",
+  "detectedAt": "2026-06-29",
+  "date": "2026-06-24",
+  "status": "published",
+  "tags": ["EU AI Act", "transparency", "regulation", "compliance", "AI governance", "policy"],
+  "category": ["Ethics & Policy", "Org & Leadership"],
+  "whyItMatters": [
+    "Software organizations serving EU users or customers have 5 weeks to comply with transparency obligations — this is an immediate compliance deadline, not a future planning item. Engineering, legal, and product teams must coordinate now.",
+    "The delay of high-risk system obligations to December 2027 gives software organizations building AI into employment, education, or safety-critical products an additional 16 months, but the transparency baseline (disclosure, labeling) is non-negotiable as of August 2.",
+    "The fine ceiling (EUR 35M or 7% of global turnover) makes non-compliance an existential risk for mid-sized software companies and a significant governance item for large enterprises."
+  ],
+  "recommendedActions": [
+    "Conduct an immediate audit of all AI-powered user-facing features to identify where Article 50 transparency disclosures are required — prioritize chatbots, AI-generated content, and automated decision systems.",
+    "Implement AI content labeling and machine-readable marking for any generative AI outputs (text, images, code) visible to end users before August 2, 2026.",
+    "Use the extended timeline for high-risk systems (December 2027) to begin conformity assessments and documentation for AI used in employment, education, or safety-critical applications without rushing.",
+    "Establish an AI governance function or designate an AI compliance officer to coordinate across engineering, legal, and product for ongoing EU AI Act compliance."
+  ],
+  "risksAndCaveats": [
+    "The amendments delaying high-risk obligations may give organizations a false sense of security — the transparency baseline (Article 50) is still imminent and applies broadly to any user-facing AI system.",
+    "Enforcement readiness varies significantly across EU member states; early enforcement actions may be inconsistent and unpredictable as national authorities build capacity.",
+    "The boundary between 'AI-generated code as developer tooling' (generally exempt) and 'AI-generated content in user-facing products' (covered) may be ambiguous for products that expose AI-generated outputs to end users."
+  ],
+  "decisionHorizon": "now",
+  "signalType": "regulation-standard",
+  "signalStrength": "established",
+  "signalStage": "leading",
+  "leadTimeEstimate": "fixed date",
+  "effectiveDate": "2026-08-02",
+  "jurisdiction": "EU"
+}

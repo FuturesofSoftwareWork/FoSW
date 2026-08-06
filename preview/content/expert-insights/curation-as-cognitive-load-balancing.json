@@ -1,0 +1,11 @@
+{
+  "id": "curation-as-cognitive-load-balancing",
+  "title": "Expert Insight Series: Why We Built This Site in 2026 (Yes, Really)",
+  "author": "Arto Wallin",
+  "authorRole": "Project Manager & Senior Scientist @ VTT",
+  "excerpt": "Project websites aren’t exactly hot stuff in 2026. But after thinking it through, we realized we had a very practical problem: the AI-for-software landscape changes weekly, the best signals are scattered, and most “authoritative” publications arrive late. This site exists to reduce the noise—by curating what matters for our project and partners.",
+  "markdownFile": "curation-as-cognitive-load-balancing.md",
+  "date": "2026-02-18",
+  "status": "published",
+  "tags": ["cognitive-load", "team-structure", "AI-strategy"]
+}

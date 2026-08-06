@@ -1,0 +1,27 @@
+{
+"id": "2026-01-14-01",
+"title": "Workday research claims ~40% of AI ‘time saved’ is lost to rework—implying verification work must be designed into workflows",
+"summary": "Workday’s January 14, 2026 report package on “Beyond Productivity: Measuring the Real Value of AI” argues that organizations often overstate AI ROI because time saved is frequently consumed by revision and verification work. The materials emphasize converting gross efficiency into net value by redesigning roles, reinvesting in training, and measuring outcome quality rather than time saved. For software teams, the key parallel is that AI-assisted coding can shift effort into review, test hardening, and incident prevention—work that must be budgeted and instrumented. The report frames this as eliminating an “AI tax” by improving governance and integrating AI into secure enterprise systems and repeatable processes. Practically, it reinforces that productivity programs should treat QA/review capacity and enablement as first-class investments, not externalities.",
+"source": "Company Research Report (Workday)",
+"sourceUrl": "https://investor.workday.com/files/doc_news/New-Workday-Research-Companies-Are-Leaving-AI-Gains-on-the-Table-2026.pdf",
+"detectedAt": "2026-02-09T09:57:47Z",
+"date": "2026-01-14",
+"status": "published",
+"tags": ["productivity", "rework", "governance", "quality", "roi"],
+"category": "Business Impact",
+"whyItMatters": [
+"Because AI can create rework/verification load, leaders should plan capacity for review and testing instead of assuming linear time savings.",
+"Because outcome-quality measurement is emphasized, engineering orgs should align AI rollout metrics with reliability/defect outcomes, not activity metrics.",
+"Because role redesign and training are highlighted, productivity gains may depend more on operating-model changes than model choice."
+],
+"recommendedActions": [
+"Track ‘net’ productivity: pair AI adoption metrics with downstream signals (defect escape rate, code review churn, MTTR, test flakiness).",
+"Standardize review and testing patterns for AI-assisted changes (e.g., required test updates, linters, security scanning, and review checklists).",
+"Reinvest any saved time explicitly into debt reduction, test coverage, or reliability work to avoid it being absorbed by untracked rework."
+],
+"risksAndCaveats": [
+"This is a broad cross-industry study; software-specific effects will vary by codebase maturity and SDLC controls.",
+"Reported rework shares depend on self-reported survey measures and may not match instrumented engineering data."
+],
+"decisionHorizon": "now"
+}

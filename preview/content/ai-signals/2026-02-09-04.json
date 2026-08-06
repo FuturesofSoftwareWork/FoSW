@@ -1,0 +1,29 @@
+{
+"id": "2026-02-09-04",
+"title": "MIT SMR India: A two-minute AI coding speed-up correlated with a 17% drop in learning for junior engineers in a controlled study",
+"summary": "MIT Sloan Management Review India summarizes new research testing whether AI coding assistants help or hinder skill formation when developers are learning unfamiliar tools. In a randomized controlled trial with 52 mostly junior software engineers learning the previously unfamiliar Python library Trio, the AI-assisted group finished tasks only about two minutes faster on average, and the speed gain was not statistically significant. The measurable downside was learning: on a post-task comprehension quiz, AI users scored 17% lower than non-AI peers, with the biggest gaps in debugging and code understanding—skills required to safely supervise AI-generated code. Researchers attribute the effect to “cognitive offloading,” but also report that interaction style matters: developers who used the assistant to ask conceptual questions or request explanations retained more knowledge than those who delegated generation/debugging. For software leaders, the article reframes “productivity” as a tradeoff between short-term throughput and long-term capability, especially for junior staff and for safety-critical or reliability-sensitive systems.",
+"source": "Reputable Business Press (MIT Sloan Management Review India) + arXiv Preprint",
+"sourceUrl": "https://mitsloanindia.com/article/what-a-two-minute-speed-gain-costs-developers-in-learning/",
+"detectedAt": "2026-02-09T10:00:00Z",
+"date": "2026-02-02",
+"status": "published",
+"tags": ["developer-productivity", "skills", "learning", "ai-coding-assistants", "debugging", "governance"],
+"category": "Skills & Learning",
+"whyItMatters": [
+"Because the measured speedup was small while learning loss was large, leaders should treat “time saved” claims as incomplete without capability/quality metrics—especially for junior-heavy teams.",
+"Because debugging and code reading were most affected, heavy AI reliance during onboarding can weaken the exact competencies needed for code review, incident response, and validating AI outputs.",
+"Because outcomes depended on how people used the tool, organizations can influence results via workflow design: ‘explain/teach’ usage patterns may preserve learning better than ‘delegate/do it for me.’"
+],
+"recommendedActions": [
+"Define allowed AI usage modes by career stage and task type (e.g., for juniors: explanation-first prompts, no blind delegation for unfamiliar libraries; for seniors: broader latitude with accountability).",
+"Instrument “net productivity” by pairing adoption with leading indicators of capability and quality (debug success rates, review rework, incident learning, comprehension checks in onboarding).",
+"Update onboarding and training to include AI-specific learning practices (prompt patterns that elicit explanations, required write-ups of reasoning, and deliberate ‘no-AI’ exercises for core skills).",
+"Introduce lightweight governance for AI-assisted changes in high-stakes services (stronger test expectations, review checklists focused on understanding/ownership, and audit trails for AI involvement)."
+],
+"risksAndCaveats": [
+"The experiment focused on one unfamiliar library (Trio) and a sample of mostly junior engineers; results may vary by domain, task familiarity, and team maturity.",
+"The finding suggests correlation in this setting; organizations should validate locally with their own telemetry and skills outcomes before enforcing broad restrictions."
+],
+"decisionHorizon": "now",
+"signalType": "study"
+}

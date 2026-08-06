@@ -1,0 +1,37 @@
+{
+  "id": "2026-05-20-05",
+  "title": "AI-coding fatigue: 60–75% of engineers report stress or reduced satisfaction since assistant adoption",
+  "summary": "A March 2026 Harvard Business Review report and concurrent industry surveys document a wellbeing dimension to the AI coding rollout. Between 60% and 75% of engineers report some level of AI-related fatigue, stress, or reduced job satisfaction, while overall burnout sits at 41–42% (peaking at 58% in early-stage startups). The picture is mixed: 41% of developers think AI tools could help prevent burnout, and one study found a 17% burnout-risk reduction for AI users with healthy workflows. The differentiator is how AI is integrated — constant review of plausible-but-wrong output is corrosive, while well-scoped delegation appears beneficial. For HR and engineering leaders this is now a measurable people-risk, not a soft concern.",
+  "source": "Harvard Business Review",
+  "sourceUrl": "https://hbr.org/2026/03/when-using-ai-leads-to-brain-fry",
+  "sourceType": "article",
+  "detectedAt": "2026-05-20",
+  "date": "2026-04-15",
+  "status": "published",
+  "tags": [
+    "burnout",
+    "developer experience",
+    "wellbeing",
+    "retention"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "Retention risk is concentrated in roles most exposed to AI review workload — senior ICs and tech leads.",
+    "AI rollout strategy is a people-risk decision, not only a tooling decision; HR and engineering must co-own it.",
+    "Effects are bimodal: thoughtful integration can reduce burnout, careless rollout amplifies it."
+  ],
+  "recommendedActions": [
+    "Add AI-specific items to engineering pulse surveys (review fatigue, trust in outputs, cognitive load).",
+    "Cap continuous AI-review time per engineer per day in team norms.",
+    "Train managers to distinguish 'AI-assisted' from 'AI-overloaded' workflows in 1:1s and capacity planning."
+  ],
+  "risksAndCaveats": [
+    "Self-reported survey data; causal attribution to AI vs. broader macro stress is uncertain.",
+    "Reported ranges (60–75%) span multiple methodologies and populations.",
+    "Effects likely depend heavily on team practices, making cross-company benchmarks unreliable."
+  ],
+  "decisionHorizon": "now"
+}

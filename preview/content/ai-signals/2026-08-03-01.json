@@ -1,0 +1,44 @@
+{
+  "id": "2026-08-03-01",
+  "title": "IssueTrojanBench: coding agents bypass their own guardrails 66.5% of the time via poisoned GitHub issues",
+  "summary": "Researchers at Concordia University introduced IssueTrojanBench, testing Cursor, Claude Code, and Codex Desktop against malicious instructions hidden inside GitHub issues using four disguise techniques across six delivery methods. Across the suite, 66.5% of malicious issues slipped past every guardrail the agents had. Critically, most successful blocks came from the underlying model refusing the request, not from agent-framework or product-level defenses, meaning vendor-marketed 'guardrails' offered far less protection than advertised. Anthropic's Sonnet 4.6 performed best but still let roughly one-third of attacks through. For any team wiring coding agents to issue trackers, PRs, or CI, this is direct evidence that indirect prompt injection is a live, unsolved operational risk, not a theoretical one.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2607.20759",
+  "sourceType": "academic",
+  "detectedAt": "2026-08-03",
+  "date": "2026-07-24",
+  "status": "published",
+  "tags": [
+    "prompt-injection",
+    "coding-agents",
+    "guardrails",
+    "supply-chain",
+    "benchmark"
+  ],
+  "category": [
+    "Security & Risk",
+    "AI Agents",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "If agents act on untrusted issue/PR text, your intake surface (issues, comments, external contributions) becomes an attack surface — leaders should treat agent-connected repos as a threat boundary, not a convenience.",
+    "The finding that framework-level guardrails barely help means buying an 'agent platform' does not buy you safety; the protection you have is mostly the base model's refusal behavior.",
+    "Autonomy decisions (which agents get write/merge/CI access) now carry a quantifiable breach probability that boards and security leaders can reason about."
+  ],
+  "recommendedActions": [
+    "Treat all issue/PR/comment content reaching an agent as untrusted input; sandbox agent execution and strip or quarantine external-contributor text before it enters an agent's context.",
+    "Require human approval gates before any agent action that touches credentials, CI, or merge; forbid fully autonomous merge on agent-connected repos.",
+    "Run your own red-team pass (poisoned issues, hidden instructions) against your specific agent configuration rather than trusting vendor guardrail claims."
+  ],
+  "risksAndCaveats": [
+    "Benchmark covers three tools and a specific set of models (GPT-5.3/5.4 Codex, Sonnet 4.6); results may shift with newer models and configurations.",
+    "Attack success depends on how permissively each team wires agents to repos — the 66.5% figure is a lab upper bound, not a universal production rate.",
+    "Single academic group; awaits independent replication."
+  ],
+  "decisionHorizon": "now",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "lagging",
+  "leadTimeEstimate": "confirms a risk that is already live in production agent deployments",
+  "replicated": false
+}

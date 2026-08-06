@@ -1,0 +1,11 @@
+{
+  "id": "2026-02-05-01",
+  "title": "Open-source LLMs close performance gap with proprietary models",
+  "summary": "Latest benchmarks show open-source large language models achieving 95% parity with leading commercial alternatives, democratizing access to advanced AI capabilities.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://example.com/arxiv",
+  "detectedAt": "2026-02-05T14:22:00Z",
+  "date": "2026-02-05",
+  "status": "published",
+  "tags": ["open-source", "llm", "benchmarks"]
+}
