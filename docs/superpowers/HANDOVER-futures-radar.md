@@ -131,8 +131,13 @@ builds and publishes `/FoSW/preview/` from `main`. Both share the
 to `main` and would otherwise interleave.
 
 **Pushing workflow changes needs a token with `workflow` scope, which the usual
-credential here lacks.** The last one was applied through GitHub's web editor; expect
-to do the same with these two files if the push is rejected.
+credential here lacks** — it has `gist`, `read:org` and `repo` only, and the push is
+rejected outright. So on the pushed branch both files are parked in
+`docs/pending-workflows/`, with a README explaining how to apply them. **Neither the
+preview build nor anything else in Phase 4 depends on them being applied**; they only
+automate the deployment. This is now the second workflow change on this project to
+need the web editor — it is worth getting a `workflow`-scoped token rather than
+hitting it a third time.
 
 ## How to see it
 

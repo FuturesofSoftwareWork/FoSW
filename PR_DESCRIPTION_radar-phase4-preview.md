@@ -84,10 +84,16 @@ step guarded by `if: github.event_name == 'push'`. `clean-exclude: preview` stop
 production deploy wiping the preview folder, and both workflows share a
 `github-pages-deploy` concurrency group so they cannot race for `gh-pages`.
 
-> **Pushing these two workflow files needs a token with `workflow` scope**, which the
-> usual credential on this project lacks. If the push is rejected, apply
-> `.github/workflows/deploy.yml` and `.github/workflows/deploy-preview.yml` through
-> GitHub's web editor — that is how the last workflow change here was applied.
+> **The two workflow files are parked in `docs/pending-workflows/`, not
+> `.github/workflows/`.** Pushing to that path needs a token with `workflow` scope;
+> the credentials available here have only `gist`, `read:org` and `repo`, and the
+> push was rejected outright. Apply them through GitHub's web editor — the same way
+> the last workflow change on this project was applied — or push from a machine with
+> a `workflow`-scoped token. See `docs/pending-workflows/README.md`.
+>
+> **Nothing else in this PR depends on them.** The preview build, the `noindex`
+> handling, the 404 shim and the radar changes all work and are verified without
+> them; the workflows only automate the deployment.
 
 ## Verification
 
