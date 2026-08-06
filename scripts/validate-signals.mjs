@@ -16,45 +16,14 @@ import { resolve, join } from "path";
 const SIGNALS_DIR = resolve("public/content/ai-signals");
 const INDEX_FILE = join(SIGNALS_DIR, "index.json");
 
-const DECISION_HORIZONS = ["now", "0,5 - 2 years", "2+ years"];
-const SOURCE_TYPES = ["academic", "article", "social", "video", "discussion", "release"];
-export const SIGNAL_TYPES = [
-  "practitioner-account",
-  "field-report",
-  "study",
-  "tool-shift",
-  "regulation-standard",
-  "market-event",
-  "forecast",
-  "primary-research",
-];
-const SIGNAL_STRENGTHS = ["weak", "emerging", "established"];
-const SIGNAL_STAGES = ["leading", "concurrent", "lagging"];
-const AVAILABILITY = ["GA", "preview", "announced"];
-const CATEGORIES = [
-  "AI Agents", "AI Tools", "Productivity", "SDLC Change", "Quality & Testing",
-  "Security & Risk", "Org & Leadership", "Skills & Learning", "Work Wellbeing",
-  "Ethics & Policy", "Business Impact", "Costs & Economics", "Other",
-];
-const REQUIRED = ["id", "title", "summary", "source", "detectedAt", "date", "status"];
-// Fields the site renders with .map() — a non-array value crashes the render.
-const ARRAY_FIELDS = [
-  "tags",
-  "whyItMatters",
-  "recommendedActions",
-  "risksAndCaveats",
-  "corroboration",
-];
+// The schema rules live in lib/signal-schema.mjs so promote-signals.mjs can
+// apply exactly the same checks to a draft before it is allowed into public/.
+import { validateSignal, SIGNAL_TYPES } from "./lib/signal-schema.mjs";
+
+export { SIGNAL_TYPES };
 
 const errors = [];
 const err = (file, msg) => errors.push(`${file}: ${msg}`);
-
-function checkEnum(file, field, value, allowed) {
-  if (value === undefined) return;
-  if (!allowed.includes(value)) {
-    err(file, `${field} = ${JSON.stringify(value)} is not one of ${allowed.join(" | ")}`);
-  }
-}
 
 function main() {
   let index;
@@ -89,46 +58,7 @@ function main() {
       continue;
     }
 
-    // A signal file whose root is null, an array, or a scalar would crash every
-    // field check below with a confusing error.
-    if (typeof s !== "object" || s === null || Array.isArray(s)) {
-      err(entry.file, "root value is not a JSON object");
-      continue;
-    }
-
-    for (const field of REQUIRED) {
-      if (s[field] == null || s[field] === "") err(entry.file, `missing required field '${field}'`);
-    }
-
-    // The site maps over these directly. A string where an array is expected
-    // (e.g. "corroboration": "https://…") throws inside render and blanks the UI,
-    // so catch the shape here — this validator is the only gate on fetched content.
-    for (const field of ARRAY_FIELDS) {
-      if (s[field] !== undefined && !Array.isArray(s[field])) {
-        err(entry.file, `'${field}' must be an array, got ${typeof s[field]}`);
-      }
-    }
-
-    checkEnum(entry.file, "decisionHorizon", s.decisionHorizon, DECISION_HORIZONS);
-    checkEnum(entry.file, "sourceType", s.sourceType, SOURCE_TYPES);
-    checkEnum(entry.file, "signalType", s.signalType, SIGNAL_TYPES);
-    checkEnum(entry.file, "signalStrength", s.signalStrength, SIGNAL_STRENGTHS);
-    checkEnum(entry.file, "signalStage", s.signalStage, SIGNAL_STAGES);
-    checkEnum(entry.file, "availability", s.availability, AVAILABILITY);
-
-    const cats = Array.isArray(s.category) ? s.category : s.category ? [s.category] : [];
-    for (const c of cats) checkEnum(entry.file, "category", c, CATEGORIES);
-    if (cats.length > 3) err(entry.file, `category has ${cats.length} values (max 3)`);
-
-    if (s.status !== "published" && s.status !== "draft") {
-      err(entry.file, `status = ${JSON.stringify(s.status)} must be 'published' or 'draft'`);
-    }
-    if (s.signalType === "regulation-standard" && !s.effectiveDate) {
-      err(entry.file, "signalType 'regulation-standard' requires effectiveDate");
-    }
-    if (s.signalType === "practitioner-account" && !s.observer) {
-      err(entry.file, "signalType 'practitioner-account' requires observer");
-    }
+    for (const problem of validateSignal(s)) err(entry.file, problem);
   }
 
   for (const file of readdirSync(SIGNALS_DIR)) {

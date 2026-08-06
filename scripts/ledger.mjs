@@ -103,9 +103,13 @@ export function keyFor({ url, claim }) {
   return c ? `claim:${c}` : "";
 }
 
-function readLedger() {
-  if (!existsSync(LEDGER_FILE)) return [];
-  return readFileSync(LEDGER_FILE, "utf8")
+/**
+ * Read a ledger file. The path is a parameter so promote-signals.mjs can point
+ * at a different root; every caller here uses the default.
+ */
+export function readLedger(file = LEDGER_FILE) {
+  if (!existsSync(file)) return [];
+  return readFileSync(file, "utf8")
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean)
@@ -142,7 +146,35 @@ function loadPublishedSignals() {
   return out;
 }
 
-function recordFromSignal(s) {
+/**
+ * Append records to a ledger, skipping any key already present.
+ *
+ * This is the only path that writes ledger lines, so "already seen" means the
+ * same thing everywhere and re-running a step is always a no-op.
+ */
+export function appendRecords(records, file = LEDGER_FILE) {
+  const seen = new Set(readLedger(file).map((r) => r.key));
+  const lines = [];
+  let added = 0;
+  let skipped = 0;
+  for (const rec of records) {
+    if (!rec.key) continue;
+    if (seen.has(rec.key)) {
+      skipped++;
+      continue;
+    }
+    seen.add(rec.key);
+    lines.push(JSON.stringify(rec));
+    added++;
+  }
+  if (lines.length) {
+    mkdirSync(dirname(file), { recursive: true });
+    appendFileSync(file, lines.join("\n") + "\n", "utf8");
+  }
+  return { added, skipped };
+}
+
+export function recordFromSignal(s) {
   const claim = s.title || (s.summary || "").slice(0, 140);
   const seenDate = (s.detectedAt || s.date || today()).slice(0, 10); // date-only, drop any timestamp
   return {
@@ -255,21 +287,8 @@ function cmdReconcile(args) {
   const rejectedIdx = args.indexOf("--rejected");
   const rejectedPath = rejectedIdx !== -1 ? args[rejectedIdx + 1] : null;
 
-  const seen = new Set(readLedger().map((r) => r.key));
-  const lines = [];
-  let added = 0;
-  let skipped = 0;
-
-  const append = (rec) => {
-    if (!rec.key) return;
-    if (seen.has(rec.key)) {
-      skipped++;
-      return;
-    }
-    seen.add(rec.key);
-    lines.push(JSON.stringify(rec));
-    added++;
-  };
+  const pending = [];
+  const append = (rec) => pending.push(rec);
 
   // published items = the finder's output
   for (const s of loadJsonArray(outputPath)) {
@@ -301,10 +320,7 @@ function cmdReconcile(args) {
     }
   }
 
-  if (lines.length) {
-    ensureLedgerDir();
-    appendFileSync(LEDGER_FILE, lines.join("\n") + "\n", "utf8");
-  }
+  const { added, skipped } = appendRecords(pending);
   console.log(`reconcile: appended ${added}, skipped ${skipped} already-seen. Ledger: ${LEDGER_FILE}`);
 }
 
