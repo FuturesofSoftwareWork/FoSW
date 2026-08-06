@@ -140,6 +140,53 @@ Flags: `--days N` (window, default 10), `--out <file>` (output path),
 - **GitHub** unauthenticated calls are rate-limited (60/hr). Set a `GITHUB_TOKEN` header if you add many repos.
 - **X/Twitter and LinkedIn** have no zero-auth post search and are intentionally not collected here. Options: maintain a curated list of ~20–30 credible practitioners and check them via the official (paid) X API, or check manually. LinkedIn post scraping violates its ToS.
 
+## Sector runs (targeted at one radar work dimension)
+
+The pipeline above is the **generic** weekly run. Alongside it there are
+**sector runs**: a targeted finder pass aimed at a single radar work dimension,
+used when a radar sector looks thin on evidence.
+
+Why they exist: the generic finder's search terms, feeds and quotas are all
+tuned for SDLC, tooling and productivity signal, so the other sectors are
+structurally under-sampled — which reads as an absence of phenomena in the world
+rather than an absence of sampling.
+
+Each sector has its own **standalone** prompt in `docs/sector-prompts/`. These
+are forks of `ai-signals-finder-prompt.md`, not extensions of it: a sector
+prompt's source-mix quotas and altitude test **replace** the generic prompt's.
+Never run both against one another.
+
+Currently written:
+
+| Sector | Prompt |
+|--------|--------|
+| `worker-experience-identity-and-wellbeing` | [`sector-prompts/worker-experience-identity-and-wellbeing.md`](./sector-prompts/worker-experience-identity-and-wellbeing.md) |
+
+Run order — note there is **no `signals:collect` step**, because the collector's
+feeds are not sector-aware yet:
+
+```bash
+npm run signals:prepare
+#  run the sector prompt (web search; no candidate pool)
+npm run signals:reconcile -- data/_finder-output-<dimension-id>.json \
+  --rejected data/_finder-rejected-<dimension-id>.json
+```
+
+Output filenames are sector-suffixed so a sector run can never overwrite the
+generic run's output. `reconcile` already takes a path, so no script change was
+needed.
+
+Sector prompts also write a retrieval report to
+`data/_finder-report-<dimension-id>.md` recording what was searched, what could
+not be reached, and whether a sector-aware candidate collector would have helped.
+That report is the input to the decision on whether to build one — see
+[the design](./superpowers/specs/2026-08-06-radar-sector-signal-search-design.md)
+and [the handover](./superpowers/HANDOVER-sector-signal-search.md).
+
+The sector is a **run-time lens only**: it shapes the search and the output
+filenames, and is never recorded in published signal JSON. There is no
+`workDimensions` field on the AI Signal schema.
+
 ## Extending
 
 Add a source by writing an `async` collector that returns candidate objects
