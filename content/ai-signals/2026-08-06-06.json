@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-06-06",
+  "title": "Agentic work is eroding the flow state that used to make programming restorative",
+  "summary": "Two July 2026 firsthand accounts sharpen the burnout story from a generic load problem into an attention problem. Jake Gold, an AI-infrastructure builder, writes after roughly eight months of full-time multi-agent work that he is more productive while spending much less time in programming flow, because his day is now switching between multiple agent sessions from morning to night. Alec Scollon reports a related but distinct mechanism: his job shifted from designing and writing code to designing, describing the design to an LLM, reviewing its output, and only then writing code, while hours of repetitive model prose have made him start to dread reading AI output. Both accounts are from people who continue to use LLMs heavily and say the tools increase productivity, which makes the signal more specific than anti-AI fatigue. The weak signal is that some AI-era developers may lose not just autonomy or ownership, but the restorative attentional state that made difficult programming psychologically sustainable.",
+  "source": "Practitioner Blog",
+  "sourceUrl": "https://jacob.gold/posts/programmers-need-to-start-meditating-now/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Jake Gold, an AI-infrastructure builder at Clor who says he helped launch and scale Vibecode and Bluesky and previously worked at Nuro, Docker and Google, writing a firsthand account after roughly eight months of full-time multi-agent work. Corroborated by Alec Scollon, a developer who uses Claude Code and Codex daily and is working on a framework for large-scale unsupervised code generation.",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://www.alecscollon.com/blog/llm-burnout/"
+  ],
+  "detectedAt": "2026-08-06",
+  "date": "2026-07-04",
+  "status": "published",
+  "tags": [
+    "flow state",
+    "context switching",
+    "LLM burnout",
+    "attention",
+    "agent supervision"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "AI Agents",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "If agentic workflows remove flow rather than just adding workload, leaders cannot infer sustainability from hours worked or delivery rate; the damaging change may be in the texture of attention inside the same working day.",
+    "The accounts come from heavy, competent users who are still productive. That means sentiment checks framed as whether AI helps productivity will miss a separate loss in satisfaction and recovery.",
+    "Repeated exposure to generated prose and generated code becomes a load of its own. Review bandwidth should be treated as a human attentional constraint, not an infinite companion to faster generation."
+  ],
+  "recommendedActions": [
+    "During AI-tool rollouts, ask engineers separately about flow, context switching and dread of reviewing generated output instead of bundling those into one developer-experience score.",
+    "Set explicit norms for how many concurrent agent sessions are reasonable for complex work, and protect some single-threaded deep-work blocks where understanding matters more than parallel throughput.",
+    "Put shared style and verbosity constraints into team AI configuration so reviewers are not repeatedly paying the same avoidable prose-fatigue cost."
+  ],
+  "risksAndCaveats": [
+    "Both sources are self-selected personal essays by heavy AI users. Reflective posts over-represent people who have something to process; the absence of quietly positive accounts in this pair is not evidence that positive experiences are absent in the population.",
+    "Gold and Scollon describe unusually AI-intensive workflows and high personal agency over tool use. Their accounts may not transfer to teams using simpler autocomplete or to mandated enterprise rollouts.",
+    "The signal is about felt attention and repetition, not measured productivity or clinical burnout. There is no sample, comparison group or independent health measure."
+  ],
+  "decisionHorizon": "now"
+}
