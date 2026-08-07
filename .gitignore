@@ -147,6 +147,11 @@ data/signal-drafts/
 # which reports every finding several times over.
 .claude/
 
+# The CI deployment tree: the production build with the preview build nested at
+# preview/, assembled by deploy.yml and pushed to gh-pages in one go. Created
+# locally only when rehearsing that sequence by hand.
+_site
+
 # Vite
 dist-ssr
 *.local

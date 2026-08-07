@@ -1,5 +1,20 @@
 name: Deploy to GitHub Pages
 
+# Production and the radar preview are built and published together, in one job,
+# with a SINGLE push to gh-pages.
+#
+# They used to be two workflows. Each pushed its own commit to gh-pages, and
+# every push to that branch spawns its own GitHub Pages deployment — of which
+# only one may be in flight at a time. The two deployments landed roughly a
+# minute apart and raced: the second was rejected with "due to in progress
+# deployment", and on 2026-08-06 one wedged in `building` and blocked every
+# later deploy until it was cancelled through the API. A `concurrency:` group
+# cannot fix that, because it governs these workflows and not the deployments
+# GitHub spawns afterwards. One push is the only structural fix.
+#
+# Merging cost no parallelism: the shared concurrency group already forced the
+# two workflows to run one after the other.
+
 on:
   push:
     branches: [main]
@@ -8,8 +23,11 @@ on:
   # below is guarded so this trigger validates without publishing.
   pull_request:
     branches: [main]
+  # Kept for manual resyncs when a deployment has to be re-driven by hand.
+  workflow_dispatch:
 
-# Shared with deploy-preview.yml: both commit to gh-pages on a push to main.
+# Still needed: two pushes to main in quick succession would otherwise put two
+# deployments in flight, which is the same collision one layer up.
 concurrency:
   group: github-pages-deploy
   cancel-in-progress: false
@@ -41,14 +59,48 @@ jobs:
       - name: Install Puppeteer system dependencies
         run: npx puppeteer browsers install chrome
 
-      - name: Build
+      - name: Build production
         run: npm run build
 
+      # Both builds write to dist/, and Vite empties it first, so production has
+      # to be moved aside before the preview build starts.
+      - name: Stash the production build
+        run: mv dist _site
+
+      - name: Build preview
+        env:
+          VITE_RADAR_PREVIEW: "1"
+        run: npm run build:preview
+
+      # The radar is verified against the artefact about to be deployed, not
+      # against a dev server. Four of these checks exist because screenshots
+      # caught defects the DOM checks had missed.
+      #
+      # This now gates production too: nothing publishes if the harness fails.
+      # That is deliberate — a failing radar harness is not a reason to ship.
+      - name: Verify the radar
+        run: |
+          # --strictPort: without it Vite silently moves to the next free port
+          # and the harness would verify whatever else is listening on 5199.
+          npx vite preview --base=/FoSW/preview/ --port 5199 --strictPort &
+          for i in $(seq 1 30); do
+            curl -sfo /dev/null http://localhost:5199/FoSW/preview/ && break
+            sleep 2
+          done
+          node scripts/verify-radar.mjs http://localhost:5199/FoSW/preview/
+
+      - name: Assemble the deployment tree
+        run: |
+          mv dist _site/preview
+          # Fail loudly rather than publishing a half-built tree.
+          test -f _site/index.html || { echo "missing production index.html"; exit 1; }
+          test -f _site/preview/index.html || { echo "missing preview index.html"; exit 1; }
+
+      # One push, one Pages deployment. `clean-exclude: preview` is gone with the
+      # second workflow: preview/ is inside the tree being deployed, so a clean
+      # deploy no longer threatens it.
       - name: Deploy
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
-          # A production deploy must not wipe the preview folder that
-          # deploy-preview.yml publishes into the same branch.
-          clean-exclude: preview
+          folder: _site
