@@ -116,6 +116,43 @@ scannable while collapsed — Evidence reads
   the interactive elements. Nothing in the app respected reduced motion except
   the carousel.
 
+## `decisionHorizon` is no longer rendered
+
+Its values are literal year ranges, and the distribution is degenerate: across
+102 signals, **78 `now`, 19 `0,5 - 2 years`, and exactly one `2+ years`**. A chip
+in the drawer's top row was spending reader attention to say almost nothing.
+
+This is the same finding that already removed the field from the radar —
+`docs/superpowers/specs/2026-08-04-futures-radar-design.md` rejected it as the
+radius axis in August because four-fifths of every blip landed in the bullseye
+and the outer ring was empty. The signal-level vocabulary is `signalStrength`;
+how far a change has spread is the phenomenon's `observedReach`.
+
+Relabelling to something like "Near term" was the obvious alternative and is
+worse — it dresses a distinction the corpus cannot support in wording that
+implies it can.
+
+Removed from the two finder prompts as well, with a note saying why, so new
+signals stop paying a judgement per item for a field nothing renders. The
+`regulation-standard` rule that computed it from `effectiveDate` went with them.
+
+**Deliberately left alone:** the field stays in `types/content.ts`,
+`signal-schema.mjs` and the 98 JSON files that carry it. Nothing reads it now,
+and stripping inert data from published research content would be a 98-file diff
+for no visible gain.
+
+**Recommended follow-up, not in this PR:** drop the enum check from
+`signal-schema.mjs`, and update `CLAUDE.md` / `AGENTS.md`. Worth doing on its own
+merits — the validator can currently fail a promote over a field nobody reads.
+Note that `promote.test.mjs:147` uses `decisionHorizon: "watch"` as its only
+invalid-value fixture, so that test needs a different violation
+(`sourceType: "Academic"` works) or it stops testing anything.
+
+**Related, undecided:** `leadTimeEstimate` (14 signals) carries the same kind of
+literal duration — `"~3-6 months"`, `"~12-18 months"` — mixed with free text like
+`"confirms current practice"`. It now sits inside collapsed Provenance, where
+specifics belong, so it was left as-is.
+
 ## Design decisions worth flagging
 
 - **Evidence stays closed by default.** The stance breakdown in the summary line
