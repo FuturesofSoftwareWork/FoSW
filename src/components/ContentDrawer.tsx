@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft, X, Link2, Check } from "lucide-react";
 import type { AISignal, DrawerContent } from "@/types/content";
 import type { Phenomenon } from "@/types/phenomenon";
@@ -19,6 +19,9 @@ const DRAWER_TYPE_META: Record<
     borderClassName: string;
     copyButtonClassName: string;
     closeButtonClassName: string;
+    /** Reading-progress bar. Previously drawn for insights only, though the
+     *  phenomenon body is the longest of the three. */
+    progressClassName: string;
   }
 > = {
   signal: {
@@ -28,6 +31,7 @@ const DRAWER_TYPE_META: Record<
     copyButtonClassName:
       "text-hologram-cyan hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
     closeButtonClassName: "hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
+    progressClassName: "bg-hologram-cyan",
   },
   insight: {
     ariaLabel: "Expert Insight article",
@@ -36,6 +40,7 @@ const DRAWER_TYPE_META: Record<
     copyButtonClassName:
       "text-neon-gold hover:bg-neon-gold/20 focus:ring-neon-gold/50",
     closeButtonClassName: "hover:bg-neon-gold/20 focus:ring-neon-gold/50",
+    progressClassName: "bg-neon-gold",
   },
   phenomenon: {
     ariaLabel: "Phenomenon details",
@@ -44,6 +49,7 @@ const DRAWER_TYPE_META: Record<
     copyButtonClassName:
       "text-hologram-cyan hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
     closeButtonClassName: "hover:bg-hologram-cyan/20 focus:ring-hologram-cyan/50",
+    progressClassName: "bg-hologram-cyan",
   },
 };
 
@@ -139,8 +145,14 @@ const ContentDrawer = ({
     setScrollProgress(0);
   }, [content?.type, content?.data.id]);
 
-  const isInsight = content?.type === "insight";
   const meta = content ? DRAWER_TYPE_META[content.type] : DRAWER_TYPE_META.signal;
+  const reduceMotion = useReducedMotion();
+
+  // A radar blip carries a 2-4 word label and nothing else — and labels can be
+  // switched off entirely — so a phenomenon drawer is a cold open. Keeping the
+  // label pinned is what carries the click's context through a long scroll.
+  const stickyLabel =
+    content?.type === "phenomenon" ? content.data.label : null;
 
   return (
     <AnimatePresence>
@@ -159,17 +171,21 @@ const ContentDrawer = ({
           {/* Drawer panel */}
           <motion.div
             ref={scrollRef}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            initial={reduceMotion ? { opacity: 0 } : { x: "100%" }}
+            animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { x: "100%" }}
+            transition={
+              reduceMotion
+                ? { duration: 0.15 }
+                : { type: "spring", damping: 25, stiffness: 200 }
+            }
             role="dialog"
             aria-modal="true"
             aria-label={meta.ariaLabel}
             className={`relative w-full ${meta.maxWidthClassName} bg-midnight/95 backdrop-blur-md border-l-4 overflow-y-auto ${meta.borderClassName}`}
           >
             {/* Close button */}
-            <div className="sticky top-0 z-10 flex justify-between items-center p-4 bg-midnight/80 backdrop-blur-sm">
+            <div className="sticky top-0 z-10 flex items-center gap-2 p-4 bg-midnight/80 backdrop-blur-sm">
               {onBack && (
                 <button
                   onClick={onBack}
@@ -179,18 +195,27 @@ const ContentDrawer = ({
                   <ArrowLeft size={14} /> Back
                 </button>
               )}
+              {stickyLabel && (
+                <span className="min-w-0 truncate font-mono text-xs uppercase tracking-widest text-gray-400">
+                  {stickyLabel}
+                </span>
+              )}
               <button
                 onClick={handleCopyLink}
-                className={`flex items-center gap-2 text-xs font-mono uppercase tracking-wider px-3 py-2 rounded-full transition-all focus:outline-none focus:ring-2 ${meta.copyButtonClassName}`}
+                className={`ml-auto flex items-center gap-2 text-xs font-mono uppercase tracking-wider px-3 py-2 rounded-full transition-all focus:outline-none focus:ring-2 ${meta.copyButtonClassName}`}
                 aria-label="Copy link to this article"
               >
+                {/* Text drops below `sm` so the label cannot wrap to two lines
+                    in the sticky bar; the button keeps its aria-label. */}
                 {copied ? (
                   <>
-                    <Check size={14} /> Copied
+                    <Check size={14} />
+                    <span className="hidden sm:inline">Copied</span>
                   </>
                 ) : (
                   <>
-                    <Link2 size={14} /> Copy link
+                    <Link2 size={14} />
+                    <span className="hidden sm:inline">Copy link</span>
                   </>
                 )}
               </button>
@@ -202,41 +227,22 @@ const ContentDrawer = ({
               >
                 <X size={20} />
               </button>
-              {isInsight && (
-                <div
-                  className="absolute bottom-0 left-0 h-0.5 bg-neon-gold transition-[width] duration-75"
-                  style={{ width: `${scrollProgress}%` }}
-                  aria-hidden="true"
-                />
-              )}
+              <div
+                className={`absolute bottom-0 left-0 h-0.5 transition-[width] duration-75 ${meta.progressClassName}`}
+                style={{ width: `${scrollProgress}%` }}
+                aria-hidden="true"
+              />
             </div>
 
             {/* Content */}
-            <div className="px-8 pb-12">
-              {content.type === "signal" &&
-                (() => {
-                  const partOf = phenomena.filter((p) =>
-                    p.evidence.some((e) => e.signalId === content.data.id),
-                  );
-                  if (partOf.length === 0) return null;
-                  return (
-                    <p className="mb-6 text-sm text-gray-400">
-                      Evidence for{" "}
-                      {partOf.map((p, i) => (
-                        <span key={p.id}>
-                          {i > 0 && ", "}
-                          <button
-                            onClick={() => onOpenPhenomenon(p)}
-                            className="text-hologram-cyan underline decoration-dotted underline-offset-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-hologram-cyan/50"
-                          >
-                            {p.label}
-                          </button>
-                        </span>
-                      ))}
-                    </p>
-                  );
-                })()}
-              {content.type === "signal" && <SignalContent data={content.data} />}
+            <div className="px-6 pb-12 md:px-10">
+              {content.type === "signal" && (
+                <SignalContent
+                  data={content.data}
+                  phenomena={phenomena}
+                  onOpenPhenomenon={onOpenPhenomenon}
+                />
+              )}
               {content.type === "insight" && <InsightContent data={content.data} />}
               {content.type === "phenomenon" && (
                 <PhenomenonContent
