@@ -231,8 +231,7 @@ That is the point of recording it.
   "category": ["string"],
   "whyItMatters": ["string (2-4 bullets, leadership implications)"],
   "recommendedActions": ["string (0-4 concrete bullets, or [])"],
-  "risksAndCaveats": ["string (1-3 bullets)"],
-  "decisionHorizon": "now | 0,5 - 2 years | 2+ years"
+  "risksAndCaveats": ["string (1-3 bullets)"]
 }
 ```
 
@@ -243,6 +242,11 @@ reviewer's decision, made by moving the file, not yours. `corroboration` may be
 There is **no work-dimension field**. The sector is a lens on the search, not
 something recorded in published signal JSON. Do not add one.
 
+There is likewise **no `decisionHorizon` field**. It was retired: across 102
+signals the values ran 78 `now` / 19 `0,5 - 2 years` / 1 `2+ years`, so it cost
+a judgement per signal and carried almost no information. Nothing renders it.
+Do not add it back.
+
 ### Allowed values
 
 - `status`: `published` or `draft`
@@ -251,8 +255,6 @@ something recorded in published signal JSON. Do not add one.
 - `signalStrength`: `weak`, `emerging`, `established`
 - `signalStage`: `leading`, `concurrent`, `lagging`
 - `availability`: `GA`, `preview`, `announced`
-- `decisionHorizon`: `now`, `0,5 - 2 years`, `2+ years` — these exact strings,
-  they render verbatim on the site (keep the comma in `0,5 - 2 years`)
 - `sourceType`: `academic`, `article`, `social`, `video`, `discussion`, `release`
 - `category`: 1 primary plus up to 2 secondary (max 3) from: `AI Agents`,
   `AI Tools`, `Productivity`, `SDLC Change`, `Quality & Testing`,

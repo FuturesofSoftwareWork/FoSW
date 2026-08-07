@@ -169,9 +169,11 @@ week about 2025 data is a lagging indicator, and the reader must see that). If
 the source does not state the collection window, omit the field rather than
 guessing.
 
-For `regulation-standard`, compute `decisionHorizon` from `effectiveDate` rather than
-judging it: within 6 months → `"now"`, within ~2 years → `"0,5 - 2 years"`,
-beyond → `"2+ years"`.
+There is **no `decisionHorizon` field**. It was retired: across 102 signals the
+values ran 78 `now` / 19 `0,5 - 2 years` / 1 `2+ years`, so the judgement cost
+real effort and carried almost no information. Nothing renders it. Do not emit
+it. Certainty is `signalStrength`; how far a change has spread is the
+phenomenon's `observedReach`, not a signal field.
 
 Omit `sponsor` entirely when a report has no commercial backer — do not write
 `"independent"`. Several genuinely unsponsored field reports are independent of
@@ -228,8 +230,7 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
   "category": ["string"],
   "whyItMatters": ["string (2-4 bullets, leadership implications)"],
   "recommendedActions": ["string (0-4 concrete bullets, or [])"],
-  "risksAndCaveats": ["string (1-3 bullets)"],
-  "decisionHorizon": "now | 0,5 - 2 years | 2+ years"
+  "risksAndCaveats": ["string (1-3 bullets)"]
 }
 ```
 
@@ -239,7 +240,6 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
 
 - `status`: `published` or `draft`
 - `signalType`: `practitioner-account`, `field-report`, `study`, `tool-shift`, `regulation-standard`, `market-event`, `forecast`, `primary-research`
-- `decisionHorizon`: `now`, `0,5 - 2 years`, `2+ years` — use these exact strings, they render verbatim on the site
 - `sourceType`: `academic` (peer-reviewed or preprint), `article` (non-academic article), `social` (blogs, social posts), `video`, `discussion` (forum/comment threads), `release` (changelogs, release notes)
 - `category`: choose 1 primary plus up to 2 secondary (max 3) from: `AI Agents`, `AI Tools`, `Productivity`, `SDLC Change`, `Quality & Testing`, `Security & Risk`, `Org & Leadership`, `Skills & Learning`, `Work Wellbeing`, `Ethics & Policy`, `Business Impact`, `Costs & Economics`, `Other`
 

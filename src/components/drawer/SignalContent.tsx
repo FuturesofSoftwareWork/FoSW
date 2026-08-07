@@ -2,7 +2,6 @@ import {
   AlertTriangle,
   BarChart3,
   CheckCircle,
-  Clock,
   ExternalLink,
   FlaskConical,
   Lightbulb,
@@ -205,7 +204,20 @@ const SignalContent = ({
         {data.title}
       </h2>
 
-      {(typeMeta || data.signalStrength || data.decisionHorizon) && (
+      {/* `decisionHorizon` is deliberately not rendered anywhere.
+       *
+       * Its values are literal year ranges ("0,5 - 2 years") and the
+       * distribution is degenerate: of 102 signals, 78 say "now", 19 say
+       * "0,5 - 2 years" and exactly one says "2+ years". A chip in the top row
+       * was spending the reader's attention to tell them almost nothing.
+       *
+       * Relabelling rather than removing would have been worse — it would dress
+       * a distinction the corpus cannot support in wording that implies it can.
+       * The same finding is why the radar does not use this field as its radius:
+       * see docs/superpowers/specs/2026-08-04-futures-radar-design.md. The
+       * signal-level vocabulary is `signalStrength`; the temporal axis lives on
+       * the phenomenon as `observedReach`. */}
+      {(typeMeta || data.signalStrength) && (
         <div className="mb-4 flex flex-wrap gap-2">
           {typeMeta && TypeIcon && (
             <span className={CHIP}>
@@ -220,12 +232,6 @@ const SignalContent = ({
           {data.signalStrength && (
             <span className={CHIP}>
               {SIGNAL_STRENGTH_LABEL[data.signalStrength]}
-            </span>
-          )}
-          {data.decisionHorizon && (
-            <span className={CHIP}>
-              <Clock size={12} aria-hidden="true" className="shrink-0" />
-              {data.decisionHorizon}
             </span>
           )}
         </div>
