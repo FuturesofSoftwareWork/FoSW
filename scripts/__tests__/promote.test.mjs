@@ -144,13 +144,16 @@ test("finder rejection lines reach the ledger", () => {
 
 test("one invalid accepted draft blocks the whole batch", () => {
   const root = makeRoot({
-    accepted: [draft("2026-08-06-01"), draft("2026-08-06-02", { decisionHorizon: "watch" })],
+    // A capitalised sourceType — a violation the corpus has actually produced.
+    // This used to use `decisionHorizon: "watch"`, but that field is no longer
+    // validated, so it would have made this test assert nothing.
+    accepted: [draft("2026-08-06-01"), draft("2026-08-06-02", { sourceType: "Academic" })],
   });
 
   const result = promote({ root });
 
   assert.ok(result.errors.length > 0);
-  assert.match(result.errors.join(" "), /decisionHorizon/);
+  assert.match(result.errors.join(" "), /sourceType/);
   assert.deepEqual(result.promoted, []);
   assert.equal(readdirSync(join(root, SIGNALS)).length, 1, "only index.json should exist");
   assert.ok(existsSync(join(root, DRAFTS, "accepted", "2026-08-06-01.json")), "valid draft stays staged");

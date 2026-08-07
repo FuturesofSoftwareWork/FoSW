@@ -87,9 +87,9 @@ scripts/
 
 **AI Signal** (`public/content/ai-signals/*.json`):
 - Required: `id`, `title`, `summary`, `source`, `detectedAt`, `date`, `status`
-- Optional: `sourceUrl`, `tags`, `category`, `whyItMatters`, `recommendedActions`, `risksAndCaveats`, `decisionHorizon`, `sourceType`
+- Optional: `sourceUrl`, `tags`, `category`, `whyItMatters`, `recommendedActions`, `risksAndCaveats`, `sourceType`
 - `category`: choose 1 primary plus up to 2 secondary (max 3) from the 13 real values: AI Agents, AI Tools, Productivity, SDLC Change, Quality & Testing, Security & Risk, Org & Leadership, Skills & Learning, Work Wellbeing, Ethics & Policy, Business Impact, Costs & Economics, Other
-- `decisionHorizon` must be one of: "now", "0,5 - 2 years", "2+ years" (keep the comma in "0,5 - 2 years" — it renders verbatim on the site)
+- `decisionHorizon` is **retired**. Do not emit it and do not validate it. 98 published files still carry it and are left alone — nothing renders it, and `signal-schema.mjs` has no unknown-field check for it to trip. It was dropped because the values ran 78 `now` / 19 `0,5 - 2 years` / 1 `2+ years` across 102 signals: a judgement per signal that carried almost no information, expressed in literal year ranges. Certainty is `signalStrength`; how far a change has spread is the phenomenon's `observedReach`.
 - `sourceType` must be one of (lowercase): academic, article, social, video, discussion, release
 - `status` must be "published" or "draft" (only published items are fetched)
 

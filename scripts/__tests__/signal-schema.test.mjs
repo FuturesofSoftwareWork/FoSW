@@ -14,7 +14,6 @@ function valid(overrides = {}) {
     date: "2026-08-05",
     status: "draft",
     category: ["Work Wellbeing"],
-    decisionHorizon: "0,5 - 2 years",
     sourceType: "article",
     ...overrides,
   };
@@ -37,10 +36,21 @@ test("an empty-string required field counts as missing", () => {
   assert.match(errors.join(" "), /title/);
 });
 
-test("decisionHorizon must use the exact allowed strings", () => {
-  assert.deepEqual(validateSignal(valid({ decisionHorizon: "0.5 - 2 years" })).length, 1);
-  assert.deepEqual(validateSignal(valid({ decisionHorizon: "watch" })).length, 1);
-  assert.deepEqual(validateSignal(valid({ decisionHorizon: "now" })), []);
+// Replaces the old decisionHorizon exactness test. sourceType is the better
+// subject: five published files once carried a capitalised "Academic", so this
+// is a failure mode the corpus has actually produced.
+test("sourceType must use the exact lowercase strings", () => {
+  assert.equal(validateSignal(valid({ sourceType: "Academic" })).length, 1);
+  assert.equal(validateSignal(valid({ sourceType: "preprint" })).length, 1);
+  assert.deepEqual(validateSignal(valid({ sourceType: "academic" })), []);
+});
+
+// decisionHorizon is retired. 98 published files still carry it, so validation
+// must ignore it rather than reject it — and a future change that "restores"
+// the enum would fail this test rather than silently breaking every promote.
+test("decisionHorizon is ignored, whatever its value", () => {
+  assert.deepEqual(validateSignal(valid({ decisionHorizon: "0,5 - 2 years" })), []);
+  assert.deepEqual(validateSignal(valid({ decisionHorizon: "watch" })), []);
 });
 
 test("a field the site maps over must be an array", () => {
