@@ -48,9 +48,12 @@ npm run radar:apply -- data/_radar-proposal.json   # writes drafts, index, repor
 #   read the diff
 #   reach review, docs/radar-reach-review-prompt.md, one phenomenon at a time
 npm run radar:accept -- <ids...>                   # publish, stamp lastReviewed
+npm run radar:reject -- <ids...> --reason "..."    # decline, record, release the signals
 ```
 
-Steps 1, 3 and 5 are deterministic code. Steps 2 and 4 are LLM sessions. This
+Steps 1, 3 and 5 are deterministic code. Steps 2 and 4 are LLM sessions.
+`accept` and `reject` are the two outcomes of a review; a draft touched by
+neither is still under consideration. This
 follows the principle already in `docs/ai-signals-pipeline.md` — *retrieve
 broadly in code, score editorially in the LLM* — with the addition the radar
 needs: **numbers are computed in code, meaning is judged by the LLM, ring
@@ -69,6 +72,7 @@ not who types `npm`.
 | `scripts/radar-apply.mjs` | Apply a proposal — the only writer of machine-owned fields | new |
 | `scripts/radar-derive.mjs` | Recompute derived values; raise `possibleReachChange` | new |
 | `scripts/radar-accept.mjs` | Publish reviewed drafts, stamp `lastReviewed` | new |
+| `scripts/radar-reject.mjs` | Decline a draft, record it, release its signals | new |
 | `docs/radar-clustering-prompt.md` | The clustering pass | new |
 | `docs/radar-reach-review-prompt.md` | The reach conversation | new |
 | `scripts/lib/content.mjs` | `readIndex` / `readItems` / `indexById` | reused |
@@ -76,7 +80,7 @@ not who types `npm`.
 | `scripts/lib/phenomenon-schema.mjs` | Enums, `REQUIRED_FIELDS` | edited |
 | `scripts/validate-phenomena.mjs` | One relaxation, one new enum check | edited |
 | `src/types/phenomenon.ts` | `possibleReachChange` | edited |
-| `package.json` | `radar:prepare` / `apply` / `derive` / `accept` | edited |
+| `package.json` | `radar:prepare` / `apply` / `derive` / `accept` / `reject` | edited |
 | `.gitignore` | `data/_radar-*` | edited |
 
 `content.mjs` and `derive.mjs` were built in Phase 1 explicitly for this — the
@@ -99,7 +103,8 @@ It is also not new logic. `validate-phenomena.mjs` already computes the covered
 set to report coverage; this lifts it.
 
 - Covered means cited by **any** phenomenon including drafts, so a draft's
-  citations are not re-offered.
+  citations are not re-offered while that draft is still under consideration.
+  Rejecting the draft releases them — see *Rejecting a proposal*.
 - `--all` re-digests everything. A covered signal can legitimately be
   counter-evidence to a second phenomenon, and that is unreachable by default.
 - `--since <date>` survives as an extra narrowing filter, not the selector.
@@ -107,6 +112,9 @@ set to report coverage; this lifts it.
 - Zero selected exits **0** with "nothing to cluster". A quiet week is not an
   error. (Contrast `collect-candidates.mjs`, which exits 1 when every source
   fails — there, an empty pool means collection broke.)
+
+It also carries the rejected clusters from `data/_radar-rejected.jsonl`, so the
+model does not re-propose what was already declined. See *Rejecting a proposal*.
 
 Per signal the digest carries `id`, `title`, `summary`, `source`, `date`,
 `category`, `tags`, `signalType`, `signalStrength`, `signalStage`,
@@ -212,6 +220,63 @@ whether human reach review is a safeguard or a rubber stamp.
 It is also the most useful measurement this project can take for any future
 version of the pipeline: if human judgment changes the answer often, that judgment
 is the product; if it never does, the design is wrong somewhere.
+
+## Rejecting a proposal
+
+A phenomenon has no rejection path today. The status enum carries `retired`, but
+nothing in the validator or the UI treats it specially — it is a vestige.
+Declining a proposal therefore means hand-deleting a file *and* its `index.json`
+entry, and forgetting the second fails the build with *"referenced by index.json
+but missing on disk"* (`scripts/lib/content.mjs:43`).
+
+That gap has a second effect, which is what surfaced it: **a declined draft's
+signals stay invisible.** Covered is computed from files on disk, so as long as
+the rejected file exists its citations are held out of every future digest.
+
+`npm run radar:reject -- <ids...> --reason "..."`
+
+1. Verify each id exists and is `draft`. **Refuse to reject a published
+   phenomenon** — removing something already on the site is `retired`, a
+   different act with a different meaning, and out of scope here.
+2. Append one line per id to `data/_radar-rejected.jsonl`:
+   ```json
+   {"id":"...","label":"...","thesis":"...","signalIds":["2026-08-06-01"],"reason":"...","at":"2026-08-07"}
+   ```
+3. Delete the phenomenon file and its `index.json` entry **together**, so the
+   build never observes a half-state.
+4. Report which signals returned to the uncovered pool.
+
+Deleting the file is what releases the signals, and it needs no machinery — the
+covered set is derived, not stored. Everything else in this command exists for
+the second problem.
+
+### Why a store rather than just deleting
+
+Delete-only releases the signals and then re-proposes the same cluster on the next
+run, so the reviewer re-reads a proposal they already declined. This is the exact
+mistake the signals pipeline made and corrected: its publish design records that
+rejection-by-absence *"infers an editorial decision from a file not being there"*,
+where an accidental `rm` and a considered decline are indistinguishable.
+
+So `radar:prepare` includes rejected clusters in the digest as *previously
+rejected — do not re-propose unless the evidence has materially changed*, and the
+clustering prompt carries a section on honouring it. Same organising rule as the
+seen-ledger: **the store is written at the moment a decision is made**, and the
+model reads it so it does not re-surface what was already judged.
+
+Keeping `label` and `thesis`, not just the id, is deliberate. The signal ledger
+keeps only a claim and a URL, and the publish design notes that losing the whole
+item is the part you regret. For a research project, *"what did we consider and
+turn down, and why?"* is a question worth being able to answer — and is arguably a
+finding in its own right.
+
+### What this deliberately does not solve
+
+A draft that is neither accepted nor rejected sits there, and its signals stay
+invisible. That is correct: an undecided proposal is still under consideration,
+and the drafts are the queue. `radar:prepare` reports the undecided count so the
+queue cannot rot silently — the same role the root of `data/signal-drafts/` plays
+for signals.
 
 ## Field ownership — structural, not validated
 
@@ -363,6 +428,12 @@ building, previewing or deploying anything.
 It warns, without refusing, when `reachReviewedAt` predates `latestEvidenceDate`:
 reach was judged before the newest evidence arrived.
 
+`radar:reject` refuses the whole batch if any named id does not exist or is not
+`draft`, and requires `--reason`. It appends to the store **before** deleting, so
+an interrupted run loses a file whose record already exists rather than a decision
+with no trace — the same failing-toward-the-recoverable-state choice `apply`
+makes. Re-running with an already-rejected id is a no-op.
+
 `radar:derive` is idempotent.
 
 ## Testing
@@ -386,6 +457,10 @@ reach was judged before the newest evidence arrived.
 - **`radar-accept.test.mjs`** — refuses a missing `reachReviewedAt`; refuses
   failing minimums before writing; stamps `lastReviewed`; all-or-nothing; warns on
   a stale `reachReviewedAt`.
+- **`radar-reject.test.mjs`** — file and `index.json` entry are removed together;
+  the store line carries label, thesis and signal ids; a published phenomenon is
+  refused; a missing `--reason` is refused; the released signals reappear in the
+  next `prepare`; re-rejecting is a no-op.
 
 Plus `validate-phenomena.test.mjs` gains: a draft without `reachReviewedAt` is
 valid, a published one without it is not.
@@ -428,6 +503,11 @@ vocabulary, not a refactor. Keep it that way.
 | `snapshot`, editions, `reachHistory` deferred | The spec puts them last; there is no history yet to record |
 | Coverage table withheld from the model | The spec's own no-quota rule; a gap shown to a model is a gap it may fill |
 
+One **addition** rather than a departure: `radar:reject` and
+`data/_radar-rejected.jsonl`. The 2026-08-04 spec has no rejection path for a
+proposal at all, which leaves declining one as a hand-edit that can break the
+build and silently strands the signals it cited.
+
 Reach authorship is **not** a departure. The 2026-08-04 spec already has the
 clustering pass propose `observedReach` and a person confirm or rewrite it. What
 is added is a machine-checkable trace that the second step happened.
@@ -443,6 +523,10 @@ is added is a machine-checkable trace that the second step happened.
   movement infers spread from coverage, which is the error this axis exists to
   avoid.
 - **A `workDimensions` field on signals.** The sector stays a run-time lens.
+- **Retiring a *published* phenomenon.** `radar:reject` covers drafts only. The
+  `retired` status exists in the enum but nothing implements it, and removing
+  something already on the site — with deep links pointing at it — is a different
+  problem that deserves its own thinking.
 - **Retiring `signals:reconcile`.** Out of scope; it still works.
 
 ## Things that will bite you
@@ -463,6 +547,11 @@ is added is a machine-checkable trace that the second step happened.
   adjacent-ring requirement is not decoration.
 - **The clustering agent must not be the reviewing agent.** It will defend its own
   proposals and it will sound reasonable doing it.
-- **`prepare` counts a draft's citations as covered.** A signal attached to a
-  draft that is later rejected becomes invisible to the next run until someone
-  passes `--all`.
+- **`prepare` counts a draft's citations as covered**, so an *undecided* draft
+  holds its signals out of every digest. `radar:reject` releases them; leaving the
+  draft to sit does not. Watch the undecided count `prepare` reports — a queue
+  nobody empties looks exactly like a corpus with nothing left in it.
+- **`rm` is not a rejection**, for the same reason it is not one on the signals
+  side. Deleting a phenomenon by hand releases its signals but records no
+  decision, breaks the build if the `index.json` entry is left behind, and lets
+  the next clustering run re-propose the cluster you just declined.
