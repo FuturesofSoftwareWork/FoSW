@@ -5,7 +5,11 @@ One command, `signals:promote`, that moves reviewed signal drafts into
 the drafts itself; the reviewer sorts them; `promote` does the rest.
 
 Written 2026-08-06. Revised the same day after the first real sector run — see
-*Revision: the publish step was removed* at the end. Nothing here is built yet.
+*Revision: the publish step was removed* at the end.
+
+**Built and in use as of 2026-08-07.** `scripts/promote-signals.mjs` and
+`scripts/lib/signal-schema.mjs` shipped in PR #22 with 24 tests. The first six
+wellbeing signals (`2026-08-06-01` … `-06`) were published through it.
 
 ## The gap
 

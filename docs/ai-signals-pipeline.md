@@ -179,12 +179,16 @@ npm run signals:prepare
 #    data/_finder-rejected-<dim>.jsonl     appended, one line per rejection
 #    data/_finder-report-<dim>.md          retrieval report
 #  review data/signal-drafts/, mv each file into accepted/ or rejected/
-npm run signals:promote                  # NOT BUILT YET — see the design below
+npm run signals:promote
 ```
 
-Until `signals:promote` exists, the drafts have to be placed by hand. The
-staging folders and the append-only rejection store are specified in
-[the publishing design](./superpowers/specs/2026-08-06-signals-publish-design.md).
+`signals:promote` validates every file in `accepted/`, moves them into
+`public/content/ai-signals/` as `published`, appends their `index.json` entries,
+and records each decision in the seen-ledger — promoted as `published`,
+everything in `rejected/` and every `_finder-rejected-*.jsonl` line as
+`rejected`. It never touches the unreviewed queue, refuses to overwrite an
+existing published file, and moves nothing at all if any file fails validation.
+See [the publishing design](./superpowers/specs/2026-08-06-signals-publish-design.md).
 
 Working filenames are sector-suffixed so a sector run can never overwrite the
 generic run's output.

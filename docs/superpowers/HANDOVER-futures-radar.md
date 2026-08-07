@@ -71,18 +71,28 @@ All three open questions are answered. **Read #1 before touching the 404 code.**
    preview run for `295302b` was cancelled while production's succeeded, leaving the
    preview one commit behind `main`.
 
-   It was harmless that time — the commit only moved a docs file, so the built output
-   was identical. **It will not always be harmless.** A preview that silently lags
-   `main` undercuts the reason the preview exists. Two things to know:
+   **This is fixed as of 2026-08-07 — the two workflows are now one.** What follows
+   is kept because the failure it describes was worse than cancellation, and the
+   diagnosis is not obvious.
 
-   - **Check before trusting a preview.** Compare the `gh-pages` head commit with
-     `main`; a `Deploy Radar Preview` run with conclusion `cancelled` is the tell.
-   - **Resync with `gh workflow run deploy-preview.yml --ref main`.** The
-     `workflow_dispatch` trigger is already on the file for exactly this. It was used
-     once, on 2026-08-06, and worked.
+   The contention was never really between the two *workflows*; the concurrency group
+   serialised those correctly. It was between the **GitHub Pages deployments each of
+   their `gh-pages` pushes spawned** — only one may be in flight, and a
+   `concurrency:` group has no authority over them. On 2026-08-06 one wedged in
+   `building` and blocked every later deployment: the site served a two-hour-old
+   build while every workflow run showed green, because a green run means `gh-pages`
+   was written, not that Pages published it.
 
-   The `paths-ignore` idea listed under *Known, unfixed* is the real fix: docs-only
-   pushes are what create the contention in the first place.
+   - **The check that actually works** is
+     `gh api repos/FuturesofSoftwareWork/FoSW/pages --jq .status`. Anything but
+     `built`, or `building` for more than a couple of minutes, means the live site is
+     stale regardless of what Actions shows.
+   - **Clear a wedged deployment** with
+     `gh api -X POST repos/FuturesofSoftwareWork/FoSW/pages/deployments/<sha>/cancel`,
+     then re-trigger. Until it is cancelled every later deploy fails with
+     *"due to in progress deployment"*.
+   - **Do not split `deploy.yml` back into two workflows.** One push to `gh-pages`
+     per commit is the only structural fix.
 
 Two further things were confirmed on the live deployment:
 
@@ -226,8 +236,10 @@ the project's own devDependency, because MCP browser tools were unavailable.
 It lives at `scripts/verify-radar.mjs`, **committed to the repo**, and is run with
 `npm run verify:radar <baseUrl>` — not wired into `npm run build`, `npm test` or
 `npm run lint`, since it needs a server already running and would fail spuriously in
-an unattended pipeline. It *is* wired into `deploy-preview.yml`, which starts a
-server first and verifies the artefact it is about to deploy. It runs 15 checks.
+an unattended pipeline. It *is* wired into `deploy.yml`, which starts a server first
+and verifies the artefact it is about to deploy — and since the workflows merged,
+that check gates **production** as well as the preview: a failing harness stops the
+whole release. It runs 15 checks.
 Six exist because *screenshots or a whole-branch review caught defects the DOM
 checks had missed*:
 
@@ -250,11 +262,16 @@ Both files are installed at `.github/workflows/` and both have run successfully 
 also deploys to Pages, so check it before debugging a mystery deployment.
 
 `deploy.yml` also triggers on `pull_request`, with an
-`if: github.event_name == 'push'` guard on the Deploy step, so `npm test` and
-`npm run lint` finally run *before* a merge rather than after. `deploy-preview.yml`
-builds and publishes `/FoSW/preview/` from `main`. Both share the
-`github-pages-deploy` concurrency group, because both commit to `gh-pages` on a push
-to `main` and would otherwise interleave.
+`if: github.event_name != 'pull_request'` guard on the Deploy step, so `npm test` and
+`npm run lint` finally run *before* a merge rather than after.
+
+**Since 2026-08-07 it is a single workflow.** It builds production, stashes it to
+`_site`, builds the preview, verifies the radar against it, moves the preview to
+`_site/preview`, and pushes `gh-pages` once. `deploy-preview.yml` is gone, and so is
+`clean-exclude: preview` — the preview now sits inside the deployed tree, so a clean
+deploy cannot threaten it. Merging cost no parallelism, because the concurrency group
+had already forced the two workflows to run one after the other; it took the
+push-to-published time from 2m26s to 1m52s.
 
 The CI gap earlier versions of this document recorded is **closed**: PRs are now
 checked before they land.
