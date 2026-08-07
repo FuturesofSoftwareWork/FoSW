@@ -26,8 +26,9 @@ last one.
 ## Scope
 
 **In:** `radar:prepare`, the clustering prompt, `radar:apply`, `radar:derive`,
-`radar:accept`, the reach-review prompt, the machine/human field split,
-`possibleReachChange`, and the Phase 1 carry-forwards that belong to those.
+`radar:accept`, `radar:reject`, the reach-review prompt, the machine/human field
+split, `possibleReachChange`, `construct`, evidence detachment, and the Phase 1
+carry-forwards that belong to those.
 
 **Out:** `radar:snapshot`, `editions.json`, and `reachHistory` rendering. The
 2026-08-04 spec puts them last and says history "will be thin at launch and gets
@@ -79,7 +80,7 @@ not who types `npm`.
 | `scripts/lib/derive.mjs` | `deriveEvidenceProfile` / `deriveDates` | reused |
 | `scripts/lib/phenomenon-schema.mjs` | Enums, `REQUIRED_FIELDS` | edited |
 | `scripts/validate-phenomena.mjs` | One relaxation, one new enum check | edited |
-| `src/types/phenomenon.ts` | `possibleReachChange` | edited |
+| `src/types/phenomenon.ts` | `possibleReachChange`, `construct` | edited |
 | `package.json` | `radar:prepare` / `apply` / `derive` / `accept` / `reject` | edited |
 | `.gitignore` | `data/_radar-*` | edited |
 
@@ -116,6 +117,23 @@ set to report coverage; this lifts it.
 
 It also carries the rejected clusters from `data/_radar-rejected.jsonl`, so the
 model does not re-propose what was already declined. See *Rejecting a proposal*.
+
+### Apply an outstanding claim block before running `prepare`
+
+Signals found by a **claim run** are hunted as evidence for one named phenomenon,
+but they reach `public/` by the ordinary route — `signal-drafts/`, review,
+`signals:promote` — and arrive **uncovered** like any other signal. Nothing on the
+signal records which claim it was found for; the claim is a run-time lens, exactly
+as the sector is.
+
+So a `prepare` run made while a claim run's proposed evidence block is still
+unapplied will offer that evidence to clustering as unattached material, and
+clustering may propose a **new phenomenon** built from evidence gathered to test
+an existing one.
+
+The rule is sequencing, not machinery: **apply an outstanding claim block before
+the next `prepare`.** Applying it makes those signals covered, and they drop out
+of the digest on their own.
 
 Per signal the digest carries `id`, `title`, `summary`, `source`, `date`,
 `category`, `tags`, `signalType`, `signalStrength`, `signalStage`,
@@ -286,7 +304,7 @@ one signal must not be able to rewrite a thesis that took an hour to get right.
 
 | Machine-owned — `apply` may write | Human-owned — unreachable from `apply` |
 | --- | --- |
-| `evidence[]` | `label`, `title`, `thesis`, `currentPressure` |
+| `evidence[]` | `label`, `title`, `thesis`, `construct`, `currentPressure` |
 | `evidenceProfile` | `observedReach`, `reachRationale`, `reachReviewedAt` |
 | `firstObserved`, `latestEvidenceDate` | `implications[]`, `developmentPaths[]` |
 | `possibleReachChange` | `whatWouldChangeThis`, `related[]` |
@@ -338,10 +356,22 @@ prompted it.
 
 Rule: `radar:derive` computes the evidence profile twice — once over all evidence,
 once over evidence whose signal date is on or before `reachReviewedAt` — and
-raises `possibleReachChange` only when `independentContexts` increased. Never on
-`quartersSpanned` alone: time passing is not spread, and a phenomenon that
-accumulates quarters without accumulating contexts is the exact case the reach
-axis exists to hold still.
+raises `possibleReachChange` when `independentContexts` has **changed in either
+direction** since reach was last judged. Never on `quartersSpanned` alone: time
+passing is not spread, and a phenomenon that accumulates quarters without
+accumulating contexts is the exact case the reach axis exists to hold still.
+
+**Both directions, and the downward one matters more.** An earlier version raised
+it only on an increase. Claim runs make decreases routine — stripping
+off-construct evidence can take a phenomenon from four independent contexts to
+one — and that is the more urgent review, because the blip may need to move
+**outward**. The radar design is explicit that `receding` is a finding and that
+*"a radar that can only move blips inward is a hype instrument"*; a rule that only
+fires on growth would have made this pipeline exactly that.
+
+`reason` says which happened and names the signals, so a reviewer can tell
+"three new independent contexts appeared" from "three of your four contexts were
+removed as off-construct".
 
 Needs adding in three places, mirrored as the others are: `src/types/phenomenon.ts`,
 `scripts/lib/phenomenon-schema.mjs`, `scripts/validate-phenomena.mjs`. No UI in
@@ -352,6 +382,14 @@ computed, so `derive` reports phenomena where it is true and `contested` is not
 set, and a person decides. *"Is this disagreement substantive, or one dissenting
 voice against ten studies?"* is not a countable question.
 
+**That suggestion is only meaningful once the evidence base has passed a construct
+check.** `teams-get-smaller` is a live false positive of it: `contested: true`,
+driven by two labour-market datasets that argue against AI-driven job loss rather
+than against the delivery unit shrinking. Off-construct counter-evidence
+manufactures contestation, and the flag then reads as a genuine disagreement in
+the field. `derive` says so in the report rather than presenting the suggestion
+bare.
+
 ## The proposal format
 
 ```json
@@ -359,10 +397,14 @@ voice against ten studies?"* is not a countable question.
   "attachments": [
     { "phenomenonId": "...", "signalId": "...", "stance": "supports", "primary": true, "note": "..." }
   ],
+  "detachments": [
+    { "phenomenonId": "...", "signalId": "...", "reason": "wrong-construct" }
+  ],
   "newPhenomena": [
-    { "label": "...", "title": "...", "thesis": "...", "currentPressure": "...",
-      "primaryDimension": "...", "potentialImpact": "...", "observedReach": "...",
-      "reachRationale": "...", "implications": [], "evidence": [], "whatWouldChangeThis": [] }
+    { "label": "...", "title": "...", "thesis": "...", "construct": "...",
+      "currentPressure": "...", "primaryDimension": "...", "potentialImpact": "...",
+      "observedReach": "...", "reachRationale": "...",
+      "implications": [], "evidence": [], "whatWouldChangeThis": [] }
   ],
   "suggestions": [
     { "phenomenonId": "...", "field": "thesis", "observation": "..." }
@@ -374,15 +416,88 @@ voice against ten studies?"* is not a countable question.
 `firstObserved` or `latestEvidenceDate`. `apply` assigns the id from a slug of the
 label, matching the existing file naming, and `derive` computes the rest.
 
-The clustering prompt must apply the stance test per evidence item: *does this
-show the change happening, or only that the conditions for it exist?* Most news
-items answer the second, and `contextual` is the correct and expected outcome.
-Only `supports` counts in the profile.
+### The construct test comes first
+
+**A source is evidence for a claim only if it measured the thing the claim is
+about.** This gates attachment, ahead of every other test: if a source did not
+measure the construct, it is not attached at any stance.
+
+An earlier version of this spec said only *"does this show the change happening,
+or only that the conditions for it exist? Most news items answer the second, and
+`contextual` is the correct and expected outcome."* That instruction is how
+`teams-get-smaller` came to cite six signals of which one measures team size —
+two layoff `market-event`s filed as `contextual` and two labour-market datasets
+filed as `counter` that argue against AI-driven job loss rather than against the
+delivery unit shrinking. The phenomenon reads as contested by strong opposing
+evidence; it is one investor field report surrounded by material that never asked
+the question.
+
+At bootstrap scale that instruction is actively dangerous. Clustering attaches to
+six existing phenomena and proposes roughly ten more, and every one of them may
+accumulate topically-associated noise that makes a thin base look furnished.
+
+So, per candidate evidence item, in order:
+
+1. **Construct** — did this source measure what the phenomenon claims? Near
+   neighbours travel in the same news cycle and use the same vocabulary. If no,
+   **do not attach**. `wrong-construct` is a rejection, never a demotion to
+   `contextual`.
+2. **Stance** — does it show the change happening (`supports`), show it not
+   happening or going elsewhere (`counter`), or evidence the present-day pressure
+   without direction (`contextual`)?
+3. **Primary** — its own observation, or commentary on someone else's?
+
+`contextual` remains a legitimate and common outcome — for material that *did*
+measure the construct and shows pressure rather than direction. Only `supports`
+counts in the profile.
+
+This is the same rule `docs/claim-prompts/claim-prompt-instructions.md` is built
+around. Clustering applies it preventively; a claim run applies it as a cure.
+
+### Every proposed phenomenon names its construct
+
+`construct` is a new field: one sentence naming **the thing that must be measured
+for a source to count as evidence here**. For `teams-get-smaller` it is the size
+of the delivery unit — not headcount, hiring, layoffs, postings, wages, attrition,
+revenue per employee, or output per developer, all of which are consistent with
+the delivery unit staying exactly the same size.
+
+Without it the construct test has nothing to test against, every claim run
+re-derives the construct from scratch, and a new phenomenon is born with no stated
+standard for its own evidence.
+
+- Optional on the type and on drafts; **required on published phenomena**, the
+  same treatment `reachReviewedAt` gets and for the same reason — it is a
+  standard someone has to set, and forcing it onto the six existing drafts before
+  anyone has written one would only produce a fabricated value.
+- `radar:apply` always writes it for a new phenomenon; the clustering prompt must
+  author it.
+- Human-owned. It defines what counts as evidence, so a script that could rewrite
+  it could redefine the claim.
+- The six existing drafts acquire one during review, before `accept` will take
+  them.
 
 It must also author `implications`, and that is where a proposal most needs
 review — a model will happily generate a plausible implication no evidence
 supports. Every implication should be traceable to something in the phenomenon's
 evidence.
+
+### Detachments
+
+A claim run's deliverable is a proposed evidence block **including removals**, and
+`evidence[]` is machine-owned — so removing an item by hand would be editing a
+machine-owned field, exactly what the ownership split exists to prevent.
+`detachments` lets a claim run's block be applied by the same script, in one
+all-or-nothing batch, with `derive` recomputing after.
+
+A claim run therefore emits its block in this proposal format rather than a second
+one. `reason` is free text carrying the claim run's own vocabulary
+(`wrong-construct` and the rest); nothing machine-reads it, and it goes into the
+apply report so the removal is evidenced.
+
+Detaching the last piece of `supports` evidence is **allowed but warned about**:
+it can drop a published phenomenon below the editorial minimum `accept` enforces,
+and that is a finding — a claim nobody is measuring — not an error to suppress.
 
 ### The clustering pass runs in its own session
 
@@ -401,14 +516,21 @@ The handoff is already a file on disk, so this costs nothing to honour.
 
 `radar:apply` aborts and writes nothing when:
 
-- an `attachments[].phenomenonId` does not exist
-- a `signalId` does not resolve to a **published** signal
+- an `attachments[]` or `detachments[]` `phenomenonId` does not exist
+- an attached `signalId` does not resolve to a **published** signal
 - a new phenomenon's slug collides with an existing file — **never overwrite**,
   the same backstop `promote` applies to `public/content/ai-signals/`
+- a new phenomenon has no `construct`
 - the proposal is malformed
 
-An attachment already present is a **no-op with a notice**, so re-running after a
-partial failure is safe.
+An attachment already present is a **no-op with a notice**, and so is a
+detachment of something not cited, so re-running after a partial failure is safe.
+
+A detachment that empties a phenomenon's `supports` evidence **warns and
+proceeds**. It can drop a published phenomenon below the minimum `accept`
+enforces, but a claim with nothing measuring it is a finding, and a script that
+refused would be protecting the number rather than the reader. The apply report
+names every such phenomenon.
 
 `apply` writes phenomenon files **before** `index.json`. A crash between the two
 leaves orphan files, which `validate-phenomena.mjs` catches loudly; the reverse
@@ -451,10 +573,15 @@ makes. Re-running with an already-rejected id is a no-op.
   them; a new phenomenon gets `draft`, the proposed reach, and no
   `reachReviewedAt`; slug collision aborts; unknown `phenomenonId` aborts;
   unpublished `signalId` aborts; duplicate attachment is a no-op; `index.json`
-  gains exactly one entry per new phenomenon.
+  gains exactly one entry per new phenomenon; a new phenomenon without
+  `construct` aborts.
+- **detachments**, in the same suite — a cited item is removed and the profile
+  recomputed; detaching something not cited is a no-op; emptying `supports`
+  warns and proceeds; a detachment on an unknown phenomenon aborts the batch.
 - **`radar-derive.test.mjs`** — profile and dates match `derive.mjs`;
-  `possibleReachChange` raised on new independent contexts, not raised on elapsed
-  quarters; idempotent.
+  `possibleReachChange` raised on new independent contexts **and on lost ones**,
+  with a `reason` that distinguishes the two; not raised on elapsed quarters;
+  idempotent.
 - **`radar-accept.test.mjs`** — refuses a missing `reachReviewedAt`; refuses
   failing minimums before writing; stamps `lastReviewed`; all-or-nothing; warns on
   a stale `reachReviewedAt`.
@@ -464,7 +591,7 @@ makes. Re-running with an already-rejected id is a no-op.
   next `prepare`; re-rejecting is a no-op.
 
 Plus `validate-phenomena.test.mjs` gains: a draft without `reachReviewedAt` is
-valid, a published one without it is not.
+valid and a published one without it is not, and the same pair for `construct`.
 
 Then the empirical check: `npm run verify:radar` against a preview build once new
 phenomena exist. No harness change. **Take screenshots as well** — that harness
@@ -503,6 +630,14 @@ vocabulary, not a refactor. Keep it that way.
 | `reachReviewedAt` becomes published-only | It is the record of a human act; requiring it on drafts forces a fabricated date |
 | `snapshot`, editions, `reachHistory` deferred | The spec puts them last; there is no history yet to record |
 | Coverage table withheld from the model | The spec's own no-quota rule; a gap shown to a model is a gap it may fill |
+| The construct test gates attachment, ahead of stance | Filing off-construct material as `contextual` is how `teams-get-smaller` came to cite five signals that never measured team size |
+| `possibleReachChange` fires on a **fall** in independent contexts too | Claim runs make decreases routine, and a shrinking evidence base is the more urgent reach review |
+
+Two further **additions** rather than departures. `construct` on the phenomenon —
+the 2026-08-04 spec has no field naming what a phenomenon's evidence must measure,
+so the construct test had nothing durable to test against. And `detachments` in
+the proposal — that spec's pipeline only ever adds evidence, which leaves a claim
+run's proposed removals as a hand-edit of a machine-owned field.
 
 One **addition** rather than a departure: `radar:reject` and
 `data/_radar-rejected.jsonl`. The 2026-08-04 spec has no rejection path for a
@@ -546,6 +681,13 @@ is added is a machine-checkable trace that the second step happened.
   or the proposal and the reach log land in a public repo.
 - **A proposal that argues only for itself will be nodded through.** The
   adjacent-ring requirement is not decoration.
+- **Off-construct evidence makes a thin claim look furnished, and makes an
+  uncontested one look contested.** `teams-get-smaller` is the worked example and
+  it is still in the repo. If clustering starts filing near-neighbour material as
+  `contextual`, the construct gate is not being applied.
+- **A claim run's signals arrive uncovered.** Apply the proposed evidence block
+  before the next `prepare`, or clustering will offer you a new phenomenon built
+  from evidence gathered to test an old one.
 - **The clustering agent must not be the reviewing agent.** It will defend its own
   proposals and it will sound reasonable doing it.
 - **`prepare` counts a draft's citations as covered**, so an *undecided* draft
