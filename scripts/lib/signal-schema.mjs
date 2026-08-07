@@ -9,7 +9,13 @@
  * Keep in step with the Content Schema section of CLAUDE.md.
  */
 
-export const DECISION_HORIZONS = ["now", "0,5 - 2 years", "2+ years"];
+// `decisionHorizon` is retired and no longer validated. 98 published files still
+// carry it, and that is fine: nothing renders it, nothing reads it, and there is
+// no unknown-field check here for it to trip. It is not re-added as an enum
+// because the values ran 78 "now" / 19 "0,5 - 2 years" / 1 "2+ years" across the
+// whole corpus — a judgement per signal that carried almost no information. The
+// finder prompts tell the agent not to emit it; if one does anyway, it is
+// ignored rather than being grounds to fail a promote.
 export const SOURCE_TYPES = ["academic", "article", "social", "video", "discussion", "release"];
 export const SIGNAL_TYPES = [
   "practitioner-account",
@@ -69,7 +75,6 @@ export function validateSignal(s) {
     }
   }
 
-  checkEnum("decisionHorizon", s.decisionHorizon, DECISION_HORIZONS);
   checkEnum("sourceType", s.sourceType, SOURCE_TYPES);
   checkEnum("signalType", s.signalType, SIGNAL_TYPES);
   checkEnum("signalStrength", s.signalStrength, SIGNAL_STRENGTHS);

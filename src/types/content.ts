@@ -15,8 +15,10 @@ export type AISignalCategory =
   | "Costs & Economics"
   | "Other";
 
-// Rendered verbatim by ContentDrawer — keep these exact strings, comma included.
-export type DecisionHorizon = "now" | "0,5 - 2 years" | "2+ years";
+// `DecisionHorizon` was here. The field is retired and nothing renders it, so
+// the type is gone too — a typed field is a claim that the site consumes it.
+// 98 published files still carry the raw value; that is inert, and excess
+// properties on runtime-fetched JSON are not type-checked. See CLAUDE.md.
 
 export type AISignalSourceType =
   | "academic"
@@ -61,7 +63,6 @@ export interface AISignal {
   whyItMatters?: string[];
   recommendedActions?: string[];
   risksAndCaveats?: string[];
-  decisionHorizon?: DecisionHorizon;
 
   // --- Radar + provenance (all optional; legacy signals omit them) ---
   /** Evidence genre; drives marker shape on the radar. */
