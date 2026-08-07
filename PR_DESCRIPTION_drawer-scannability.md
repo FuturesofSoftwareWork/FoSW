@@ -136,17 +136,28 @@ Removed from the two finder prompts as well, with a note saying why, so new
 signals stop paying a judgement per item for a field nothing renders. The
 `regulation-standard` rule that computed it from `effectiveDate` went with them.
 
-**Deliberately left alone:** the field stays in `types/content.ts`,
-`signal-schema.mjs` and the 98 JSON files that carry it. Nothing reads it now,
-and stripping inert data from published research content would be a 98-file diff
-for no visible gain.
+Validation dropped it too. The enum check was a live footgun rather than dead
+weight — `promote-signals.mjs` would fail a whole batch over a value nobody
+reads. `signal-schema.mjs` has no unknown-field check, so the 98 published files
+that still carry the raw value stay valid and untouched:
+`validate: OK — 102 signals valid`.
 
-**Recommended follow-up, not in this PR:** drop the enum check from
-`signal-schema.mjs`, and update `CLAUDE.md` / `AGENTS.md`. Worth doing on its own
-merits — the validator can currently fail a promote over a field nobody reads.
-Note that `promote.test.mjs:147` uses `decisionHorizon: "watch"` as its only
-invalid-value fixture, so that test needs a different violation
-(`sourceType: "Academic"` works) or it stops testing anything.
+Two tests needed care. `promote.test.mjs` used `decisionHorizon: "watch"` as its
+only invalid-value fixture for "one invalid accepted draft blocks the whole
+batch" — left alone it would have asserted nothing. It now uses
+`sourceType: "Academic"`, a violation the corpus has actually produced. Same swap
+in `signal-schema.test.mjs`, where the exactness test becomes a `sourceType` one,
+plus a new test pinning that `decisionHorizon` is ignored whatever its value — so
+a future change that "restores" the enum fails loudly instead of silently
+breaking every promote.
+
+The `DecisionHorizon` type and the `AISignal` field are gone as well: the type
+was the last place claiming the site consumes this field. Content is
+runtime-fetched and never type-checked, so the raw JSON values are unaffected.
+
+**Deliberately left alone:** the 98 JSON files. Stripping inert data from
+published research content would be a 98-file diff for no visible gain, and it
+would make `git blame` on the content directory worse.
 
 **Related, undecided:** `leadTimeEstimate` (14 signals) carries the same kind of
 literal duration — `"~3-6 months"`, `"~12-18 months"` — mixed with free text like
