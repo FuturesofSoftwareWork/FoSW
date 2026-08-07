@@ -12,10 +12,10 @@ The radar renders in production only when **ten phenomena are published**. Today
 
 ```
 validate-phenomena: OK — 6 phenomena valid (0 published, launch gate closed (10 more needed))
-  coverage: 37 of 101 published signals map to a phenomenon
+  coverage: 37 of 102 published signals map to a phenomenon
 ```
 
-Six phenomena exist, all `draft`, all hand-authored. Sixty-four published signals
+Six phenomena exist, all `draft`, all hand-authored. Sixty-five published signals
 are cited by nothing. Phase 2 is the pipeline that turns that corpus into
 reviewed phenomena — and publishing the tenth is what switches the radar on.
 
@@ -90,7 +90,8 @@ and the counting rules rather than restating them.
 ## The digest — what `radar:prepare` selects
 
 **Default: every published signal not cited as evidence by any phenomenon.**
-Sixty-four today.
+Sixty-five today, and the count moves with every promoted signal — treat it as a
+snapshot, not a constant.
 
 The 2026-08-04 spec said `--since <date>`. Staging broke the assumption that
 rested on. A signal now sits in `data/signal-drafts/accepted/` until someone runs
