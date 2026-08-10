@@ -55,8 +55,7 @@
   "observedReach": "early-manifestations",
   "reachRationale": "A single investor field writeup reports teams shrinking to five or fewer, and the surrounding layoff data is driven by infrastructure spending rather than by team-level productivity. This is a forerunner observation that has not been replicated across independent contexts, and the counter-evidence on aggregate demand is strong.",
   "reachReviewedAt": "2026-08-05",
-  "contested": true,
-  "contestedNote": "The supporting evidence is a single investor observation of forerunner teams, while independent labour-market datasets show engineering demand growing. These are not necessarily incompatible — smaller teams inside more teams would produce both — but nothing currently distinguishes that reading from the simpler one, that the shrinkage is not general.",
+  "contested": false,
   "whatWouldChangeThis": [
     "Independent survey data from outside the investor and consultancy circuit reports median team size falling",
     "Median team size holds steady through 2027 while delivery volume rises, indicating the change is in output rather than in team shape"
