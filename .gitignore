@@ -135,6 +135,11 @@ data/_finder-report*.md
 # public/content/ai-signals/ is ever committed.
 data/signal-drafts/
 
+# Radar pipeline working files. Same rule as the finder artifacts above: data/ is
+# never published, and this repo is public — a proposal is unreviewed research
+# claims, and the reach log records how a reviewer judged them.
+data/_radar-*
+
 # Brainstorming mockups (visual companion scratch space) and the implementation-ledger directory
 .superpowers/
 
