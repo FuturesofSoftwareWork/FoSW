@@ -80,8 +80,12 @@ export function validatePhenomenon(p, ctx) {
     } else {
       if (isBlank(prc.reason)) e("possibleReachChange.reason must be a non-empty string");
       if (isBlank(prc.raisedAt)) e("possibleReachChange.raisedAt must be present");
-      if (!Array.isArray(prc.signalIds) || prc.signalIds.length === 0) {
-        e("possibleReachChange.signalIds must be a non-empty array");
+      // Empty is meaningful, not missing: it says the signals that changed are no
+      // longer cited. Detaching the last evidence item produces exactly that, and
+      // rejecting it would leave a file no script could repair — only a hand-edit
+      // of a machine-owned field, which is what the ownership split exists to stop.
+      if (!Array.isArray(prc.signalIds)) {
+        e("possibleReachChange.signalIds must be an array");
       }
       if ("suggested" in prc) {
         e("possibleReachChange must not carry 'suggested' — reach is a human judgment");

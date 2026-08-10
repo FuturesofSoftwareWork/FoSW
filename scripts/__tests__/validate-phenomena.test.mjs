@@ -73,11 +73,24 @@ test("a published phenomenon may not omit construct", () => {
   );
 });
 
-test("possibleReachChange needs a reason, a date and signal ids", () => {
-  const p = { ...valid(), possibleReachChange: { reason: "", raisedAt: "2026-08-10", signalIds: [] } };
+test("possibleReachChange needs a reason, a date and an array of signal ids", () => {
+  const p = { ...valid(), possibleReachChange: { reason: "", raisedAt: "", signalIds: "s-a" } };
   const errors = validatePhenomenon(p, ctx);
   assert.ok(errors.some((e) => e.includes("possibleReachChange.reason")));
+  assert.ok(errors.some((e) => e.includes("possibleReachChange.raisedAt")));
   assert.ok(errors.some((e) => e.includes("possibleReachChange.signalIds")));
+});
+
+test("possibleReachChange.signalIds may be empty — every changed signal was removed", () => {
+  const p = {
+    ...valid(),
+    possibleReachChange: {
+      reason: "lost 1 independent context(s) since reach was last reviewed (1 -> 0)",
+      raisedAt: "2026-08-10",
+      signalIds: [],
+    },
+  };
+  assert.deepEqual(validatePhenomenon(p, ctx), []);
 });
 
 test("possibleReachChange may be null", () => {
