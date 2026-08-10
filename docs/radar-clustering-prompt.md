@@ -401,9 +401,9 @@ one" is.
 fails the build.
 
 **Leave `pathIds` out, or empty.** The proposal format carries no
-`developmentPaths`, so `radar:apply` writes none — and an implication whose
-`pathIds` names a path that does not exist fails `validate-phenomena` right after
-the files have been written. Development paths are added by a person during
+`developmentPaths`, so `radar:apply` writes none, so a `pathIds` reference could
+never resolve. It refuses the whole batch rather than writing a phenomenon that
+would immediately fail validation. Development paths are added by a person during
 review, and the `pathIds` links with them.
 
 ### `observedReach` and `reachRationale` — proposed, never decided

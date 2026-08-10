@@ -28,7 +28,7 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 - `npm run verify:radar <baseUrl>` — 15 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
 - `npm run signals:promote` — move reviewed drafts from `data/signal-drafts/accepted/` into `public/content/ai-signals/`, append their `index.json` entries, and record every decision in the seen-ledger. See the pipeline section below.
 - `npm run radar:prepare` — digest uncovered signals for the clustering pass
-- `npm run radar:apply -- <proposal.json>` — apply a proposal; the only writer of machine-owned fields
+- `npm run radar:apply -- <proposal.json>` — apply a proposal; the only writer of a phenomenon's `evidence`, and the only thing that writes machine-owned fields from a proposal (`radar:derive` writes the derived ones on its own)
 - `npm run radar:derive` — recompute derived values and reach candidates
 - `npm run radar:accept -- <ids...>` — publish reviewed drafts
 - `npm run radar:reject -- <ids...> --reason "..."` — decline a draft and release its signals
