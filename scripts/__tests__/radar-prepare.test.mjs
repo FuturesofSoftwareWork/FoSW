@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, unlinkSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
-import { prepare } from "../radar-prepare.mjs";
+import { prepare, flag } from "../radar-prepare.mjs";
 
 const SIGNALS = "public/content/ai-signals";
 const PHENOMENA = "public/content/phenomena";
@@ -129,4 +129,36 @@ test("the digest is written to the out path", () => {
   prepare({ root, out: "data/_radar-input.json" });
   const written = JSON.parse(readFileSync(join(root, "data/_radar-input.json"), "utf8"));
   assert.deepEqual(written.signals.map((s) => s.id), ["s1"]);
+});
+
+test("a missing phenomenon file is reported as an error", () => {
+  const root = makeRoot({
+    signals: [signal("s1")],
+    phenomena: [phenomenon("p1", [{ signalId: "s1", stance: "supports", primary: true }])],
+  });
+  // Delete the phenomenon file but leave its index entry
+  unlinkSync(join(root, PHENOMENA, "p1.json"));
+  const result = prepare({ root });
+  assert(result.errors.length > 0, "missing phenomenon file should produce an error");
+  assert(result.digest === null, "digest should be null when errors occur");
+});
+
+test("flag() returns fallback when flag has no value", () => {
+  const savedArgv = process.argv;
+  try {
+    process.argv = ["node", "script.mjs", "--out"];
+    assert.equal(flag("--out", "default.json"), "default.json");
+  } finally {
+    process.argv = savedArgv;
+  }
+});
+
+test("flag() returns fallback when followed by another flag", () => {
+  const savedArgv = process.argv;
+  try {
+    process.argv = ["node", "script.mjs", "--since", "--out", "x.json"];
+    assert.equal(flag("--since"), null);
+  } finally {
+    process.argv = savedArgv;
+  }
 });

@@ -75,13 +75,17 @@ export function prepare({ root = process.cwd(), all = false, since = null, out =
 
   try {
     const dir = resolve(root, SIGNALS_DIR);
-    signalItems = readItems(dir, readIndex(dir)).items;
+    const result = readItems(dir, readIndex(dir));
+    signalItems = result.items;
+    errors.push(...result.errors);
   } catch (e) {
     errors.push(e.message);
   }
   try {
     const dir = resolve(root, PHENOMENA_DIR);
-    phenomenonItems = readItems(dir, readIndex(dir)).items;
+    const result = readItems(dir, readIndex(dir));
+    phenomenonItems = result.items;
+    errors.push(...result.errors);
   } catch (e) {
     errors.push(e.message);
   }
@@ -126,9 +130,11 @@ export function prepare({ root = process.cwd(), all = false, since = null, out =
   return { digest, coverage, undecided, errors: [] };
 }
 
-function flag(name, fallback = null) {
+export function flag(name, fallback = null) {
   const i = process.argv.indexOf(name);
-  return i === -1 ? fallback : process.argv[i + 1];
+  if (i === -1) return fallback;
+  const value = process.argv[i + 1];
+  return value === undefined || value.startsWith("--") ? fallback : value;
 }
 
 function main() {
