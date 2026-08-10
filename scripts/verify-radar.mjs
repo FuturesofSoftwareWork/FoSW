@@ -17,7 +17,13 @@
  * drafts and the radar both render.
  *
  * What each check exists to catch:
- *   1-7   Structural/behavioural checks on blip count, ring placement,
+ *   1     Every phenomenon the page ought to show renders, and nothing else —
+ *         counted from the index the page fetched, not from a literal. The
+ *         expected set depends on context (drafts render in dev and preview,
+ *         not in production), so it keys off whether any draft rendered: all of
+ *         them must, or none. A hardcoded count instead fails on the day someone
+ *         publishes a phenomenon, which reads as a broken radar.
+ *   2-7   Structural/behavioural checks on ring placement,
  *         contested bolts, drawer open, URL, reload stability, filtering and
  *         the labels toggle — ordinary DOM assertions.
  *   8     Sanity check that the radar rendered at all. Without it, checks 9
@@ -92,9 +98,38 @@ try {
   await page.goto(BASE, { waitUntil: "networkidle0" });
   await page.waitForSelector('#futures-radar', { timeout: 15000 });
 
-  // 1. Exactly 6 blips render.
+  // 1. Every phenomenon the page ought to show renders, and nothing else.
+  //
+  // Derived from the index the page itself fetched, never a literal: the corpus
+  // grows, and a hardcoded count fails on the day someone publishes a
+  // phenomenon — which reads as "the radar broke" rather than "the number in the
+  // harness is stale".
+  //
+  // Which phenomena *ought* to show depends on context, and the harness cannot
+  // read `isPreviewContext()` from outside the bundle: drafts render in dev and
+  // in a preview build, and are hidden in production. So the expectation keys
+  // off whether any draft rendered at all. Either none do (production) or all of
+  // them do (dev/preview) — a partial set is itself the bug, and is caught here
+  // rather than silently rounding to whichever total happens to match.
   let blips = await getBlips();
-  check("exactly 6 blips render", blips && blips.length === 6, `got ${blips ? blips.length : "null"}`);
+  const index = await fetch(new URL("content/phenomena/index.json", BASE)).then((r) => r.json());
+  const inIndex = { published: 0, draft: 0 };
+  for (const item of index.items) {
+    if (item.status in inIndex) inIndex[item.status] += 1;
+  }
+  // Same marker check 15 relies on: the blip's accessible name ends with the status.
+  const renderedDrafts = (blips || []).filter((b) => /draft$/i.test(b.label || "")).length;
+  const showsDrafts = renderedDrafts > 0;
+  const expected = inIndex.published + (showsDrafts ? inIndex.draft : 0);
+  check(
+    `every published${showsDrafts ? " and draft" : ""} phenomenon renders as a blip`,
+    blips !== null && blips.length === expected && (!showsDrafts || renderedDrafts === inIndex.draft),
+    blips === null
+      ? "no radar on the page"
+      : `got ${blips.length}, expected ${expected} ` +
+        `(index: ${inIndex.published} published + ${inIndex.draft} draft; ` +
+        `${showsDrafts ? `drafts shown, ${renderedDrafts} rendered` : "drafts hidden"})`,
+  );
 
   // 2. Ring placement by distance from centre.
   const bandOf = (d) => (d <= 90 ? "field-level-shift" : d <= 165 ? "gaining-traction" : d <= 250 ? "early-manifestations" : "outside");
@@ -370,7 +405,7 @@ try {
     "hover card for every blip stays within the viewBox with labels off",
     hoverViolations.length === 0,
     hoverViolations.length === 0
-      ? "no clipping across all 6 blips"
+      ? `no clipping across all ${blips.length} blips`
       : hoverViolations
           .map((v) => `${v.label}: ${v.tag} "${v.text}" x=${v.x.toFixed(1)}..${v.xEnd.toFixed(1)} y=${v.y.toFixed(1)}..${v.yEnd.toFixed(1)}`)
           .join("; "),
