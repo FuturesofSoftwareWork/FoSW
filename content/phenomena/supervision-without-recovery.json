@@ -1,0 +1,102 @@
+{
+  "id": "supervision-without-recovery",
+  "label": "Supervision without recovery",
+  "title": "Output held steady. The day got worse.",
+  "thesis": "As producing code gives way to supervising machine output, the attentional structure of the working day changes: the low-stakes intervals that used to sit between hard judgements disappear, sustained concentration gives way to switching between agent sessions, and authorship of the result becomes something people feel less of. The claim is that this moves independently of productivity, so an organisation watching delivery metrics would see a healthy period while the thing that predicts attrition moved. It also does not land the same way on everyone: the same displacement reads as expanded autonomy to engineers who choose their own work and as lost ownership to newcomers who do not. If the effect turns out to be a transition cost that fades as agent workflows settle, or if it simply tracks hours worked after all, this claim is wrong.",
+  "construct": "The attentional and experiential structure of the working day for people whose work has shifted from producing code to supervising machine output — sustained concentration, the recovery intervals between hard judgements, and felt authorship of the result — measured separately from throughput. Not hours worked, not burnout or job-satisfaction prevalence, not self-reported productivity, not delivery velocity, and not attrition, all of which move for many reasons and are consistent with the texture of the day being entirely unchanged.",
+  "currentPressure": "82% of matched respondents in a six-month longitudinal survey report spending less time writing code, and heavy agent users describe days spent moving between multiple agent sessions rather than working in sustained stretches.",
+  "status": "draft",
+  "primaryDimension": "worker-experience-identity-and-wellbeing",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "worker-experience-identity-and-wellbeing",
+      "statement": "Across two waves six months apart, self-reported productivity stayed flat and high at 84% while the share reporting a worsened experience on at least one dimension nearly doubled from 14% to 27% — so an organisation inferring wellbeing from delivery would have recorded a healthy period, and experience has to be measured on its own instrument.",
+      "actors": [
+        "organisation",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "If the mechanism is that the intervals between hard judgements were removed rather than that hours increased, then headcount, deadline relief and time-off policy all leave the cause in place; the lever is the shape of the working day rather than its length.",
+      "actors": [
+        "engineering-manager",
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Two senior engineers describe the same displacement of authorship as expanded autonomy and report being happier for it, while thirteen interns and juniors describe feeling more capable and less like the author of their work — which points at control over the work, not at the tooling, as the variable a leader can actually set.",
+      "actors": [
+        "developer",
+        "new-entrant",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "The accounts come from competent, still-productive heavy users, which makes review bandwidth an attentional limit rather than a schedulable one — so throughput gained in generation cannot be assumed to survive the supervision it creates.",
+      "actors": [
+        "technical-lead",
+        "reviewer",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-06-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "Two survey waves six months apart with 95 matched respondents: flow state and cognitive load both declined while self-reported productivity stayed flat at 84%, and the share reporting a worsened experience rose from 14% to 27%. Measures experience and throughput separately in the same people."
+    },
+    {
+      "signalId": "2026-08-06-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Four unconnected practitioners independently describe the same mechanism — the low-stakes intervals between hard judgements removed, not more hours worked: 'my brain was full. Not from writing code — from judging code.'"
+    },
+    {
+      "signalId": "2026-08-06-06",
+      "stance": "supports",
+      "primary": true,
+      "note": "Two firsthand accounts after roughly eight months of full-time multi-agent work: more productive, much less time in programming flow, days spent switching between agent sessions from morning to night."
+    },
+    {
+      "signalId": "2026-08-06-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Interviews with thirteen interns and junior developers: an autonomy paradox in which they feel more capable and simultaneously less like the author of what they produce."
+    },
+    {
+      "signalId": "2026-04-13-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "Interviews inside a 2,989-developer study surface erosion of the sense of code ownership as a recurring concern alongside measured time savings that were modest. Attached for the ownership finding, not for the productivity numbers."
+    },
+    {
+      "signalId": "2026-08-06-04",
+      "stance": "counter",
+      "primary": true,
+      "note": "Two senior engineers describe the identical displacement — supervision replacing production — and report being happier and having more fun than before, one saying he no longer writes code at all. The disagreement with the accounts above is about valence, not mechanism."
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "This has been observed in the same 95 people six months apart, and independently by unconnected practitioners at different companies and by newcomers in a separate interview study, so it is neither confined to one setting nor only visible in the heaviest agent users. What has not happened is any organisational response: nothing in the evidence shows a company measuring flow or recovery, scheduling supervision load deliberately, or treating any of this as more than individual coping — the disciplines participants credit for making their use sustainable are still personal habits carried by the least senior people. The working day has changed widely; the field has not yet formed an expectation about it.",
+  "whatWouldChangeThis": [
+    "A second matched longitudinal cohort finds flow and cognitive load stable or improving as agent workflows mature",
+    "Practitioner accounts converge on the positive valence the two senior engineers report, rather than staying split",
+    "The deterioration is shown to be a transition cost that disappears after the first year of heavy agent use",
+    "Teams that deliberately schedule supervision load report no better experience than teams that do not, which would locate the cause somewhere other than the shape of the day"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 5,
+    "evidenceTypes": 2,
+    "quartersSpanned": 3,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-02-08",
+  "latestEvidenceDate": "2026-07-27"
+}

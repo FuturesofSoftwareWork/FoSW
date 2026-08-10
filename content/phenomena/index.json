@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-05",
+  "lastUpdated": "2026-08-10T13:33:56Z",
   "items": [
     {
       "id": "review-shifts-to-verification",
@@ -35,6 +35,30 @@
       "id": "teams-get-smaller",
       "file": "teams-get-smaller.json",
       "date": "2026-08-05",
+      "status": "draft"
+    },
+    {
+      "id": "the-management-layer-thins",
+      "file": "the-management-layer-thins.json",
+      "date": "2026-08-10",
+      "status": "draft"
+    },
+    {
+      "id": "supervision-without-recovery",
+      "file": "supervision-without-recovery.json",
+      "date": "2026-08-10",
+      "status": "draft"
+    },
+    {
+      "id": "agents-become-the-perimeter",
+      "file": "agents-become-the-perimeter.json",
+      "date": "2026-08-10",
+      "status": "draft"
+    },
+    {
+      "id": "maintenance-becomes-the-constraint",
+      "file": "maintenance-becomes-the-constraint.json",
+      "date": "2026-08-10",
       "status": "draft"
     }
   ]

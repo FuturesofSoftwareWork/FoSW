@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-07-01",
+  "title": "Instagram replaces baker's-dozen specialist teams with pods of four to six generalist engineers",
+  "summary": "Adam Mosseri, head of Instagram, described his organisation's current team shape on Lenny's Podcast on 9 July 2026. What he counted is the product delivery team: the canonical Instagram team used to be roughly a baker's dozen of specialists, and is now a pod of four to six engineers who are 'a bit more generalists', plus one 'product staff' person blending product management, design, data science and research into a single generalist role. That is a before-and-after of both size and role mix, stated by the person accountable for the org, at a company that is neither a startup nor a portfolio company of the investor whose report currently carries this claim. It is a leader's account of his own organisation rather than a measurement across a sample, and Mosseri does not say how many pods now exist or what share of Instagram engineering has moved to the new shape. The composition detail is the part that is hard to get elsewhere: the old team was assembled from platform specialists, and the new one is not.",
+  "source": "Lenny's Podcast — interview with Adam Mosseri, Head of Instagram",
+  "sourceUrl": "https://www.lennysnewsletter.com/p/adam-mosseri-ai-is-a-tailwind-for",
+  "sourceType": "video",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Adam Mosseri, Head of Instagram at Meta, describing the team structure of the organisation he runs; an accountable executive speaking about his own org chart rather than a commentator generalising about the industry",
+  "leadTimeEstimate": "~12-18 months ahead of population-level benchmark confirmation",
+  "corroboration": [
+    "https://open.spotify.com/episode/5BSSw3LT44VKTP07jsOaN7"
+  ],
+  "detectedAt": "2026-08-07",
+  "date": "2026-07-09",
+  "status": "published",
+  "tags": [
+    "team-structure",
+    "team-size",
+    "org-design",
+    "generalists",
+    "product-teams",
+    "instagram"
+  ],
+  "category": [
+    "Org & Leadership",
+    "SDLC Change",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "This is the first account of the delivery unit shrinking that comes from a large established product organisation rather than from a venture portfolio, which is the specific gap in the evidence for smaller teams.",
+    "The change described is a change in role mix, not only in count: platform specialists are replaced by generalists, and four support functions collapse into one 'product staff' seat. Leaders planning headcount by discipline are planning against a shape that Instagram has stopped using.",
+    "If a pod of five owns what thirteen used to, the career ladder inside it has fewer rungs and the manager's job changes. Neither consequence is addressed by hiring plans."
+  ],
+  "recommendedActions": [
+    "Ask your own leads for the current and twelve-month-ago headcount and role mix of two or three delivery teams, rather than inferring team shape from total engineering headcount.",
+    "Check whether your job architecture can describe a generalist product role that spans PM, design, data and research, since promotion and levelling break first when a team collapses four functions into one.",
+    "Before copying the pod shape, establish who now owns the specialist knowledge (mobile platform, data modelling, accessibility) that used to sit inside the team."
+  ],
+  "risksAndCaveats": [
+    "This is one executive's account of one organisation, given in an interview, with no sample, no methodology and no independent verification. It is a leading indicator, not a measurement.",
+    "Mosseri does not state how many pods have moved to the new shape or whether the change covers all of Instagram engineering, so the scope inside Meta is unknown.",
+    "Instagram is an unusually large and well-resourced consumer product org. That it can staff a surface with five people says little about whether a regulated enterprise or a public-sector delivery team can."
+  ]
+}

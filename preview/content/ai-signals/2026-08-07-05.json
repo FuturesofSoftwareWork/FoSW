@@ -1,0 +1,48 @@
+{
+  "id": "2026-08-07-05",
+  "title": "Meta ran its applied AI unit at 50 engineers per manager, then walked it back four months later",
+  "summary": "Meta structured its new applied AI engineering organisation with a target ratio of 50 individual contributors to one manager, reported by the Wall Street Journal and covered on 14 March 2026 — double the 25-to-1 figure usually treated as the outer limit of span of control. Mark Zuckerberg had framed the approach on Meta's January 2026 earnings call as 'elevating individual contributors and flattening teams'. In a memo dated 12 June 2026 he acknowledged concerns about the expanded oversight load and said Meta would scale the ratios back, alongside other remediation for the unit. This is a rare case where a named organisation stated a delivery-unit ratio, ran it, and revised it inside one quarter, so both the number and the correction are on the record. It measures how many engineers report to one manager, not how many sit in one delivery squad, and the AI-era experiment ran towards larger units under thinner management rather than towards smaller teams.",
+  "source": "Fortune, reporting the Wall Street Journal; follow-up in Human Resources Director",
+  "sourceUrl": "https://www.fortune.com/2026/03/14/metas-ai-team-50-flat-management-structure",
+  "sourceType": "article",
+  "signalType": "market-event",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "organisation": "Meta (applied AI engineering organisation)",
+  "magnitude": "50 individual contributors per manager, versus a 25-to-1 conventional ceiling; scaled back after a 12 June 2026 memo",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://www.hcamag.com/us/specialization/transformation/weve-made-mistakes-zuckerberg-addresses-metas-ai-workforce-shakeup/578961",
+    "https://leaddev.com/career-development/the-engineering-manager-role-is-splitting-in-two"
+  ],
+  "detectedAt": "2026-08-07",
+  "date": "2026-03-14",
+  "status": "published",
+  "tags": [
+    "span-of-control",
+    "org-design",
+    "flattening",
+    "engineering-management",
+    "meta",
+    "reorganisation"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Work Wellbeing",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "The most aggressive AI-era org experiment at a major engineering company went towards bigger units with less management, not towards small autonomous teams. That is the opposite bet from the one the shrinking-teams story describes.",
+    "It was reversed in under a quarter, and the reversal is documented. For leaders considering a flattening move, this is the closest thing available to a controlled trial of the failure mode.",
+    "A 50-to-1 ratio removes the layer that normally absorbs career development, review and escalation. Meta's own remediation list — team-building budget, hackathon, internal redeployment — is a description of what broke."
+  ],
+  "recommendedActions": [
+    "If you are widening span of control, name in advance which manager duties are being transferred and to whom, and set a review date. Meta's correction came four months in, after the cost was visible.",
+    "Treat announced target ratios as intentions, not practice, including your own: record the actual ratio a quarter after the reorg lands."
+  ],
+  "risksAndCaveats": [
+    "The 50-to-1 figure comes from Wall Street Journal reporting and internal memos rather than from Meta's own published disclosure; Meta did not comment to Fortune.",
+    "This measures reports per manager in one unit at one company, not delivery-squad size, and Meta's superintelligence organisation is not representative of ordinary software delivery.",
+    "The reported scale-back has no stated target ratio or timeline, so the end state is unknown."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "maintenance-becomes-the-constraint",
+  "label": "Maintenance becomes the constraint",
+  "title": "Anyone can write it. Who keeps it running?",
+  "thesis": "As machine assistance drives the cost of producing a change towards zero, the binding constraint on a software organisation moves to keeping what has already been merged working — and that capacity has not been automated to the same degree. Benchmarks that test sustained maintenance rather than isolated fixes find most agents regress previously passing tests, and repository-level complexity and static-analysis warnings rise persistently after agent adoption rather than as a one-off cost. If this holds, the scarce organisational capability becomes stewardship of merged code — ownership, review depth, and the decision to revisit — rather than the ability to produce more of it. Agents closing the gap between one-shot and sustained performance, or complexity indicators settling back after adoption, would refute it.",
+  "construct": "What happens to code after it is merged: whether it keeps working, how often it has to be revisited, and how repository-level complexity and defect indicators move as the machine-authored share rises. Not the pass rate of agents on isolated benchmark tasks, not how much code is produced or how fast, not developer-reported productivity, and not the security properties of a single generated snippet — all of which are consistent with a codebase that stays exactly as maintainable as it was.",
+  "currentPressure": "Repository-level static-analysis warnings and cognitive complexity rise after coding agents are adopted and stay raised, and the field's standard delivery-metrics framework has added a rework measure alongside throughput.",
+  "status": "draft",
+  "primaryDimension": "economics-productivity-and-value",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "A benchmark running 18 models across 100 codebases over 233 simulated maintenance days found most regress previously passing tests, with only one model series clearing a 50% zero-regression rate — so performance on one-shot fixes says little about the cost the same agent imposes over a codebase's life, and procurement evidence and operating evidence are not the same evidence.",
+      "actors": [
+        "executive",
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Static-analysis warnings rose about 18% and cognitive complexity about 39% after agent adoption, persistently and regardless of prior AI tooling, so the work of holding complexity down has to be scheduled as continuous load rather than treated as cleanup after a push.",
+      "actors": [
+        "developer",
+        "technical-lead",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "A survival analysis across 201 projects found agent-authored code is modified less often than human-written code, which means durable machine-authored code can become a long-lived dependency that nobody has read — making explicit ownership a maintenance control rather than a bureaucratic one.",
+      "actors": [
+        "organisation",
+        "technical-lead",
+        "developer"
+      ]
+    },
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "Throughput and rework move in opposite directions in the same dataset, so a delivery dashboard reporting only throughput reports a gain that the rework line is already spending.",
+      "actors": [
+        "engineering-manager",
+        "executive",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-03-11-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "18 models across 100 real codebases over 233 simulated maintenance days: agents break previously passing tests in roughly 75% of cases, and only the Claude Opus series clears a 50% zero-regression rate. Measures sustained upkeep rather than one-shot fixes."
+    },
+    {
+      "signalId": "2026-04-13-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Repository-level comparison of autonomous agents against AI IDE tooling: static-analysis warnings up ~18% and cognitive complexity up ~39%, persistent across settings rather than a one-off adoption cost."
+    },
+    {
+      "signalId": "2026-04-13-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "~110,000 open-source pull requests across five agents: agent-authored code is significantly more likely to be rewritten, reverted or substantially modified in later commits."
+    },
+    {
+      "signalId": "2026-03-23-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "~5,000 survey responses plus 100+ hours of interviews: AI raises delivery throughput while raising instability and rework, and the report adds Rework Rate as a formal metric alongside the existing four."
+    },
+    {
+      "signalId": "2026-06-29-08",
+      "stance": "counter",
+      "primary": true,
+      "note": "Survival analysis of 200,000+ code units across 201 projects finds agent-authored code is modified LESS often than human-written code — a 15.8 percentage-point lower modification rate, HR 0.842 — which is the opposite direction from the churn study above on the same question. The authors nonetheless conclude the constraint is the practices governing evolution rather than generation quality."
+    },
+    {
+      "signalId": "2026-06-29-01",
+      "stance": "contextual",
+      "primary": true,
+      "note": "142,652 agentic pull requests across 59,412 repositories: 27.67% hit merge conflicts, averaging 11.36 conflict regions and ~540 conflicting lines. The authors explicitly decline the comparison with human-authored baselines, so this measures the integration cost without showing it has grown."
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "The measurements are population-scale and independent of one another — 18 models across 100 codebases over simulated maintenance cycles, 201 open-source projects, roughly 110,000 pull requests, and a survey of about 5,000 practitioners — and the field's standard delivery-metrics framework has responded by adding a rework measure, which is an institution changing what it counts. What has not happened is organisations reorganising around it: the same survey reports throughput being pursued regardless, and nothing in the evidence shows procurement or staffing decisions being made on sustained-maintenance evidence rather than on one-shot performance. The argument for the centre is that a change to the canonical delivery-metric set is itself a field-level marker; a reviewer who weighs that more heavily than the absence of organisational response should move this inwards.",
+  "whatWouldChangeThis": [
+    "A sustained-maintenance benchmark shows agents closing the gap with their one-shot performance across model families, not just one",
+    "Repository complexity and static-analysis warnings settle back towards pre-adoption levels once teams have a year of agent use behind them",
+    "The churn disagreement resolves in favour of agent code being more durable, and the corrective-churn premium disappears with it",
+    "Organisations begin selecting and staffing on sustained-maintenance evidence, which would make this an accepted operating fact rather than a claim about where the constraint is heading"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 4,
+    "evidenceTypes": 0,
+    "quartersSpanned": 2,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-01-23",
+  "latestEvidenceDate": "2026-05-12"
+}

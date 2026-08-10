@@ -81,6 +81,30 @@
       "stance": "counter",
       "primary": true,
       "note": "hiring tracked across 80 million companies shows engineering among the most resilient functions"
+    },
+    {
+      "signalId": "2026-02-19-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Randomised trial, 52 mostly junior engineers learning an unfamiliar library: the AI-assisted group scored 50% against 67% on a follow-up comprehension quiz, with the largest gap on debugging questions. Measures whether the learner acquires the judgement, not how fast the task finished."
+    },
+    {
+      "signalId": "2026-08-06-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Interviews with thirteen interns and junior developers: they describe shallow learning that makes the critical judgement the market now asks of them harder to build, and identify AI dependence in peers while rejecting it in themselves."
+    },
+    {
+      "signalId": "2026-06-29-13",
+      "stance": "supports",
+      "primary": true,
+      "note": "900+ developer survey: senior engineers report using AI instead of mentoring juniors, and less experienced developers spend more tokens on unproductive work. Measures the transmission route into senior judgement, not the labour market around it."
+    },
+    {
+      "signalId": "2026-03-09-01",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Observed-exposure metric ranks computer programmers the most exposed occupation, finds no statistically meaningful rise in unemployment for exposed workers, and only suggestive evidence that hiring has slowed for younger entrants into exposed occupations. The pipeline is measured; the direction is unsettled."
     }
   ],
   "observedReach": "gaining-traction",
@@ -88,7 +112,7 @@
   "reachReviewedAt": "2026-08-05",
   "contested": true,
   "contestedNote": "Labour-market datasets disagree: entry-level postings and junior employment at AI-adopting firms are down sharply, while total engineering demand and role resilience are up. Both sets of evidence are independent and credible, and the disagreement may be a composition effect — fewer junior roles within a growing whole — rather than a contradiction.",
-  "firstObserved": "2026-02-02",
+  "firstObserved": "2026-01-29",
   "latestEvidenceDate": "2026-07-28",
   "whatWouldChangeThis": [
     "Entry-level postings recover to their 2023 share of engineering hiring and hold for two quarters",
@@ -114,9 +138,19 @@
   "related": [],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 4,
+    "independentContexts": 7,
     "evidenceTypes": 2,
-    "quartersSpanned": 2,
+    "quartersSpanned": 3,
     "counterEvidence": true
+  },
+  "possibleReachChange": {
+    "reason": "gained 3 independent context(s) since reach was last reviewed (4 -> 7)",
+    "raisedAt": "2026-08-10",
+    "signalIds": [
+      "2026-02-19-04",
+      "2026-08-06-01",
+      "2026-06-29-13",
+      "2026-03-09-01"
+    ]
   }
 }

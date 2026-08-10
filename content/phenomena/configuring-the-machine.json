@@ -76,6 +76,36 @@
       "stance": "counter",
       "primary": true,
       "note": "systematic evaluation across 138 tasks finds repository context files often hinder rather than help"
+    },
+    {
+      "signalId": "2026-03-16-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Documents a working CLI coding agent whose capability is attributed to planner/executor separation, lazy tool discovery, adaptive context compaction and cross-session memory — named as the design principles that made it work, not the model behind it."
+    },
+    {
+      "signalId": "2026-05-06-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Meta's own deployment: expert performance-engineering reasoning encoded as reusable agent 'skills' plus structured tooling around the model, applied autonomously across its infrastructure. Capability built rather than bought."
+    },
+    {
+      "signalId": "2026-02-18-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Block's Goose team reports the decisive skill moving from prompt engineering to shaping persistent, structured context so agents can complete multi-step work reliably."
+    },
+    {
+      "signalId": "2026-02-18-02",
+      "stance": "supports",
+      "primary": false,
+      "note": "Argues multi-agent coding is less about the model than about orchestration — planner/worker/judge coordination at scale. Secondary: reports Cursor's experiments rather than its own."
+    },
+    {
+      "signalId": "2026-05-06-09",
+      "stance": "counter",
+      "primary": true,
+      "note": "Production telemetry: 59% of agentic requests make only a single service call and just 18% make three or more. Measures how agents are actually configured in production and finds most are thin wrappers, not engineered harnesses."
     }
   ],
   "observedReach": "gaining-traction",
@@ -112,11 +142,22 @@
   ],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 3,
+    "independentContexts": 6,
     "evidenceTypes": 2,
     "quartersSpanned": 2,
     "counterEvidence": true
   },
-  "firstObserved": "2026-02-12",
-  "latestEvidenceDate": "2026-06-10"
+  "firstObserved": "2026-01-19",
+  "latestEvidenceDate": "2026-06-10",
+  "possibleReachChange": {
+    "reason": "gained 3 independent context(s) since reach was last reviewed (3 -> 6)",
+    "raisedAt": "2026-08-10",
+    "signalIds": [
+      "2026-03-16-01",
+      "2026-05-06-04",
+      "2026-02-18-04",
+      "2026-02-18-02",
+      "2026-05-06-09"
+    ]
+  }
 }

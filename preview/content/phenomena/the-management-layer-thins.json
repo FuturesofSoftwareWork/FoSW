@@ -1,0 +1,71 @@
+{
+  "id": "the-management-layer-thins",
+  "label": "The management layer thins",
+  "title": "Fifty to one, then back again",
+  "thesis": "Software organisations are putting more engineers under each manager, and machine support is being used to justify going further. Engineers per engineering manager has risen at both large technology companies and venture-backed startups, while engineering-manager roles are flat or declining as a share of hiring and senior individual-contributor roles grow. The claim is that AI-era org design is pushing an existing drift past what the management layer can absorb: the work that layer carried — coaching, review, escalation, career development — has no stated new owner, and the most aggressive attempt on record was reversed inside a quarter. If the widening turns out to be nothing but the continuation of a pre-AI trend, or if the removed functions prove dispensable at scale, this claim is wrong.",
+  "construct": "How many engineers report to a single manager, and where the work that layer performs — coaching, review, escalation, career development — goes when the ratio rises. Not the size of a delivery squad, which is a different quantity (a manager with twelve reports may run three pods of four); not total headcount, layoffs or hiring rates; not the ratio of senior to junior engineers; and not how much mentoring individual seniors choose to do, all of which move without the reporting structure changing at all.",
+  "currentPressure": "Engineers per engineering manager stands at roughly twelve at large technology companies and fifteen at venture-backed startups, up 14% and 34% since 2019, while engineering-manager roles are flat or declining as a share of hiring.",
+  "status": "draft",
+  "primaryDimension": "organisation-and-leadership",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Meta set its applied-AI unit at fifty engineers per manager, framed it as elevating individual contributors, and scaled it back within a quarter with a remediation list of team-building budget, a hackathon and internal redeployment — so the ceiling on flattening is set by the functions the layer absorbs, not by how much machine support the engineers underneath it have.",
+      "actors": [
+        "executive",
+        "engineering-manager",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "careers-occupations-and-labour-markets",
+      "statement": "Engineering-manager roles are flat or declining as a share of hiring while senior individual-contributor roles grow, which narrows the promotion route into people management at the same time as it widens the technical one.",
+      "actors": [
+        "engineering-manager",
+        "developer",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Product managers at the same companies now support 22% more engineers than in 2019, so coordination capacity is being thinned from two directions at once and the residue lands on the engineers themselves by default.",
+      "actors": [
+        "developer",
+        "technical-lead",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-07-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Span of control measured from a dataset of 80 million-plus organisations: ~12 engineers per engineering manager at twelve named large technology companies (up 14% since 2019) and ~15 at top-100-VC-backed startups (up 34%); PM span up 22%; EM roles flat or declining as a share of hiring."
+    },
+    {
+      "signalId": "2026-08-07-05",
+      "stance": "counter",
+      "primary": false,
+      "note": "Meta ran its applied AI unit at a stated 50:1 ratio and scaled it back inside a quarter — the most aggressive AI-era widening on record, reversed and documented. Secondary: Fortune reporting the Wall Street Journal, plus a follow-up trade outlet."
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "The ratio is measured across two independent organisational populations — a named cohort of twelve large technology companies, and startups funded by top-100 VC firms — from a dataset covering more than 80 million organisations, and it shows up in hiring composition as well as in reporting lines, so this is not a forerunner case. What has not happened is the field settling on a new home for the functions that layer carried: the one named organisation that pushed the ratio to an extreme reversed it inside a quarter and published a remediation list rather than a replacement. Until organisations are sustaining wider spans with a stated substitute for coaching, review and escalation, this has not reset what a manager's job is expected to be. A reviewer could reasonably argue for the rim instead, on the grounds that the only explicitly AI-era instance in evidence is a single reversed experiment.",
+  "whatWouldChangeThis": [
+    "The next population-scale span-of-control measurement shows the ratio flat or falling rather than continuing to widen",
+    "Engineering-manager roles resume growth as a share of engineering hiring",
+    "An organisation sustains a span above 25:1 for more than a year with a stated, working substitute for coaching, review and escalation, rather than reversing it",
+    "The widening is shown to be an artefact of cohort or measurement change rather than of real reporting structure",
+    "The drift proves entirely pre-AI: spans widen at the same rate in organisations with little or no agent adoption"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 1,
+    "evidenceTypes": 1,
+    "quartersSpanned": 1,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-03-14",
+  "latestEvidenceDate": "2026-06-22"
+}

@@ -46,41 +46,16 @@
       "note": "engineering teams reported shrinking from 8-10 to five or fewer"
     },
     {
-      "signalId": "2026-06-29-12",
-      "stance": "contextual",
+      "signalId": "2026-08-07-01",
+      "stance": "supports",
       "primary": true,
-      "note": "635+ leaders report the challenge shifting from adoption to accountability"
-    },
-    {
-      "signalId": "2026-04-06-05",
-      "stance": "contextual",
-      "primary": true,
-      "note": "30,000 roles cut to fund infrastructure — restructuring driven by AI spend, not by team-level productivity"
-    },
-    {
-      "signalId": "2026-04-13-07",
-      "stance": "contextual",
-      "primary": true,
-      "note": "AI becomes the leading stated reason for US job cuts, at 25% of the monthly total"
-    },
-    {
-      "signalId": "2026-04-13-08",
-      "stance": "counter",
-      "primary": true,
-      "note": "engineering roles doubled since the 2023 trough with 67,000+ open positions"
-    },
-    {
-      "signalId": "2026-06-29-05",
-      "stance": "counter",
-      "primary": true,
-      "note": "engineering among the most resilient functions across 80 million companies tracked"
+      "note": "The head of Instagram states the product delivery team went from roughly thirteen specialists to a pod of four to six more generalist engineers plus one 'product staff' seat. A count of the delivery unit itself, from a large established product organisation rather than a venture portfolio."
     }
   ],
   "observedReach": "early-manifestations",
-  "reachRationale": "A single investor field writeup reports teams shrinking to five or fewer, and the surrounding layoff data is driven by infrastructure spending rather than by team-level productivity. This is a forerunner observation that has not been replicated across independent contexts, and the counter-evidence on aggregate demand is strong.",
+  "reachRationale": "Two sources measure the delivery unit itself: an investor field writeup reporting teams of eight to ten shrinking to five or fewer, and the head of Instagram describing a product team going from about thirteen specialists to a pod of four to six. The second matters because it is a large established product organisation rather than a venture portfolio. It is still two self-reported accounts with no independent survey of median team size behind them — concrete examples in forerunner settings, not a pattern replicated across contexts. The labour-market and layoff sources that once sat here as counter-evidence were detached as off-construct: they measure aggregate employment and job-cut attribution, which move for reasons that leave the size of a delivery unit untouched, so their removal is not evidence that the claim strengthened.",
   "reachReviewedAt": "2026-08-05",
-  "contested": true,
-  "contestedNote": "The supporting evidence is a single investor observation of forerunner teams, while independent labour-market datasets show engineering demand growing. These are not necessarily incompatible — smaller teams inside more teams would produce both — but nothing currently distinguishes that reading from the simpler one, that the shrinkage is not general.",
+  "contested": false,
   "whatWouldChangeThis": [
     "Independent survey data from outside the investor and consultancy circuit reports median team size falling",
     "Median team size holds steady through 2027 while delivery volume rises, indicating the change is in output rather than in team shape"
@@ -110,11 +85,23 @@
   ],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 1,
-    "evidenceTypes": 1,
+    "independentContexts": 2,
+    "evidenceTypes": 2,
     "quartersSpanned": 1,
-    "counterEvidence": true
+    "counterEvidence": false
   },
-  "firstObserved": "2026-03-31",
-  "latestEvidenceDate": "2026-07-17"
+  "firstObserved": "2026-07-09",
+  "latestEvidenceDate": "2026-07-17",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (1 -> 2)",
+    "raisedAt": "2026-08-10",
+    "signalIds": [
+      "2026-08-07-01",
+      "2026-06-29-12",
+      "2026-04-06-05",
+      "2026-04-13-07",
+      "2026-04-13-08",
+      "2026-06-29-05"
+    ]
+  }
 }
