@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { deriveOne } from "../radar-derive.mjs";
+import { MACHINE_OWNED } from "../lib/radar-fields.mjs";
 
 const sig = (id, over = {}) => ({ id, date: "2026-08-01", status: "published", signalType: "study", ...over });
 
@@ -50,6 +51,29 @@ test("a LOST independent context raises a candidate too", () => {
   assert.match(updates.possibleReachChange.reason, /lost|removed|fell/i);
 });
 
+test("changedSignalIds names what moved, not what survived", () => {
+  const p = base({
+    evidenceProfile: { independentContexts: 3, evidenceTypes: 1, quartersSpanned: 1, counterEvidence: false },
+  });
+  const { updates } = deriveOne(p, signals([sig("s1")]), {
+    today: "2026-08-10",
+    changedSignalIds: ["s2", "s3"],
+  });
+  assert.deepEqual(
+    updates.possibleReachChange.signalIds,
+    ["s2", "s3"],
+    "on a loss the removed ids are already gone from evidence, so the survivors say nothing",
+  );
+});
+
+test("with no changedSignalIds the candidate falls back to the current evidence ids", () => {
+  const p = base({
+    evidenceProfile: { independentContexts: 3, evidenceTypes: 1, quartersSpanned: 1, counterEvidence: false },
+  });
+  const { updates } = deriveOne(p, signals([sig("s1")]), { today: "2026-08-10" });
+  assert.deepEqual(updates.possibleReachChange.signalIds, ["s1"], "standalone derive cannot recover them");
+});
+
 test("elapsed quarters alone raise nothing — time passing is not spread", () => {
   const p = base({
     evidenceProfile: { independentContexts: 1, evidenceTypes: 1, quartersSpanned: 1, counterEvidence: false },
@@ -88,6 +112,19 @@ test("derive is idempotent", () => {
   const first = deriveOne(p, map, { today: "2026-08-10" }).updates;
   const second = deriveOne({ ...p, ...first }, map, { today: "2026-08-10" }).updates;
   assert.deepEqual(second, first);
+});
+
+// derive() applies these through mergeMachineFields, which silently drops anything
+// outside the allowlist. A human-owned key added here would therefore not be written
+// but would also not be noticed — this is the check that notices.
+test("every key deriveOne proposes is machine-owned", () => {
+  const p = base({
+    evidenceProfile: { independentContexts: 3, evidenceTypes: 1, quartersSpanned: 1, counterEvidence: false },
+  });
+  const { updates } = deriveOne(p, signals([sig("s1")]), { today: "2026-08-10" });
+  for (const key of Object.keys(updates)) {
+    assert.ok(MACHINE_OWNED.includes(key), `${key} is not on the machine-owned allowlist`);
+  }
 });
 
 test("counter-evidence with contested unset is reported, not written", () => {

@@ -60,6 +60,11 @@ export interface PossibleReachChange {
   /** What prompted it, naming the direction — contexts gained or lost. */
   reason: string;
   raisedAt: string;
+  /**
+   * The signals that changed, not the ones that remain: on a loss the removed ids
+   * are already gone from `evidence`, so the survivors would name what did not
+   * change. Empty when every changed signal was detached.
+   */
   signalIds: string[];
 }
 
