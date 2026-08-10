@@ -96,24 +96,56 @@ cites two `supports` items and `evidenceProfile.counterEvidence` is false.
 Ten phenomena validate, all `draft`. Coverage rises from 37 to 67 of 105
 published signals.
 
+### 6. `verify:radar` no longer hardcodes the blip count
+
+It asserted exactly six, a literal from when six phenomena existed, and failed
+the moment a seventh arrived — reading as "the radar broke" rather than "the
+harness is stale", which is how a team learns to ignore a harness.
+
+The count is now derived from the index the page itself fetched. Context is
+handled without guessing: drafts render in dev and preview and are hidden in
+production, so the expectation keys off whether any draft rendered — either none
+do, or all of them do. A partial set is itself a bug and is now caught.
+
 ## Verification
 
 - `npm run build` — exit 0
 - `npm test` — 176 pass
 - `npm run lint` — clean
-- `npm run preview:radar` — 13/15, identical to the manual route
+- `npm run preview:radar` — **14/15**, the one failure being the label crowding
+  below
 - Radar screenshotted at 10 blips, since a green harness once reported 9/9 on a
   visibly broken radar
 
+## ⚠️ This branch will fail the deploy workflow
+
+`.github/workflows/deploy.yml` runs `verify:radar` against the preview build and
+gates **both** deployments on it — "nothing publishes if the harness fails" is
+deliberate and documented there. The label-crowding check fails at ten
+phenomena, so merging this as-is means the workflow goes red and nothing
+deploys, including production.
+
+The overlap is between `Managing machine spend` and the two new phenomena
+`The management layer thins` and `Maintenance becomes the constraint`, so it is
+new on this branch — main's six phenomena do not collide.
+
+Three ways forward, and this is a call for the team rather than something to
+decide inside this PR:
+
+1. **Fix blip-label layout first** and merge that ahead of this branch. It is
+   the honest fix and it is real work — `placeBlips` separates blips but nothing
+   separates their labels.
+2. **Merge and accept a red deploy** until the layout fix lands. Only sensible
+   if nothing needs to ship meanwhile.
+3. **Hold the four new phenomena** — merge the tooling and docs now, apply the
+   radar proposal after the layout fix. Splits cleanly: the content is one
+   commit.
+
 ## Known, and deliberately not fixed here
 
-- **`verify:radar` hardcodes six blips** (`scripts/verify-radar.mjs:97`, and a
-  message string at :373). It fails on every run now that there are ten.
-  Deriving the count from the phenomenon index would stop it rotting again.
-- **Label crowding is real at ten phenomena.** `Managing machine spend`,
-  `The management layer thins` and `Maintenance becomes the constraint` overprint
-  near the centre. Blips stay cleanly separated — it is only the labels, exactly
-  as the Phase 2 spec predicted when it deferred this.
+- **Label crowding at ten phenomena.** Blips stay cleanly separated; it is only
+  the labels, exactly as the Phase 2 spec predicted when it deferred this and
+  called it "the most likely next visible defect".
 - **`teams-get-smaller` still renders a contested bolt**, and its
   `contestedNote` describes the evidence just detached. Both fields are
   human-owned, so `apply` correctly left them alone; they need an editorial edit.
