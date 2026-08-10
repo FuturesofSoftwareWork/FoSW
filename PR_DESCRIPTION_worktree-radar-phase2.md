@@ -37,7 +37,7 @@ to hold those two lines:
 ## Run order
 
 ```bash
-npm run radar:prepare                              # -> data/_radar-digest.md
+npm run radar:prepare                              # -> data/_radar-input.json
 # the clustering prompt runs, in its own session   # -> data/_radar-proposal.json
 npm run radar:apply -- data/_radar-proposal.json   # writes drafts + the apply report
 # a person reads the diff
