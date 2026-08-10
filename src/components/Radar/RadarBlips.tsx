@@ -14,11 +14,14 @@ interface RadarBlipsProps {
 /** A small lightning bolt, drawn inside a contested blip. */
 const BOLT = "M 1.1 -5.6 L -3.0 0.5 L -0.4 0.5 L -1.3 5.6 L 3.2 -0.9 L 0.4 -0.9 Z";
 
-/** Hover-card metrics. The box is sized from the label rather than fixed, since
- *  a fixed width either clips the long labels or leaves the short ones adrift. */
-const HOVER_FONT = 9;
+/** Hover-card metrics. Every dimension derives from the font size: the card is
+ *  now the only place a blip's name appears on the canvas, so it is sized to be
+ *  read, and a box with hardcoded width or height would clip the moment the type
+ *  changed. */
+const HOVER_FONT = 12;
 const HOVER_CHAR = HOVER_FONT * 0.62; // monospace advance width
-const HOVER_PAD = 7;
+const HOVER_PAD = 8;
+const HOVER_H = HOVER_FONT + 11;
 
 const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
@@ -123,16 +126,16 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
                       ? x + r + 4
                       : x - r - 4 - (p.label.length * HOVER_CHAR + HOVER_PAD * 2)
                   }
-                  y={y - 9}
+                  y={y - HOVER_H / 2}
                   width={p.label.length * HOVER_CHAR + HOVER_PAD * 2}
-                  height={18}
+                  height={HOVER_H}
                   rx={3}
                   fill="#0b1220"
                   stroke="#334155"
                 />
                 <text
                   x={labelRight ? x + r + 4 + HOVER_PAD : x - r - 4 - HOVER_PAD}
-                  y={y + 3.5}
+                  y={y + HOVER_FONT * 0.36}
                   textAnchor={labelRight ? "start" : "end"}
                   fontSize={HOVER_FONT}
                   fontFamily="monospace"
