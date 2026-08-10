@@ -1,8 +1,8 @@
-import { createServer } from "http";
 import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from "fs";
-import { resolve, join, extname } from "path";
+import { resolve, join } from "path";
 import puppeteer from "puppeteer";
 import { detectBase } from "./lib/prerender-base.mjs";
+import { startStaticServer, LOOPBACK } from "./lib/static-server.mjs";
 
 const DIST_DIR = resolve("dist");
 const PORT = 4173;
@@ -17,62 +17,11 @@ const PRERENDER_SIGNALS = false; // toggle AI-signal pages (Task 7)
 const ROUTE = detectBase(readFileSync(join(DIST_DIR, "index.html"), "utf-8"));
 const IS_PREVIEW = ROUTE.includes("/preview/");
 
-const MIME_TYPES = {
-  ".html": "text/html",
-  ".js": "application/javascript",
-  ".css": "text/css",
-  ".json": "application/json",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".svg": "image/svg+xml",
-  ".woff": "font/woff",
-  ".woff2": "font/woff2",
-};
-
-function startServer() {
-  return new Promise((resolvePromise) => {
-    const server = createServer((req, res) => {
-      // Strip the build's own base path and query string so files resolve from
-      // dist/. ROUTE is whatever the bundle was built with, not a literal.
-      const withoutBase = req.url.startsWith(ROUTE)
-        ? `/${req.url.slice(ROUTE.length)}`
-        : req.url;
-      const urlPath = withoutBase.split("?")[0] || "/";
-      const rawPath = urlPath === "/" ? "index.html" : urlPath;
-      const wasExtensionless = !extname(rawPath);
-      let filePath = join(DIST_DIR, rawPath);
-      if (wasExtensionless) {
-        filePath = join(filePath, "index.html");
-      }
-
-      try {
-        const content = readFileSync(filePath);
-        const ext = extname(filePath);
-        res.writeHead(200, { "Content-Type": MIME_TYPES[ext] || "application/octet-stream" });
-        res.end(content);
-      } catch {
-        // SPA fallback: extensionless routes that don't exist yet (e.g. /insights/<id>)
-        // should serve the app shell so the client can open the right drawer.
-        if (wasExtensionless) {
-          try {
-            const shell = readFileSync(join(DIST_DIR, "index.html"));
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(shell);
-            return;
-          } catch {
-            // fall through to 404
-          }
-        }
-        res.writeHead(404);
-        res.end("Not found");
-      }
-    });
-
-    server.listen(PORT, () => {
-      console.log(`Pre-render server running on http://localhost:${PORT}`);
-      resolvePromise(server);
-    });
-  });
+async function startServer() {
+  // Shared with preview-radar.mjs — see scripts/lib/static-server.mjs.
+  const server = await startStaticServer({ distDir: DIST_DIR, route: ROUTE, port: PORT });
+  console.log(`Pre-render server running on http://${LOOPBACK}:${PORT}`);
+  return server;
 }
 
 function readPublishedIndex(contentPath) {
@@ -87,7 +36,7 @@ function readItemTitle(contentPath, file) {
 }
 
 async function prerenderItem(page, kind, id) {
-  const url = `http://localhost:${PORT}${ROUTE}${kind}/${id}`;
+  const url = `http://${LOOPBACK}:${PORT}${ROUTE}${kind}/${id}`;
   await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
   // Wait for the drawer dialog to render before capturing.
   await page.waitForSelector('[role="dialog"]', { timeout: 15000 });
@@ -204,7 +153,7 @@ async function prerender() {
     });
     let page = await browser.newPage();
 
-    const url = `http://localhost:${PORT}${ROUTE}`;
+    const url = `http://${LOOPBACK}:${PORT}${ROUTE}`;
     console.log(`Navigating to ${url}...`);
     await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
 
