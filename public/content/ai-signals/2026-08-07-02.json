@@ -1,0 +1,50 @@
+{
+  "id": "2026-08-07-02",
+  "title": "SignalFire: engineers per engineering manager rose to ~12 at big tech and ~15 at startups — the unit under a manager is getting larger, not smaller",
+  "summary": "SignalFire's State of Talent Report 2026, published 22 June 2026, reports span of control measured from its Beacon dataset of 650 million-plus individuals and 80 million-plus organisations. Each engineering manager at a 'Tech Major' (a named cohort of twelve companies including Alphabet, Meta, Apple, Amazon, Microsoft, Nvidia, Uber, Airbnb, Block and Stripe) now manages about 12 engineers, up 14% from roughly 10.5 in 2019. At early-stage startups funded by top-100 VC firms the figure is about 15 engineers per manager, up 34% from roughly 11.2. Product managers at Tech Majors now support 22% more engineers than in 2019, and senior IC and staff roles are growing as a share of hiring while engineering-manager roles are flat or declining. What is counted here is the reporting line, not the squad: a manager with twelve reports may run two teams of six, so this measures how many engineers sit under one manager rather than how many sit in one delivery unit. On that measure the direction is the opposite of the shrinking-team claim, and it has been moving that way since well before the current AI cycle.",
+  "source": "SignalFire — State of Talent Report 2026",
+  "sourceUrl": "https://www.signalfire.com/blog/signalfire-state-of-talent-report-2026",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "sampleSize": "Beacon dataset tracking 650M+ individuals across 80M+ organisations; 'Tech Majors' cohort of 12 named companies; early-stage cohort of companies funded by top-100 VC firms at seed to Series B in the prior four years",
+  "fieldworkPeriod": "2019 baseline compared against 2026 snapshot",
+  "sponsor": "SignalFire (venture capital firm; analysis of its own proprietary talent dataset)",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://www.gallup.com/workplace/700718/span-control-optimal-team-size-managers.aspx",
+    "https://techcrunch.com/2026/06/24/ai-was-supposed-to-kill-engineering-jobs-but-new-data-suggests-theyre-the-most-resilient/"
+  ],
+  "detectedAt": "2026-08-07",
+  "date": "2026-06-22",
+  "status": "published",
+  "tags": [
+    "span-of-control",
+    "team-structure",
+    "org-design",
+    "engineering-management",
+    "flattening",
+    "team-size"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Business Impact",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "The clearest population-scale measurement available of how many engineers sit under one manager says the unit is widening, not shrinking. Leaders planning for smaller teams should know that the only large dataset on org shape points the other way.",
+    "A manager going from 10.5 to 12 reports, and to 15 at startups, is a change in the manager's job before it is a change in the engineer's. Coaching, review and career development are the first things that fall out at that ratio.",
+    "Engineering-manager roles flat or declining while senior IC roles grow means the ladder is being rebuilt around technical depth rather than people leadership — a different consequence from the one the smaller-teams story predicts."
+  ],
+  "recommendedActions": [
+    "Measure your own two ratios separately — engineers per manager, and engineers per delivery team — because the two move independently and only the second bears on whether delivery units are shrinking.",
+    "If span of control has widened in your org, decide explicitly which manager duties have been dropped rather than letting the answer emerge from what people stop doing."
+  ],
+  "risksAndCaveats": [
+    "Span of control is not team size. A manager with twelve reports may run two squads of six, so this measurement is consistent with delivery units shrinking while reporting lines widen.",
+    "The 2019 baseline predates the current AI cycle, so most of the widening cannot be attributed to AI adoption.",
+    "This is the same underlying report already published on this site as 2026-06-29-05, which covered its hiring-resilience findings. The two are one source and one context, not two.",
+    "SignalFire is a venture capital firm analysing its own proprietary dataset, with no external methodology audit."
+  ]
+}
