@@ -96,6 +96,14 @@ cites two `supports` items and `evidenceProfile.counterEvidence` is false.
 Ten phenomena validate, all `draft`. Coverage rises from 37 to 67 of 105
 published signals.
 
+`teams-get-smaller` is also no longer marked `contested`. Its flag and note
+described the four sources just detached as off-construct, so the bolt reported
+a disagreement the file no longer contains — and, per the Phase 2 design, never
+really did. Set to `false` rather than removed: absent means nobody has judged,
+and someone has now. The harness read the contested set from a hardcoded pair of
+names and would have failed on this ordinary editorial change; it now reads
+`contested` from the phenomenon files, the same fix the blip count got.
+
 ### 6. `verify:radar` no longer hardcodes the blip count
 
 It asserted exactly six, a literal from when six phenomena existed, and failed
@@ -147,9 +155,12 @@ title is 32 characters and caps single-line type at about 9px.
 
 ## Known, and deliberately not fixed here
 
-- **`teams-get-smaller` still renders a contested bolt**, and its
-  `contestedNote` describes the evidence just detached. Both fields are
-  human-owned, so `apply` correctly left them alone; they need an editorial edit.
+- **`teams-get-smaller`'s `reachRationale` is stale.** It argues from "a single
+  investor field writeup" and "the counter-evidence on aggregate demand is
+  strong" — there are now two supporting sources and no counter-evidence.
+  Rewriting reach prose belongs to the reach review, with a person, and
+  `possibleReachChange` is already raised on this phenomenon to force it.
+  (The `contested` flag itself is fixed on this branch — see below.)
 - **All four proposed phenomena came back `gaining-traction`** — none at the rim,
   none at the centre. Worth scepticism at reach review; it is the anchoring
   pattern the adjacent-ring requirement exists to counter.
