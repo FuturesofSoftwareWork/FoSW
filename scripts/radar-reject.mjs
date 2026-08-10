@@ -60,8 +60,11 @@ export function reject({ root = process.cwd(), ids = [], reason = "", today = ne
   const byId = new Map(items.map(({ file, data }) => [data.id, { file, data }]));
   const seen = alreadyRejected(root);
 
+  // Dedupe up front: a repeated id in one invocation must never process the
+  // same phenomenon twice — that would append a duplicate store line and
+  // rmSync a file the first pass already removed.
   const targets = [];
-  for (const id of ids) {
+  for (const id of [...new Set(ids)]) {
     if (seen.has(id) && !byId.has(id)) continue; // already rejected — no-op
     const entry = byId.get(id);
     if (!entry) { errors.push(`'${id}': no such phenomenon`); continue; }
@@ -86,7 +89,7 @@ export function reject({ root = process.cwd(), ids = [], reason = "", today = ne
       JSON.stringify({ id: data.id, label: data.label, thesis: data.thesis, signalIds, reason, at: today }) + "\n",
       "utf8",
     );
-    rmSync(join(phenomenaDir, file));
+    rmSync(join(phenomenaDir, file), { force: true });
     phenomenaIndex.items = phenomenaIndex.items.filter((i) => i.id !== data.id);
     released.push(...signalIds);
     rejected.push(data.id);
