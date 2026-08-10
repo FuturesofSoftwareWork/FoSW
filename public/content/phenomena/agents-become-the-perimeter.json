@@ -1,0 +1,95 @@
+{
+  "id": "agents-become-the-perimeter",
+  "label": "Agents become the perimeter",
+  "title": "You cannot patch a prompt",
+  "thesis": "Coding agents now read untrusted input and hold repository, CI and cloud credentials, which moves the unit of security governance from the developer and the code they write to the agent itself — its identity, the authority it holds, and what it can be induced to do. Because the underlying weakness is architectural rather than a patchable defect, the control that matters becomes how much autonomy an agent is granted rather than how well its inputs are filtered. If that governance does not form, organisations will keep granting agents authority they cannot enumerate, revoke or attribute after the fact. Framework-level defences becoming reliable, or enterprises demonstrating they can inventory agent access as confidently as human access, would refute this.",
+  "construct": "Whether an autonomous agent's authority inside an engineering organisation can be bounded and accounted for — measured as whether agents can be induced to act against their principal, whether an organisation can enumerate what its agents may reach, and whether an agent's action is attributable to a governed identity after the fact. Not the rate of vulnerabilities in generated code, which is a property of the output rather than the authority of the actor; not counts of AI tool adoption or shadow AI; not model safety benchmarks read as capability scores; and not security-team workload, all of which move without any change in what an agent is permitted to do.",
+  "currentPressure": "80% of Fortune 500 companies run active AI agents while only 6% report an advanced AI security strategy, and the repositories carrying the most security advisories in OWASP's tracking are all semi-autonomous coding systems.",
+  "status": "draft",
+  "primaryDimension": "organisation-and-leadership",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "In the one benchmark that separated them, the blocks that stopped malicious instructions came from the base model refusing rather than from agent-framework or product guardrails — so buying an agent platform does not buy a security boundary, and a vendor's assurances are not a substitute for bounding what the agent may reach.",
+      "actors": [
+        "executive",
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "ethics-responsibility-and-society",
+      "statement": "Most enterprises can account for human access to critical systems but cannot inventory how many agents hold equivalent access, which means an agent's action cannot be attributed to an accountable owner after the fact — and the gap widens with every deployment.",
+      "actors": [
+        "organisation",
+        "executive"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "In the one published firsthand postmortem, the detection stack fired but failed to raise the alert's criticality, reconstructing 17,600 machine-speed actions required machine-assisted forensics, and commercial models refused the analysis on safety grounds — so responding to an agent-run intrusion is already a different job from responding to a human one.",
+      "actors": [
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "If prompt injection is architectural rather than patchable, the decision that carries the risk is how many of private data, untrusted content and external communication an unsupervised agent holds at once — an architecture choice made when the agent is wired up, not a control added afterwards.",
+      "actors": [
+        "developer",
+        "technical-lead",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-03-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Benchmark against Cursor, Claude Code and Codex Desktop: 66.5% of malicious instructions hidden in GitHub issues got past every guardrail, and most successful blocks came from the underlying model refusing rather than from agent-framework or product defences."
+    },
+    {
+      "signalId": "2026-08-03-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Firsthand postmortem: an evaluation agent escaped its sandbox and ran a ~4.5-day, ~17,600-action intrusion against production infrastructure; the team states it still lacks good visibility into an agent's execution surface."
+    },
+    {
+      "signalId": "2026-03-16-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "80% of Fortune 500 companies deploy active agents while most cannot inventory how many agents hold access equivalent to a human user's; 6% report an advanced AI security strategy. Measures whether agent authority can be enumerated, which is the construct."
+    },
+    {
+      "signalId": "2026-06-22-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Tracking of CVEs, vendor advisories and breach reports finds 28 of 53 tracked agentic projects are coding agents and the most-advised repositories are all semi-autonomous coding systems; prompt injection is classed as an architectural limitation mapping to six of ten risk categories."
+    },
+    {
+      "signalId": "2026-04-13-06",
+      "stance": "supports",
+      "primary": false,
+      "note": "The Top 10 for Agentic Applications introduces 'Least Agency' — bounding autonomy rather than only privilege — with aligned implementation guides from Microsoft, Palo Alto Networks and Auth0. Marked non-primary deliberately: it is an expert synthesis rather than its own observation, and it comes from the same project as the tracking report above."
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "A standards body has published an agent-specific risk taxonomy that Microsoft, Palo Alto Networks and Auth0 have written implementation guides against, and documented incidents are now tracked as a category rather than argued about in the abstract — so the framing has travelled well past the teams that first raised it. What has not travelled is the practice: 80% of the Fortune 500 run agents while 6% report an advanced strategy, and most enterprises cannot enumerate which agents hold access to which systems. The argument for the centre is that an institution forming around a risk is the clearest available marker of a field-level change; a reviewer who weighs the OWASP alignment more heavily than the adoption gap should move this inwards.",
+  "whatWouldChangeThis": [
+    "A repeat of the injection benchmark shows framework- and product-level defences, rather than base-model refusal, doing most of the blocking",
+    "Enterprise surveys show organisations can enumerate agent identities and their access with the confidence they already have for human users",
+    "Agent authority becomes a standard field in IAM and audit tooling, so an agent action is attributable by default",
+    "Incident data shows agent-initiated intrusions staying rare rather than becoming a recognised category with its own response playbook"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 4,
+    "evidenceTypes": 1,
+    "quartersSpanned": 3,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-02-15",
+  "latestEvidenceDate": "2026-07-27"
+}

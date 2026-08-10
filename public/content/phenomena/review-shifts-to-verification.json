@@ -93,20 +93,44 @@
       "stance": "contextual",
       "primary": true,
       "note": "telemetry from 22,000 developers: the constraint has moved past throughput"
+    },
+    {
+      "signalId": "2026-05-06-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "Shipped release that moves per-action approval to automated evaluation: safe operations proceed immediately, ambiguous or high-risk ones route to a human. The reviewer becomes an exception handler by product design."
+    },
+    {
+      "signalId": "2026-03-11-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "Survey of 820 technology professionals: 55% of QA teams report their focus moving from executing tests to quality analytics, while 77% express confidence in AI output and only 39% have fully automated audit trails."
+    },
+    {
+      "signalId": "2026-02-19-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "52 practitioners running a Builder/Reviewer workflow on real legacy tasks, in which a model critiques artifacts before human review and humans hold explicit approval gates between phases; ~83% report less rework."
+    },
+    {
+      "signalId": "2026-05-06-02",
+      "stance": "contextual",
+      "primary": true,
+      "note": "200 security practitioners: 62% say keeping up with the volume of code requiring security review is getting harder, and 66% spend over half their time validating findings rather than fixing. Measures assurance capacity under strain; shows no direction on how assurance is performed."
     }
   ],
   "observedReach": "gaining-traction",
   "reachRationale": "Automated first-pass review is running in production at several unrelated organisations and tooling vendors are building for it, but assurance practice outside those forerunners is still diff-centric.",
   "reachReviewedAt": "2026-08-05",
   "evidenceProfile": {
-    "independentContexts": 3,
+    "independentContexts": 6,
     "evidenceTypes": 3,
-    "quartersSpanned": 3,
+    "quartersSpanned": 4,
     "counterEvidence": true
   },
   "contested": false,
   "contestedNote": null,
-  "firstObserved": "2026-01-29",
+  "firstObserved": "2025-12-01",
   "latestEvidenceDate": "2026-07-30",
   "whatWouldChangeThis": [
     "Review practice stays diff-centric through 2027 despite sustained volume growth",
@@ -135,5 +159,15 @@
     }
   ],
   "related": [],
-  "indicators": []
+  "indicators": [],
+  "possibleReachChange": {
+    "reason": "gained 3 independent context(s) since reach was last reviewed (3 -> 6)",
+    "raisedAt": "2026-08-10",
+    "signalIds": [
+      "2026-05-06-03",
+      "2026-03-11-05",
+      "2026-02-19-02",
+      "2026-05-06-02"
+    ]
+  }
 }

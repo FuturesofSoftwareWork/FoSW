@@ -68,6 +68,12 @@
       "stance": "counter",
       "primary": true,
       "note": "agent-generated tests provide only marginal utility, undercutting the labour saving the practice depends on"
+    },
+    {
+      "signalId": "2026-02-18-02",
+      "stance": "supports",
+      "primary": false,
+      "note": "The author states his credence in agent output turns on the presence of conformance suites, tests and reproducible instructions rather than on reading the code. Secondary: a roundup reporting Cursor's planner/worker/judge experiments rather than its own observation."
     }
   ],
   "observedReach": "early-manifestations",
