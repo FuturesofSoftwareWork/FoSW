@@ -67,3 +67,18 @@ test("the store is append-only across runs", () => {
   reject({ root, ids: ["p2"], reason: "two", today: "2026-08-11" });
   assert.deepEqual(store(root).map((r) => r.id), ["p1", "p2"]);
 });
+
+test("a duplicate id in one invocation is deduped, not double-processed", () => {
+  const root = makeRoot({ signals: [sig("s1")], phenomena: [phen("p1", [{ signalId: "s1", stance: "supports", primary: true }])] });
+  const result = reject({ root, ids: ["p1", "p1"], reason: "thin", today: "2026-08-10" });
+  assert.deepEqual(result.errors, []);
+  assert.deepEqual(result.rejected, ["p1"]);
+  assert.ok(!existsSync(join(root, PHENOMENA, "p1.json")), "file must be gone");
+  assert.equal(store(root).length, 1, "the store must not gain a duplicate line");
+});
+
+test("a duplicate id in one invocation still removes the index entry", () => {
+  const root = makeRoot({ signals: [sig("s1")], phenomena: [phen("p1", [{ signalId: "s1", stance: "supports", primary: true }])] });
+  reject({ root, ids: ["p1", "p1"], reason: "thin", today: "2026-08-10" });
+  assert.equal(index(root).items.find((i) => i.id === "p1"), undefined, "index entry must be gone");
+});
