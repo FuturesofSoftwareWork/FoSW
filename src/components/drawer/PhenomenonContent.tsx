@@ -462,7 +462,11 @@ const PhenomenonContent = ({
         <DisclosureSection
           id={PROVENANCE_ID}
           title="Provenance"
-          hint={`Reach reviewed ${data.reachReviewedAt}`}
+          hint={
+            data.reachReviewedAt
+              ? `Reach reviewed ${data.reachReviewedAt}`
+              : undefined
+          }
         >
           <MetaList
             items={[
@@ -472,7 +476,9 @@ const PhenomenonContent = ({
               ...(data.latestEvidenceDate
                 ? [{ label: "Latest evidence", value: data.latestEvidenceDate }]
                 : []),
-              { label: "Reach reviewed", value: data.reachReviewedAt },
+              ...(data.reachReviewedAt
+                ? [{ label: "Reach reviewed", value: data.reachReviewedAt }]
+                : []),
               ...(impacts.length > 0
                 ? [
                     {

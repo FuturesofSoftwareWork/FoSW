@@ -87,7 +87,9 @@ export interface Phenomenon {
 
   observedReach: ObservedReach;
   reachRationale: string;
-  reachReviewedAt: string;
+  /** The date a human last judged reach. Absent means no human has judged it
+   *  yet — required on published phenomena, optional on drafts. */
+  reachReviewedAt?: string;
   evidenceProfile?: EvidenceProfile;
   possibleReachChange?: PossibleReachChange | null;
 
