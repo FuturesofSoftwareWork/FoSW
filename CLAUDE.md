@@ -20,6 +20,7 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 - `npm run lint` — ESLint (zero warnings allowed)
 - `npm run preview` — preview production build
 - `npm run verify:radar <baseUrl>` — 15 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
+- `npm run preview:radar` — build with drafts on, serve, run those checks, and stay up so a person can look. `--no-build`, `--no-verify`, `--port`. Serves on **4180**, deliberately not `prerender.mjs`'s 4173: a stale server there does not collide loudly (on Windows it can hold `::1` while the prerenderer binds `0.0.0.0`), so `npm run build` prerenders whatever the stale server answers and then fails on a missing dialog.
 - `npm run signals:promote` — move reviewed drafts from `data/signal-drafts/accepted/` into `public/content/ai-signals/`, append their `index.json` entries, and record every decision in the seen-ledger. See the pipeline section below.
 - `npm run radar:prepare` — digest uncovered signals for the clustering pass
 - `npm run radar:apply -- <proposal.json>` — apply a proposal; the only writer of a phenomenon's `evidence`, and the only thing that writes machine-owned fields from a proposal (`radar:derive` writes the derived ones on its own)
@@ -29,7 +30,11 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 
 The two LLM steps between those commands are [`docs/radar-clustering-prompt.md`](docs/radar-clustering-prompt.md) (runs in its own session, writes `data/_radar-proposal.json`) and [`docs/radar-reach-review-prompt.md`](docs/radar-reach-review-prompt.md) (runs with a person, one phenomenon at a time). Design detail in [`docs/superpowers/specs/2026-08-07-radar-phase2-pipeline-design.md`](docs/superpowers/specs/2026-08-07-radar-phase2-pipeline-design.md).
 
-**On Windows, run the `--base=` builds from PowerShell, or prefix with `MSYS_NO_PATHCONV=1` in Git Bash.** MSYS rewrites `/FoSW/preview/` into a Windows path, and the build then succeeds with a silently wrong base.
+**Operating either pipeline end to end: [`docs/pipeline-runbook.md`](docs/pipeline-runbook.md).** It is the one page that covers both — signal drafts through `signals:promote`, then `radar:prepare` through `radar:accept` — with the decision points, the refusal messages and what to do about them.
+
+**On Windows, prefix every `--base=/FoSW/preview/` command with `MSYS_NO_PATHCONV=1` in Git Bash** — the build *and* `vite preview`. MSYS rewrites `/FoSW/preview/` into a Windows path; on `vite preview` that shows up as a 404 with `/Program%20Files/Git/...` in the server log, and on the build it is silent — exit 0, wrong base, assets 404 at runtime. Verify with `grep -o 'src="[^"]*"' dist/index.html | head -3`.
+
+PowerShell also avoids MSYS, but is not a reliable fallback here: on a locked-down execution policy `npm` fails with *"npm.ps1 cannot be loaded … not digitally signed"*, and a `profile.ps1` in a synced Documents folder fails the same way. `npm.cmd` bypasses it. **`npm run preview:radar` avoids both traps** — it builds, serves and verifies from Node, with no `--base` argument for MSYS to touch and no PowerShell in the path. `preview.bat` is a double-clickable wrapper for it.
 
 ## AI-signals pipeline
 
