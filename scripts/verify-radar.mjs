@@ -151,17 +151,29 @@ try {
     evals ? `dist=${evals.dist.toFixed(1)} band=${bandOf(evals.dist)}` : "not found",
   );
 
-  // 3. Contested bolts: teams-get-smaller and the-vanishing-apprenticeship are
-  //    contested; the other four are not.
-  const contestedLabels = ["Teams get smaller", "The vanishing apprenticeship"];
+  // 3. A bolt renders on exactly the phenomena marked contested.
+  //
+  //    Read from the content, not from a list of names. `contested` is a human
+  //    judgment that moves — detaching off-construct counter-evidence took
+  //    teams-get-smaller from contested to not — and a hardcoded pair turns an
+  //    ordinary editorial decision into a harness failure.
+  const contestedLabels = await Promise.all(
+    index.items.map((item) =>
+      fetch(new URL(`content/phenomena/${item.file}`, BASE))
+        .then((r) => r.json())
+        .then((p) => (p.contested ? p.label : null))
+        .catch(() => null),
+    ),
+  ).then((labels) => labels.filter(Boolean));
   const boltMismatch = blips.filter((b) => {
     const shouldHaveBolt = contestedLabels.some((c) => b.label.startsWith(c));
     return shouldHaveBolt !== b.hasBolt;
   });
   check(
-    "exactly the two contested phenomena render a bolt",
+    `a bolt renders on exactly the ${contestedLabels.length} contested phenomena`,
     boltMismatch.length === 0,
-    boltMismatch.map((b) => `${b.label}: hasBolt=${b.hasBolt}`).join("; ") || "all match",
+    boltMismatch.map((b) => `${b.label}: hasBolt=${b.hasBolt}`).join("; ") ||
+      `all match (${contestedLabels.join(", ") || "none contested"})`,
   );
 
   // 4. Clicking a blip opens the phenomenon drawer and updates the URL.
