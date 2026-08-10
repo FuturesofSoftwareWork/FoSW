@@ -7,7 +7,6 @@ import { deriveImpacts, freshnessOf } from "@/lib/phenomenon";
 
 interface RadarBlipsProps {
   phenomena: Phenomenon[];
-  showLabels: boolean;
   activeDimension: WorkDimensionId | null;
   onOpen: (p: Phenomenon) => void;
 }
@@ -15,7 +14,13 @@ interface RadarBlipsProps {
 /** A small lightning bolt, drawn inside a contested blip. */
 const BOLT = "M 1.1 -5.6 L -3.0 0.5 L -0.4 0.5 L -1.3 5.6 L 3.2 -0.9 L 0.4 -0.9 Z";
 
-const RadarBlips = ({ phenomena, showLabels, activeDimension, onOpen }: RadarBlipsProps) => {
+/** Hover-card metrics. The box is sized from the label rather than fixed, since
+ *  a fixed width either clips the long labels or leaves the short ones adrift. */
+const HOVER_FONT = 9;
+const HOVER_CHAR = HOVER_FONT * 0.62; // monospace advance width
+const HOVER_PAD = 7;
+
+const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
 
   // Positions depend on the whole set, not on one blip, because overlapping
@@ -102,51 +107,38 @@ const RadarBlips = ({ phenomena, showLabels, activeDimension, onOpen }: RadarBli
                 transform={`translate(${x} ${y}) scale(${r / 7})`}
               />
             )}
-            {showLabels && !dimmed && (
-              <text
-                x={labelRight ? x + r + 5 : x - r - 5}
-                y={y + 3.5}
-                textAnchor={labelRight ? "start" : "end"}
-                fontSize="10.5"
-                fontFamily="monospace"
-                fill="#cbd5e1"
-                pointerEvents="none"
-              >
-                {p.label}
-              </text>
-            )}
-            {isHovered && !showLabels && (
+            {/* The hover card carries the label and nothing else. Ring, contested
+                and draft all used to be repeated here, and all three are already
+                on the canvas: the ring is the blip's distance from the centre —
+                the radar's entire subject — the bolt marks contested, and the
+                dashed outline marks a draft. Restating them costs a second line
+                of text per blip and teaches the reader that the position is not
+                to be trusted on its own. They remain in `aria-label`, where a
+                reader who cannot see the position needs them stated. */}
+            {isHovered && !dimmed && (
               <g pointerEvents="none">
                 <rect
-                  x={labelRight ? x + r + 4 : x - r - 4 - 190}
-                  y={y - 14}
-                  width={190}
-                  height={30}
+                  x={
+                    labelRight
+                      ? x + r + 4
+                      : x - r - 4 - (p.label.length * HOVER_CHAR + HOVER_PAD * 2)
+                  }
+                  y={y - 9}
+                  width={p.label.length * HOVER_CHAR + HOVER_PAD * 2}
+                  height={18}
                   rx={3}
                   fill="#0b1220"
                   stroke="#334155"
                 />
                 <text
-                  x={labelRight ? x + r + 10 : x - r - 10}
-                  y={y - 3}
+                  x={labelRight ? x + r + 4 + HOVER_PAD : x - r - 4 - HOVER_PAD}
+                  y={y + 3.5}
                   textAnchor={labelRight ? "start" : "end"}
-                  fontSize="8"
+                  fontSize={HOVER_FONT}
                   fontFamily="monospace"
                   fill="#e2e8f0"
                 >
                   {p.label}
-                </text>
-                <text
-                  x={labelRight ? x + r + 10 : x - r - 10}
-                  y={y + 8}
-                  textAnchor={labelRight ? "start" : "end"}
-                  fontSize="7.5"
-                  fontFamily="monospace"
-                  fill="#64748b"
-                >
-                  {RING_LABEL[p.observedReach]}
-                  {p.contested ? " · contested" : ""}
-                  {isDraft ? " · draft" : ""}
                 </text>
               </g>
             )}

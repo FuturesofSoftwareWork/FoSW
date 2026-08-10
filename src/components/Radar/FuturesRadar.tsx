@@ -7,7 +7,6 @@ import RadarBlips from "./RadarBlips";
 import RadarLegend from "./RadarLegend";
 
 const LAUNCH_THRESHOLD = 10;
-const LABELS_OFF_ABOVE = 15;
 
 interface FuturesRadarProps {
   phenomena: Phenomenon[];
@@ -17,8 +16,6 @@ interface FuturesRadarProps {
 const FuturesRadar = ({ phenomena, onOpen }: FuturesRadarProps) => {
   const publishedCount = phenomena.filter((p) => p.status === "published").length;
   const [activeDimension, setActiveDimension] = useState<WorkDimensionId | null>(null);
-  const [labelsOverride, setLabelsOverride] = useState<boolean | null>(null);
-  const showLabels = labelsOverride ?? phenomena.length <= LABELS_OFF_ABOVE;
 
   // A stale research claim presented as current is worse than no radar, and an
   // unfinished one is worse than an absent one. Both guards live here.
@@ -53,20 +50,14 @@ const FuturesRadar = ({ phenomena, onOpen }: FuturesRadarProps) => {
           </p>
         )}
 
-        <div className="mb-4 flex justify-center">
-          <button
-            onClick={() => setLabelsOverride(!showLabels)}
-            aria-pressed={showLabels}
-            className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-gray-400 transition-colors hover:border-white/25 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-electric-blue/50"
-          >
-            Labels {showLabels ? "on" : "off"}
-          </button>
-        </div>
-
+        {/* No labels toggle: blip labels are gone. Ten phenomena across seven
+            sectors could not be labelled in place without the labels colliding
+            with each other and striking through the ring labels, and a toggle
+            that has to be switched off to make the radar readable is not a
+            feature. The name is on hover, on focus, and in the drawer. */}
         <RadarCanvas>
           <RadarBlips
             phenomena={phenomena}
-            showLabels={showLabels}
             activeDimension={activeDimension}
             onOpen={onOpen}
           />

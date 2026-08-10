@@ -23,9 +23,14 @@
  *         not in production), so it keys off whether any draft rendered: all of
  *         them must, or none. A hardcoded count instead fails on the day someone
  *         publishes a phenomenon, which reads as a broken radar.
- *   2-7   Structural/behavioural checks on ring placement,
- *         contested bolts, drawer open, URL, reload stability, filtering and
- *         the labels toggle — ordinary DOM assertions.
+ *   2-6   Structural/behavioural checks on ring placement, contested bolts,
+ *         drawer open, URL, reload stability and filtering — ordinary DOM
+ *         assertions.
+ *   7     No blip carries a standing label and no toggle offers to add one.
+ *         Ten phenomena across seven sectors could not be labelled in place —
+ *         the labels collided with each other and struck through the ring
+ *         labels while the blips stayed cleanly separated. This is the
+ *         regression guard for that removal.
  *   8     Sanity check that the radar rendered at all. Without it, checks 9
  *         and 10 (the viewBox and crowding checks) would iterate over zero
  *         `<text>` elements on a page with no radar — such as a production
@@ -231,23 +236,22 @@ try {
   });
   await new Promise((r) => setTimeout(r, 300));
 
-  // 7. Labels toggle changes whether label <text> elements are present.
-  const labelsOnCount = (await getBlips()).filter((b) => b.hasText).length;
-  const toggled = await page.evaluate(() => {
-    const btn = [...document.querySelectorAll("button[aria-pressed]")].find((b) =>
+  // 7. No blip carries a standing label, and no toggle offers to add one.
+  //    Ten phenomena across seven sectors could not be labelled in place: the
+  //    labels collided with each other and struck through the ring labels while
+  //    the blips themselves stayed cleanly separated. The name is on hover, on
+  //    focus, and in the drawer. This check is the regression guard — a
+  //    re-introduced label would quietly bring the crowding back with it.
+  const labelledBlips = (await getBlips()).filter((b) => b.hasText).length;
+  const toggleExists = await page.evaluate(() =>
+    [...document.querySelectorAll("button[aria-pressed]")].some((b) =>
       /^Labels (on|off)$/.test((b.textContent || "").trim()),
-    );
-    if (!btn) return null;
-    const before = btn.textContent.trim();
-    btn.click();
-    return before;
-  });
-  await new Promise((r) => setTimeout(r, 300));
-  const labelsOffCount = (await getBlips()).filter((b) => b.hasText).length;
+    ),
+  );
   check(
-    "labels toggle changes whether label <text> elements are present",
-    toggled !== null && labelsOnCount !== labelsOffCount,
-    `toggleBtn was "${toggled}", before=${labelsOnCount} after=${labelsOffCount}`,
+    "no blip renders a standing label, and no labels toggle exists",
+    labelledBlips === 0 && !toggleExists,
+    `${labelledBlips} labelled blip(s); labels toggle ${toggleExists ? "present" : "absent"}`,
   );
 
   // 8. Sanity check that the radar actually rendered, before trusting the two
@@ -269,17 +273,11 @@ try {
     `got ${textCount} <text> elements`,
   );
 
-  // 9. No <text> element's bounding box may extend outside the viewBox. Labels
-  //    were on after the previous toggle click, so turn them back on to cover
-  //    the blip-label case too, then measure every <text> in the radar SVG.
-  await page.evaluate(() => {
-    const btn = [...document.querySelectorAll("button[aria-pressed]")].find((b) =>
-      /^Labels (on|off)$/.test((b.textContent || "").trim()),
-    );
-    if (btn && btn.textContent.trim() === "Labels off") btn.click();
-  });
-  await new Promise((r) => setTimeout(r, 300));
-
+  // 9. No <text> element's bounding box may extend outside the viewBox. With
+  //    blip labels gone this measures the ring and sector titles, which is where
+  //    the risk now sits: the sector titles are the longest strings on the
+  //    canvas, they sit outside the outer ring, and they were enlarged once the
+  //    blip labels stopped competing with them for that space.
   const clipped = await page.evaluate(() => {
     const svg = document.querySelector('svg[aria-label^="Futures radar"]');
     if (!svg) return { size: null, violations: [{ text: "(svg not found)" }] };
@@ -362,16 +360,9 @@ try {
       : overlaps.map((o) => `"${o.a}" × "${o.b}" (${o.detail})`).join("; "),
   );
   // 11. Hover card must stay inside the viewBox for every blip, in both halves
-  //     of the radar. Labels must be off — the hover card only renders when
-  //     `isHovered && !showLabels`.
-  await page.evaluate(() => {
-    const btn = [...document.querySelectorAll("button[aria-pressed]")].find((b) =>
-      /^Labels (on|off)$/.test((b.textContent || "").trim()),
-    );
-    if (btn && btn.textContent.trim() === "Labels on") btn.click();
-  });
-  await new Promise((r) => setTimeout(r, 300));
-
+  //     of the radar. It is now the only way a blip's name appears on the
+  //     canvas, and its box is sized from the label, so a long name near the rim
+  //     is exactly the case that would push it out.
   const hoverViolations = [];
   const blipHandles = await page.$$('svg[aria-label^="Futures radar"] g[role="button"]');
   for (const handle of blipHandles) {

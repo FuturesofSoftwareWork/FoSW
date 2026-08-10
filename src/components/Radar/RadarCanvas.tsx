@@ -6,12 +6,22 @@ import {
   RING_LABEL,
   VIEWBOX,
   sectorAngles,
+  wrapSectorLabel,
 } from "@/config/radarGeometry";
 
 const pointOnCircle = (deg: number, r: number) => {
   const rad = ((deg - 90) * Math.PI) / 180;
   return { x: VIEWBOX.cx + r * Math.cos(rad), y: VIEWBOX.cy + r * Math.sin(rad) };
 };
+
+/** Ring labels name the axis the whole radar is built on, so they are sized to
+ *  be read rather than to stay out of the way. They sit on each band's outer
+ *  boundary, where placeBlip's radial inset keeps blips clear of them. */
+const RING_FONT = 11;
+const RING_CHAR = RING_FONT * 0.62; // monospace advance width
+
+const SECTOR_FONT = 13;
+const SECTOR_LINE = 15;
 
 const RadarCanvas = ({ children }: { children: ReactNode }) => {
   const sectors = sectorAngles(WORK_DIMENSIONS.length);
@@ -69,31 +79,55 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
         const edge = VIEWBOX.r * RING_EDGES[i + 1];
         const y = VIEWBOX.cy - edge;
         const label = RING_LABEL[ring];
+        // Backing-rect width tracks the font: these are the only labels drawn
+        // over the gradient, and a rect sized for a smaller font leaves the ends
+        // of the word sitting on the background it was meant to mask.
+        const half = (label.length * RING_CHAR) / 2 + 3;
         return (
           <g key={ring}>
-            <rect x={VIEWBOX.cx - label.length * 3.1} y={y - 9} width={label.length * 6.2} height={13} fill="#030711" />
-            <text x={VIEWBOX.cx} y={y} textAnchor="middle" fontSize="9" fontFamily="monospace" fill={i === 0 ? "#7dd3fc" : "#64748b"}>
+            <rect x={VIEWBOX.cx - half} y={y - RING_FONT} width={half * 2} height={RING_FONT + 5} fill="#030711" />
+            <text
+              x={VIEWBOX.cx}
+              y={y}
+              textAnchor="middle"
+              fontSize={RING_FONT}
+              fontFamily="monospace"
+              fill={i === 0 ? "#7dd3fc" : "#94a3b8"}
+            >
               {label}
             </text>
           </g>
         );
       })}
 
+      {/* Sector titles. These name the seven dimensions the whole radar is
+          organised by, so they were the last thing on the canvas that should
+          have been the hardest to read — 8px at 75% opacity was decorative
+          rather than legible. The blip labels that used to compete with them for
+          space are gone, so there is room to state them properly. */}
       {WORK_DIMENSIONS.map((d, i) => {
         const s = sectors[i];
-        const p = pointOnCircle((s.start + s.end) / 2, VIEWBOX.r + 16);
+        const p = pointOnCircle((s.start + s.end) / 2, VIEWBOX.r + 18);
+        const lines = wrapSectorLabel(d.shortLabel);
+        // Centre the block on the anchor point so a two-line title straddles the
+        // sector's midline exactly as a one-line title does.
+        const top = p.y - ((lines.length - 1) * SECTOR_LINE) / 2;
         return (
           <text
             key={d.id}
             x={p.x}
-            y={p.y}
+            y={top}
             textAnchor={p.x < VIEWBOX.cx - 4 ? "end" : p.x > VIEWBOX.cx + 4 ? "start" : "middle"}
-            fontSize="8"
+            fontSize={SECTOR_FONT}
             fontFamily="monospace"
+            fontWeight="500"
             fill={d.colour}
-            opacity="0.75"
           >
-            {d.shortLabel}
+            {lines.map((line, li) => (
+              <tspan key={line} x={p.x} dy={li === 0 ? 0 : SECTOR_LINE}>
+                {line}
+              </tspan>
+            ))}
           </text>
         );
       })}
