@@ -50,15 +50,21 @@ The rule the whole type exists for: **a source is evidence for a claim only if i
 measured the thing the claim is about.** Each claim file names the construct and
 tabulates the near neighbours — for `teams-get-smaller`, layoffs, hiring rates,
 job postings, total headcount, wages, junior hiring, output per developer, tool
-adoption, attrition and revenue per employee. All are rejected under
-`wrong-construct` however well reported, and `wrong-construct` is a removal
-reason rather than a demotion to `contextual`: leaving noise in as context makes
-a thin evidence base look furnished.
+adoption, attrition, revenue per employee, and vendor "pod" and "squad"
+offerings. All are rejected under `wrong-construct` however well reported, and
+`wrong-construct` is a removal reason rather than a demotion to `contextual`:
+leaving noise in as context makes a thin evidence base look furnished.
 
 `revenue per employee` and `output per developer` get called out by name, because
 both are consistent with the delivery unit staying exactly the same size and
 doing more — which is a named competing development path in the phenomenon file,
 not evidence for it.
+
+The first run against the claim surfaced a second confusion worth naming, so the
+claim file now carries it: "pod" has two referents. A company's own internal
+delivery unit is evidence about team shape; a packaged team bought from an
+agency is a procurement decision wearing the same word. "Squad" carries the same
+ambiguity plus a Spotify-model inheritance that predates AI by a decade.
 
 ## Mechanics
 
@@ -91,6 +97,14 @@ is derived and `validate-phenomena.mjs` fails the build on a mismatch;
 and `reachRationale` and `contestedNote` both currently describe the
 counter-evidence that would be leaving. `firstObserved` and `latestEvidenceDate`
 do not move — the extremes come from signals that are staying.
+
+## The second commit
+
+`data/_seen-ledger.jsonl` rides along, committed separately. It is a catch-up,
+not new content: the 82 `published` entries all correspond to signals already
+committed under `public/content/ai-signals/`, and the rest are finder declines
+swept in from the append-only rejection stores. The ledger is tracked state, so
+leaving it dirty was the worse option.
 
 ## Verification
 
