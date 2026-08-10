@@ -14,6 +14,7 @@ const valid = () => ({
   label: "Review becomes verification",
   title: "From reading code to verifying evidence",
   thesis: "Assurance shifts from inspecting code towards verifying evidence.",
+  construct: "whether assurance work inspects code or verifies evidence",
   status: "published",
   primaryDimension: "nature-and-division-of-work",
   implications: [
@@ -46,8 +47,57 @@ test("reachRationale must be present and non-empty", () => {
   assert.match(validatePhenomenon(blank, ctx).join("\n"), /reachRationale/);
 });
 
-test("reachReviewedAt must be present", () => {
-  assert.match(validatePhenomenon(withOut("reachReviewedAt"), ctx).join("\n"), /reachReviewedAt/);
+test("a draft may omit reachReviewedAt — nobody has judged its reach yet", () => {
+  const p = { ...withOut("reachReviewedAt"), status: "draft" };
+  assert.deepEqual(validatePhenomenon(p, ctx), []);
+});
+
+test("a published phenomenon may not omit reachReviewedAt", () => {
+  const errors = validatePhenomenon(withOut("reachReviewedAt"), ctx);
+  assert.ok(
+    errors.some((e) => e.includes("reachReviewedAt")),
+    `expected a reachReviewedAt error, got: ${errors.join("; ")}`,
+  );
+});
+
+test("a draft may omit construct", () => {
+  const p = { ...withOut("construct"), status: "draft" };
+  assert.deepEqual(validatePhenomenon(p, ctx), []);
+});
+
+test("a published phenomenon may not omit construct", () => {
+  const errors = validatePhenomenon(withOut("construct"), ctx);
+  assert.ok(
+    errors.some((e) => e.includes("construct")),
+    `expected a construct error, got: ${errors.join("; ")}`,
+  );
+});
+
+test("possibleReachChange needs a reason, a date and signal ids", () => {
+  const p = { ...valid(), possibleReachChange: { reason: "", raisedAt: "2026-08-10", signalIds: [] } };
+  const errors = validatePhenomenon(p, ctx);
+  assert.ok(errors.some((e) => e.includes("possibleReachChange.reason")));
+  assert.ok(errors.some((e) => e.includes("possibleReachChange.signalIds")));
+});
+
+test("possibleReachChange may be null", () => {
+  assert.deepEqual(validatePhenomenon({ ...valid(), possibleReachChange: null }, ctx), []);
+});
+
+test("possibleReachChange may name no ring", () => {
+  const p = {
+    ...valid(),
+    possibleReachChange: {
+      reason: "gained 2 independent context(s) since reach was last reviewed (1 -> 3)",
+      raisedAt: "2026-08-10",
+      signalIds: ["s-a"],
+      suggested: "gaining-traction",
+    },
+  };
+  assert.ok(
+    validatePhenomenon(p, ctx).some((e) => e.includes("suggested")),
+    "a suggested ring must be rejected — reach is a human judgment",
+  );
 });
 
 test("label must be four words or fewer", () => {

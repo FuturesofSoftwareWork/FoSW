@@ -17,7 +17,7 @@ export const MACHINE_OWNED = [
   "evidenceProfile",
   "firstObserved",
   "latestEvidenceDate",
-  // "possibleReachChange" is added in Task 2, with the field itself.
+  "possibleReachChange",
 ];
 
 /**
@@ -34,7 +34,7 @@ export const HUMAN_OWNED = [
   "label",
   "title",
   "thesis",
-  // "construct" is added in Task 2, with the field itself.
+  "construct",
   "currentPressure",
   "status",
   "primaryDimension",

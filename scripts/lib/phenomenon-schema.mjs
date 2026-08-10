@@ -32,6 +32,13 @@ export const ACTOR_IDS = [
   "organisation",
 ];
 
+/**
+ * Required on every phenomenon at any status.
+ *
+ * `reachReviewedAt` and `construct` are deliberately absent: both record a human
+ * act, and requiring them on a draft would only produce a fabricated value. Both
+ * are enforced on published phenomena in validate-phenomena.mjs.
+ */
 export const REQUIRED_FIELDS = [
   "id",
   "label",
@@ -43,5 +50,4 @@ export const REQUIRED_FIELDS = [
   "evidence",
   "observedReach",
   "reachRationale",
-  "reachReviewedAt",
 ];
