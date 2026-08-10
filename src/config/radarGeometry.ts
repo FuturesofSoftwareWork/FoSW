@@ -187,3 +187,31 @@ export function placeBlips(
 
   return polar.map((q) => polarToXY(q.radius, q.deg));
 }
+
+/** Longest sector title that still fits beside the circle on one line at the
+ *  canvas's sector font size. "Experience, identity & wellbeing" is 32
+ *  characters and ran 180px past the viewBox edge before wrapping. */
+const SECTOR_WRAP = 17;
+
+/**
+ * Break a sector title into at most two lines, at the space nearest its middle.
+ *
+ * Wrapping rather than shrinking is deliberate. These titles name the seven
+ * dimensions the whole radar is organised by, and the single-line width of the
+ * longest one caps the type at about 9px — barely more than the 8px that made
+ * them unreadable in the first place. Two lines halve the width, so the type can
+ * be sized to be read.
+ */
+export function wrapSectorLabel(label: string, max = SECTOR_WRAP): string[] {
+  if (label.length <= max) return [label];
+  const mid = label.length / 2;
+  let best = -1;
+  for (let i = 0; i < label.length; i++) {
+    if (label[i] === " " && (best === -1 || Math.abs(i - mid) < Math.abs(best - mid))) {
+      best = i;
+    }
+  }
+  // No space to break on: one long line beats a mid-word split.
+  if (best === -1) return [label];
+  return [label.slice(0, best), label.slice(best + 1)];
+}
