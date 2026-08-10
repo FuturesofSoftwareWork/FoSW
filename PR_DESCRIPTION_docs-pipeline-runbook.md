@@ -96,13 +96,27 @@ cites two `supports` items and `evidenceProfile.counterEvidence` is false.
 Ten phenomena validate, all `draft`. Coverage rises from 37 to 67 of 105
 published signals.
 
-`teams-get-smaller` is also no longer marked `contested`. Its flag and note
-described the four sources just detached as off-construct, so the bolt reported
-a disagreement the file no longer contains — and, per the Phase 2 design, never
-really did. Set to `false` rather than removed: absent means nobody has judged,
-and someone has now. The harness read the contested set from a hardcoded pair of
-names and would have failed on this ordinary editorial change; it now reads
-`contested` from the phenomenon files, the same fix the blip count got.
+`teams-get-smaller` picks up the two editorial edits the detachments left owing,
+both on human-owned fields that `radar:apply` correctly refused to touch:
+
+- **No longer `contested`.** The flag and note described the four sources just
+  detached as off-construct, so the bolt reported a disagreement the file no
+  longer contains — and, per the Phase 2 design, never really did. Set to `false`
+  rather than removed: absent means nobody has judged, and someone has now.
+- **`reachRationale` rewritten.** It argued from "a single investor field
+  writeup" and "the counter-evidence on aggregate demand is strong", neither true
+  any more. It now names both supporting sources and what each measured, says
+  what is still missing, and records that the removed counter-evidence was
+  off-construct — so its disappearance is not misread as the claim strengthening.
+
+`observedReach` and `reachReviewedAt` are unchanged on purpose. Correcting stale
+prose is not a reach judgment, and stamping today's date would assert a
+conversation that did not happen — leaving it also keeps `possibleReachChange`
+raised, so the review stays outstanding.
+
+The harness read the contested set from a hardcoded pair of names and would have
+failed on the `contested` change; it now reads `contested` from the phenomenon
+files, the same fix the blip count got.
 
 ### 6. `verify:radar` no longer hardcodes the blip count
 
@@ -155,12 +169,11 @@ title is 32 characters and caps single-line type at about 9px.
 
 ## Known, and deliberately not fixed here
 
-- **`teams-get-smaller`'s `reachRationale` is stale.** It argues from "a single
-  investor field writeup" and "the counter-evidence on aggregate demand is
-  strong" — there are now two supporting sources and no counter-evidence.
-  Rewriting reach prose belongs to the reach review, with a person, and
-  `possibleReachChange` is already raised on this phenomenon to force it.
-  (The `contested` flag itself is fixed on this branch — see below.)
+- **`teams-get-smaller` still owes a reach review.** Its `contested` flag and
+  `reachRationale` are corrected on this branch, but `possibleReachChange` is
+  raised and `reachReviewedAt` deliberately still reads 2026-08-05: the prose was
+  corrected, the ring was not re-judged. Whether `early-manifestations` is still
+  right at two independent contexts is the conversation, and it has not happened.
 - **All four proposed phenomena came back `gaining-traction`** — none at the rim,
   none at the centre. Worth scepticism at reach review; it is the anchoring
   pattern the adjacent-ring requirement exists to counter.
