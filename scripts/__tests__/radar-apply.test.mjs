@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import { apply } from "../radar-apply.mjs";
-import { sig, phen, makeRoot, read, index } from "./helpers/radar-fixtures.mjs";
+import { sig, phen, makeRoot, read, index, PHENOMENA } from "./helpers/radar-fixtures.mjs";
 
 const newPhen = (over = {}) => ({
   label: "Teams get smaller",
@@ -159,6 +159,70 @@ test("a new phenomenon without construct aborts", () => {
   delete p.construct;
   const result = apply({ root, today: "2026-08-10", proposal: { newPhenomena: [p] } });
   assert.ok(result.errors.some((e) => e.includes("construct")));
+});
+
+test("a detachment's reason reaches the apply report", () => {
+  const root = makeRoot({
+    signals: [sig("s1"), sig("s2")],
+    phenomena: [
+      phen("p1", [
+        { signalId: "s1", stance: "supports", primary: true },
+        { signalId: "s2", stance: "counter", primary: true },
+      ]),
+    ],
+  });
+  const result = apply({
+    root,
+    today: "2026-08-10",
+    proposal: {
+      detachments: [
+        { phenomenonId: "p1", signalId: "s2", reason: "wrong-construct: measures hiring, not team size" },
+        // not cited, so nothing is removed and nothing should be reported as one
+        { phenomenonId: "p1", signalId: "s9", reason: "never attached" },
+      ],
+    },
+  });
+  assert.deepEqual(result.errors, []);
+  const report = readFileSync(join(root, "data/_radar-apply-report.md"), "utf8");
+  assert.match(report, /## Detachments/);
+  assert.match(report, /wrong-construct: measures hiring, not team size/);
+  assert.doesNotMatch(report, /never attached/, "a no-op detachment is not a removal");
+});
+
+test("a new phenomenon whose implication carries pathIds aborts and writes nothing", () => {
+  const root = makeRoot({ signals: [sig("s1")] });
+  const result = apply({
+    root,
+    today: "2026-08-10",
+    proposal: {
+      newPhenomena: [
+        newPhen({
+          implications: [
+            { dimension: "organisation-and-leadership", statement: "A thing.", pathIds: ["x"] },
+          ],
+        }),
+      ],
+    },
+  });
+  assert.ok(result.errors.some((e) => e.includes("pathIds")));
+  assert.deepEqual(result.created, []);
+  assert.equal(existsSync(join(root, PHENOMENA, "teams-get-smaller.json")), false);
+  assert.equal(index(root).items.length, 0, "the index must not gain an entry either");
+});
+
+test("an empty pathIds array is accepted", () => {
+  const root = makeRoot({ signals: [sig("s1")] });
+  const result = apply({
+    root,
+    today: "2026-08-10",
+    proposal: {
+      newPhenomena: [
+        newPhen({ implications: [{ dimension: "organisation-and-leadership", statement: "A thing.", pathIds: [] }] }),
+      ],
+    },
+  });
+  assert.deepEqual(result.errors, []);
+  assert.deepEqual(result.created, ["teams-get-smaller"]);
 });
 
 test("a detachment on an unknown phenomenon aborts the whole batch", () => {

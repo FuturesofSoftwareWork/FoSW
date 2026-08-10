@@ -2,11 +2,14 @@
 /**
  * Apply a clustering or claim-run proposal.
  *
- * The only writer of machine-owned fields. On an existing phenomenon every write
- * goes through mergeMachineFields, so rewriting a thesis is not forbidden but
- * unreachable — there is no code path that does it. Where the model believes
- * human-owned content should change, it emits a suggestion into the report, which
- * a person reads and a person acts on.
+ * The only writer of a phenomenon's evidence, and the only thing that writes any
+ * machine-owned field from a proposal — radar-derive.mjs writes the derived ones
+ * (evidenceProfile, the dates, possibleReachChange) on its own.
+ *
+ * On an existing phenomenon every write goes through mergeMachineFields, so
+ * rewriting a thesis is not forbidden but unreachable — there is no code path that
+ * does it. Where the model believes human-owned content should change, it emits a
+ * suggestion into the report, which a person reads and a person acts on.
  *
  * All-or-nothing: any validation error and nothing is written at all.
  *
@@ -106,6 +109,20 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     if (!p.construct || !String(p.construct).trim()) {
       errors.push(`newPhenomena '${id}': construct is required — it defines what counts as evidence here`);
     }
+    // The proposal format carries no developmentPaths, so this script writes none.
+    // A pathIds reference could therefore never resolve, and letting it through
+    // would write the file and then fail validate-phenomena in the spawned check —
+    // leaving an invalid phenomenon on disk and an index entry pointing at it.
+    // Development paths are added by a person during review, and the links with them.
+    for (const [j, im] of (p.implications || []).entries()) {
+      if (Array.isArray(im?.pathIds) && im.pathIds.length) {
+        errors.push(
+          `newPhenomena '${id}': implications[${j}].pathIds is non-empty, but a proposal ` +
+            `carries no developmentPaths for it to reference — leave pathIds out and add ` +
+            `paths during review`,
+        );
+      }
+    }
     if (byId.has(id) || existsSync(join(phenomenaDir, `${id}.json`))) {
       errors.push(`newPhenomena '${id}': ${id}.json already exists — refusing to overwrite`);
     }
@@ -134,6 +151,11 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     list.push({ signalId: a.signalId, stance: a.stance, primary: a.primary, ...(a.note ? { note: a.note } : {}) });
     attached += 1;
   }
+  // Removals are recorded with their reason: an evidence item that vanishes from a
+  // phenomenon with no trace of why is exactly the hand-edit the ownership split
+  // exists to prevent, done by a script instead. Only applied removals are listed —
+  // a detachment of something not cited changed nothing and is not a removal.
+  const removals = [];
   let detached = 0;
   for (const d of detachments) {
     const list = evidenceOf(d.phenomenonId);
@@ -141,6 +163,7 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     if (at === -1) continue; // no-op
     list.splice(at, 1);
     detached += 1;
+    removals.push({ phenomenonId: d.phenomenonId, signalId: d.signalId, reason: d.reason });
   }
 
   // ---- write existing phenomena through the machine-owned allowlist ----
@@ -202,6 +225,20 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     `- created: ${created.length ? created.join(", ") : "none"}`,
     "",
   ];
+  if (removals.length) {
+    lines.push(
+      "## Detachments",
+      "",
+      "Evidence removed, and why. Nothing else records this.",
+      "",
+      ...removals.map(
+        (r) =>
+          `- **${r.phenomenonId}** dropped \`${r.signalId}\`: ` +
+          `${String(r.reason || "").trim() || "_no reason given_"}`,
+      ),
+      "",
+    );
+  }
   if (warnings.length) lines.push("## Warnings", "", ...warnings.map((w) => `- ${w}`), "");
   if (suggestions.length) {
     lines.push(
