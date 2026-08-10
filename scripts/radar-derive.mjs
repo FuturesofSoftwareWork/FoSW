@@ -13,6 +13,7 @@ import { writeFileSync } from "fs";
 import { resolve, join } from "path";
 import { readIndex, readItems, indexById } from "./lib/content.mjs";
 import { deriveEvidenceProfile, deriveDates } from "./lib/derive.mjs";
+import { mergeMachineFields } from "./lib/radar-fields.mjs";
 
 const PHENOMENA_DIR = "public/content/phenomena";
 const SIGNALS_DIR = "public/content/ai-signals";
@@ -24,15 +25,24 @@ const SIGNALS_DIR = "public/content/ai-signals";
  * than re-filtering evidence by date. Detached evidence is gone from the array,
  * so a date filter can only ever see additions — and a claim run that strips
  * off-construct evidence produces exactly the decrease that matters most.
+ *
+ * `changedSignalIds` is what the caller just attached or detached. The candidate's
+ * signalIds exist so a reviewer can tell "three new contexts appeared" from "three
+ * of your four were removed" — and on a loss the removed ids are already gone from
+ * `evidence`, so the surviving ids name precisely what did NOT change. radar:apply
+ * knows what it moved and passes it; standalone radar:derive cannot recover it and
+ * falls back to the current evidence ids.
  */
-export function deriveOne(phenomenon, signalsById, { today }) {
+export function deriveOne(phenomenon, signalsById, { today, changedSignalIds } = {}) {
   const evidenceProfile = deriveEvidenceProfile(phenomenon, signalsById);
   const { firstObserved, latestEvidenceDate } = deriveDates(phenomenon, signalsById);
 
   const stored = phenomenon.evidenceProfile;
   const previous = phenomenon.possibleReachChange ?? null;
   const reviewedAt = phenomenon.reachReviewedAt;
-  const signalIds = (phenomenon.evidence || []).map((e) => e.signalId);
+  const signalIds = Array.isArray(changedSignalIds)
+    ? [...changedSignalIds]
+    : (phenomenon.evidence || []).map((e) => e.signalId);
 
   let possibleReachChange = null;
 
@@ -98,7 +108,9 @@ export function derive({ root = process.cwd(), today = new Date().toISOString().
   for (const { file, data } of items) {
     const { updates, reachChangeNote } = deriveOne(data, signalsById, { today });
     if (reachChangeNote) notes.push(reachChangeNote);
-    const next = { ...data, ...updates };
+    // Through the allowlist, not a raw spread: mergeMachineFields is meant to be the
+    // single write path onto an existing phenomenon in fact, not only in the docs.
+    const next = mergeMachineFields(data, updates);
     // A field that computed to null and was never on this phenomenon before
     // (possibleReachChange on content predating this script, chiefly) is not a
     // real change — just the field's absence written out explicitly. Writing
