@@ -21,6 +21,13 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 - `npm run preview` — preview production build
 - `npm run verify:radar <baseUrl>` — 15 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
 - `npm run signals:promote` — move reviewed drafts from `data/signal-drafts/accepted/` into `public/content/ai-signals/`, append their `index.json` entries, and record every decision in the seen-ledger. See the pipeline section below.
+- `npm run radar:prepare` — digest uncovered signals for the clustering pass
+- `npm run radar:apply -- <proposal.json>` — apply a proposal; the only writer of machine-owned fields
+- `npm run radar:derive` — recompute derived values and reach candidates
+- `npm run radar:accept -- <ids...>` — publish reviewed drafts
+- `npm run radar:reject -- <ids...> --reason "..."` — decline a draft and release its signals
+
+The two LLM steps between those commands are [`docs/radar-clustering-prompt.md`](docs/radar-clustering-prompt.md) (runs in its own session, writes `data/_radar-proposal.json`) and [`docs/radar-reach-review-prompt.md`](docs/radar-reach-review-prompt.md) (runs with a person, one phenomenon at a time). Design detail in [`docs/superpowers/specs/2026-08-07-radar-phase2-pipeline-design.md`](docs/superpowers/specs/2026-08-07-radar-phase2-pipeline-design.md).
 
 **On Windows, run the `--base=` builds from PowerShell, or prefix with `MSYS_NO_PATHCONV=1` in Git Bash.** MSYS rewrites `/FoSW/preview/` into a Windows path, and the build then succeeds with a silently wrong base.
 
@@ -115,10 +122,13 @@ Only include a type-specific field when its value is actually stated in the sour
 - Optional: `tags`
 
 **Phenomenon** (`public/content/phenomena/*.json`):
-- Required (`REQUIRED_FIELDS`): `id`, `label`, `title`, `thesis`, `status`, `primaryDimension`, `implications`, `evidence`, `observedReach`, `reachRationale`, `reachReviewedAt`
+- Required (`REQUIRED_FIELDS`): `id`, `label`, `title`, `thesis`, `status`, `primaryDimension`, `implications`, `evidence`, `observedReach`, `reachRationale`
 - `observedReach` must be one of: `early-manifestations`, `gaining-traction`, `field-level-shift`
 - Evidence `stance` must be one of: `supports`, `counter`, `contextual`
 - Work dimensions (seven): `nature-and-division-of-work`, `organisation-and-leadership`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
+- `construct` — what a source must measure to count as evidence here. Optional on drafts, **required on published**.
+- `possibleReachChange` — derived candidate for reach review. Carries no ring.
+- `reachReviewedAt` is now **required on published only**; its absence means no human has judged reach yet, and `radar:accept` refuses on it.
 
 `observedReach` is a human judgment and must never be set by a script. `evidenceProfile`, `firstObserved` and `latestEvidenceDate` are derived and must never be hand-edited — the validator fails the build on either.
 

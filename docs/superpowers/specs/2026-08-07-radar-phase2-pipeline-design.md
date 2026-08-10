@@ -354,12 +354,32 @@ one; a script naming a target ring, even as a suggestion, is closer to deciding
 reach than this design should get. It says *look at this again*, and names what
 prompted it.
 
-Rule: `radar:derive` computes the evidence profile twice — once over all evidence,
+Rule: `radar:derive` computes the evidence profile fresh and compares it against
+the profile **stored on the phenomenon**, raising `possibleReachChange` when
+`independentContexts` has **changed in either direction**. Never on
+`quartersSpanned` alone: time passing is not spread, and a phenomenon that
+accumulates quarters without accumulating contexts is the exact case the reach
+axis exists to hold still.
+
+**Stored-profile comparison, not a date filter over the evidence.** An earlier
+draft of this section said to compute the profile twice — once over all evidence,
 once over evidence whose signal date is on or before `reachReviewedAt` — and
-raises `possibleReachChange` when `independentContexts` has **changed in either
-direction** since reach was last judged. Never on `quartersSpanned` alone: time
-passing is not spread, and a phenomenon that accumulates quarters without
-accumulating contexts is the exact case the reach axis exists to hold still.
+diff the two. That does not work, and it fails on the case that matters most.
+Detached evidence is *gone from the array*, so a date filter has nothing to see:
+both passes run over the same surviving items, and the only difference either can
+ever produce is an addition. A claim run that strips off-construct evidence takes
+a phenomenon from four independent contexts to one and the filter reports no
+change at all. The stored profile is the record of what the count was when reach
+was last written, which is exactly the baseline the comparison needs, and it costs
+one field read instead of a second derivation.
+
+The flag is **sticky**. It stays raised until a human has looked at reach since it
+was raised — `reachReviewedAt >= possibleReachChange.raisedAt` — rather than
+clearing on the next quiet run. Clearing it because nothing changed this week
+would drop a review nobody performed, and the flag's whole job is to survive until
+someone answers it. `radar:derive` re-raises with a fresh `raisedAt` whenever the
+count moves again, so the newest reason wins; otherwise it carries the outstanding
+one forward unchanged.
 
 **Both directions, and the downward one matters more.** An earlier version raised
 it only on an increase. Claim runs make decreases routine — stripping
