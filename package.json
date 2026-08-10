@@ -15,6 +15,7 @@
     "radar:prepare": "node scripts/radar-prepare.mjs",
     "radar:derive": "node scripts/radar-derive.mjs",
     "radar:apply": "node scripts/radar-apply.mjs",
+    "radar:accept": "node scripts/radar-accept.mjs",
     "signals:prepare": "node scripts/ledger.mjs prepare",
     "signals:collect": "node scripts/collect-candidates.mjs",
     "signals:reconcile": "node scripts/ledger.mjs reconcile",
