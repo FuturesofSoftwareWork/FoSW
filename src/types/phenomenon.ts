@@ -55,6 +55,14 @@ export interface ReachHistoryEntry {
   rationale: string;
 }
 
+/** A candidate for reach review. Carries no ring: reach is a human judgment. */
+export interface PossibleReachChange {
+  /** What prompted it, naming the direction — contexts gained or lost. */
+  reason: string;
+  raisedAt: string;
+  signalIds: string[];
+}
+
 export interface Phenomenon {
   id: string;
   /** 2–4 words. The radar blip label. */
@@ -63,6 +71,10 @@ export interface Phenomenon {
   title: string;
   /** The forward-looking transformation claim, stated so it could be wrong. */
   thesis: string;
+  /** What must be measured for a source to count as evidence here. A source is
+   *  evidence for a claim only if it measured the thing the claim is about.
+   *  Required on published phenomena. */
+  construct?: string;
   /** The observable present-day pressure driving the transformation. */
   currentPressure?: string;
   status: "published" | "draft" | "retired";
@@ -77,6 +89,7 @@ export interface Phenomenon {
   reachRationale: string;
   reachReviewedAt: string;
   evidenceProfile?: EvidenceProfile;
+  possibleReachChange?: PossibleReachChange | null;
 
   contested?: boolean;
   contestedNote?: string | null;

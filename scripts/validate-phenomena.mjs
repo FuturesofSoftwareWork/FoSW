@@ -59,9 +59,35 @@ export function validatePhenomenon(p, ctx) {
     e(`primaryDimension ${JSON.stringify(p.primaryDimension)} is not one of ${WORK_DIMENSION_IDS.join(" | ")}`);
   }
 
-  // A ring position without a stated reason is unreviewable.
+  // A ring position without a stated reason is unreviewable at any status.
   if (isBlank(p.reachRationale)) e("reachRationale must be present and non-empty");
-  if (isBlank(p.reachReviewedAt)) e("reachReviewedAt must be present");
+
+  // reachReviewedAt records when a human last judged reach, and construct records
+  // what a source must measure to count here. A draft that has neither has simply
+  // not been reviewed yet; a published one must have been.
+  if (published && isBlank(p.reachReviewedAt)) {
+    e("a published phenomenon needs reachReviewedAt — the date a human judged its reach");
+  }
+  if (published && isBlank(p.construct)) {
+    e("a published phenomenon needs construct — what a source must measure to be evidence here");
+  }
+
+  // Derived, and never a ring: nothing automatic may propose where a blip sits.
+  if (p.possibleReachChange != null) {
+    const prc = p.possibleReachChange;
+    if (typeof prc !== "object" || Array.isArray(prc)) {
+      e("possibleReachChange must be an object or null");
+    } else {
+      if (isBlank(prc.reason)) e("possibleReachChange.reason must be a non-empty string");
+      if (isBlank(prc.raisedAt)) e("possibleReachChange.raisedAt must be present");
+      if (!Array.isArray(prc.signalIds) || prc.signalIds.length === 0) {
+        e("possibleReachChange.signalIds must be a non-empty array");
+      }
+      if ("suggested" in prc) {
+        e("possibleReachChange must not carry 'suggested' — reach is a human judgment");
+      }
+    }
+  }
 
   // The label sits beside a dot on the radar; anything longer does not fit.
   if (typeof p.label === "string" && p.label.trim().split(/\s+/).length > 4) {
