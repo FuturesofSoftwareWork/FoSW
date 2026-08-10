@@ -204,6 +204,88 @@ The sector is a **run-time lens only**: it shapes the search and the output
 filenames, and is never recorded in published signal JSON. There is no
 `workDimensions` field on the AI Signal schema.
 
+## Claim runs (targeted at one phenomenon's evidence base)
+
+A generic run and a sector run both ask *what is new?* A **claim run** asks
+whether the evidence under one radar phenomenon actually supports what that
+phenomenon says — and goes looking for what would show that it does not.
+
+Why they exist: evidence accumulates by topical association, not by measurement.
+A phenomenon claiming the delivery unit is shrinking attracts a year of layoff
+and hiring data, all of it real and none of it about team size. The result looks
+like a well-evidenced claim and is a single source wearing five coats. A claim
+run is the corrective pass.
+
+Three things make it different from every other run here:
+
+1. **It tests rather than scouts.** Novelty is not the bar; measuring the
+   construct is.
+2. **It hunts both sides deliberately.** A phenomenon's `whatWouldChangeThis`
+   list is a ready-made search brief for the refuting side, and refutations are
+   rarer because nothing that stayed the same makes news.
+3. **Its deliverable is an evidence block, not a set of drafts.** The retrieval
+   report ends with the `evidence` array proposed for the phenomenon file,
+   including proposed removals and their consequences for `evidenceProfile
+   .counterEvidence`, `contested` and `reachRationale`. The run never edits the
+   phenomenon file; a human applies it.
+
+The central rule is the **construct test**: a source is evidence for a claim only
+if it measured the thing the claim is about. Each claim file names the construct
+and tabulates the near neighbours that get mistaken for it, which the run must
+reject under `wrong-construct` however well reported they are.
+
+Each claim has its own **standalone** prompt in `docs/claim-prompts/`. These are
+forks of the sector prompts, not extensions of them: never run a claim prompt and
+a sector prompt against one another.
+
+Currently written:
+
+| Claim | Prompt |
+|-------|--------|
+| `teams-get-smaller` | [`claim-prompts/teams-get-smaller.md`](./claim-prompts/teams-get-smaller.md) |
+
+Each claim prompt is launched on its own and reads
+[`claim-prompts/claim-prompt-instructions.md`](./claim-prompts/claim-prompt-instructions.md)
+first — the shared half, carrying the construct test, the schema, the output
+contract, dedup rules and the retrieval-report format. The claim file carries
+only the claim, its construct, its near neighbours, what would refute it, the
+search window, source mix, hunting grounds and hazards. The two are disjoint.
+
+Run order — as with sector runs there is **no `signals:collect` step**, because
+the collector's feeds are not claim-aware:
+
+```bash
+npm run signals:prepare
+#  run the claim prompt (web search; no candidate pool). It writes, itself:
+#    data/signal-drafts/<id>.json                        one file per selected signal
+#    data/_finder-rejected-claim-<claim-id>.jsonl        appended, one line per rejection
+#    data/_finder-report-claim-<claim-id>.md             retrieval report + proposed evidence block
+#  review data/signal-drafts/, mv each file into accepted/ or rejected/
+npm run signals:promote
+#  then apply the report's proposed evidence block to
+#  public/content/phenomena/<claim-id>.json by hand
+```
+
+The `claim-` infix keeps a claim run's working files clear of both the generic
+run's and any sector run's. `promote-signals.mjs` sweeps every
+`data/_finder-rejected*.jsonl` into the ledger, so claim-run rejections are
+remembered without further wiring.
+
+The claim is a **run-time lens only**, exactly as the sector is: it shapes the
+search and the output filenames and is never recorded in published signal JSON.
+There is no phenomenon field and no stance field on a signal — stance lives on
+the phenomenon's evidence entry, because the same source can be support for one
+phenomenon and context for another.
+
+Applying the proposed block is a human step, and three fields move with it:
+`evidenceProfile.counterEvidence` is derived and validated (`validate-phenomena
+.mjs` fails the build on a mismatch), `contested` gates a radar bolt that
+`scripts/verify-radar.mjs` counts by name, and `reachRationale` and
+`contestedNote` are prose that may now describe evidence no longer in the file.
+`observedReach` is a human judgment and a claim run may report that it no longer
+matches the evidence, but never propose a new ring value as though it were
+derived.
+
 ## Extending
 
 Add a source by writing an `async` collector that returns candidate objects
