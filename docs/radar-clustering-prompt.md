@@ -301,9 +301,12 @@ Propose a detachment when an existing citation fails the construct test. That is
 the main use, and it is a genuinely valuable output of a clustering run:
 correcting the existing corpus matters at least as much as extending it.
 
-`reason` is free text, read by a person in the apply report. Use
+`reason` is **required** and free text, read by a person in the apply report. Use
 `wrong-construct` where it applies, and say plainly what the source measured
-instead.
+instead. `radar:apply` refuses the whole batch if a detachment has no reason: the
+report is the only record a citation was ever removed, and a removal with no
+stated reason is not a decision — the same rule `radar:reject` applies to a
+decline.
 
 Two things to know before you propose one:
 
@@ -398,7 +401,11 @@ one" is.
 `dimension` must be one of the seven work dimensions. `actors` must be drawn from
 `developer`, `reviewer`, `technical-lead`, `engineering-manager`, `executive`,
 `new-entrant`, `organisation`. Both are validated; a value outside the lists
-fails the build.
+refuses the batch. That is general: `radar:apply` builds every record it would
+write — attachments merged onto existing phenomena as well as new phenomena — and
+runs it through the same validator the build runs, before anything reaches disk.
+Nothing invalid lands on disk and nothing invalid reddens the build; you get a
+refusal and a message instead.
 
 **Leave `pathIds` out, or empty.** The proposal format carries no
 `developmentPaths`, so `radar:apply` writes none, so a `pathIds` reference could

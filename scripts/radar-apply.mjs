@@ -11,7 +11,12 @@
  * does it. Where the model believes human-owned content should change, it emits a
  * suggestion into the report, which a person reads and a person acts on.
  *
- * All-or-nothing: any validation error and nothing is written at all.
+ * All-or-nothing, and against the real schema: every record this run would write —
+ * merged existing ones as well as new ones — is built in memory and put through
+ * validate-phenomena's own validatePhenomenon before anything reaches disk. There is
+ * no second restatement of the schema here to drift out of step, and no path that
+ * lands a file and an index entry only for the spawned validator to redden the build
+ * afterwards, which `npm run build` runs first and so blocks everyone.
  *
  *   node scripts/radar-apply.mjs data/_radar-proposal.json
  */
@@ -22,6 +27,7 @@ import { spawnSync } from "child_process";
 import { readIndex, readItems, indexById } from "./lib/content.mjs";
 import { mergeMachineFields } from "./lib/radar-fields.mjs";
 import { deriveOne } from "./radar-derive.mjs";
+import { validatePhenomenon } from "./validate-phenomena.mjs";
 
 const PHENOMENA_DIR = "public/content/phenomena";
 const SIGNALS_DIR = "public/content/ai-signals";
@@ -98,6 +104,15 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
   }
   for (const d of detachments) {
     if (!byId.has(d.phenomenonId)) errors.push(`detachment: unknown phenomenon '${d.phenomenonId}'`);
+    // Same argument radar:reject makes about --reason. Removing evidence is a
+    // decision, the apply report is the only place it is ever recorded, and a
+    // removal recorded as "_no reason given_" records nothing.
+    if (!String(d.reason ?? "").trim()) {
+      errors.push(
+        `detachment: '${d.phenomenonId}' / '${d.signalId}' has no reason — ` +
+          `removing evidence with no stated reason is not a decision`,
+      );
+    }
   }
   const created = [];
   for (const p of newPhenomena) {
@@ -137,11 +152,19 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
 
   if (errors.length) return { attached: 0, detached: 0, created: [], warnings, errors };
 
-  // ---- mutate evidence on existing phenomena ----
+  // ---- mutate evidence on existing phenomena, in memory only ----
   const touched = new Map();
   const evidenceOf = (id) => {
     if (!touched.has(id)) touched.set(id, [...(byId.get(id).data.evidence || [])]);
     return touched.get(id);
+  };
+  // What actually moved, per phenomenon. deriveOne needs it: on a loss the removed
+  // ids are gone from the evidence array, so the surviving ids name what did NOT
+  // change — the opposite of what the reach candidate is for.
+  const changedSignals = new Map();
+  const noteChange = (id, signalId) => {
+    if (!changedSignals.has(id)) changedSignals.set(id, new Set());
+    changedSignals.get(id).add(signalId);
   };
 
   let attached = 0;
@@ -149,6 +172,7 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     const list = evidenceOf(a.phenomenonId);
     if (list.some((e) => e.signalId === a.signalId)) continue; // no-op, safe to re-run
     list.push({ signalId: a.signalId, stance: a.stance, primary: a.primary, ...(a.note ? { note: a.note } : {}) });
+    noteChange(a.phenomenonId, a.signalId);
     attached += 1;
   }
   // Removals are recorded with their reason: an evidence item that vanishes from a
@@ -163,17 +187,24 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     if (at === -1) continue; // no-op
     list.splice(at, 1);
     detached += 1;
+    noteChange(d.phenomenonId, d.signalId);
     removals.push({ phenomenonId: d.phenomenonId, signalId: d.signalId, reason: d.reason });
   }
 
-  // ---- write existing phenomena through the machine-owned allowlist ----
+  // ---- build every record exactly as it would be written ----
+  const pending = [];
+
   for (const [id, evidence] of touched) {
     const { file, data } = byId.get(id);
     const withEvidence = mergeMachineFields(data, { evidence });
-    const { updates } = deriveOne(withEvidence, signalsById, { today });
+    const moved = [...(changedSignals.get(id) ?? [])];
+    const { updates } = deriveOne(withEvidence, signalsById, {
+      today,
+      ...(moved.length ? { changedSignalIds: moved } : {}),
+    });
     const merged = mergeMachineFields(withEvidence, updates);
     const next = withoutPhantomNulls(merged, updates, data);
-    writeJson(join(phenomenaDir, file), next);
+    pending.push({ path: join(phenomenaDir, file), record: next });
     if (!evidence.some((e) => e.stance === "supports")) {
       warnings.push(
         `${id}: no 'supports' evidence remains — it can no longer be published, ` +
@@ -182,7 +213,6 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     }
   }
 
-  // ---- write new phenomena, files before index ----
   for (const [i, p] of newPhenomena.entries()) {
     const id = created[i];
     const record = {
@@ -204,8 +234,23 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     const { updates } = deriveOne(record, signalsById, { today });
     const merged = { ...record, ...updates };
     const finalRecord = withoutPhantomNulls(merged, updates, record);
-    writeJson(join(phenomenaDir, `${id}.json`), finalRecord);
+    pending.push({ path: join(phenomenaDir, `${id}.json`), record: finalRecord });
   }
+
+  // ---- the schema is enforced in exactly one place ----
+  // Not a restatement of the rules: the same validatePhenomenon the build runs, on
+  // the exact bytes this run would write. A related[] reference to a sibling created
+  // in the same batch resolves because the batch's own ids are in scope.
+  const phenomenonIds = new Set([...byId.keys(), ...created]);
+  for (const { record } of pending) {
+    for (const msg of validatePhenomenon(record, { signalsById, phenomenonIds })) {
+      errors.push(`${record.id}: ${msg}`);
+    }
+  }
+  if (errors.length) return { attached: 0, detached: 0, created: [], warnings: [], errors };
+
+  // ---- write, files before index ----
+  for (const { path, record } of pending) writeJson(path, record);
 
   if (created.length) {
     phenomenaIndex.items = phenomenaIndex.items || [];
@@ -231,11 +276,8 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
       "",
       "Evidence removed, and why. Nothing else records this.",
       "",
-      ...removals.map(
-        (r) =>
-          `- **${r.phenomenonId}** dropped \`${r.signalId}\`: ` +
-          `${String(r.reason || "").trim() || "_no reason given_"}`,
-      ),
+      // The reason is guaranteed non-blank: a detachment without one is refused above.
+      ...removals.map((r) => `- **${r.phenomenonId}** dropped \`${r.signalId}\`: ${String(r.reason).trim()}`),
       "",
     );
   }
