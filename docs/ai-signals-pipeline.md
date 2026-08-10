@@ -8,6 +8,9 @@ Design principle: **retrieve broadly in code → score editorially in the LLM.**
 can only reason over what it's given, so discovery and de-duplication live in scripts; the
 model does the editorial judgment.
 
+> Operating this? Read [`pipeline-runbook.md`](./pipeline-runbook.md) instead — what to
+> type, in what order, and what to do when a step refuses. This page is the design.
+
 ## Files
 
 | Path | What it is | Committed? |
@@ -16,9 +19,10 @@ model does the editorial judgment.
 | `scripts/collect-candidates.mjs` | Zero-auth feed collector (HN, Dev.to, Reddit, GitHub releases) | yes |
 | `scripts/validate-signals.mjs` | Schema validator; runs first in `npm run build` | yes |
 | `data/_seen-ledger.jsonl` | Append-only memory of everything seen | **yes — this is state** |
+| `scripts/promote-signals.mjs` | Publishes reviewed drafts; the only schema gate | yes |
 | `data/_candidates.json` | Per-run candidate pool for the prompt | no (gitignored, regenerated) |
-| `data/_finder-output.json` | The finder's selected items for this run | no (gitignored) |
-| `data/_finder-rejected.json` | Items evaluated and declined this run | no (gitignored) |
+| `data/signal-drafts/<id>.json` | The finder's selected items, one file each, awaiting review | no (gitignored) |
+| `data/_finder-rejected*.jsonl` | Items evaluated and declined, append-only across runs | no (gitignored) |
 
 ### Why these live in `data/`, not `public/`
 
@@ -42,14 +46,25 @@ npm run signals:collect      # 2. pull leading-indicator feeds -> data/_candidat
 #                              3. run the finder prompt, feeding it:
 #                                   - data/_seen-ledger.jsonl  (what NOT to resurface)
 #                                   - data/_candidates.json    (fresh items to score)
-#                                 the prompt writes data/_finder-output.json
-#                                 and data/_finder-rejected.json
-npm run signals:reconcile -- data/_finder-output.json --rejected data/_finder-rejected.json   # 4. append to ledger
+#                                 the prompt writes data/signal-drafts/<id>.json,
+#                                 one per signal, and appends to
+#                                 data/_finder-rejected.jsonl
+#                              4. review data/signal-drafts/, mv each file into
+#                                 accepted/ or rejected/
+npm run signals:promote      # 5. validate, publish, and record every decision in the ledger
 ```
 
-Steps 1, 2, and 4 are deterministic code. Step 3 is the LLM. Keeping ledger writes in code
-(step 4) rather than asking the model to append means state can't be lost to a model slip or
-a run that dies mid-write.
+Steps 1, 2, and 5 are deterministic code. Step 3 is the LLM and step 4 is a person. Keeping
+ledger writes in code (step 5) rather than asking the model to append means state can't be
+lost to a model slip or a run that dies mid-write.
+
+**The generic run ends at `signals:promote`, not `signals:reconcile`.** It used to write a
+single `data/_finder-output.json` array which `reconcile` appended to the ledger as
+`published` — a contract that predates draft staging. Nothing converts that array into
+drafts, so items written that way are invisible to review and to `promote`, while `reconcile`
+has already recorded them as seen, so no later run re-surfaces them. Four signals were lost
+that way on 2026-08-10 and recovered by hand. `signals:reconcile` still exists and still
+works; no run order in this repo uses it.
 
 ## The seen-ledger
 

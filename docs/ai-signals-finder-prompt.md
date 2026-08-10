@@ -6,9 +6,17 @@ Paste the block below into the scheduled job. Run order is documented in
 ```
 npm run signals:prepare
 npm run signals:collect
-<this prompt runs>
-npm run signals:reconcile -- data/_finder-output.json --rejected data/_finder-rejected.json
+<this prompt runs>                       # -> data/signal-drafts/<id>.json, one per signal
+#  a person reviews data/signal-drafts/ and moves each file
+#  into accepted/ or rejected/
+npm run signals:promote
 ```
+
+`signals:promote` is the only schema gate between this prompt and the live site,
+and the only thing that writes the ledger. This run does **not** end in
+`signals:reconcile` — that belongs to the older contract where the finder's
+output was published directly, and running it as well would record items in the
+ledger as `published` before anyone had reviewed them.
 
 ---
 
@@ -55,7 +63,7 @@ organisational, and the item must be written from that consequence outward.
 
 1. `data/_seen-ledger.jsonl` — append-only memory of everything already surfaced or already rejected. One JSON object per line: `{key, claim, url, firstSeen, lastSeen, timesSeen, status, id}`. This is your "do not repeat" list. If the file is missing or empty, treat this as the first run.
 2. `data/_candidates.json` — a freshly collected pool of candidate items from practitioner and discussion feeds (Hacker News, Dev.to, GitHub releases, and others). Each entry has `{title, url, discussionUrl, source, sourceType, date, score, signals}`. This pool is your PRIMARY hunting ground.
-3. `public/content/ai-signals/index.json` — existing published items. Read it to find which `id` values for today's date are already taken so your new ids do not collide.
+3. `public/content/ai-signals/index.json` — existing published items, **and** the three `data/signal-drafts/` folders. Read all four to find which `id` values for today's date are already taken so your new ids do not collide. Drafts are not listed in `index.json`, so the index alone will not tell you an id is free.
 
 The candidate pool is a starting point, not a limit. It does NOT cover LinkedIn, X/Twitter, curated practitioner newsletters, company engineering blogs, or conference talks. Actively search the web for those to fill gaps — especially named practitioners posting firsthand operational lessons. Follow promising `discussionUrl` links and read the comment threads: senior engineers routinely report what is actually working or failing there months before anyone writes it up formally.
 
@@ -124,7 +132,7 @@ Reject items that are:
 - Do NOT output any item whose core claim or URL already appears in `_seen-ledger.jsonl`, regardless of `status`.
 - Revisit a ledger topic only if there is a genuinely NEW development (new data, replication, refutation, major adoption shift). If so, title it as an update and state explicitly what is new since last time.
 - Also dedupe within this run: if several sources cover one development, output a single item using the most primary source as `sourceUrl` and the others in `corroboration`.
-- Do NOT write to the ledger yourself. A separate reconcile script records your output. Your only job is to read it and respect it.
+- Do NOT write to the ledger yourself. `signals:promote` records every decision once a human has made it. Your only job is to read the ledger and respect it.
 
 ## Signal types
 
@@ -183,13 +191,57 @@ collapse them all into one.
 
 ## Output
 
-Write your results to TWO files, and also print the main array so it appears in the run log.
+You write two things: one file per selected signal, and one appended line per
+rejected item. Also print a one-line summary of each selected item so the run log
+is readable.
 
-**1. `data/_finder-output.json`** — a JSON array of selected items using the schema below. Write `[]` if nothing qualifies. Valid JSON only, no markdown, no commentary.
+### 1. One file per selected signal
 
-**2. `data/_finder-rejected.json`** — a JSON array of notable items you evaluated and deliberately rejected, so future runs do not re-evaluate them. Keep it short (max ~10) and limit it to items that looked plausible but failed your criteria. Format: `[{"claim": "...", "url": "..."}]`. Write `[]` if none.
+Write each selected item to its own file at **`data/signal-drafts/<id>.json`**,
+using the schema below, with `"status": "draft"`. The filename must match the
+`id` field inside the file.
 
-Do not create individual signal files or edit `index.json`. Publishing is a separate, reviewed step.
+Create these directories if they do not exist — the reviewer needs all three:
+
+```
+data/signal-drafts/            your output goes here
+data/signal-drafts/accepted/   leave empty; the reviewer moves files in
+data/signal-drafts/rejected/   leave empty; the reviewer moves files in
+```
+
+Write nothing into `accepted/` or `rejected/` yourself. Those two folders record
+a human decision, and a run that pre-empts it destroys the only review step
+between you and a published research site.
+
+**Never write into `public/` and never edit `index.json`.** `signals:promote`
+moves reviewed drafts there. If nothing qualifies, write no signal files at all —
+that is a valid and correct run.
+
+Do **not** write `data/_finder-output.json`. Nothing reads it: it was the older
+contract, in which the finder's output was published directly, and an array left
+there is invisible to the review step and to `signals:promote`.
+
+### 2. Rejected items — append, never overwrite
+
+Append one JSON object per line to **`data/_finder-rejected.jsonl`**. This file
+is append-only and accumulates across runs: never truncate it, never rewrite
+earlier lines. `signals:promote` sweeps every `data/_finder-rejected*.jsonl`
+into the ledger, so your declines are remembered and not re-evaluated next week.
+
+Record notable items you evaluated and deliberately rejected — the ones that
+looked plausible but failed your criteria. Roughly 10 per run is right; do not
+log the obviously irrelevant.
+
+```json
+{"run":"2026-08-10","claim":"…","url":"https://…","reason":"…"}
+```
+
+**`reason`** — why you rejected it, specifically. Name the disqualifying fact:
+"the only durable takeaway is a flag substitution", not "not relevant". A
+reviewer must be able to judge your call without re-reading the source.
+
+The `.jsonl` extension is load-bearing. A `.json` array at that path is not swept
+into the ledger and the item returns next run.
 
 ### Schema — core fields required; type-specific fields as noted above
 
@@ -225,7 +277,7 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
   "corroboration": ["https://other-source.example.com"],
   "detectedAt": "YYYY-MM-DD (today)",
   "date": "YYYY-MM-DD (when the source was published)",
-  "status": "published",
+  "status": "draft",
   "tags": ["string"],
   "category": ["string"],
   "whyItMatters": ["string (2-4 bullets, leadership implications)"],
@@ -234,11 +286,17 @@ Do not create individual signal files or edit `index.json`. Publishing is a sepa
 }
 ```
 
-`id` uses today's date plus a two-digit sequence (`2026-08-03-01`, `-02`, …). Check `index.json` and continue past any ids already used for today. `corroboration` may be `[]` if there is only one source.
+`id` uses today's date plus a two-digit sequence (`2026-08-03-01`, `-02`, …).
+Before writing, find the highest `NN` already used for today across **all four**
+of `public/content/ai-signals/index.json`, `data/signal-drafts/`,
+`data/signal-drafts/accepted/` and `data/signal-drafts/rejected/`, and continue
+past it. Check all four every time: a generic run and a sector run on the same
+day will both reach for `-01`, and drafts are not listed in `index.json`.
+`corroboration` may be `[]` if there is only one source.
 
 ### Allowed values
 
-- `status`: `published` or `draft`
+- `status`: always `draft` from this run. `promote` sets `published`.
 - `signalType`: `practitioner-account`, `field-report`, `study`, `tool-shift`, `regulation-standard`, `market-event`, `forecast`, `primary-research`
 - `sourceType`: `academic` (peer-reviewed or preprint), `article` (non-academic article), `social` (blogs, social posts), `video`, `discussion` (forum/comment threads), `release` (changelogs, release notes)
 - `category`: choose 1 primary plus up to 2 secondary (max 3) from: `AI Agents`, `AI Tools`, `Productivity`, `SDLC Change`, `Quality & Testing`, `Security & Risk`, `Org & Leadership`, `Skills & Learning`, `Work Wellbeing`, `Ethics & Policy`, `Business Impact`, `Costs & Economics`, `Other`
