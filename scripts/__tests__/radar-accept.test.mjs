@@ -66,6 +66,47 @@ test("an already published phenomenon is refused", () => {
   assert.ok(accept({ root, ids: ["p1"], today: "2026-08-10" }).errors.some((e) => e.includes("draft")));
 });
 
+test("a primaryDimension absent from the implications is refused before publishing", () => {
+  const root = makeRoot({
+    signals: [sig("s1")],
+    phenomena: [
+      ready("p1", {
+        primaryDimension: "economics-productivity-and-value",
+        implications: [
+          { dimension: "organisation-and-leadership", statement: "One." },
+          { dimension: "skills-knowledge-and-learning", statement: "Two." },
+        ],
+      }),
+    ],
+  });
+  const result = accept({ root, ids: ["p1"], today: "2026-08-10" });
+  assert.ok(
+    result.errors.some((e) => e.includes("primaryDimension")),
+    `expected a primaryDimension error, got: ${result.errors.join("; ")}`,
+  );
+  assert.equal(read(root, "p1").status, "draft", "the build must never be the thing that catches this");
+});
+
+test("a supports item whose signal does not resolve is refused", () => {
+  const root = makeRoot({
+    signals: [sig("s1")],
+    phenomena: [ready("p1", { evidence: [{ signalId: "ghost", stance: "supports", primary: true }] })],
+  });
+  const result = accept({ root, ids: ["p1"], today: "2026-08-10" });
+  assert.ok(result.errors.length, "an unresolvable citation is not a silent skip");
+  assert.equal(read(root, "p1").status, "draft");
+});
+
+test("a draft whose label is too long for the radar is refused rather than published", () => {
+  const root = makeRoot({
+    signals: [sig("s1")],
+    phenomena: [ready("p1", { label: "Review slowly becomes a verification activity" })],
+  });
+  const result = accept({ root, ids: ["p1"], today: "2026-08-10" });
+  assert.ok(result.errors.some((e) => e.includes("label")), result.errors.join("; "));
+  assert.equal(read(root, "p1").status, "draft");
+});
+
 test("reach judged before the newest evidence warns but proceeds", () => {
   const root = makeRoot({
     signals: [sig("s1", { date: "2026-08-20" })],

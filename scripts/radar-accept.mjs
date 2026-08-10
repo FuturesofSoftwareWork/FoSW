@@ -17,6 +17,7 @@ import { writeFileSync } from "fs";
 import { resolve, join } from "path";
 import { spawnSync } from "child_process";
 import { readIndex, readItems, indexById } from "./lib/content.mjs";
+import { validatePhenomenon } from "./validate-phenomena.mjs";
 
 const PHENOMENA_DIR = "public/content/phenomena";
 const SIGNALS_DIR = "public/content/ai-signals";
@@ -54,6 +55,7 @@ export function accept({ root = process.cwd(), ids = [], today = new Date().toIS
   if (errors.length) return { accepted: [], warnings, errors };
 
   const byId = new Map(items.map(({ file, data }) => [data.id, { file, data }]));
+  const phenomenonIds = new Set(byId.keys());
 
   // ---- check every id before writing anything ----
   for (const id of ids) {
@@ -64,30 +66,28 @@ export function accept({ root = process.cwd(), ids = [], today = new Date().toIS
     if (p.status !== "draft") { errors.push(`'${id}': status is '${p.status}', not 'draft'`); continue; }
 
     if (isBlank(p.reachReviewedAt)) {
+      // Kept alongside the validator's own wording because this one says what to do
+      // about it: the reach review is a conversation, not a missing field.
       errors.push(
         `'${id}': no reachReviewedAt — reach has never been judged by a human. ` +
           `Run the reach review before accepting.`,
       );
     }
-    if (isBlank(p.construct)) {
-      errors.push(`'${id}': no construct — a published phenomenon must state what its evidence measures`);
-    }
-
-    // The published-only editorial minimums, pre-checked so a failure is a refusal
-    // rather than a red build that blocks everyone from building anything.
-    const implications = Array.isArray(p.implications) ? p.implications : [];
-    if (implications.length < 2) {
-      errors.push(`'${id}': a published phenomenon needs at least two implications`);
-    }
-    const supports = (p.evidence || []).filter((e) => e.stance === "supports");
-    if (supports.length < 1) {
-      errors.push(`'${id}': a published phenomenon needs at least one 'supports' evidence item`);
-    }
-    for (const ev of supports) {
+    for (const ev of (p.evidence || []).filter((e) => e.stance === "supports")) {
       const s = signalsById.get(ev.signalId);
-      if (s && !s.signalType) {
+      // `!s` too: a citation that does not resolve is not a reason to skip the check.
+      if (!s || !s.signalType) {
         errors.push(`'${id}': supporting signal '${ev.signalId}' has no signalType`);
       }
+    }
+
+    // Every other published-only rule comes from the validator itself, run against
+    // the record this would write. Restating them here is how they drift: the build
+    // enforces ~20 rules and any one not restated is a publish that reddens the
+    // build for everyone, which is exactly what pre-checking exists to prevent.
+    const asPublished = { ...p, status: "published", lastReviewed: today };
+    for (const msg of validatePhenomenon(asPublished, { signalsById, phenomenonIds })) {
+      errors.push(`'${id}': ${msg}`);
     }
 
     // Not a refusal: reach may still be right, but it was judged without the newest
