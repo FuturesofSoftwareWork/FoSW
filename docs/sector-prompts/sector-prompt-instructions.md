@@ -222,7 +222,7 @@ That is the point of recording it.
   "title": "string",
   "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work)",
   "source": "string (e.g. Practitioner Blog, Reddit Thread, Survey Report, arXiv Preprint)",
-  "sourceUrl": "https://example.com",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-real-article-you-read",
   "sourceType": "academic | article | social | video | discussion | release",
   "signalType": "practitioner-account | field-report | study | tool-shift | regulation-standard | market-event | forecast | primary-research",
   "signalStrength": "weak | emerging | established",
@@ -245,7 +245,7 @@ That is the point of recording it.
   "method": "interview | workshop | other (primary-research only)",
   "participants": "string (primary-research only)",
   "leadTimeEstimate": "string (how far ahead of mainstream, e.g. '~6-12 months', or 'confirms current practice')",
-  "corroboration": ["https://other-source.example.com"],
+  "corroboration": ["https://www.infoq.com/news/the-corroborating-piece"],
   "detectedAt": "YYYY-MM-DD (today)",
   "date": "YYYY-MM-DD (when the source was published)",
   "status": "draft",
@@ -268,6 +268,18 @@ There is likewise **no `decisionHorizon` field**. It was retired: across 102
 signals the values ran 78 `now` / 19 `0,5 - 2 years` / 1 `2+ years`, so it cost
 a judgement per signal and carried almost no information. Nothing renders it.
 Do not add it back.
+
+
+**`sourceUrl` must be the real URL you verified.** It has to be an absolute
+`http`/`https` address, and the schema rejects reserved placeholder domains —
+`example.com`/`.net`/`.org` and their subdomains, `localhost`, and the `.test`,
+`.example`, `.invalid` and `.localhost` TLDs. `promote` refuses the whole batch
+on one of these, so a stand-in URL blocks every other draft in the run.
+
+Three signals once reached the live site citing `https://example.com/...` while
+attributing invented figures to VTT and MIT Technology Review. Never substitute
+a plausible-looking URL for one you could not find: drop the item instead, and
+log it under `unverifiable-source`.
 
 ### Allowed values
 
