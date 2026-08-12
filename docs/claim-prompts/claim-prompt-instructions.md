@@ -238,6 +238,14 @@ Write nothing into `accepted/` or `rejected/` yourself. Those two folders record
 a human decision, and a run that pre-empts it destroys the only review step
 between you and a published research site.
 
+**Add `"$schema": "../../schemas/signal-draft.schema.json"` as the first key**
+of every draft. It gives the human reviewer enum autocomplete and hover
+descriptions in their editor; `signals:promote` strips it before publishing.
+
+**Never write a `_review` block.** That is the reviewer's, and it is where they
+record why they accepted or rejected your draft. A run that pre-fills it is
+putting words in a person's mouth.
+
 **Never write into `public/` and never edit `index.json`.** A separate promote
 step moves reviewed drafts there. **Never edit the phenomenon file either** —
 you propose its evidence block in the report and a human applies it. If nothing
@@ -285,7 +293,14 @@ neighbours. Log them generously even past ten.
 - **`rejectedUnder`** — the rule that disqualified it. One of:
   `wrong-construct`, `outside-window`, `too-vague`, `stale-fieldwork`,
   `no-original-data`, `overlaps-published`, `unverifiable-source`,
-  `not-primary-source`, `commercial-intent`, `already-in-ledger`.
+  `not-primary-source`, `commercial-intent`, `already-in-ledger`,
+  `seo-content-no-method`, `adjacent-already-covered`,
+  `illustrative-not-measured`, `superseded-by-later-development`,
+  `aggregator-used-primary-instead`, `capped-this-run`, `low-altitude`.
+
+  `capped-this-run` means deferred by a per-run quota, NOT disqualified — it
+  marks a candidate for a later run. A code outside this list is recorded as
+  `unrecorded`, which loses the distinction you drew, so pick from the list.
 - **`reviewable`** — `true` when the call was genuinely arguable and you want a
   second opinion; `false` when it was clear-cut. Be honest and be sparing: this
   field exists so the reviewer can read two items instead of ten. A borderline
@@ -305,6 +320,7 @@ claim run it carries the deliverable.
 
 ```json
 {
+  "$schema": "../../schemas/signal-draft.schema.json",
   "id": "YYYY-MM-DD-XX",
   "title": "string",
   "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work)",

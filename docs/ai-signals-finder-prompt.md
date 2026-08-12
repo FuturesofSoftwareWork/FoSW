@@ -213,6 +213,14 @@ Write nothing into `accepted/` or `rejected/` yourself. Those two folders record
 a human decision, and a run that pre-empts it destroys the only review step
 between you and a published research site.
 
+**Add `"$schema": "../../schemas/signal-draft.schema.json"` as the first key**
+of every draft. It gives the human reviewer enum autocomplete and hover
+descriptions in their editor; `signals:promote` strips it before publishing.
+
+**Never write a `_review` block.** That is the reviewer's, and it is where they
+record why they accepted or rejected your draft. A run that pre-fills it is
+putting words in a person's mouth.
+
 **Never write into `public/` and never edit `index.json`.** `signals:promote`
 moves reviewed drafts there. If nothing qualifies, write no signal files at all —
 that is a valid and correct run.
@@ -233,12 +241,29 @@ looked plausible but failed your criteria. Roughly 10 per run is right; do not
 log the obviously irrelevant.
 
 ```json
-{"run":"2026-08-10","claim":"…","url":"https://…","reason":"…"}
+{"run":"2026-08-10","claim":"…","url":"https://…","reason":"…","rejectedUnder":"low-altitude","reviewable":false}
 ```
 
 **`reason`** — why you rejected it, specifically. Name the disqualifying fact:
 "the only durable takeaway is a flag substitution", not "not relevant". A
 reviewer must be able to judge your call without re-reading the source.
+
+**`rejectedUnder`** — the rule that disqualified it, so declines can be counted
+as well as read. One of: `low-altitude`, `too-vague`, `stale-fieldwork`,
+`no-original-data`, `overlaps-published`, `unverifiable-source`,
+`not-primary-source`, `commercial-intent`, `already-in-ledger`,
+`seo-content-no-method`, `adjacent-already-covered`,
+`illustrative-not-measured`, `superseded-by-later-development`,
+`aggregator-used-primary-instead`, `capped-this-run`, `outside-window`.
+
+Use `capped-this-run` when an item was good but held back by a quota — it means
+deferred, not disqualified, and marks a candidate for a later run. A code
+outside this list is recorded as `unrecorded`, which loses the distinction you
+drew, so pick from the list.
+
+**`reviewable`** — `true` when the call was genuinely arguable and you want a
+second opinion; `false` when it was clear-cut. Be sparing: this field exists so
+the reviewer can read two items instead of ten.
 
 The `.jsonl` extension is load-bearing. A `.json` array at that path is not swept
 into the ledger and the item returns next run.
@@ -247,6 +272,7 @@ into the ledger and the item returns next run.
 
 ```json
 {
+  "$schema": "../../schemas/signal-draft.schema.json",
   "id": "YYYY-MM-DD-XX",
   "title": "string",
   "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work)",
