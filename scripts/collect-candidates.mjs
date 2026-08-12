@@ -9,20 +9,27 @@
  *
  * Two-stage design: retrieve broadly here (code) -> score editorially in the prompt (LLM).
  *
- *   node scripts/collect-candidates.mjs [--days N] [--out <file>] [--timeout MS]
- *       --days N     only keep items from the last N days   (default 10)
- *       --out        output path   (default data/_candidates.json)
+ *   node scripts/collect-candidates.mjs [--profile NAME] [--days N] [--out <file>] [--timeout MS]
+ *       --profile    which config/sources/<name>.json to collect  (default generic)
+ *       --days N     only keep items from the last N days   (overrides the profile)
+ *       --out        output path   (default derived from the profile)
  *       --timeout    per-request timeout in ms   (default 15000)
+ *
+ * WHICH sources are collected lives in config/sources/*.json, not here. Profiles
+ * are standalone — no inheritance — so a sector or claim run declares exactly the
+ * venues the generic run cannot reach. The output path is derived from the
+ * profile name so a sector pool can never overwrite the generic one.
  *
  * Every request is bounded by --timeout, so an unresponsive feed cannot hang the
  * cron job. Requests run sequentially, so worst-case wall clock is roughly
- * (number of requests) x timeout; with the default lists that is about 5 minutes.
+ * (number of requests) x timeout; with the generic profile that is about 5 minutes.
  *
  * Working files live in data/, NOT public/. Vite copies public/ into dist, so
  * anything written there is published on the live site.
  *
- * Sources are each wrapped so one failing feed never kills the run. Add sources by
- * pushing an async collector into COLLECTORS. GitHub releases / Reddit are leading
+ * Sources are each wrapped so one failing feed never kills the run. Add a new KIND
+ * of source by writing an async collector and wiring it into collectorsFor();
+ * add more of an existing kind by editing a profile. GitHub releases are leading
  * indicators for tools before anyone writes them up; HN comments carry firsthand
  * operational lessons; Dev.to carries practitioner how-tos.
  *
@@ -34,64 +41,17 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { resolve, join, dirname } from "path";
 import { normalizeUrl } from "./ledger.mjs";
+import {
+  loadProfile,
+  candidatesPathFor,
+  resolveWindowDays,
+} from "./lib/source-profile.mjs";
 
 const SIGNALS_DIR = resolve("public/content/ai-signals");
 const INDEX_FILE = join(SIGNALS_DIR, "index.json");
 // Outside public/ on purpose — see the note in the file header.
 const DATA_DIR = resolve("data");
 const LEDGER_FILE = join(DATA_DIR, "_seen-ledger.jsonl");
-
-// Topic terms used for keyword-search feeds (HN). Tune to taste.
-const TERMS = [
-  "coding agent",
-  "AI coding",
-  "Copilot",
-  "Claude Code",
-  "Cursor editor",
-  "LLM software engineering",
-  "agentic coding",
-  "AI code review",
-];
-
-// Dev.to tags (practitioner how-tos + firsthand lessons).
-const DEVTO_TAGS = ["ai", "llm", "machinelearning", "devops", "programming"];
-
-// Subreddits where senior engineers report firsthand before blogging.
-//
-// NOTE: this source currently returns nothing. Reddit's `.json` listing routes
-// require OAuth as of the API lockdown, and answer every unauthenticated
-// request with a 403 WAF page regardless of address or user-agent (the same IP
-// gets 200 for the HTML page). Editing this list changes nothing until a
-// script-type OAuth app is wired in — see docs/ai-signals-pipeline.md,
-// *Known source limitations*.
-const SUBREDDITS = ["ExperiencedDevs", "devops", "programming", "LocalLLaMA"];
-
-// Dev-tool repos whose releases lead the discourse. Add the tools your readers use.
-const GITHUB_REPOS = [
-  "microsoft/vscode",
-  "cline/cline",
-  "Aider-AI/aider",
-  "All-Hands-AI/OpenHands",
-];
-
-// Leadership-facing RSS/Atom feeds. The HN/Dev.to/GitHub sources above are
-// structurally biased toward the practitioner-technical end, so every org
-// design, roles, hiring and reskilling signal had to come from ad-hoc web
-// search. These feeds cover that ground directly.
-const LEADERSHIP_FEEDS = [
-  { name: "LeadDev", url: "https://leaddev.com/feed" },
-  { name: "InfoQ Culture & Methods", url: "https://feed.infoq.com/culture-methods/" },
-  { name: "Martin Fowler", url: "https://martinfowler.com/feed.atom" },
-  { name: "Stack Overflow Blog", url: "https://stackoverflow.blog/feed/" },
-];
-
-// Substack publications, via their public JSON archive endpoint. Newsletters
-// often carry engineering-management and hiring signals a quarter or two before
-// they reach conference talks or press.
-const SUBSTACK_PUBS = [
-  { name: "The Pragmatic Engineer", host: "newsletter.pragmaticengineer.com" },
-  { name: "Engineering Leadership", host: "newsletter.eng-leadership.com" },
-];
 
 const args = process.argv.slice(2);
 
@@ -112,10 +72,13 @@ function strArg(flag, def) {
   return i !== -1 ? args[i + 1] : def;
 }
 
-const DAYS = numArg("--days", 10);
 const TIMEOUT_MS = numArg("--timeout", 15_000);
-const OUT = strArg("--out", join(DATA_DIR, "_candidates.json"));
-const CUTOFF = Date.now() - DAYS * 86_400_000;
+
+// Resolved in main() once the profile is known, since the window can come from
+// the profile as well as from --days. They keep a module-level default so
+// withinWindow() is callable (and testable) without a profile loaded.
+let DAYS = 10;
+let CUTOFF = Date.now() - DAYS * 86_400_000;
 
 /**
  * Fetch JSON with a hard per-request timeout.
@@ -250,9 +213,9 @@ export async function perItem(label, list, fn) {
   return items;
 }
 
-async function collectHackerNews() {
+async function collectHackerNews(terms) {
   const sinceTs = Math.floor(CUTOFF / 1000);
-  return perItem("Hacker News", TERMS, async (term) => {
+  return perItem("Hacker News", terms, async (term) => {
     const url =
       `https://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(term)}` +
       `&tags=story&numericFilters=points>30,created_at_i>${sinceTs}&hitsPerPage=20`;
@@ -270,8 +233,8 @@ async function collectHackerNews() {
   });
 }
 
-async function collectDevto() {
-  return perItem("Dev.to", DEVTO_TAGS, async (tag) => {
+async function collectDevto(tags) {
+  return perItem("Dev.to", tags, async (tag) => {
     const data = await getJson(`https://dev.to/api/articles?tag=${tag}&top=7&per_page=20`);
     return (data || []).map((a) => ({
       title: a.title,
@@ -286,8 +249,8 @@ async function collectDevto() {
   });
 }
 
-async function collectReddit() {
-  return perItem("Reddit", SUBREDDITS, async (sub) => {
+async function collectReddit(subreddits) {
+  return perItem("Reddit", subreddits, async (sub) => {
     const data = await getJson(`https://www.reddit.com/r/${sub}/top.json?t=week&limit=20`);
     return (data?.data?.children || [])
       .map((c) => c.data)
@@ -305,8 +268,8 @@ async function collectReddit() {
   });
 }
 
-async function collectGithubReleases() {
-  return perItem("GitHub releases", GITHUB_REPOS, async (repo) => {
+async function collectGithubReleases(repos) {
+  return perItem("GitHub releases", repos, async (repo) => {
     const data = await getJson(`https://api.github.com/repos/${repo}/releases?per_page=5`, {
       headers: { Accept: "application/vnd.github+json" },
     });
@@ -324,8 +287,8 @@ async function collectGithubReleases() {
   });
 }
 
-async function collectLeadershipFeeds() {
-  return perItem("Leadership feeds", LEADERSHIP_FEEDS, async (feed) => {
+async function collectLeadershipFeeds(feeds) {
+  return perItem("Leadership feeds", feeds, async (feed) => {
     const xml = await getText(feed.url);
     return parseFeed(xml).map((e) => ({
       title: e.title,
@@ -341,8 +304,8 @@ async function collectLeadershipFeeds() {
   });
 }
 
-async function collectSubstack() {
-  return perItem("Substack", SUBSTACK_PUBS, async (pub) => {
+async function collectSubstack(pubs) {
+  return perItem("Substack", pubs, async (pub) => {
     const data = await getJson(`https://${pub.host}/api/v1/archive?sort=new&limit=20`);
     return (data || []).map((p) => ({
       title: p.title,
@@ -356,14 +319,30 @@ async function collectSubstack() {
   });
 }
 
-const COLLECTORS = [
-  ["Hacker News", collectHackerNews],
-  ["Dev.to", collectDevto],
-  ["Reddit", collectReddit],
-  ["GitHub releases", collectGithubReleases],
-  ["Leadership feeds", collectLeadershipFeeds],
-  ["Substack", collectSubstack],
-];
+/**
+ * The collectors this profile actually declares sources for, as
+ * [name, thunk] pairs.
+ *
+ * A profile that omits a key runs no collector for it — nothing is inherited to
+ * fill the gap. That is the point: the generic run's tooling sources are the
+ * bias that under-samples every other sector, so a sector profile is written as
+ * the complement of the generic run rather than an extension of it.
+ *
+ * Building the list makes no network call, which is what lets a test assert
+ * which collectors a profile activates.
+ */
+export function collectorsFor(profile) {
+  return [
+    ["Hacker News", profile.hackerNewsTerms, collectHackerNews],
+    ["Dev.to", profile.devtoTags, collectDevto],
+    ["Reddit", profile.subreddits, collectReddit],
+    ["GitHub releases", profile.githubRepos, collectGithubReleases],
+    ["Leadership feeds", profile.feeds, collectLeadershipFeeds],
+    ["Substack", profile.substacks, collectSubstack],
+  ]
+    .filter(([, list]) => Array.isArray(list) && list.length > 0)
+    .map(([name, list, fn]) => [name, () => fn(list)]);
+}
 
 // ---------- dedup + filter ----------
 
@@ -403,11 +382,30 @@ export function withinWindow(dateStr) {
 }
 
 async function main() {
+  const profileName = strArg("--profile", "generic");
+  let profile;
+  try {
+    profile = loadProfile(profileName);
+  } catch (err) {
+    // An unknown or malformed profile is fatal rather than a fallback to
+    // generic: collecting the wrong sources still writes a plausible pool, and
+    // nothing downstream could tell it from a real one.
+    console.error(`collect: ${err.message}`);
+    process.exit(1);
+  }
+
+  DAYS = resolveWindowDays(profile, numArg("--days", undefined));
+  CUTOFF = Date.now() - DAYS * 86_400_000;
+  const out = strArg("--out", candidatesPathFor(profileName));
+  const collectors = collectorsFor(profile);
+
+  console.log(`collect: profile '${profileName}', ${collectors.length} source(s), ${DAYS}d window`);
+
   const seen = loadSeenUrls();
   const all = [];
 
   const failed = [];
-  for (const [name, fn] of COLLECTORS) {
+  for (const [name, fn] of collectors) {
     try {
       const items = await fn();
       console.log(`  ${name}: ${items.length} raw`);
@@ -421,14 +419,14 @@ async function main() {
   // Every source dying looks identical to a quiet news week if we exit 0: the
   // finder would run against an empty pool and silently fall back to web search.
   // Make total failure visible to whatever is running the cron.
-  if (failed.length === COLLECTORS.length) {
+  if (failed.length === collectors.length) {
     console.error(
-      `collect: ALL ${COLLECTORS.length} sources failed (${failed.join(", ")}) — not writing a candidate pool`
+      `collect: ALL ${collectors.length} sources failed (${failed.join(", ")}) — not writing a candidate pool`
     );
     process.exit(1);
   }
   if (failed.length) {
-    console.warn(`collect: ${failed.length}/${COLLECTORS.length} sources failed: ${failed.join(", ")}`);
+    console.warn(`collect: ${failed.length}/${collectors.length} sources failed: ${failed.join(", ")}`);
   }
 
   // dedup within this run + against seen-ledger/published history, then window-filter
@@ -475,10 +473,10 @@ async function main() {
   }
   pool.length = 0;
   pool.push(...interleaved);
-  mkdirSync(dirname(resolve(OUT)), { recursive: true });
-  writeFileSync(resolve(OUT), JSON.stringify(pool, null, 2) + "\n", "utf8");
+  mkdirSync(dirname(resolve(out)), { recursive: true });
+  writeFileSync(resolve(out), JSON.stringify(pool, null, 2) + "\n", "utf8");
   console.log(
-    `collect: ${pool.length} candidates (dropped ${dropSeen} already-seen, ${dropOld} outside ${DAYS}d). Wrote ${OUT}`
+    `collect: ${pool.length} candidates (dropped ${dropSeen} already-seen, ${dropOld} outside ${DAYS}d). Wrote ${out}`
   );
 }
 
