@@ -107,11 +107,12 @@ run and write it up with the same care as a supporting one.
    runs against this claim evaluated and declined, and why. Do not re-litigate a
    rejection unless something has genuinely changed.
 
-**You are doing the deduplication yourself on this run.** In a generic run a
-candidate collector strips already-seen URLs before the model ever sees them.
-There is no collector for a claim run, so nothing is pre-filtered: a URL already
-in the ledger will come back to you in search results looking brand new. Check
-every candidate against the ledger before you write it up.
+**You are doing the deduplication yourself on this run.** A claim run may have a
+source profile — `config/sources/claim-<claim-id>.json` — but none has been
+written yet, and a claim run's value is mostly in deliberate search rather than
+in feeds. Unless your claim file says otherwise, nothing is pre-filtered: a URL
+already in the ledger will come back to you in search results looking brand new.
+Check every candidate against the ledger before you write it up.
 
 Do not write to the ledger yourself. A separate step records your output.
 

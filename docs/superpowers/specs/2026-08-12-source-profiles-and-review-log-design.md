@@ -75,6 +75,7 @@ bias that under-samples the other sectors.
   "description": "Venues the generic run structurally cannot reach for this sector.",
   "hackerNewsTerms": ["developer burnout", "agent supervision"],
   "devtoTags": ["career"],
+  "subreddits": [],
   "githubRepos": [],
   "feeds": [{ "name": "Sean Goedecke", "url": "https://www.seangoedecke.com/rss.xml" }],
   "substacks": [{ "name": "The Pragmatic Engineer", "host": "newsletter.pragmaticengineer.com" }],
@@ -91,6 +92,9 @@ bias that under-samples the other sectors.
   not through any fault but because its newest post was 12 days old against a
   10-day window. A profile built around low-cadence writers needs a wider one.
 - `description` is for the human reading the file and is never used by code.
+- `subreddits` exists so `generic.json` can hold today's constants verbatim.
+  It collects nothing until Reddit OAuth is wired — see Part A's reachability
+  table — and a new profile should leave it empty.
 
 `config/sources/generic.json` holds today's constants **verbatim**, so the
 generic run's behaviour is unchanged by this work and the change is reviewable

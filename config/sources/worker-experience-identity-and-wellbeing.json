@@ -1,0 +1,17 @@
+{
+  "profile": "worker-experience-identity-and-wellbeing",
+  "description": "Sector run: worker experience, identity and wellbeing. Written as the COMPLEMENT of the generic run, not an extension of it — the generic profile's terms, tags, repos and leadership feeds are collected weekly anyway and the seen-ledger dedupes them, so repeating them here would only re-fetch what the generic run already took. The named feeds are the practitioners the 2026-08-06 run found by hand (see data/_finder-report-worker-experience-identity-and-wellbeing.md); every URL was fetched and parsed before being added, and Wes McKinney is absent because his site exposes no discoverable feed. hackerNewsTerms is deliberately empty: measured on 2026-08-12, 'developer burnout', 'cognitive load', 'code review fatigue', 'engineer morale' and 'AI coding burnout' each returned ZERO stories in 60 days at the collector's points>30 threshold, and 'developer experience' returned only Launch HN noise. This sector does not reach the HN front page, so the source would cost six requests a run to add items a reviewer must then discard. Reddit, LinkedIn, X and Blind remain unreachable and stay part of the prompt's manual method.",
+  "hackerNewsTerms": [],
+  "devtoTags": ["career", "mentalhealth"],
+  "subreddits": [],
+  "githubRepos": [],
+  "feeds": [
+    { "name": "Sean Goedecke", "url": "https://www.seangoedecke.com/rss.xml" },
+    { "name": "Siddhant Khare", "url": "https://siddhantkhare.com/rss.xml" },
+    { "name": "Jake Gold", "url": "https://jacob.gold/index.xml" },
+    { "name": "Chris Wellons", "url": "https://nullprogram.com/feed/" },
+    { "name": "David Crawshaw", "url": "https://crawshaw.io/atom.xml" }
+  ],
+  "substacks": [],
+  "windowDays": 21
+}

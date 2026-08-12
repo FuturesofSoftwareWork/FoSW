@@ -145,8 +145,23 @@ or a clear new downstream consequence.
 
 ## Where to hunt
 
-There is no candidate pool for this run, so the venue list is part of the method.
-Work through these deliberately rather than issuing one broad search:
+**Start with the pool, then do the real work.** This sector has a source profile
+(`config/sources/worker-experience-identity-and-wellbeing.json`). If
+`data/_candidates-worker-experience-identity-and-wellbeing.json` exists, read it
+first — it is already deduped against the ledger. It covers exactly two things:
+
+- **Named practitioner blogs** — Sean Goedecke, Siddhant Khare, Jake Gold, Chris
+  Wellons, David Crawshaw. These are the people the 2026-08-06 run found by hand.
+- **Dev.to** `career` and `mentalhealth` tags.
+
+Nothing else. It does **not** cover Reddit, Hacker News, LinkedIn, X, Blind,
+surveys, or any blog not on that list. Hacker News is deliberately absent: at the
+collector's `points>30` threshold this sector returned zero stories in 60 days,
+so it is searched by hand here or not at all.
+
+The pool is therefore a floor of five writers and two tags. Everything below is
+still the method, and it is where the run earns its keep. Work through these
+deliberately rather than issuing one broad search:
 
 - **Practitioner forums** — r/ExperiencedDevs, r/cscareerquestions,
   r/programming, Hacker News threads (the comments more than the submissions),

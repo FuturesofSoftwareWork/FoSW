@@ -179,7 +179,8 @@ instructions.
 
 ## Where to hunt
 
-There is no candidate pool for this run, so the venue list is part of the method.
+No source profile has been written for this claim, so there is no candidate pool
+and the venue list is the whole method.
 Work through these deliberately rather than issuing one broad search:
 
 - **Engineering-org benchmarks** — DORA, State of DevOps, engineering-analytics
