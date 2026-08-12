@@ -24,7 +24,8 @@
     "signals:validate": "node scripts/validate-signals.mjs",
     "verify:radar": "node scripts/verify-radar.mjs",
     "preview:radar": "node scripts/preview-radar.mjs",
-    "schema:build": "node scripts/build-draft-schema.mjs"
+    "schema:build": "node scripts/build-draft-schema.mjs",
+    "sources:discover": "node scripts/sources-discover.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
