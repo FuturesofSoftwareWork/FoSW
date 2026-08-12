@@ -25,7 +25,8 @@
     "verify:radar": "node scripts/verify-radar.mjs",
     "preview:radar": "node scripts/preview-radar.mjs",
     "schema:build": "node scripts/build-draft-schema.mjs",
-    "sources:discover": "node scripts/sources-discover.mjs"
+    "sources:discover": "node scripts/sources-discover.mjs",
+    "sources:promote": "node scripts/sources-promote.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
