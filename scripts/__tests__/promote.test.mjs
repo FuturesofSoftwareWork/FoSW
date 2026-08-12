@@ -203,3 +203,35 @@ test("a second run adds nothing", () => {
   // left accepted/ on the first run.
   assert.equal(result.ledger.skipped, 1);
 });
+
+// ---------- editorial review fields ----------
+
+// _review is a candid judgement about a named source and $schema is an editor
+// affordance. Neither belongs on a public research site.
+test("editorial fields never reach published content", () => {
+  const d = draft("2026-08-06-01", {
+    $schema: "../../schemas/signal-draft.schema.json",
+    _review: { under: "too-vague", note: "kept anyway", reviewer: "arto" },
+  });
+  const root = makeRoot({ accepted: [d] });
+
+  promote({ root });
+
+  const published = JSON.parse(
+    readFileSync(join(root, SIGNALS, "2026-08-06-01.json"), "utf8"),
+  );
+  assert.equal(published._review, undefined);
+  assert.equal(published.$schema, undefined);
+  assert.equal(published.status, "published");
+  assert.equal(published.title, "Title 2026-08-06-01");
+});
+
+test("an out-of-enum _review.under blocks the whole batch", () => {
+  const root = makeRoot({ accepted: [draft("2026-08-06-01", { _review: { under: "made-up" } })] });
+
+  const result = promote({ root });
+
+  assert.equal(result.promoted.length, 0);
+  assert.match(result.errors.join(" "), /_review\.under/);
+  assert.ok(!existsSync(join(root, SIGNALS, "2026-08-06-01.json")));
+});

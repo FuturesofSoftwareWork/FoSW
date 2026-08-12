@@ -22,6 +22,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, rmSync, mkdirSync
 import { resolve, join } from "path";
 import { spawnSync } from "child_process";
 import { validateSignal } from "./lib/signal-schema.mjs";
+import { validateReview, stripReviewFields } from "./lib/review-schema.mjs";
 import { appendRecords, recordFromSignal, keyFor } from "./ledger.mjs";
 
 const SIGNALS_DIR = "public/content/ai-signals";
@@ -113,6 +114,7 @@ export function promote({ root = process.cwd() } = {}) {
       continue;
     }
     for (const problem of validateSignal(signal)) errors.push(`${file}: ${problem}`);
+    for (const problem of validateReview(signal)) errors.push(`${file}: ${problem}`);
     if (signal?.id && `${signal.id}.json` !== file) {
       errors.push(`${file}: filename does not match id '${signal.id}'`);
     }
@@ -142,7 +144,9 @@ export function promote({ root = process.cwd() } = {}) {
   // ---- move accepted drafts into published content ----
   const promoted = [];
   for (const { path, signal } of accepted) {
-    writeJson(join(signalsDir, `${signal.id}.json`), { ...signal, status: "published" });
+    // stripReviewFields, not a spread: the reviewer's note names a source and
+    // says what was wrong with it, and this write is what reaches the live site.
+    writeJson(join(signalsDir, `${signal.id}.json`), { ...stripReviewFields(signal), status: "published" });
     rmSync(path);
     promoted.push(signal.id);
   }
