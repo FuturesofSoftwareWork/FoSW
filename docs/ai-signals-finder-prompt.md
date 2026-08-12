@@ -327,6 +327,19 @@ day will both reach for `-01`, and drafts are not listed in `index.json`.
 - `sourceType`: `academic` (peer-reviewed or preprint), `article` (non-academic article), `social` (blogs, social posts), `video`, `discussion` (forum/comment threads), `release` (changelogs, release notes)
 - `category`: choose 1 primary plus up to 2 secondary (max 3) from: `AI Agents`, `AI Tools`, `Productivity`, `SDLC Change`, `Quality & Testing`, `Security & Risk`, `Org & Leadership`, `Skills & Learning`, `Work Wellbeing`, `Ethics & Policy`, `Business Impact`, `Costs & Economics`, `Other`
 
+
+## Nominating sources
+
+If you drafted, or seriously considered drafting, a signal from a source you
+would want collected every run, nominate it: write
+`data/source-nominations/<slug>.json` with `name`, `profile`, `foundAt` (the
+page you actually read), `why`, and `signalId` where there is one. Do **not**
+write a `feed` field — `npm run sources:discover` finds and verifies it, because
+a guessed feed URL is a plausible 404 that contributes nothing forever after.
+
+Check the profile's existing feeds and all three nomination folders first, and
+never re-nominate someone already collected or already declined.
+
 ## Writing guidance
 
 - Be specific: name the mechanism, what changes in practice, and who should care (CTO / VP Eng / Product / Security).

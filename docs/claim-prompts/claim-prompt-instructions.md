@@ -395,6 +395,19 @@ fails the build.
 
 ---
 
+
+## Nominating sources
+
+If you drafted, or seriously considered drafting, a signal from a source you
+would want collected every run, nominate it: write
+`data/source-nominations/<slug>.json` with `name`, `profile`, `foundAt` (the
+page you actually read), `why`, and `signalId` where there is one. Do **not**
+write a `feed` field — `npm run sources:discover` finds and verifies it, because
+a guessed feed URL is a plausible 404 that contributes nothing forever after.
+
+Check the profile's existing feeds and all three nomination folders first, and
+never re-nominate someone already collected or already declined.
+
 ## The retrieval report
 
 Write `data/_finder-report-claim-<claim-id>.md` with these seven sections. The
