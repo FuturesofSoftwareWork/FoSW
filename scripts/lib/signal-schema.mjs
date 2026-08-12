@@ -46,6 +46,41 @@ export const ARRAY_FIELDS = [
   "corroboration",
 ];
 
+// RFC 2606 reserves example.com/.net/.org and the .test/.example/.invalid/
+// .localhost TLDs for documentation. A signal whose sourceUrl points into that
+// space cites nothing, and on a research-communication site an unverifiable
+// source is a correctness failure rather than a broken link. Three published
+// signals reached the live site this way, carrying invented figures attributed
+// to VTT and MIT Technology Review, because nothing here looked at sourceUrl.
+const RESERVED_HOST = /(^|\.)(example\.(com|net|org)|localhost)$/i;
+const RESERVED_TLD = /\.(test|example|invalid|localhost)$/i;
+
+/**
+ * Check sourceUrl, which is optional: an absent one is valid, and several
+ * legitimate published signals have none. Returns a problem string, or null.
+ */
+function checkSourceUrl(url) {
+  if (url === undefined || url === null || url === "") return null;
+  if (typeof url !== "string") return `'sourceUrl' must be a string, got ${typeof url}`;
+
+  let parsed;
+  try {
+    parsed = new URL(url.trim());
+  } catch {
+    return `sourceUrl ${JSON.stringify(url)} is not a URL (an absolute http(s) address is required)`;
+  }
+  // The site renders sourceUrl straight into an href, so a non-http scheme is
+  // both useless as a citation and the shape a script-injection attempt takes.
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    return `sourceUrl uses the '${parsed.protocol.replace(":", "")}' scheme — only http and https are citable`;
+  }
+  const host = parsed.hostname.toLowerCase();
+  if (RESERVED_HOST.test(host) || RESERVED_TLD.test(host)) {
+    return `sourceUrl host '${host}' is a reserved placeholder domain, not a real source`;
+  }
+  return null;
+}
+
 /**
  * Check one signal object against the schema.
  * Returns an array of human-readable problems; empty means valid.
@@ -74,6 +109,9 @@ export function validateSignal(s) {
       errors.push(`'${field}' must be an array, got ${typeof s[field]}`);
     }
   }
+
+  const urlProblem = checkSourceUrl(s.sourceUrl);
+  if (urlProblem) errors.push(urlProblem);
 
   checkEnum("sourceType", s.sourceType, SOURCE_TYPES);
   checkEnum("signalType", s.signalType, SIGNAL_TYPES);

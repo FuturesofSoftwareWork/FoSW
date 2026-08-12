@@ -9,7 +9,9 @@ function valid(overrides = {}) {
     title: "A title",
     summary: "A summary.",
     source: "Practitioner Blog",
-    sourceUrl: "https://example.com",
+    // Deliberately not example.com: that is a reserved placeholder domain and
+    // the schema now rejects it, which is the point of the sourceUrl tests below.
+    sourceUrl: "https://leaddev.com/an-article",
     detectedAt: "2026-08-06",
     date: "2026-08-05",
     status: "draft",
@@ -90,6 +92,55 @@ test("regulation-standard requires an effectiveDate", () => {
     validateSignal(valid({ signalType: "regulation-standard" })).join(" "),
     /effectiveDate/,
   );
+});
+
+// Three published signals reached the live site with `https://example.com/...`
+// as their sourceUrl and invented figures attributed to VTT and MIT Technology
+// Review. Nothing in the schema looked at sourceUrl at all, so neither promote
+// nor validate had anything to say about them. On a research-communication site
+// an unverifiable source is a correctness failure, not a cosmetic one.
+test("a reserved placeholder host is rejected", () => {
+  assert.match(validateSignal(valid({ sourceUrl: "https://example.com/arxiv" })).join(" "), /sourceUrl/);
+  assert.match(validateSignal(valid({ sourceUrl: "https://example.org/x" })).join(" "), /sourceUrl/);
+  assert.match(validateSignal(valid({ sourceUrl: "https://example.net" })).join(" "), /sourceUrl/);
+});
+
+// RFC 2606 reserves the whole subtree, and a fabricated URL is as likely to be
+// dressed up with a subdomain as not.
+test("a subdomain of a reserved host is rejected too", () => {
+  assert.match(validateSignal(valid({ sourceUrl: "https://www.example.com/a" })).join(" "), /sourceUrl/);
+  assert.match(validateSignal(valid({ sourceUrl: "http://research.example.org" })).join(" "), /sourceUrl/);
+});
+
+test("localhost and the reserved test TLDs are rejected", () => {
+  for (const url of ["http://localhost:5173/x", "https://foo.test/a", "https://foo.invalid/a"]) {
+    assert.match(validateSignal(valid({ sourceUrl: url })).join(" "), /sourceUrl/, url);
+  }
+});
+
+test("a sourceUrl that is not a URL at all is rejected", () => {
+  assert.match(validateSignal(valid({ sourceUrl: "not a url" })).join(" "), /sourceUrl/);
+  assert.match(validateSignal(valid({ sourceUrl: "leaddev.com/article" })).join(" "), /sourceUrl/);
+});
+
+// The site renders sourceUrl straight into an href, so a non-http scheme is
+// both useless as a citation and the shape a script-injection attempt takes.
+test("only http and https are accepted schemes", () => {
+  assert.match(validateSignal(valid({ sourceUrl: "ftp://ftp.example.org/p" })).join(" "), /sourceUrl/);
+  assert.match(validateSignal(valid({ sourceUrl: "javascript:alert(1)" })).join(" "), /sourceUrl/);
+  assert.deepEqual(validateSignal(valid({ sourceUrl: "http://leaddev.com/a" })), []);
+});
+
+// sourceUrl is optional in the schema and several legitimate published signals
+// have none. Absent must stay absent-and-fine, or this check fails the corpus.
+test("an absent sourceUrl is still allowed", () => {
+  const s = valid();
+  delete s.sourceUrl;
+  assert.deepEqual(validateSignal(s), []);
+});
+
+test("a real source URL passes", () => {
+  assert.deepEqual(validateSignal(valid({ sourceUrl: "https://newsletter.pragmaticengineer.com/p/x" })), []);
 });
 
 test("a non-object is reported rather than crashing the field checks", () => {

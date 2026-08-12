@@ -57,6 +57,13 @@ const TERMS = [
 const DEVTO_TAGS = ["ai", "llm", "machinelearning", "devops", "programming"];
 
 // Subreddits where senior engineers report firsthand before blogging.
+//
+// NOTE: this source currently returns nothing. Reddit's `.json` listing routes
+// require OAuth as of the API lockdown, and answer every unauthenticated
+// request with a 403 WAF page regardless of address or user-agent (the same IP
+// gets 200 for the HTML page). Editing this list changes nothing until a
+// script-type OAuth app is wired in — see docs/ai-signals-pipeline.md,
+// *Known source limitations*.
 const SUBREDDITS = ["ExperiencedDevs", "devops", "programming", "LocalLLaMA"];
 
 // Dev-tool repos whose releases lead the discourse. Add the tools your readers use.
@@ -194,7 +201,7 @@ const tagText = (block, tag) => {
  * zero-dependency by design, and we only need four fields per entry. Anything
  * malformed yields an empty title or link and is dropped by the caller.
  */
-function parseFeed(xml) {
+export function parseFeed(xml) {
   const blocks = xml.match(/<(item|entry)\b[\s\S]*?<\/\1>/gi) || [];
   return blocks
     .map((b) => {
@@ -225,7 +232,7 @@ function parseFeed(xml) {
  * The source is only reported as failed if EVERY request failed, which keeps the
  * caller's per-source failure accounting intact.
  */
-async function perItem(label, list, fn) {
+export async function perItem(label, list, fn) {
   const items = [];
   let failed = 0;
   for (const item of list) {
@@ -389,7 +396,7 @@ function loadSeenUrls() {
   return seen;
 }
 
-function withinWindow(dateStr) {
+export function withinWindow(dateStr) {
   if (!dateStr) return true; // keep undated rather than silently dropping
   const t = new Date(dateStr + "T00:00:00Z").getTime();
   return Number.isNaN(t) || t >= CUTOFF;
@@ -475,7 +482,12 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  console.error("collect failed:", err);
-  process.exit(1);
-});
+// Only run the CLI when invoked directly. Importing this module for tests must
+// not fire six live feed collections — the same guard validate-signals.mjs and
+// promote-signals.mjs use.
+if (process.argv[1] && process.argv[1].endsWith("collect-candidates.mjs")) {
+  main().catch((err) => {
+    console.error("collect failed:", err);
+    process.exit(1);
+  });
+}
