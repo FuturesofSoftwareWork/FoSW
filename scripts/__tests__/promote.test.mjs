@@ -295,3 +295,55 @@ test("the seen-ledger shape is unchanged by review logging", () => {
     "claim", "firstSeen", "id", "key", "lastSeen", "status", "timesSeen", "url",
   ]);
 });
+
+// The prompts require reason/rejectedUnder/reviewable on every decline, and
+// finderRejections() copied out only claim, url and status -- deleting the
+// editorial reasoning at the last step. This is the regression test for that.
+test("the finder's own rationale survives into the review log", () => {
+  const root = makeRoot();
+  writeFileSync(
+    join(root, "data/_finder-rejected-some-sector.jsonl"),
+    JSON.stringify({
+      run: "2026-08-06",
+      claim: "A declined story",
+      url: "https://leaddev.com/declined",
+      reason: "fieldwork traces to 2021 and predates any AI mechanism",
+      rejectedUnder: "stale-fieldwork",
+      reviewable: true,
+    }) + "\n",
+  );
+
+  promote({ root });
+
+  const e = readReviewLog(root).find((x) => x.by === "finder");
+  assert.equal(e.under, "stale-fieldwork");
+  assert.equal(e.reviewable, true);
+  assert.match(e.note, /predates any AI mechanism/);
+  assert.equal(e.decision, "rejected");
+  assert.equal(e.url, "https://leaddev.com/declined");
+});
+
+test("a finder line with no code is recorded as unrecorded, not dropped", () => {
+  const root = makeRoot();
+  writeFileSync(
+    join(root, "data/_finder-rejected-generic.jsonl"),
+    JSON.stringify({ run: "2026-08-06", claim: "C", url: "https://x.dev/1", reason: "thin" }) + "\n",
+  );
+
+  promote({ root });
+
+  assert.equal(readReviewLog(root).find((x) => x.by === "finder").under, "unrecorded");
+});
+
+// A code the enum does not know must not silently become a valid-looking value.
+test("an unknown finder code degrades to unrecorded rather than being trusted", () => {
+  const root = makeRoot();
+  writeFileSync(
+    join(root, "data/_finder-rejected-generic.jsonl"),
+    JSON.stringify({ run: "2026-08-06", claim: "C", url: "https://x.dev/2", rejectedUnder: "invented-code" }) + "\n",
+  );
+
+  promote({ root });
+
+  assert.equal(readReviewLog(root).find((x) => x.by === "finder").under, "unrecorded");
+});

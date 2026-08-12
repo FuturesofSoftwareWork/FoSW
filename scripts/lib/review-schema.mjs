@@ -17,6 +17,7 @@
  */
 
 export const REJECTED_UNDER = [
+  // Documented in the sector and claim prompt instructions.
   "out-of-sector",
   "wrong-construct",
   "outside-window",
@@ -28,7 +29,25 @@ export const REJECTED_UNDER = [
   "not-primary-source",
   "commercial-intent",
   "already-in-ledger",
+
+  // Observed in use, not invented here. Runs have been emitting these against
+  // the documented list, and each names a distinct disqualifying fact that the
+  // codes above do not cover — 8 of the 55 rejections on disk use one. They are
+  // adopted rather than collapsed into `unrecorded`, which would discard the
+  // distinction the run took the trouble to draw. `capped-this-run` is the one
+  // to read carefully: it means deferred by a per-run quota, NOT disqualified,
+  // so those items are candidates for a later run rather than declined.
+  "seo-content-no-method",
+  "adjacent-already-covered",
+  "illustrative-not-measured",
+  "superseded-by-later-development",
+  "aggregator-used-primary-instead",
+  "capped-this-run",
+
+  // The generic prompt's most-used rule, which had no code.
   "low-altitude",
+
+  // Written only by code, for a decision recorded without a rationale.
   "unrecorded",
 ];
 

@@ -107,3 +107,19 @@ test("REJECTED_UNDER carries the documented codes", () => {
     assert.ok(REJECTED_UNDER.includes(code), code);
   }
 });
+
+// These six were already being emitted by real runs against the documented
+// list. Dropping one back out would silently send those rejections to
+// `unrecorded` and lose the distinction the run drew.
+test("REJECTED_UNDER carries the codes real runs already emit", () => {
+  for (const code of [
+    "seo-content-no-method",
+    "adjacent-already-covered",
+    "illustrative-not-measured",
+    "superseded-by-later-development",
+    "aggregator-used-primary-instead",
+    "capped-this-run",
+  ]) {
+    assert.ok(REJECTED_UNDER.includes(code), code);
+  }
+});
