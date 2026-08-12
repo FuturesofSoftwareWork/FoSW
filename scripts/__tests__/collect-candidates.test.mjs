@@ -10,7 +10,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseFeed, perItem, withinWindow } from "../collect-candidates.mjs";
+import { parseFeed, perItem, withinWindow, collectorsFor } from "../collect-candidates.mjs";
 
 /** Silence the collector's per-request warnings for one call. */
 async function quietly(fn) {
@@ -144,4 +144,51 @@ test("an undated item is kept rather than silently dropped", () => {
 
 test("an unparseable date is kept rather than compared against NaN", () => {
   assert.equal(withinWindow("not-a-date"), true);
+});
+
+// ---------- collectorsFor ----------
+
+const emptyProfile = {
+  hackerNewsTerms: [],
+  devtoTags: [],
+  subreddits: [],
+  githubRepos: [],
+  feeds: [],
+  substacks: [],
+};
+
+// Nothing is inherited, so a profile that omits a key must run no collector for
+// it. Asserted on names only: building the list makes no network call.
+test("a profile activates only the collectors it declares", () => {
+  const names = collectorsFor({
+    ...emptyProfile,
+    hackerNewsTerms: ["a"],
+    feeds: [{ name: "F", url: "https://f.dev/feed" }],
+  }).map(([name]) => name);
+  assert.deepEqual(names, ["Hacker News", "Leadership feeds"]);
+});
+
+test("a profile declaring every source activates all six collectors", () => {
+  const names = collectorsFor({
+    hackerNewsTerms: ["a"],
+    devtoTags: ["ai"],
+    subreddits: ["devops"],
+    githubRepos: ["o/r"],
+    feeds: [{ name: "F", url: "https://f.dev/feed" }],
+    substacks: [{ name: "S", host: "s.dev" }],
+  }).map(([name]) => name);
+  assert.deepEqual(names, [
+    "Hacker News",
+    "Dev.to",
+    "Reddit",
+    "GitHub releases",
+    "Leadership feeds",
+    "Substack",
+  ]);
+});
+
+// The all-sources-failed check counts against this list, so an empty profile
+// must not make that comparison trivially true.
+test("a profile with no sources activates nothing", () => {
+  assert.deepEqual(collectorsFor(emptyProfile), []);
 });
