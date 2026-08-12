@@ -101,8 +101,12 @@ Two behaviours matter when this runs unattended:
   — an empty pool would be indistinguishable from a quiet week, and the finder
   would silently fall back to web search.
 
-Reddit 403s unauthenticated datacenter traffic and GitHub rate-limits at 60/hr
-unauthenticated; both are isolated failures, not run failures.
+Reddit `403`s every unauthenticated `.json` request from any address — the route
+requires OAuth now, so nothing about *where* the run happens changes it — and
+GitHub rate-limits at 60/hr unauthenticated. Both are isolated failures, not run
+failures. Reddit contributes nothing until a script-type OAuth app is
+configured; see *Known source limitations* in
+[`ai-signals-pipeline.md`](./ai-signals-pipeline.md).
 
 **Sector and claim runs skip `signals:collect` entirely** — the collector's
 feeds are not sector- or claim-aware — and use web search instead. They still
@@ -403,6 +407,7 @@ Helsinki research site those are not world-readable.
 | a finder run's items never appear in `data/signal-drafts/` | the job still uses the retired `_finder-output.json` + `reconcile` contract | split the array into per-file drafts, drop the premature ledger lines, and fix the job — see A2 |
 | `signals:promote` moves nothing | one file in `accepted/` fails the schema | fix that file; the batch is deliberately atomic |
 | `promote` refuses to overwrite | that id is already published | the finder assigns ids by scanning `index.json` plus all three draft folders — a collision means a stale draft |
+| `promote` or `validate` refuses on `sourceUrl` | the URL is not an absolute http(s) address, or its host is a reserved placeholder (`example.com`, `localhost`, `.test`, `.invalid`) | find the real source, or reject the draft. Do not invent a URL to clear the check — an unverifiable citation is the thing it exists to stop |
 | `radar:prepare` selects nothing | every published signal is cited | expected after a full clustering pass; use `--all` to look for second-phenomenon counter-evidence |
 | `radar:apply` aborts | unknown id, unpublished signal, slug collision, or a new phenomenon with no `construct` | fix `_radar-proposal.json`; re-running is safe |
 | `radar:accept` refuses "no reachReviewedAt" | the reach review has not happened for that id | run B5. Do not hand-write the date |

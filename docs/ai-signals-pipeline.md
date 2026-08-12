@@ -136,7 +136,8 @@ Flags: `--days N` (window, default 10), `--out <file>` (output path),
   that term's results, and the source keeps everything else
   (`GitHub releases: 1/5 requests failed, keeping the rest`). A source is only
   reported as failed when *every* one of its requests failed — which is the
-  normal case for Reddit, since it 403s unauthenticated datacenter traffic.
+  normal case for Reddit, whose `.json` routes now require OAuth (see
+  *Known source limitations*).
 - **A failed source is isolated too**, logged as `! <name> failed: <reason>`,
   and the run continues with the rest. A partial run still writes a pool and
   exits 0, with a `N/M sources failed` summary line.
@@ -151,7 +152,29 @@ Flags: `--days N` (window, default 10), `--out <file>` (output path),
 
 ### Known source limitations
 
-- **Reddit** now returns `403` to unauthenticated datacenter requests. For reliable Reddit access, register a script-type OAuth app and add a bearer token; the collector isolates the failure so the rest of the run is unaffected.
+- **Reddit** returns `403` to *every* unauthenticated request for a `.json`
+  listing, from any address. This was previously recorded here as a block on
+  datacenter traffic; that is wrong, and the distinction decides whether the
+  problem is fixable by changing where the request comes from. It is not.
+  Measured on 2026-08-12 from a residential Windows machine:
+
+  | Request | Result |
+  |---|---|
+  | `www.reddit.com/r/<sub>/` (HTML) | `200` |
+  | `www.reddit.com/r/<sub>/top.json` | `403 Blocked`, 190 KB HTML: *"You've been blocked by network security"* |
+  | `old.reddit.com/r/<sub>/top.json` | `302` → `/login/?reason=lor2` |
+  | `oauth.reddit.com/r/<sub>/top` (no token) | `403` |
+  | `www.reddit.com/api/v1/access_token` (no creds) | `401` |
+
+  The same IP gets `200` for HTML and `403` for `.json`, so it is not an IP,
+  user-agent or reputation block — the route itself now requires OAuth, as part
+  of Reddit's API lockdown. `old.reddit.com` says so plainly by redirecting to
+  login; `www` returns a generic WAF page instead of a `401`, which is what made
+  this look like an IP block. **No user-agent, header or host change gets past
+  it.** The only fix is a script-type OAuth app: POST client id/secret to
+  `/api/v1/access_token` with `grant_type=client_credentials`, then call
+  `oauth.reddit.com` with the bearer token. Until then the source contributes
+  nothing and its failure is isolated, so the rest of the run is unaffected.
 - **GitHub** unauthenticated calls are rate-limited (60/hr). Set a `GITHUB_TOKEN` header if you add many repos.
 - **X/Twitter and LinkedIn** have no zero-auth post search and are intentionally not collected here. Options: maintain a curated list of ~20–30 credible practitioners and check them via the official (paid) X API, or check manually. LinkedIn post scraping violates its ToS.
 

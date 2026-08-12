@@ -15,7 +15,8 @@ function draft(id, overrides = {}) {
     title: `Title ${id}`,
     summary: "A summary.",
     source: "Practitioner Blog",
-    sourceUrl: `https://example.com/${id}`,
+    // Not example.com: the schema rejects reserved placeholder domains.
+    sourceUrl: `https://leaddev.com/${id}`,
     detectedAt: "2026-08-06",
     date: "2026-08-05",
     status: "draft",
@@ -118,7 +119,7 @@ test("promoted items are recorded in the ledger as published", () => {
 
   const published = readLedgerLines(root).filter((r) => r.status === "published");
   assert.equal(published.length, 1);
-  assert.equal(published[0].url, "https://example.com/2026-08-06-01");
+  assert.equal(published[0].url, "https://leaddev.com/2026-08-06-01");
 });
 
 test("finder rejection lines reach the ledger", () => {
@@ -128,7 +129,7 @@ test("finder rejection lines reach the ledger", () => {
     JSON.stringify({
       run: "2026-08-06",
       claim: "A declined story",
-      url: "https://example.com/declined",
+      url: "https://leaddev.com/declined",
       reason: "stale fieldwork",
       rejectedUnder: "stale-fieldwork",
       reviewable: false,
@@ -139,7 +140,7 @@ test("finder rejection lines reach the ledger", () => {
 
   const rejected = readLedgerLines(root).filter((r) => r.status === "rejected");
   assert.equal(rejected.length, 1);
-  assert.equal(rejected[0].url, "https://example.com/declined");
+  assert.equal(rejected[0].url, "https://leaddev.com/declined");
 });
 
 test("one invalid accepted draft blocks the whole batch", () => {
