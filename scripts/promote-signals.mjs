@@ -22,7 +22,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, rmSync, mkdirSync
 import { resolve, join, dirname } from "path";
 import { spawnSync, execFileSync } from "child_process";
 import { validateSignal } from "./lib/signal-schema.mjs";
-import { validateReview, stripReviewFields, reviewEvent } from "./lib/review-schema.mjs";
+import { validateReview, stripReviewFields, reviewEvent, REJECTED_UNDER } from "./lib/review-schema.mjs";
 import { appendRecords, recordFromSignal, keyFor } from "./ledger.mjs";
 
 const SIGNALS_DIR = "public/content/ai-signals";
@@ -77,7 +77,17 @@ function appendReviewEvents(file, events) {
   appendFileSync(file, events.map((e) => JSON.stringify(e)).join("\n") + "\n", "utf8");
 }
 
-/** Ledger records for the finder's own declines, from the append-only .jsonl stores. */
+/**
+ * The finder's own declines, from the append-only .jsonl stores, as a ledger
+ * record plus a review event per line.
+ *
+ * The prompts require `reason`, `rejectedUnder` and `reviewable` on every
+ * decline and work hard to produce them. This function used to copy out claim,
+ * url and status only, so that reasoning was deleted at the last step and the
+ * pipeline could never learn from its own calls. The ledger record keeps its
+ * original shape — it is a dedup index — and the judgment goes to the review
+ * log instead.
+ */
 function finderRejections(dataDir) {
   if (!existsSync(dataDir)) return [];
   const out = [];
@@ -98,14 +108,29 @@ function finderRejections(dataDir) {
       const url = r.url || "";
       const seen = r.run || today();
       out.push({
-        key: keyFor({ url, claim }),
-        claim,
-        url,
-        firstSeen: seen,
-        lastSeen: seen,
-        timesSeen: 1,
-        status: "rejected",
-        id: r.id || "",
+        ledger: {
+          key: keyFor({ url, claim }),
+          claim,
+          url,
+          firstSeen: seen,
+          lastSeen: seen,
+          timesSeen: 1,
+          status: "rejected",
+          id: r.id || "",
+        },
+        event: {
+          ts: seen,
+          claim,
+          url,
+          decision: "rejected",
+          by: "finder",
+          // An unknown code degrades rather than being trusted: a value the
+          // enum does not know cannot be counted, and passing it through would
+          // make it look countable.
+          under: REJECTED_UNDER.includes(r.rejectedUnder) ? r.rejectedUnder : "unrecorded",
+          note: r.reason || "",
+          ...(typeof r.reviewable === "boolean" ? { reviewable: r.reviewable } : {}),
+        },
       });
     }
   }
@@ -205,10 +230,11 @@ export function promote({ root = process.cwd() } = {}) {
 
   // ---- ledger: one record per decision ----
   mkdirSync(resolve(root, "data"), { recursive: true });
+  const declined = finderRejections(resolve(root, "data"));
   const records = [
     ...accepted.map(({ signal }) => recordFromSignal(signal)),
     ...rejected.map((s) => ({ ...recordFromSignal(s), status: "rejected" })),
-    ...finderRejections(resolve(root, "data")),
+    ...declined.map((d) => d.ledger),
   ];
   // `added` vs `skipped` distinguishes a first run from a repeat: the records
   // are rebuilt from the folders every time, and the key-dedup absorbs the rest.
@@ -223,8 +249,10 @@ export function promote({ root = process.cwd() } = {}) {
     ...accepted.map(({ signal }) => reviewEvent({ signal, decision: "accepted", reviewer, ts })),
     ...rejected.map((signal) => reviewEvent({ signal, decision: "rejected", reviewer, ts })),
   ];
-  appendReviewEvents(resolve(root, "data/_review-log.jsonl"), events);
+  appendReviewEvents(resolve(root, "data/_review-log.jsonl"), [...events, ...declined.map((d) => d.event)]);
 
+  // Counted over human decisions only: the finder's unrecorded lines are a
+  // prompt problem, not a reviewer one, and mixing them would blur the number.
   const reviewed = {
     accepted: accepted.length,
     rejected: rejected.length,
