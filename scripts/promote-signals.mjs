@@ -18,11 +18,11 @@
  *   node scripts/promote-signals.mjs
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, rmSync, mkdirSync } from "fs";
-import { resolve, join } from "path";
-import { spawnSync } from "child_process";
+import { readFileSync, writeFileSync, existsSync, readdirSync, rmSync, mkdirSync, appendFileSync } from "fs";
+import { resolve, join, dirname } from "path";
+import { spawnSync, execFileSync } from "child_process";
 import { validateSignal } from "./lib/signal-schema.mjs";
-import { validateReview, stripReviewFields } from "./lib/review-schema.mjs";
+import { validateReview, stripReviewFields, reviewEvent } from "./lib/review-schema.mjs";
 import { appendRecords, recordFromSignal, keyFor } from "./ledger.mjs";
 
 const SIGNALS_DIR = "public/content/ai-signals";
@@ -46,6 +46,35 @@ function readJson(path) {
 
 function writeJson(path, value) {
   writeFileSync(path, JSON.stringify(value, null, 2) + "\n", "utf8");
+}
+
+/**
+ * Git's configured name, so a reviewer never has to type their own.
+ *
+ * Empty when git has no user.name: reviewEvent then omits the field rather than
+ * guessing, because attributing an editorial decision to the wrong person is
+ * worse than recording that nobody was identified.
+ */
+function gitUserName(root) {
+  try {
+    return execFileSync("git", ["config", "user.name"], { cwd: root, encoding: "utf8" }).trim();
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Append review events. Separate from the seen-ledger on purpose: the ledger is
+ * a lean dedup index, and judgment — who decided what, and why — lives here, in
+ * the same relationship _radar-reach-log.jsonl has to the phenomenon files.
+ *
+ * Gitignored. Free-text rationale names vendors, publications and individual
+ * practitioners, and this repo is public.
+ */
+function appendReviewEvents(file, events) {
+  if (!events.length) return;
+  mkdirSync(dirname(file), { recursive: true });
+  appendFileSync(file, events.map((e) => JSON.stringify(e)).join("\n") + "\n", "utf8");
 }
 
 /** Ledger records for the finder's own declines, from the append-only .jsonl stores. */
@@ -138,7 +167,14 @@ export function promote({ root = process.cwd() } = {}) {
     .filter(Boolean);
 
   if (errors.length) {
-    return { promoted: [], rejected: 0, queued, ledger: { added: 0, skipped: 0 }, errors };
+    return {
+      promoted: [],
+      rejected: 0,
+      queued,
+      ledger: { added: 0, skipped: 0 },
+      reviewed: { accepted: 0, rejected: 0, unrecorded: 0 },
+      errors,
+    };
   }
 
   // ---- move accepted drafts into published content ----
@@ -178,7 +214,24 @@ export function promote({ root = process.cwd() } = {}) {
   // are rebuilt from the folders every time, and the key-dedup absorbs the rest.
   const ledger = appendRecords(records, ledgerFile);
 
-  return { promoted, rejected: rejected.length, queued, ledger, errors: [] };
+  // ---- review log: why each decision was made ----
+  // One timestamp for the whole run: these decisions were made in one sitting,
+  // and a per-file stamp would imply a precision the folder move does not carry.
+  const ts = nowStamp();
+  const reviewer = gitUserName(root);
+  const events = [
+    ...accepted.map(({ signal }) => reviewEvent({ signal, decision: "accepted", reviewer, ts })),
+    ...rejected.map((signal) => reviewEvent({ signal, decision: "rejected", reviewer, ts })),
+  ];
+  appendReviewEvents(resolve(root, "data/_review-log.jsonl"), events);
+
+  const reviewed = {
+    accepted: accepted.length,
+    rejected: rejected.length,
+    unrecorded: events.filter((e) => e.under === "unrecorded").length,
+  };
+
+  return { promoted, rejected: rejected.length, queued, ledger, reviewed, errors: [] };
 }
 
 function main() {
@@ -197,6 +250,14 @@ function main() {
   result.promoted.forEach((id) => console.log(`  -> ${SIGNALS_DIR}/${id}.json`));
   if (result.queued) {
     console.log(`  ${result.queued} draft(s) still in ${DRAFTS_DIR}/ awaiting review`);
+  }
+  if (result.reviewed.unrecorded) {
+    // Not an error: a bare `mv` is still a valid review. But the rate is worth
+    // watching — an unrecorded decision teaches the next run nothing.
+    console.log(
+      `  ${result.reviewed.unrecorded} decision(s) recorded without a rationale ` +
+        `(add a "_review" block to the draft before moving it)`,
+    );
   }
 
   // Fail now rather than at the next build.

@@ -129,6 +129,18 @@ data/_finder-output*.json
 data/_finder-rejected*
 data/_finder-report*.md
 
+# Human review rationale: one event per accept/reject, carrying free-text
+# judgment about named vendors, publications and individual practitioners.
+# Same rule as the finder's rejection lists above, and for the same reason —
+# this repo is public, and "SEO content with no method" attached to a named
+# author does not belong in a permanent public history. The seen-ledger IS
+# committed but records no reasons, which is why it can be.
+#
+# The cost: this file is local to one machine, so it is not shared between
+# reviewers. That is the clearest pressure toward a private store — see
+# docs/superpowers/specs/2026-08-12-source-profiles-and-review-log-design.md
+data/_review-log.jsonl
+
 # Staged signal drafts awaiting review, and the accepted/ and rejected/ folders
 # the reviewer moves them into. Local scratch: this repo is public, and a draft
 # is by definition unreviewed. Only what `signals:promote` moves into

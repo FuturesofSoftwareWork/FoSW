@@ -235,3 +235,63 @@ test("an out-of-enum _review.under blocks the whole batch", () => {
   assert.match(result.errors.join(" "), /_review\.under/);
   assert.ok(!existsSync(join(root, SIGNALS, "2026-08-06-01.json")));
 });
+
+// ---------- the review log ----------
+
+const readReviewLog = (root) => {
+  const f = join(root, "data/_review-log.jsonl");
+  if (!existsSync(f)) return [];
+  return readFileSync(f, "utf8").trim().split("\n").filter(Boolean).map(JSON.parse);
+};
+
+test("each decision produces exactly one review-log event", () => {
+  const root = makeRoot({
+    accepted: [draft("2026-08-06-01", { _review: { under: "low-altitude", note: "kept for context", reviewer: "arto" } })],
+    rejected: [draft("2026-08-06-02", { _review: { under: "commercial-intent", note: "vendor pitch", reviewer: "arto" } })],
+  });
+
+  promote({ root });
+
+  const events = readReviewLog(root).filter((e) => e.by === "human");
+  assert.equal(events.length, 2);
+  const byId = Object.fromEntries(events.map((e) => [e.id, e]));
+  assert.equal(byId["2026-08-06-01"].decision, "accepted");
+  assert.equal(byId["2026-08-06-02"].decision, "rejected");
+  assert.equal(byId["2026-08-06-02"].under, "commercial-intent");
+  assert.equal(byId["2026-08-06-02"].note, "vendor pitch");
+});
+
+// A bare `mv` must keep working: refusing would punish a reviewer at the end of
+// a session and break the guarantee that an interrupted review publishes nothing.
+test("a draft moved without a rationale is recorded as unrecorded and does not block", () => {
+  const root = makeRoot({ rejected: [draft("2026-08-06-02")] });
+
+  const result = promote({ root });
+
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.reviewed.unrecorded, 1);
+  assert.equal(readReviewLog(root).find((e) => e.id === "2026-08-06-02").under, "unrecorded");
+});
+
+test("the review log is append-only across runs", () => {
+  const root = makeRoot({ accepted: [draft("2026-08-06-01")] });
+  promote({ root });
+  writeFileSync(
+    join(root, DRAFTS, "rejected", "2026-08-06-02.json"),
+    JSON.stringify(draft("2026-08-06-02")),
+  );
+  promote({ root });
+
+  assert.equal(readReviewLog(root).length, 2);
+});
+
+// Judgment lives in the review log; the ledger stays a lean dedup index.
+test("the seen-ledger shape is unchanged by review logging", () => {
+  const root = makeRoot({ accepted: [draft("2026-08-06-01", { _review: { under: "low-altitude", note: "n" } })] });
+
+  promote({ root });
+
+  assert.deepEqual(Object.keys(readLedgerLines(root)[0]).sort(), [
+    "claim", "firstSeen", "id", "key", "lastSeen", "status", "timesSeen", "url",
+  ]);
+});
