@@ -306,6 +306,50 @@ Write `data/_finder-report-<dimension-id>.md` with:
    materially improved the run? If yes, which feeds and which search terms would
    have helped most. Be specific enough that someone could implement it.
 
+## Nominating sources
+
+Point 5 above is the prose verdict. Its actionable half is separate, and it is
+what stops the next run re-finding the people you just found.
+
+**Nominate a source when you drafted, or seriously considered drafting, a signal
+from it this run.** That is the whole criterion. It keeps the roster growing
+from material that actually cleared the bar rather than from everything you
+read.
+
+Write one file per nominee to **`data/source-nominations/<slug>.json`**, where
+`<slug>` is the name lowercased with non-alphanumerics collapsed to `-`
+(`jono-herrington.json`). Add `-2`, `-3` on a collision.
+
+```json
+{
+  "name": "Jono Herrington",
+  "profile": "<dimension-id>",
+  "foundAt": "https://example.dev/posts/the-post-you-read",
+  "why": "firsthand account of review-day cognitive load; cleared altitude and became 2026-08-06-06",
+  "signalId": "2026-08-06-06"
+}
+```
+
+- **`foundAt`** is the page you actually read, not a guessed feed URL.
+- **`profile`** is required. Without it nothing can route the nomination.
+- **`signalId`** only when the nomination produced a draft this run.
+
+**Do not write a `feed` field.** `npm run sources:discover` fetches `foundAt`,
+reads any advertised feed, falls back to the conventional paths, and verifies
+the result parses. A guessed feed URL is a plausible 404 that quietly
+contributes nothing to every run afterwards.
+
+**Check before nominating.** Read the profile's existing `feeds`, plus all three
+of `data/source-nominations/`, `accepted/` and `rejected/`. Never re-nominate
+someone already collected or already declined — `rejected/` exists precisely so
+a declined name does not come back every week.
+
+Nominate publications as readily as individuals, but not aggregators: a source
+is worth a permanent slot only if what it publishes is its own.
+
+Create the three folders if they do not exist. Write nothing into `accepted/` or
+`rejected/` — those record a human decision, exactly as with signal drafts.
+
 A thin or empty run is a valid result — but only if the report explains *which*
 of "no signal exists" and "I could not reach the signal" produced it. Say which,
 and say how you know.

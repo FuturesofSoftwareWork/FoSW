@@ -193,6 +193,72 @@ days, so `hackerNewsTerms` is empty there rather than carrying terms that only
 match noise. A source that contributes nothing but costs requests trains its
 reviewer to ignore the pool.
 
+### Source nominations — how a profile grows
+
+The seen-ledger remembers items. Nothing remembered **sources**, so the
+2026-08-06 sector run found eight named practitioners by hand, used them once,
+and dropped them; the next run started from zero. Seeding the first profile
+proved the value and the cost — a person reading a report and probing feed paths
+one domain at a time.
+
+```
+finder run  ──► data/source-nominations/<slug>.json    name, profile, foundAt, why
+                        │
+npm run sources:discover│  fetch foundAt, read <link rel="alternate">, fall back to
+                        │  conventional paths, verify it parses, write feed + feedStatus
+                        ▼
+      you: read it, mv to accepted/ or rejected/   (+ optional _review note)
+                        │
+npm run sources:promote │  append to config/sources/<profile>.json
+                        ▼
+              the next collect run picks them up
+```
+
+Same contract as signal drafts: the agent proposes, a human moves a file, a
+script promotes. Nothing joins a profile unread and nothing is accepted
+automatically.
+
+**The finder nominates a person and the page it read, never a feed URL.**
+Discovery is code's job — a model asked to guess a feed path returns plausible
+404s, and a URL that looks right but is never fetched contributes nothing to
+every run afterwards. Both discovery strategies earn their place: of the four
+pages the first sector run found people on, three advertise a feed in a `<link>`
+tag and `jacob.gold` advertises none but serves `/index.xml`. Candidates are
+verified with the collector's own `parseFeed`, because a feed discovery accepted
+but the collector could not read would be worse than none.
+
+**Feeds only** — not search terms, tags or subreddits. A feed is checkable by
+code: does it fetch, does it parse, when did it last publish. A search term is
+knowable only by running it next week, and the evidence says terms are the weak
+end anyway: five of six candidate Hacker News terms for this sector returned
+zero stories in 60 days.
+
+The nomination criterion in the prompts is deliberately evidence-based —
+*nominate a source when you drafted, or seriously considered drafting, a signal
+from it this run* — so the roster grows from material that cleared the bar.
+
+`sources:promote` is all-or-nothing and refuses an unroutable nomination, an
+unverified feed, or a duplicate. Duplicates are compared on the normalised URL,
+so a scheme change or a trailing slash cannot smuggle a second copy of one feed
+into a profile and double its weight in the pool. It does not re-fetch: a feed
+that dies between discovery and promotion shows up as an isolated per-request
+failure on the next collect run, which is how the collector already handles a
+dead source.
+
+Accepted files are consumed — the profile is the record from then on. **Rejected
+files stay**, because they are the memory that stops the next run re-nominating
+someone already declined.
+
+`data/source-nominations/` is gitignored: unreviewed material naming
+individuals, plus a reviewer's reasons for declining a named person, on a public
+repo. The cost bites hardest here of the three places it applies — the value of
+the declined list grows over time, and it lives on one machine.
+
+A profile is pruned by hand. Nothing removes a source that has gone quiet:
+deciding a writer has stopped being worth following needs a judgment about why,
+and a script that dropped sources silently would shrink the pool without anyone
+noticing.
+
 ### Run ordering
 
 Both runs use a window wider than the weekly cadence, so pools overlap by design

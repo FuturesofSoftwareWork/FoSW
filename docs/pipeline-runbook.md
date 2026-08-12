@@ -220,6 +220,31 @@ seen-ledger is committed and names declined stories, but carries no reasons,
 which is why it can be. The cost is that the log lives on one machine and is not
 shared between reviewers — the clearest pressure toward a private store.
 
+### A4b. Grow the profile — review source nominations
+
+Optional, and only after a run that nominated anything. This is what stops next
+week's run re-finding the writers this week's run just found.
+
+```bash
+npm run sources:discover        # resolve each nominee to a verified feed
+ls data/source-nominations/     # the unreviewed queue
+mv data/source-nominations/<slug>.json data/source-nominations/accepted/
+mv data/source-nominations/<slug>.json data/source-nominations/rejected/
+npm run sources:promote         # append accepted ones to their profile
+```
+
+`sources:discover` fetches the page the finder read, finds the feed, and writes
+`feedStatus` into the file — *"ok — 24 entries, newest 2026-08-09"* or *"no feed
+found"*. Read that before deciding: a nominee whose feed is dead is not worth
+accepting, and *"this person has no feed"* is a perfectly good reason to
+decline. It is idempotent; `--force` re-checks ones already resolved.
+
+`alreadyInProfile: true` means that feed is collected already — decline it.
+
+**Rejections are not deletions.** `rejected/` is the memory that stops the loop
+re-proposing the same person every week, so decline by moving the file, never by
+removing it. That memory is gitignored and therefore local to this machine.
+
 ### A5. Ship
 
 ```bash
@@ -432,6 +457,8 @@ spread — are the ones no script can reach.
 | `npm run signals:collect [-- --profile NAME]` | `data/_candidates[-NAME].json` | exits 1 if *all* sources fail, or on a bad profile |
 | `npm run signals:reconcile -- <out> --rejected <rej>` | the ledger — **retired contract, not in any run order** | — |
 | `npm run signals:promote` | `public/content/ai-signals/`, its `index.json`, the ledger | yes |
+| `npm run sources:discover [-- --force]` | `data/source-nominations/*.json` (adds `feed`, `feedStatus`) | idempotent |
+| `npm run sources:promote` | `config/sources/*.json`; consumes `accepted/` | yes |
 | `npm run radar:prepare` | `data/_radar-input.json` | — |
 | `npm run radar:apply -- <proposal>` | phenomenon files, their `index.json`, `data/_radar-apply-report.md` | yes |
 | `npm run radar:derive` | phenomenon files (derived fields only) | idempotent |
@@ -466,6 +493,9 @@ Helsinki research site those are not world-readable.
 | `promote` or `validate` refuses on `sourceUrl` | the URL is not an absolute http(s) address, or its host is a reserved placeholder (`example.com`, `localhost`, `.test`, `.invalid`) | find the real source, or reject the draft. Do not invent a URL to clear the check — an unverifiable citation is the thing it exists to stop |
 | `promote` refuses on `_review.under` | the code is not in the enum | the message lists the valid codes; the draft's `$schema` offers them in an editor. Use `capped-this-run` for deferred-not-disqualified |
 | `promote` reports decisions "without a rationale" | drafts were moved without a `_review` block | not an error, and nothing is blocked. Add one next time; an unrecorded decision teaches the next run nothing |
+| `sources:promote` refuses "no feed" | `sources:discover` has not run, or found nothing | run discover; if it found nothing, that is a reason to reject the nominee |
+| `sources:promote` refuses "already collected" | that feed is in the profile | decline the nomination; `alreadyInProfile` flags this at review time |
+| `sources:promote` refuses "unknown profile" | the nomination names no profile, or one that does not exist | fix `profile` in the nomination file |
 | `radar:prepare` selects nothing | every published signal is cited | expected after a full clustering pass; use `--all` to look for second-phenomenon counter-evidence |
 | `radar:apply` aborts | unknown id, unpublished signal, slug collision, or a new phenomenon with no `construct` | fix `_radar-proposal.json`; re-running is safe |
 | `radar:accept` refuses "no reachReviewedAt" | the reach review has not happened for that id | run B5. Do not hand-write the date |
