@@ -277,7 +277,7 @@ into the ledger and the item returns next run.
   "title": "string",
   "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work)",
   "source": "string (e.g. Practitioner Blog, Hacker News Discussion, Company Blog, arXiv Preprint)",
-  "sourceUrl": "https://example.com",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-real-article-you-read",
   "sourceType": "academic | article | social | video | discussion | release",
   "signalType": "practitioner-account | field-report | study | tool-shift | regulation-standard | market-event | forecast | primary-research",
   "signalStrength": "weak | emerging | established",
@@ -300,7 +300,7 @@ into the ledger and the item returns next run.
   "method": "interview | workshop | other (primary-research only)",
   "participants": "string (primary-research only)",
   "leadTimeEstimate": "string (how far ahead of mainstream, e.g. '~6-12 months', or 'confirms current practice')",
-  "corroboration": ["https://other-source.example.com"],
+  "corroboration": ["https://www.infoq.com/news/the-corroborating-piece"],
   "detectedAt": "YYYY-MM-DD (today)",
   "date": "YYYY-MM-DD (when the source was published)",
   "status": "draft",
@@ -319,6 +319,18 @@ of `public/content/ai-signals/index.json`, `data/signal-drafts/`,
 past it. Check all four every time: a generic run and a sector run on the same
 day will both reach for `-01`, and drafts are not listed in `index.json`.
 `corroboration` may be `[]` if there is only one source.
+
+
+**`sourceUrl` must be the real URL you verified.** It has to be an absolute
+`http`/`https` address, and the schema rejects reserved placeholder domains —
+`example.com`/`.net`/`.org` and their subdomains, `localhost`, and the `.test`,
+`.example`, `.invalid` and `.localhost` TLDs. `promote` refuses the whole batch
+on one of these, so a stand-in URL blocks every other draft in the run.
+
+Three signals once reached the live site citing `https://example.com/...` while
+attributing invented figures to VTT and MIT Technology Review. Never substitute
+a plausible-looking URL for one you could not find: drop the item instead, and
+log it under `unverifiable-source`.
 
 ### Allowed values
 
