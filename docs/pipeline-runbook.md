@@ -59,12 +59,14 @@ Stage B can only cluster signals that are already published.
 
 ### A1. Before the finder runs: memory, then retrieval
 
-Two deterministic steps set up the LLM pass. Both run **before** it, and only in
-the generic run.
+Two deterministic steps set up the LLM pass, both **before** it. `prepare` runs
+for every kind of run; `collect` runs for the generic run and for any sector or
+claim run that has a source profile.
 
 ```bash
 npm run signals:prepare      # -> data/_seen-ledger.jsonl   (memory)
-npm run signals:collect      # -> data/_candidates.json     (retrieval)
+npm run signals:collect      # -> data/_candidates.json     (retrieval, generic)
+npm run signals:collect -- --profile <name>   # -> data/_candidates-<name>.json
 ```
 
 **`signals:prepare`** (`scripts/ledger.mjs prepare`) rebuilds the seen-ledger
@@ -80,14 +82,21 @@ something genuinely newly relevant can come back.
 **`signals:collect`** (`scripts/collect-candidates.mjs`) pulls fresh items from
 zero-auth feeds, dedupes them against the ledger and published history, keeps
 the last N days, and writes the candidate pool the prompt scores. Sources are
-tuned at the top of that file: Hacker News terms, Dev.to tags, subreddits,
-GitHub releases, leadership RSS/Atom, Substack archives.
+tuned in `config/sources/<profile>.json`, not in the script: Hacker News terms,
+Dev.to tags, subreddits, GitHub releases, leadership RSS/Atom, Substack archives.
 
 | Flag | Effect |
 |------|--------|
-| `--days N` | window, default 10 |
-| `--out FILE` | output path |
+| `--profile NAME` | which `config/sources/<name>.json` to collect, default `generic` |
+| `--days N` | window; overrides the profile's `windowDays`, which defaults to 10 |
+| `--out FILE` | output path; defaults to the profile-derived one |
 | `--timeout MS` | per-request timeout, default 15000 |
+
+**Which** sources get collected lives in `config/sources/*.json`, not in the
+script. Profiles are standalone — no inheritance — so a sector profile lists
+only the venues the generic run cannot reach. The pool path is derived from the
+profile name, so a sector run cannot overwrite the generic pool, and an unknown
+profile exits 1 rather than quietly collecting the wrong sources.
 
 Two behaviours matter when this runs unattended:
 
@@ -108,9 +117,14 @@ failures. Reddit contributes nothing until a script-type OAuth app is
 configured; see *Known source limitations* in
 [`ai-signals-pipeline.md`](./ai-signals-pipeline.md).
 
-**Sector and claim runs skip `signals:collect` entirely** — the collector's
-feeds are not sector- or claim-aware — and use web search instead. They still
-run `signals:prepare`.
+**A sector or claim run uses `signals:collect` only if a profile exists** for it
+at `config/sources/<name>.json`; otherwise it skips straight to web search. Both
+always run `signals:prepare`. `worker-experience-identity-and-wellbeing` has a
+profile; no claim profile has been written yet.
+
+Even with a profile, a sector run still dedupes by hand: the pool covers feeds
+and search APIs only, and everything found by web search — most of a sector
+run's value — arrives undeduped.
 
 ### A2. Signals arrive as drafts
 
@@ -376,7 +390,7 @@ spread — are the ones no script can reach.
 | Command | Writes | All-or-nothing? |
 |---|---|---|
 | `npm run signals:prepare` | `data/_seen-ledger.jsonl` | — |
-| `npm run signals:collect` | `data/_candidates.json` | exits 1 if *all* sources fail |
+| `npm run signals:collect [-- --profile NAME]` | `data/_candidates[-NAME].json` | exits 1 if *all* sources fail, or on a bad profile |
 | `npm run signals:reconcile -- <out> --rejected <rej>` | the ledger — **retired contract, not in any run order** | — |
 | `npm run signals:promote` | `public/content/ai-signals/`, its `index.json`, the ledger | yes |
 | `npm run radar:prepare` | `data/_radar-input.json` | — |
@@ -404,6 +418,9 @@ Helsinki research site those are not world-readable.
 | Symptom | Cause | Fix |
 |---|---|---|
 | `signals:collect` exits 1 | every source failed | collection broke — do **not** run the finder on the empty pool |
+| `collect: unknown profile 'x'` | no `config/sources/x.json` | it lists what exists; there is deliberately no fallback to `generic` |
+| `collect: profile field ... does not match filename` | the `profile` key and the filename disagree | fix one; otherwise the pool path would misreport its origin |
+| `collect: ... declares no sources` | every source key in the profile is empty | a profile that collects nothing is a mistake, not a configuration |
 | a finder run's items never appear in `data/signal-drafts/` | the job still uses the retired `_finder-output.json` + `reconcile` contract | split the array into per-file drafts, drop the premature ledger lines, and fix the job — see A2 |
 | `signals:promote` moves nothing | one file in `accepted/` fails the schema | fix that file; the batch is deliberately atomic |
 | `promote` refuses to overwrite | that id is already published | the finder assigns ids by scanning `index.json` plus all three draft folders — a collision means a stale draft |

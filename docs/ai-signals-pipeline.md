@@ -122,8 +122,85 @@ sources, and a global sort buried every feed item beneath Hacker News — exactl
 the bias the feeds were added to fix. Round-robin guarantees the top of the pool
 shows every source, strongest-first within each.
 
-Flags: `--days N` (window, default 10), `--out <file>` (output path),
-`--timeout MS` (per-request timeout, default 15000).
+Flags: `--profile NAME` (which source profile to collect, default `generic`),
+`--days N` (window; overrides the profile's `windowDays`), `--out <file>`
+(output path; defaults to the profile-derived one), `--timeout MS` (per-request
+timeout, default 15000).
+
+## Source profiles
+
+**Which** sources a run collects lives in `config/sources/<name>.json`, not in
+the collector. `--profile <name>` selects one; the pool is written to
+`data/_candidates-<name>.json` (`data/_candidates.json` for `generic`), derived
+from the name so a sector pool can never overwrite the generic one. An unknown
+profile exits 1 rather than falling back — collecting the wrong sources still
+writes a plausible pool, and nothing downstream could tell it from a real one.
+
+```json
+{
+  "profile": "worker-experience-identity-and-wellbeing",
+  "description": "why this profile exists and what it deliberately omits",
+  "hackerNewsTerms": [], "devtoTags": ["career"], "subreddits": [],
+  "githubRepos": [], "feeds": [{ "name": "…", "url": "…" }],
+  "substacks": [{ "name": "…", "host": "…" }],
+  "windowDays": 21
+}
+```
+
+Every source key is optional; an absent or empty one means that collector does
+not run. `profile` must equal the filename stem. `windowDays` defaults to 10 and
+exists because sources publish at very different cadences — Pragmatic Engineer
+contributed nothing on 2026-08-10 through no fault of its own, its newest post
+being 12 days old against a 10-day window.
+
+**Profiles are standalone. There is no inheritance**, deliberately. The generic
+run executes weekly regardless, so its sources are already collected and already
+in the ledger by the time a sector run happens; a profile that re-listed them
+would re-fetch what `signals:collect` then strips as already-seen, so the
+inherited half would be empty by construction. A profile is therefore the
+*complement* of the generic run — the venues it structurally cannot reach — and
+each one must be written deliberately rather than assumed to inherit defaults.
+
+### What a profile can and cannot reach
+
+| Venue named by the sector/claim prompts | Collectable |
+|---|---|
+| Hacker News threads | yes, via `hackerNewsTerms` |
+| Personal blogs, Substacks, LeadDev, trade press | yes, via `feeds` / `substacks` |
+| Dev.to | yes, via `devtoTags` |
+| Reddit | **no** — `.json` routes require OAuth |
+| LinkedIn, X, Blind | **no** — no zero-auth search |
+| DORA / Stack Overflow / JetBrains surveys | no — not feed-shaped |
+| arXiv `cs.HC`, `cs.SE` | **deliberately excluded** |
+
+arXiv is left out on purpose: it is already the largest single host in the corpus
+at 19 of 102 signals, the prompts cap academic items at 2 per run, and academic
+work is a lagging indicator here. Collecting it would feed the exact bias the
+collector exists to correct.
+
+So a sector profile covers roughly half of its prompt's venue list. It is still
+worth having, because the half it covers arrives **pre-deduped against the
+ledger** — the specific failure the worker-experience run reported.
+
+### Writing a new profile
+
+Verify every feed URL fetches and parses before adding it, and check that search
+terms actually return on-topic hits. Writing the worker-experience profile
+turned up two findings worth repeating: one named practitioner (Wes McKinney)
+exposes no discoverable feed and had to be left out, and at the collector's
+`points>30` threshold this sector returned **zero** Hacker News stories in 60
+days, so `hackerNewsTerms` is empty there rather than carrying terms that only
+match noise. A source that contributes nothing but costs requests trains its
+reviewer to ignore the pool.
+
+### Run ordering
+
+Both runs use a window wider than the weekly cadence, so pools overlap by design
+and the ledger absorbs it. But **whichever run happens first takes the item** —
+`signals:collect` drops anything already in the ledger and `signals:promote`
+writes it. If the generic run lands first, a burnout story appearing in both
+pools is scored under generic quotas rather than by the sector prompt with its
+distress-selection hazard section. Choose the order deliberately.
 
 ### Failure behaviour (matters for cron)
 
@@ -207,18 +284,24 @@ retrieval-report format. The sector file carries only scope, altitude, source mi
 hunting grounds and hazards. The two are disjoint: nothing in one overrides the
 other.
 
-Run order — note there is **no `signals:collect` step**, because the collector's
-feeds are not sector-aware yet:
+Run order. `signals:collect` runs **only if a profile exists** for this
+dimension at `config/sources/<dim>.json` — see [Source profiles](#source-profiles):
 
 ```bash
 npm run signals:prepare
-#  run the sector prompt (web search; no candidate pool). It writes, itself:
+npm run signals:collect -- --profile <dim>   # only if config/sources/<dim>.json exists
+#  run the sector prompt. It reads data/_candidates-<dim>.json when present and
+#  searches the web for everything the profile cannot reach. It writes, itself:
 #    data/signal-drafts/<id>.json          one file per selected signal
 #    data/_finder-rejected-<dim>.jsonl     appended, one line per rejection
 #    data/_finder-report-<dim>.md          retrieval report
 #  review data/signal-drafts/, mv each file into accepted/ or rejected/
 npm run signals:promote
 ```
+
+A profile is a floor, not a ceiling: it reaches feeds and search APIs only, so
+everything the prompt finds by web search still arrives undeduped and must be
+checked against the ledger by hand.
 
 `signals:promote` validates every file in `accepted/`, moves them into
 `public/content/ai-signals/` as `published`, appends their `index.json` entries,
@@ -294,7 +377,9 @@ the collector's feeds are not claim-aware:
 
 ```bash
 npm run signals:prepare
-#  run the claim prompt (web search; no candidate pool). It writes, itself:
+#  run the claim prompt. No claim profile has been written yet, so this is web
+#  search only; if one is added, run signals:collect --profile claim-<id> first.
+#  It writes, itself:
 #    data/signal-drafts/<id>.json                        one file per selected signal
 #    data/_finder-rejected-claim-<claim-id>.jsonl        appended, one line per rejection
 #    data/_finder-report-claim-<claim-id>.md             retrieval report + proposed evidence block

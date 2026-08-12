@@ -36,11 +36,17 @@ citation of a landmark study they have already seen.
    of this sector evaluated and declined, and why. Do not re-litigate a rejection
    unless something has genuinely changed.
 
-**You are doing the deduplication yourself on this run.** In a generic run a
-candidate collector strips already-seen URLs before the model ever sees them.
-There is no collector for a sector run, so nothing is pre-filtered: a URL already
-in the ledger will come back to you in search results looking brand new. Check
-every candidate against the ledger before you write it up.
+**You are doing most of the deduplication yourself on this run.** A sector run
+may have a source profile — `config/sources/<dimension-id>.json`. If one exists
+and `npm run signals:collect -- --profile <dimension-id>` has been run, its pool
+is at `data/_candidates-<dimension-id>.json` and **is** already deduped against
+the ledger. Read it first; your sector file says what it covers.
+
+That pool is a floor, never a ceiling. It reaches only feeds and search APIs, so
+everything you find by web search — and that is most of a sector run's value —
+arrives **undeduped**. A URL already in the ledger comes back through search
+looking brand new. Check every such candidate against the ledger before you
+write it up.
 
 Do not write to the ledger yourself. A separate step records your output.
 
