@@ -116,8 +116,15 @@ a probe over six candidate paths per domain to resolve.
   varies between publishers, so matching cannot assume `rel` precedes `type`.
 - `fallbackFeedUrls(baseUrl)` → the conventional paths (`/rss.xml`, `/feed`,
   `/feed.xml`, `/index.xml`, `/atom.xml`, `/rss`) against the origin, for sites
-  that publish a feed without advertising it. All five feeds in the first
-  profile were found this way.
+  that publish a feed without advertising it.
+
+Both strategies are load-bearing. Measured against the four pages the first
+sector run found people on: three advertise a feed in a `<link>` tag, and
+`jacob.gold` advertises none but serves `/index.xml`. Tag parsing alone misses a
+quarter of them; the fallback list alone guesses wrong for any site using a path
+outside the conventional six. (An earlier note here claimed none of them
+advertised a feed — that was drawn from a hand-probe that only tried common
+paths and never looked at the tags.)
 
 `scripts/sources-discover.mjs` composes them, taking an **injectable fetcher**
 so the whole path is testable with no network — the rule every other test here
