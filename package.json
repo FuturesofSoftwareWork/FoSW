@@ -23,7 +23,8 @@
     "signals:promote": "node scripts/promote-signals.mjs",
     "signals:validate": "node scripts/validate-signals.mjs",
     "verify:radar": "node scripts/verify-radar.mjs",
-    "preview:radar": "node scripts/preview-radar.mjs"
+    "preview:radar": "node scripts/preview-radar.mjs",
+    "schema:build": "node scripts/build-draft-schema.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",

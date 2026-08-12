@@ -151,7 +151,7 @@ draft is by definition unreviewed.
 
 ```bash
 ls data/signal-drafts/          # the unreviewed queue
-# read each file, then:
+# open each file, add a "_review" block saying why, then move it:
 mv data/signal-drafts/<id>.json data/signal-drafts/accepted/
 mv data/signal-drafts/<id>.json data/signal-drafts/rejected/
 ```
@@ -159,6 +159,33 @@ mv data/signal-drafts/<id>.json data/signal-drafts/rejected/
 The root of `data/signal-drafts/` **is** the queue. Anything still sitting there
 is unreviewed, and `signals:promote` will not touch it — so an interrupted
 review cannot publish something nobody read.
+
+**Say why, in the file you are already reading.** Add a `_review` block to the
+draft before you move it:
+
+```jsonc
+{
+  "id": "2026-08-10-02",
+  "_review": {
+    "under": "commercial-intent",
+    "note": "too technically focused security news — the consequence is the exploit, not a policy change"
+  }
+}
+```
+
+The draft carries a `$schema` key, so an editor offers the `under` codes with
+their meanings as you type. **The folder is the decision; `_review` is only the
+rationale**, which is why it has no `decision` field — the two can never
+disagree. `reviewer` defaults to your `git config user.name`. It works on
+accepted drafts too: *"kept despite thin sourcing because…"* is worth recording.
+
+Both fields are stripped before anything reaches `public/`. A candid note about
+a named vendor must never ship with the signal it was written about.
+
+A bare `mv` still works and is still a valid review — `promote` records it as
+`unrecorded` and tells you how many there were. Nothing refuses. But an
+unrecorded decision teaches the next run nothing, which is the whole point of
+writing one down.
 
 ### A4. Promote
 
@@ -176,10 +203,22 @@ All-or-nothing. In order:
 4. Records every decision in `data/_seen-ledger.jsonl` — `accepted/` as
    `published`, `rejected/` as `rejected`, and every line of every
    `data/_finder-rejected*.jsonl` as `rejected`.
+5. Appends one event per decision to `data/_review-log.jsonl` — yours *and* the
+   finder's, distinguished by `by: "human"` / `by: "finder"`, each carrying its
+   `under` code and free-text note.
 
-It reports how many drafts are still queued. Step 4 is what stops next week's
-run re-surfacing the same story, which is why rejections have to go through
-`rejected/` rather than being deleted.
+It reports how many drafts are still queued, and how many decisions were
+recorded without a rationale. Step 4 is what stops next week's run re-surfacing
+the same story, which is why rejections have to go through `rejected/` rather
+than being deleted. Step 5 is what lets a later run learn *why* — several
+`commercial-intent` rejections in a row is measurable evidence the vendor
+discount in the prompt needs tightening, rather than a feeling.
+
+**The review log is gitignored.** Free-text judgment about named vendors,
+publications and practitioners does not belong in a public git history. The
+seen-ledger is committed and names declined stories, but carries no reasons,
+which is why it can be. The cost is that the log lives on one machine and is not
+shared between reviewers — the clearest pressure toward a private store.
 
 ### A5. Ship
 
@@ -425,6 +464,8 @@ Helsinki research site those are not world-readable.
 | `signals:promote` moves nothing | one file in `accepted/` fails the schema | fix that file; the batch is deliberately atomic |
 | `promote` refuses to overwrite | that id is already published | the finder assigns ids by scanning `index.json` plus all three draft folders — a collision means a stale draft |
 | `promote` or `validate` refuses on `sourceUrl` | the URL is not an absolute http(s) address, or its host is a reserved placeholder (`example.com`, `localhost`, `.test`, `.invalid`) | find the real source, or reject the draft. Do not invent a URL to clear the check — an unverifiable citation is the thing it exists to stop |
+| `promote` refuses on `_review.under` | the code is not in the enum | the message lists the valid codes; the draft's `$schema` offers them in an editor. Use `capped-this-run` for deferred-not-disqualified |
+| `promote` reports decisions "without a rationale" | drafts were moved without a `_review` block | not an error, and nothing is blocked. Add one next time; an unrecorded decision teaches the next run nothing |
 | `radar:prepare` selects nothing | every published signal is cited | expected after a full clustering pass; use `--all` to look for second-phenomenon counter-evidence |
 | `radar:apply` aborts | unknown id, unpublished signal, slug collision, or a new phenomenon with no `construct` | fix `_radar-proposal.json`; re-running is safe |
 | `radar:accept` refuses "no reachReviewedAt" | the reach review has not happened for that id | run B5. Do not hand-write the date |

@@ -8,6 +8,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "fs";
 import { REJECTED_UNDER, validateReview, stripReviewFields, reviewEvent } from "../lib/review-schema.mjs";
 
 const drafted = (over = {}) => ({ id: "2026-08-10-02", title: "T", ...over });
@@ -122,4 +123,11 @@ test("REJECTED_UNDER carries the codes real runs already emit", () => {
   ]) {
     assert.ok(REJECTED_UNDER.includes(code), code);
   }
+});
+
+// The schema is what gives VS Code the enum on hover; if it drifts from the
+// library the editor offers codes that promote then rejects.
+test("the editor schema's enum matches the library's", () => {
+  const schema = JSON.parse(readFileSync("schemas/signal-draft.schema.json", "utf8"));
+  assert.deepEqual(schema.properties._review.properties.under.enum, REJECTED_UNDER);
 });
