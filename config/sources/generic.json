@@ -1,0 +1,32 @@
+{
+  "profile": "generic",
+  "description": "The weekly generic run. Practitioner-technical sources plus leadership feeds. Every value here was moved verbatim from the constants in scripts/collect-candidates.mjs, and scripts/__tests__/source-profile.test.mjs pins them — this file is not scratch. Note that `subreddits` currently collects nothing: Reddit's .json routes require OAuth and answer every unauthenticated request with a 403, from any address. The list is retained so this stayed a pure move; a new profile should leave it empty. See docs/ai-signals-pipeline.md, Known source limitations.",
+  "hackerNewsTerms": [
+    "coding agent",
+    "AI coding",
+    "Copilot",
+    "Claude Code",
+    "Cursor editor",
+    "LLM software engineering",
+    "agentic coding",
+    "AI code review"
+  ],
+  "devtoTags": ["ai", "llm", "machinelearning", "devops", "programming"],
+  "subreddits": ["ExperiencedDevs", "devops", "programming", "LocalLLaMA"],
+  "githubRepos": [
+    "microsoft/vscode",
+    "cline/cline",
+    "Aider-AI/aider",
+    "All-Hands-AI/OpenHands"
+  ],
+  "feeds": [
+    { "name": "LeadDev", "url": "https://leaddev.com/feed" },
+    { "name": "InfoQ Culture & Methods", "url": "https://feed.infoq.com/culture-methods/" },
+    { "name": "Martin Fowler", "url": "https://martinfowler.com/feed.atom" },
+    { "name": "Stack Overflow Blog", "url": "https://stackoverflow.blog/feed/" }
+  ],
+  "substacks": [
+    { "name": "The Pragmatic Engineer", "host": "newsletter.pragmaticengineer.com" },
+    { "name": "Engineering Leadership", "host": "newsletter.eng-leadership.com" }
+  ]
+}

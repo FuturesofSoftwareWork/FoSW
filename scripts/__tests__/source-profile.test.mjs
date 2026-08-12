@@ -84,3 +84,39 @@ test("window precedence is flag over profile over default", () => {
   assert.equal(resolveWindowDays({ windowDays: 30 }, undefined), 30);
   assert.equal(resolveWindowDays({}, undefined), 10);
 });
+
+// Pins the extraction from collect-candidates.mjs as a pure move. The values
+// are written literally rather than compared against the constants, so the pin
+// survives those constants being deleted — and so an edit to generic.json made
+// in the belief that it is scratch fails here and says what it changed.
+test("generic.json holds the collector's original constants verbatim", () => {
+  const p = loadProfile("generic");
+  assert.deepEqual(p.hackerNewsTerms, [
+    "coding agent",
+    "AI coding",
+    "Copilot",
+    "Claude Code",
+    "Cursor editor",
+    "LLM software engineering",
+    "agentic coding",
+    "AI code review",
+  ]);
+  assert.deepEqual(p.devtoTags, ["ai", "llm", "machinelearning", "devops", "programming"]);
+  assert.deepEqual(p.subreddits, ["ExperiencedDevs", "devops", "programming", "LocalLLaMA"]);
+  assert.deepEqual(p.githubRepos, [
+    "microsoft/vscode",
+    "cline/cline",
+    "Aider-AI/aider",
+    "All-Hands-AI/OpenHands",
+  ]);
+  assert.deepEqual(p.feeds, [
+    { name: "LeadDev", url: "https://leaddev.com/feed" },
+    { name: "InfoQ Culture & Methods", url: "https://feed.infoq.com/culture-methods/" },
+    { name: "Martin Fowler", url: "https://martinfowler.com/feed.atom" },
+    { name: "Stack Overflow Blog", url: "https://stackoverflow.blog/feed/" },
+  ]);
+  assert.deepEqual(p.substacks, [
+    { name: "The Pragmatic Engineer", host: "newsletter.pragmaticengineer.com" },
+    { name: "Engineering Leadership", host: "newsletter.eng-leadership.com" },
+  ]);
+});
