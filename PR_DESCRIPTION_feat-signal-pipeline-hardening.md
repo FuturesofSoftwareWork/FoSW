@@ -1,11 +1,12 @@
 # Signal-pipeline hardening: sourceUrl validation, tests, Reddit diagnosis, source profiles and the review log
 
-Six pieces of work on the AI-signals pipeline, from an analysis pass over what
+Seven pieces of work on the AI-signals pipeline, from an analysis pass over what
 is implemented and what actually holds up.
 
-Sections 1–3 close gaps found in the audit. Sections 5–6 implement the design in
-section 4: sector- and claim-aware candidate collection, and a record of *why*
-each editorial decision was made. Test suite goes **176 → 252**.
+Sections 1–3 close gaps found in the audit. Sections 5–7 implement two designs:
+sector- and claim-aware candidate collection, a record of *why* each editorial
+decision was made, and a loop that lets a run's source discoveries survive into
+the next one. Test suite goes **176 → 284**.
 
 ---
 
@@ -210,11 +211,56 @@ A bare `mv` still works: the decision is recorded as `unrecorded` and counted,
 never refused. Refusing would punish a reviewer at the end of a session and
 break the guarantee that an interrupted review publishes nothing.
 
+## 7. The source nomination loop
+
+The seen-ledger remembers items; nothing remembered **sources**. The 2026-08-06
+sector run found eight named practitioners by hand, used them once and dropped
+them — the next run started from zero.
+
+The prompt was already asking the right question: report section 5 is *"which
+feeds would have helped most, specific enough that someone could implement it"*.
+It answered in prose, in a file nothing machine-reads, and the answer died
+there. This gives that answer a structured form and somewhere to go.
+
+```
+finder run  ──► data/source-nominations/<slug>.json   name, profile, foundAt, why
+npm run sources:discover  ──► resolves + verifies the feed, writes feedStatus
+you: mv to accepted/ | rejected/
+npm run sources:promote   ──► appends to config/sources/<profile>.json
+```
+
+**The finder nominates a person and the page it read, never a feed URL.**
+Discovery is code's job — a model guessing a feed path returns plausible 404s
+that contribute nothing to every run afterwards. Both strategies earn their
+place, measured against the four pages the sector run found people on: three
+advertise a feed in a `<link>` tag, and `jacob.gold` advertises none but serves
+`/index.xml`. Candidates are verified with the collector's own `parseFeed`,
+because a feed discovery accepted but the collector could not read would be
+worse than none.
+
+**Feeds only.** A feed is checkable by code — does it fetch, does it parse, when
+did it last publish. A search term is knowable only by running it next week, and
+this sector's terms all returned zero.
+
+`sources:promote` is all-or-nothing and refuses an unroutable nomination, an
+unverified feed, or a duplicate — compared on the normalised URL, so a scheme
+change or a trailing slash cannot double one source's weight in the pool.
+Accepted files are consumed; **rejected files stay**, as the memory that stops
+re-nomination.
+
+Verified end to end against a real site: a nomination carrying only a
+`jacob.gold` post URL resolved via fallback to `/index.xml`, verified at 15
+entries, and was appended to the profile after the existing feed.
+
+`data/source-nominations/` is gitignored — the third place that cost appears,
+and now the sharpest: the declined list is what stops the loop re-proposing the
+same people, its value grows over time, and it lives on one machine.
+
 ---
 
 ## Verification
 
-- `npm test` — **252 pass**, 0 fail (176 before this branch)
+- `npm test` — **284 pass**, 0 fail (176 before this branch)
 - `npm run lint` — clean
 - `npm run build` — `validate: OK — 102 signals valid`, phenomena valid,
   prerender and sitemap fine
