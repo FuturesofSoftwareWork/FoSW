@@ -117,14 +117,15 @@ Pulls fresh items from zero-auth JSON feeds, dedupes against the ledger + publis
 and keeps only the last N days (default 10). Each source is isolated — one failing feed logs a
 warning and the run continues.
 
-Tune the lists at the top of `scripts/collect-candidates.mjs`:
+Tune the lists in `config/sources/<profile>.json` — **not** in the script, which
+holds no source lists at all since they became profiles:
 
-- `TERMS` — Hacker News search terms (story text + comments = firsthand operational lessons).
-- `DEVTO_TAGS` — Dev.to tags (practitioner how-tos).
-- `SUBREDDITS` — subreddits where senior engineers report before blogging.
-- `GITHUB_REPOS` — dev-tool repos whose **releases lead the discourse** (a tool ships months before anyone studies it).
-- `LEADERSHIP_FEEDS` — RSS/Atom from leadership-facing publications (LeadDev, InfoQ Culture & Methods, Martin Fowler, Stack Overflow Blog).
-- `SUBSTACK_PUBS` — Substack newsletters via their public JSON archive (The Pragmatic Engineer, Engineering Leadership).
+- `hackerNewsTerms` — Hacker News search terms (story text + comments = firsthand operational lessons).
+- `devtoTags` — Dev.to tags (practitioner how-tos).
+- `subreddits` — subreddits where senior engineers report before blogging. Collects nothing until Reddit OAuth exists.
+- `githubRepos` — dev-tool repos whose **releases lead the discourse** (a tool ships months before anyone studies it).
+- `feeds` — RSS/Atom from leadership-facing publications and named practitioners (LeadDev, InfoQ Culture & Methods, Martin Fowler, Stack Overflow Blog).
+- `substacks` — Substack newsletters via their public JSON archive (The Pragmatic Engineer, Engineering Leadership).
 
 ### Why the leadership feeds exist
 
@@ -381,7 +382,7 @@ npm run signals:collect -- --profile <dim>   # only if config/sources/<dim>.json
 #  searches the web for everything the profile cannot reach. It writes, itself:
 #    data/signal-drafts/<id>.json          one file per selected signal
 #    data/_finder-rejected-<dim>.jsonl     appended, one line per rejection
-#    data/_finder-report-<dim>.md          retrieval report
+#    data/_finder-report-<dim>.<date>.md   retrieval report (dated: never overwrite an earlier run)
 #  review data/signal-drafts/, mv each file into accepted/ or rejected/
 npm run signals:promote
 ```
@@ -469,7 +470,7 @@ npm run signals:prepare
 #  It writes, itself:
 #    data/signal-drafts/<id>.json                        one file per selected signal
 #    data/_finder-rejected-claim-<claim-id>.jsonl        appended, one line per rejection
-#    data/_finder-report-claim-<claim-id>.md             retrieval report + proposed evidence block
+#    data/_finder-report-claim-<claim-id>.<date>.md      retrieval report + proposed evidence block
 #  review data/signal-drafts/, mv each file into accepted/ or rejected/
 npm run signals:promote
 #  then apply the report's proposed evidence block to

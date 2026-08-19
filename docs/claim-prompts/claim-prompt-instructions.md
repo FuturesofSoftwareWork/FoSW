@@ -313,7 +313,13 @@ That is the point of recording it.
 
 ### 3. The retrieval report
 
-**`data/_finder-report-claim-<claim-id>.md`** — see below. Not optional, and on a
+**`data/_finder-report-claim-<claim-id>.<YYYY-MM-DD>.md`**, dated with today — see below. Not optional, and on a
+
+**The date in the filename is load-bearing.** A fixed path means the second run
+of a sector silently destroys the first run's report — including its record of
+which venues were unreachable and which sources were worth adding, which is the
+part later runs depend on. This has already happened twice and been patched by
+hand both times. Never drop the date to "tidy up" the filename.
 claim run it carries the deliverable.
 
 ### Schema
@@ -422,7 +428,7 @@ never re-nominate someone already collected or already declined.
 
 ## The retrieval report
 
-Write `data/_finder-report-claim-<claim-id>.md` with these seven sections. The
+Write `data/_finder-report-claim-<claim-id>.<YYYY-MM-DD>.md` with these seven sections. The
 first five are the same discipline every run in this pipeline owes; the last two
 are the claim run's deliverable.
 

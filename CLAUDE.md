@@ -34,6 +34,13 @@ The two LLM steps between those commands are [`docs/radar-clustering-prompt.md`]
 
 **Operating either pipeline end to end: [`docs/pipeline-runbook.md`](docs/pipeline-runbook.md).** It is the one page that covers both — signal drafts through `signals:promote`, then `radar:prepare` through `radar:accept` — with the decision points, the refusal messages and what to do about them.
 
+**Picking work up cold: read `docs/superpowers/HANDOVER-*.md` first.** One per
+strand of in-flight work, each written at the point a session stopped: where it
+stopped, what is already decided, what not to redo, and what will bite you.
+They are the only place the *uncommitted* state is described — unreviewed
+drafts, undecided nominations, branches that were never pushed — none of which
+is visible from the repo itself.
+
 **On Windows, prefix every `--base=/FoSW/preview/` command with `MSYS_NO_PATHCONV=1` in Git Bash** — the build *and* `vite preview`. MSYS rewrites `/FoSW/preview/` into a Windows path; on `vite preview` that shows up as a 404 with `/Program%20Files/Git/...` in the server log, and on the build it is silent — exit 0, wrong base, assets 404 at runtime. Verify with `grep -o 'src="[^"]*"' dist/index.html | head -3`.
 
 PowerShell also avoids MSYS, but is not a reliable fallback here: on a locked-down execution policy `npm` fails with *"npm.ps1 cannot be loaded … not digitally signed"*, and a `profile.ps1` in a synced Documents folder fails the same way. `npm.cmd` bypasses it. **`npm run preview:radar` avoids both traps** — it builds, serves and verifies from Node, with no `--base` argument for MSYS to touch and no PowerShell in the path. `preview.bat` is a double-clickable wrapper for it.
