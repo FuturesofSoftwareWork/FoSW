@@ -46,14 +46,15 @@ Decide the ledger question first — the next section.
 - `npm run verify:radar` — **not run.** It needs a server already running, so it
   was never exercised this session. The deploy workflow gates on it.
 
-**`data/_seen-ledger.jsonl` is modified and uncommitted.** 38 lines changed: 3
-`published`, 35 `rejected`. The three published ids — `2026-08-07-01`,
-`-02`, `-05` — are all present under `public/content/ai-signals/` and already
-tracked by git, so this is a catch-up from a promote run, not new content. It is
-tracked state and the same situation was handled once before by committing it on
-its own with a message saying why. Either commit it separately or stash it, but
-do not fold it into a code commit — it makes an unrelated 38-line diff look like
-part of the feature.
+**`data/_seen-ledger.jsonl` — resolved 2026-08-19, and the diagnosis below was
+wrong.** It is not a catch-up from a promote run. The 38-line diff was **pure
+reordering**: 178 records before, 178 after, and a set comparison of canonicalised
+records shows zero on either side that the other lacks. `signals:prepare` rewrites
+the file sorted by `lastSeen`, so running it produces a large diff with no
+content change. The correct action is `git checkout data/_seen-ledger.jsonl`,
+which discards nothing; it has been done. Do not commit this diff "with a message
+saying why" — there is no why, and the commit would imply state changed when it
+did not. Expect it to reappear after any `signals:prepare`.
 
 **The review queue is deep and untouched:** 26 drafts in `data/signal-drafts/`,
 **none** carrying a `_review` block yet, `accepted/` empty, and two files in
