@@ -211,7 +211,13 @@ That is the point of recording it.
 
 ### 3. The retrieval report
 
-**`data/_finder-report-<dimension-id>.md`** — see below. Not optional.
+**`data/_finder-report-<dimension-id>.<YYYY-MM-DD>.md`**, dated with today — see below. Not optional.
+
+**The date in the filename is load-bearing.** A fixed path means the second run
+of a sector silently destroys the first run's report — including its record of
+which venues were unreachable and which sources were worth adding, which is the
+part later runs depend on. This has already happened twice and been patched by
+hand both times. Never drop the date to "tidy up" the filename.
 
 ### Schema
 
@@ -302,7 +308,7 @@ fails the build.
 
 ## The retrieval report
 
-Write `data/_finder-report-<dimension-id>.md` with:
+Write `data/_finder-report-<dimension-id>.<YYYY-MM-DD>.md` with:
 
 1. **Searches run** — the actual queries and venues you worked through, not a
    summary. Include the ones that returned nothing.

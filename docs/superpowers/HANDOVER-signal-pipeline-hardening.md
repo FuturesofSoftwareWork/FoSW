@@ -78,7 +78,7 @@ people's numbers. Deciding them is a folder move followed by
   two, both `supports` — `2026-08-03-10` and `2026-08-07-01` — with
   `contested: false` and `evidenceProfile.counterEvidence: false`. The claim
   run's report and rejection log are still on disk
-  (`data/_finder-report-claim-teams-get-smaller.md`,
+  (`data/_finder-report-claim-teams-get-smaller.2026-08-07.md`,
   `data/_finder-rejected-claim-teams-get-smaller.jsonl`) and both are gitignored.
 - **`scripts/verify-radar.mjs` no longer hardcodes which phenomena are
   contested.** The old check named `"Teams get smaller"` and
@@ -114,3 +114,72 @@ people's numbers. Deciding them is a folder move followed by
   it to check.
 - **A green deploy run does not mean the site updated.** Check
   `gh api repos/FuturesofSoftwareWork/FoSW/pages --jq .status`.
+
+---
+
+## Update 2026-08-19 — a sector run was used to test the instructions
+
+After the branch was finished, the `worker-experience-identity-and-wellbeing`
+sector prompt was run end to end against the new profile, deliberately as a test
+of whether the instructions are followable rather than to produce content.
+
+**Output:** 2 drafts (`2026-08-12-01`, `-02`, both in the queue of 26),
+10 recorded rejections, 1 source nomination (Andrew Diamond, since resolved to a
+verified feed). Report:
+`data/_finder-report-worker-experience-identity-and-wellbeing.2026-08-12.md`.
+
+**What held.** The altitude test rejected the two items that looked most like
+good finds — Khare's *"The review queue is the bottleneck"*, the most on-sector
+title in the whole pool and on reading a prescriptive framework with no personal
+account, and DoltHub's 1,500-agent-PR piece, which has excellent numbers and is a
+tool ranking. The commercial-intent discount caught an entire layer of
+statistics-roundup SEO in one pass. The ledger caught an already-seen source
+before any evaluation effort.
+
+### Open findings — none of these is done
+
+1. **No rejection code fits "on-topic but not experiential."** Khare's piece is
+   neither vague nor out-of-sector; it is prescriptive rather than situated.
+   `too-vague` was used as nearest-fit and misdescribes the call. A
+   `not-experiential` code in `scripts/lib/review-schema.mjs` would be honest,
+   and this sector would reach for it often. Adding one means the enum, the
+   generated JSON schema (`npm run schema:build`) and all three prompts.
+2. **Hacker News cannot be fetched the obvious way.** The instructions call
+   comment threads primary sources, but `news.ycombinator.com/item?id=…` returns
+   *socket hang up*. `https://hn.algolia.com/api/v1/items/<id>` serves the full
+   comment tree. One line in the sector instructions would save every future run
+   the detour. Worth noting the 2026-08-06 run concluded HN threads were
+   unreachable through search; the 2026-08-12 run reached them first try, so that
+   earlier conclusion is out of date.
+3. **The sector profile needs trimming, and the report says why.** The pool
+   produced **no drafts on its own** — it contributed dedup and one corroborating
+   link. Two causes, both fixable in
+   `config/sources/worker-experience-identity-and-wellbeing.json`:
+   - **One writer dominates.** Sean Goedecke was 9 of 11 feed items. Round-robin
+     interleaving balances across *sources*, and here one source is one prolific
+     person. A per-feed cap of 2–3 would fix it — that is a change to
+     `collect-candidates.mjs`, not just the profile.
+   - **The Dev.to tags are not earning their place.** 40 of 51 pool items, zero
+     usable. The failure is register, not topic: `career` and `mentalhealth` on
+     Dev.to select for engagement bait. Recommend dropping both and making this
+     profile feeds-only.
+4. **`sourceType` is lossy when a thread is corroboration rather than the
+   primary.** `2026-08-12-01` is a blog post corroborated by a 15-voice HN
+   thread; the schema carries one `sourceType` for the item, so the thread's
+   nature is invisible when reading the corpus back. Not wrong, just worth
+   knowing before anyone counts `sourceType` distributions.
+
+### Closed by this update — do not redo
+
+- **The retrieval-report path now carries the run date**
+  (`_finder-report-<id>.<YYYY-MM-DD>.md`), in both prompt instruction files and
+  the pipeline doc, with a note saying the date is load-bearing. A fixed path
+  meant the second run of a sector destroyed the first run's report. This had
+  already happened for real: the 2026-08-17 `arxiv-v2` run overwrote the
+  2026-08-10 one, and the 08-10 report survives only because someone saved it by
+  hand first. All five reports on disk are now named for their run date.
+- **`CLAUDE.md` now points at these handovers**, so a cold session finds them
+  without being told they exist.
+- **The pipeline doc's collector section no longer says to edit
+  `collect-candidates.mjs`.** It had kept the pre-profile instruction and the old
+  `TERMS`/`SUBREDDITS` constant names, both gone since source profiles landed.

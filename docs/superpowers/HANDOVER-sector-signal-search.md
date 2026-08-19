@@ -103,7 +103,7 @@ and will under-find the r/ExperiencedDevs threads and personal blog posts
 (hard to retrieve, most valuable). Nobody has verified this.
 
 So the prompt requires a third output file —
-`data/_finder-report-worker-experience-identity-and-wellbeing.md` — recording
+`data/_finder-report-worker-experience-identity-and-wellbeing.2026-08-06.md` — recording
 what was searched, where the selected items came from, what could not be reached,
 and a specific verdict on whether a collector would have helped and which feeds
 it would need. **Read that report before deciding to build anything.**
