@@ -1,0 +1,18 @@
+{
+  "id": "ai-makes-coding-faster-rest-of-workflow",
+  "title": "AI Makes Coding Faster. But What Happens to the Rest of the Workflow?",
+  "author": "Argjira Shala",
+  "authorRole": "University of Helsinki",
+  "excerpt": "What we learned from measuring productivity in AI-assisted software development in an industrial study with Basware. The analysis introduces the AI Productivity Triangle to examine how AI shifts engineering effort across efficiency, effectiveness, and sustainability.",
+  "markdownFile": "ai-makes-coding-faster-rest-of-workflow.md",
+  "date": "2026-08-28",
+  "status": "published",
+  "tags": [
+    "productivity",
+    "AI-assisted-development",
+    "workflow-telemetry",
+    "AI-productivity-triangle",
+    "empirical-study"
+  ],
+  "image": "content/expert-insights/productivity-triangle.png"
+}

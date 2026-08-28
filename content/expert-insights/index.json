@@ -1,6 +1,12 @@
 {
-  "lastUpdated": "2026-07-03T00:00:00Z",
+  "lastUpdated": "2026-08-28T00:00:00Z",
   "items": [
+    {
+      "id": "ai-makes-coding-faster-rest-of-workflow",
+      "file": "ai-makes-coding-faster-rest-of-workflow.json",
+      "date": "2026-08-28",
+      "status": "published"
+    },
     {
       "id": "productivity-systems-lens",
       "file": "productivity-systems-lens.json",
