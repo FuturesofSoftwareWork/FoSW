@@ -1,0 +1,50 @@
+{
+  "id": "2026-08-31-04",
+  "title": "Code review is being demoted from the quality gate to one layer among three, as teams push architectural intent into machine-readable guardrails",
+  "summary": "A qualitative interview study, situated within a broader practitioner survey, asks what happens to standing quality guardrails — code review, linting, testing, CI/CD — when AI-assisted generation raises the volume and rate of proposed changes beyond what review can absorb. The reported answer is not that review gets faster but that it stops carrying the load alone. Organisations described distributing supervision across three layers: \n\n * Preventive guardrails, produced by externalising architectural intent and conventions into machine-interpretable form so constraints are stated before generation rather than caught after; \n * Executable guardrails, in which linting, testing and CI/CD are repurposed from correctness checks into scalable supervision infrastructure; and \n * Human oversight, which shifts away from line-by-line inspection toward supervisory interpretation focused on architectural reasoning, explainability and long-term maintainability. \n\n The authors characterise this as a transition from review-centric guardrails to layered supervision. The evidence base is small — five practitioners interviewed — so this is best read as a named, coherent description of an emerging operating model rather than as a measured account of how common it is.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2608.26316",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "replicated": false,
+  "leadTimeEstimate": "~6-18 months ahead of mainstream; most organisations are still trying to make review scale rather than redistributing what review is for",
+  "corroboration": [
+    "https://arxiv.org/abs/2608.25241"
+  ],
+  "detectedAt": "2026-08-31",
+  "date": "2026-08-26",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "engineering-management",
+    "quality-assurance",
+    "guardrails",
+    "ci-cd",
+    "org-design"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Quality & Testing",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "If review is becoming one layer of three rather than the gate, then review-throughput metrics stop measuring quality assurance and start measuring only one contributor to it. Leaders tracking PR cycle time and reviewer load as their quality signal will be watching a shrinking share of the actual control surface.",
+    "Preventive guardrails require someone to externalise architectural intent into machine-readable form — a real, ongoing authoring job that currently sits with nobody's role description. This is the staffing implication most likely to be missed, and it is adjacent to the finding that committed AI configuration files are largely never updated after first commit.",
+    "The described shift in human oversight — from line-by-line inspection to architectural reasoning, explainability and maintainability judgement — raises rather than lowers the seniority profile of review. That cuts against the assumption that agents reduce demand for experienced engineers; it changes what they are scarce for.",
+    "Because it reframes CI/CD as supervision infrastructure rather than release plumbing, this argues for investing in test and pipeline capacity ahead of, not after, expanding agent-assisted generation."
+  ],
+  "recommendedActions": [
+    "Audit which of your three layers is actually absorbing the increase in change volume, rather than assuming review still is.",
+    "Name an owner for preventive guardrails — the machine-readable statement of architectural intent and conventions — and give the maintenance of it a place in the normal review cycle.",
+    "Reframe reviewer expectations explicitly toward architectural and maintainability judgement, and adjust reviewer staffing and seniority accordingly.",
+    "Treat test and CI/CD capacity as a supervision budget that must scale with generation volume."
+  ],
+  "risksAndCaveats": [
+    "Five interviewed practitioners is a very small sample. The three-layer model is a plausible and internally coherent description, but nothing here establishes how widespread it is, which organisation types it fits, or whether it improves outcomes.",
+    "The study reports what practitioners say they do; it contains no measurement of defect rates, incident frequency or maintenance cost under layered supervision versus review-centric practice.",
+    "The broader practitioner survey the interviews are situated within is not characterised on the abstract page, so its size and composition cannot be judged from the source.",
+    "No fieldwork period is stated, so how current these practices are cannot be verified."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-17-13",
+  "title": "AI-free Wednesdays at Honeycomb point to a team-level response to AI fatigue",
+  "summary": "In a Pragmatic Engineer interview advocating faster AI adoption, Charity Majors mentions a simple response to AI fatigue: teams at Honeycomb set shared limits on AI use, including an AI-free Wednesday. The remark is brief. The interview does not explain whether this is a formal company policy, how long the practice has been used, or whether it has improved wellbeing or delivery. \n Even with those limitations, the example is notable because it moves the response from personal habits to a shared team practice. Much of the current advice on AI-related fatigue places responsibility on individual engineers. They are encouraged to limit their sessions, separate experimentation from delivery work, and protect time for recovery. A June 2026 LeadDev article follows this pattern. It reports that 45% of survey respondents are working longer weeks than a year earlier and that 54% of CTOs feel emotionally drained at least weekly. Its proposed remedies, however, are mainly personal boundaries. \n An AI-free day offers a different model. The team, rather than each engineer alone, agrees when the tools will not be used. This makes the boundary visible and reduces the risk that opting out will be interpreted as lower commitment or slower performance.\n The example also comes from a strong supporter of AI-assisted development. Majors argues that skepticism is no longer tenable, questions the value of traditional code review, and expects engineers eventually to release code they have not personally read. Her support for AI-free time is therefore not a rejection of the technology. It suggests that even enthusiastic adopters may see shared limits as necessary for sustainable use.",
+  "source": "The Pragmatic Engineer (interview with Charity Majors, Honeycomb)",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/stop-being-skeptical-about-ai-for",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Charity Majors, CTO and co-founder of Honeycomb and co-author of Observability Engineering — describing a practice at her own company, in an interview arguing for faster AI adoption rather than against it",
+  "leadTimeEstimate": "~12-18 months",
+  "corroboration": [
+    "https://leaddev.com/ai/ai-coding-is-addictive-engineers-are-paying-the-price"
+  ],
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-12",
+  "status": "published",
+  "tags": [
+    "AI fatigue",
+    "engineering management",
+    "team norms",
+    "developer wellbeing",
+    "adoption policy",
+    "Honeycomb"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Org & Leadership",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "Because a pro-adoption CTO found it necessary to schedule abstinence, leaders should treat AI fatigue as a workload-design problem they own rather than a personal-resilience problem they can delegate to individuals.",
+    "Every published remedy so far asks the individual engineer to exercise restraint against a tool built to be engaging. A calendar-level rule is the first version of this intervention a manager can be held accountable for, and the first that does not penalise the engineers with the least slack.",
+    "If AI-free time becomes a norm, it will collide with how teams currently plan and measure output. Leaders who intend to try it should decide in advance what a fifth of the week without agents is for — deep work, review, design, learning — rather than treating it as lost capacity."
+  ],
+  "recommendedActions": [
+    "Ask your teams directly whether AI-assisted work is lengthening their days rather than shortening them, before deciding whether a scheduled break is a solution to a problem you actually have.",
+    "If you pilot AI-free time, define its purpose and measure something concrete across it — cycle time, defect escape rate, self-reported exhaustion — so the decision to keep or drop it rests on evidence rather than mood."
+  ],
+  "risksAndCaveats": [
+    "This is a single sentence in a podcast write-up, not a documented policy. Nothing is stated about whether the practice is formal or informal, how it is enforced, how long it has run, whether it applies beyond engineering, or what effect it has had — and this signal has not been independently validated.",
+    "Honeycomb is a small, engineering-led company with an unusually autonomous culture; a company-wide tool-free day is far cheaper there than in an organisation with on-call obligations, customer SLAs, or contractual delivery commitments.",
+    "The underlying fatigue evidence is corroborating context, not proof that this remedy works. The LeadDev piece cited here documents the mechanism and the survey numbers, and explicitly names no organisation implementing restrictions — which is what makes this early, and also what means there is no outcome data behind it.",
+    "Reading this as a considered wellbeing policy risks over-interpreting an aside. It may equally be a habit that formed without deliberation, and the interview offers no way to tell the difference."
+  ]
+}

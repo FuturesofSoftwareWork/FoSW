@@ -1,0 +1,43 @@
+{
+  "id": "2026-08-31-11",
+  "title": "A senior engineer describes the five-to-twenty-minute agent wait as the new unit of the working day, and the informal discipline teams are inventing to survive it",
+  "summary": "Ashley Childress, a senior full-stack developer at Home Depot with eight years of experience on distributed backends, wrote a firsthand account of what her day is actually made of now that agents do the typing. The structural claim is specific: her working day has become a sequence of five-to-twenty-minute gaps while agents run, in place of the long uninterrupted blocks the work used to require. She describes an explicit discipline for filling them — deliberately slowing down to reconsider the problem rather than accepting the first solution, watching the direction of change rather than reading diffs, batching administrative work and reviews, studying in five-minute increments — governed by one rule: if you cannot drop it in under thirty seconds when the agent finishes, it does not belong in the gap. She names Slack as the trap, because answering messages in the gap makes her the bottleneck when the agent returns. The 127 comments show other developers reporting the same shape, including anxiety from running parallel sessions and a shift to monitoring work through the pull-request lifecycle rather than terminal output. The signal is not that the gaps are unpleasant — it is that the interstitial gap is becoming the atomic unit of engineering time, and no organisation's capacity, focus-time or interruption policy is designed around it.",
+  "source": "Practitioner blog (Dev.to)",
+  "sourceUrl": "https://dev.to/anchildress1/what-do-you-do-while-ai-codes-k8k",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Ashley Childress, senior full-stack developer at Home Depot, eight-plus years on distributed backends, writing about her own working day under her own name",
+  "leadTimeEstimate": "~12-24 months; this is being worked out individually by practitioners and has not reached management practice, capacity models or developer-experience research",
+  "corroboration": [],
+  "detectedAt": "2026-08-31",
+  "date": "2026-08-25",
+  "status": "published",
+  "tags": [
+    "developer-experience",
+    "focus-time",
+    "context-switching",
+    "agentic-coding",
+    "ways-of-working",
+    "wellbeing"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Productivity",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "Organisational norms about focus time were built for a day made of long blocks. If the day is now made of five-to-twenty-minute gaps, then meeting policy, on-call load, interruption norms and 'no-meeting Wednesday' style interventions are all calibrated against a workday that no longer exists — and the fix is not more protected blocks but something different that nobody has designed yet.",
+    "The thirty-second rule is the interesting artefact: practitioners are independently inventing a personal scheduling discipline because no team practice supplies one. Where individuals are inventing process to cope, there is usually a management practice waiting to be written, and the organisations that write it first will get the benefit.",
+    "Slack being the trap has a direct consequence. Filling agent waits with responsiveness makes the engineer the bottleneck when the agent returns, which means a culture that rewards fast internal response is now actively taxing delivery throughput in a way it was not two years ago.",
+    "Watching direction rather than reading diffs is a quiet change in what oversight means. If senior engineers are supervising trajectory rather than reading code, then the review and accountability model most organisations still document does not describe what is happening."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "This is a single firsthand report from one developer and has not been independently validated. The comment agreement is self-selected — people who recognised the pattern replied — and cannot be read as prevalence.",
+    "The author states she has ADHD and is 'terrible' at staying idle, so part of what is described may be a personal working style rather than a general effect of agent-paced work.",
+    "No measurement of any kind is offered: no time study, no throughput or quality comparison, no before-and-after. The gap durations are her impression of her own day.",
+    "Adjacent ground is already covered in this collection — the erosion of flow and of cognitive recovery time under agentic work. What is new here is the emergence of a deliberate practice for the gaps, and a reviewer should judge whether that is separable enough to stand on its own."
+  ]
+}

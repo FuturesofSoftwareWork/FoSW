@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-31-09",
+  "title": "Redis reports its bottleneck moved from building to deciding: roadmap calls that took a fortnight now need making in hours, and product managers ship prototypes themselves",
+  "summary": "Eric Sammer, Distinguished Engineer at Redis and formerly CEO of Decodable, described how a 350-400 person product and engineering organisation has restructured around AI-assisted work. Delivery runs in pods of three to four engineers with a feature lead, while Staff, Principal and Distinguished engineers act as service leads supporting several related projects rather than owning one. Teams set their own cadence; daily stand-ups have shifted away from technical detail toward timelines, priorities and cross-team dependencies. Two details carry the signal. First, prioritisation decisions that were reviewed every couple of weeks now sometimes need making every few hours, because the cost of building the wrong thing has collapsed while the cost of deciding it has not. Sammer's stated conclusion is that alignment speed, not build speed, is now the bottleneck. Second, the roughly 20-25 product managers — about one per fifteen engineers — now build working prototypes in React and Claude Code themselves, which moves the specification from a document to a running artefact and changes what the engineer receives.",
+  "source": "Engineering Leadership newsletter",
+  "sourceUrl": "https://newsletter.eng-leadership.com/p/how-redis-builds-ai-native-engineering",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Eric Sammer, Distinguished Engineer at Redis and former CEO of Decodable, describing his own organisation in a named interview",
+  "leadTimeEstimate": "~9-18 months; most organisations are still optimising build throughput and have not yet noticed that decision latency has become the constraint",
+  "corroboration": [],
+  "detectedAt": "2026-08-31",
+  "date": "2026-08-27",
+  "status": "published",
+  "tags": [
+    "org-design",
+    "product-management",
+    "decision-making",
+    "team-topology",
+    "prototyping",
+    "engineering-management"
+  ],
+  "category": [
+    "Org & Leadership",
+    "SDLC Change",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "If alignment speed is the constraint, then the standard AI-productivity investment — more agent seats, better tooling, faster CI — buys nothing at the margin. The lever is decision latency: who can commit to a direction, how fast, and with what escalation path. That is a governance change, not a tooling purchase.",
+    "Product managers writing working prototypes rather than specifications changes the interface between product and engineering. It compresses the specification loop, and it also means the prototype arrives carrying implicit technical decisions no engineer reviewed — a new source of architectural drift that no current process catches.",
+    "The stand-up moving from technical detail to dependencies and priorities is a small, checkable symptom. Leaders can look at their own ceremonies this week and see whether the same drift has already happened, which makes this signal testable inside an organisation without waiting for research.",
+    "The service-lead pattern — senior engineers spread across related projects rather than embedded in one — is a plausible answer to how you supply architectural judgement to many small fast-moving pods at once, which is the staffing problem agent-accelerated pods create."
+  ],
+  "recommendedActions": [
+    "Measure decision latency explicitly: for a sample of recent priority changes, record the time from the question arising to a committed answer. If that number dominates build time, the productivity programme is aimed at the wrong constraint.",
+    "Decide who is authorised to make roadmap calls at hours-scale rather than fortnight-scale, and delegate that authority deliberately rather than letting it default to whoever is available.",
+    "If product managers are prototyping, define what a prototype is allowed to decide and what must still be an engineering decision, before the prototypes start arriving as de facto architecture."
+  ],
+  "risksAndCaveats": [
+    "This is a single firsthand account from one named engineer at one company, not independently validated. No productivity, cycle-time or quality measurement is offered for any of the claims, and the portion of the interview containing AI productivity metrics is behind a paywall.",
+    "Redis is an infrastructure company with an unusually senior engineering population and a 1:15 product-manager-to-engineer ratio. Pods of three to four with roving Staff-plus support may depend on that seniority mix and transfer poorly to organisations with a different distribution.",
+    "'Decisions every few hours' is described as sometimes necessary, not as steady state. Read as a directional observation about where pressure has moved, not as an operating cadence to adopt.",
+    "The account is retrospective and self-reported by someone with an interest in his organisation appearing well adapted; the article itself notes Redis is still working out which processes are right."
+  ]
+}
