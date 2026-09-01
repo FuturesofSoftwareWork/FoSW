@@ -1,0 +1,59 @@
+{
+  "id": "2026-09-01-01",
+  "title": "Amazon gave 50 teams the same coding assistant and their results split in half — the variable was not the tool but whether the team changed how it worked",
+  "summary": "Clare Liguori, a senior principal engineer at AWS who works on the Kiro coding assistant, gave the fullest public account yet of Amazon's internal pilots. The headline is a negative result about tooling: in an Amazon Stores pilot of 50 teams with a normal seniority mix working in existing brownfield codebases, watched for the better part of last year and measured on deployment velocity to production, 90% used Kiro among other internal tools — and outcomes still split in half, under 3x for one group against a median of 4.5x and sometimes past 10x for the other. Liguori's stated conclusion is that the tool was not the variable; the teams that pulled ahead deliberately changed how they worked and the rest sprinkled agents on top of their existing process. She defines the resulting 'frontier development' behaviourally: engineers writing 1-2% of their own code, agents running up to hours without intervention, several running in parallel. Interviews across the pilot and two earlier pathfinder teams produced five habits, set out one by one below. Liguori is deliberate about the word habit: this is not a sprint checklist but a day-to-day change in how engineers work, built over months, and the hard part is the habit-forming rather than the technique. The most useful parts for leaders are the costs she names unprompted: almost every team reported productivity falling during adoption, reviewing agent output is harder than writing code for early-career engineers who have not built that muscle, engineers are staying up late chasing a prompt that will run overnight, and the bottleneck has moved to decision speed — when code takes one to two months, the product decision and the launch review become the long pole, and frontier teams now spend more time deciding than coding.",
+  "source": "Conference Talk (AI Engineer) — Clare Liguori, Senior Principal Engineer, AWS",
+  "sourceUrl": "https://www.youtube.com/watch?v=pqlWNihgdjI",
+  "sourceType": "video",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Clare Liguori, Senior Principal Engineer at AWS, reporting internal Amazon pilot results in a public conference talk. She works on Kiro, the assistant 90% of the studied teams used, so she is describing her own product's deployment — but she is also the accountable engineer naming the failure modes, and most of the caveats below are hers rather than an outside critic's.",
+  "sampleSize": "50 teams in the Amazon Stores pilot (normal seniority distribution, existing codebases); plus two earlier pathfinder teams of six engineers each (Bedrock Mantle, Prime Video)",
+  "fieldworkPeriod": "the better part of 2025 for the 50-team pilot; the Prime Video experiment was a single 10-day sprint",
+  "sponsor": "Amazon / AWS — internal pilots of Amazon's own tooling, presented by an AWS engineer",
+  "leadTimeEstimate": "~12-18 months ahead of population-level confirmation; Amazon says 2026 is about scaling from 50 teams to the next 2,000, so the organisational problems described here arrive at other companies as they scale past pilots",
+  "corroboration": [
+    "https://aws.amazon.com/blogs/machine-learning/how-frontier-teams-are-reinventing-ai-native-development/"
+  ],
+  "detectedAt": "2026-09-01",
+  "date": "2026-08-28",
+  "status": "published",
+  "tags": [
+    "agentic-coding",
+    "developer-productivity",
+    "ways-of-working",
+    "decision-latency",
+    "burnout",
+    "brownfield",
+    "apprenticeship"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Productivity",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "The tool was held roughly constant and the outcomes still diverged by more than 3x. That reframes AI productivity from a procurement question into a management one: buying the assistant every competitor has bought is not the intervention, and a rollout plan that ends at licence distribution is predictably in the under-3x half.",
+    "Almost every team reported productivity going down during adoption, and Liguori names leaders — herself included — as the obstacle, for asking why teams are not faster when the models are so good. Any organisation running quarterly delivery targets over an adoption window will terminate the transition before it pays, and will read the dip as evidence the tools do not work.",
+    "The bottleneck moves rather than disappearing. When code takes one to two months instead of nine to twelve, product-approval and launch-review processes that were previously rounding errors become the constraint, and frontier teams spend more time deciding than coding. That is a governance redesign, not an engineering one, and it is owned above the engineering organisation.",
+    "The cost lands unevenly on early-career engineers. Senior engineers have spent years reviewing other people's code; juniors have not, so reviewing agent output is more cognitively expensive for them than writing it. Any team that moves to agent-authored code without rebuilding how juniors learn is removing the practice that produced the reviewing skill in the first place.",
+    "Amazon's own sequencing is the transferable part: one pathfinder team, then a structured sprint, then a 50-team pilot, and only then a scale-out. Liguori explicitly warns that going broad too fast means many teams that do not know what they are doing and no harvested practices to give them. Note too what the pilot measured — deployment velocity to production, not commits, after commit counts had flattered the earlier pathfinder teams.",
+    "The habits themselves are unglamorous and mostly predate AI: write things down, fix your error messages, test properly, agree requirements before building. What has changed is the return on doing them. A leader who reads the list and concludes there is nothing new in it has the point backwards — the argument is that basic engineering hygiene is now the difference between a 3x and a 10x team, which makes it fundable in a way it has never been."
+  ],
+  "recommendedActions": [
+    "Invest in agent context. Write down what currently lives in people's heads and moves by Slack, onboarding, code review and stand-up. The habit is that every time the agent gets something wrong, you ask what was missing from the steering files rather than correcting it by hand — and then prune as models improve, because rules written for older models become context bloat.",
+    "Slow down to speed up. Almost every team reported productivity falling as it adopted the new way of working. Brownfield codebases need real engineering before agents succeed in them: better error messages so the model can tell why something failed, new tools and MCP servers, often restructuring the code, in some cases changing language for a compiler that gives usable errors.",
+    "Feed agents, not babysit them. A running back-and-forth keeps a person in the loop all day, waiting half a minute at a time, which is what makes parallelism impossible. Give the agent what it needs to self-validate so it comes back only when the work compiles, runs and passes tests — then push that into the steering files so you stop having to ask.",
+    "Make intent explicit. For ambiguous or complex features, settle the requirements in a specification document before generating code. Iterating with a model on a document is far cheaper than arguing with it about changes already spread across a codebase, and most rework Liguori sees comes from the intent being wrong rather than the code.",
+    "Shift testing left. Linters and unit, integration, performance and security tests are what let an agent run for hours and self-correct; without them it has no signal. Mock services with deterministic local responses keep that loop on the laptop, and the faster the loop, the more of it the agent gets through."
+  ],
+  "risksAndCaveats": [
+    "Amazon is measuring the adoption of its own product: 90% of the pilot teams used Kiro, and the speaker works on Kiro. The negative finding about tooling cuts against that interest, which makes it more credible than the multiples do, but the multiples themselves are unaudited vendor-reported numbers.",
+    "No methodology is published. There is no control group, 'deployment velocity normalized against historical baselines' is self-defined, and the under-3x versus 4.5x split is a post-hoc division of the sample. Attributing the gap to changed working practices is the speaker's interpretation of interviews, not a controlled comparison — the two halves may differ in codebase age, domain or staffing in ways nobody measured.",
+    "The fieldwork is roughly a year old and the speaker undercuts its currency herself: teams needed extensive 'do not' rules for Sonnet 3.7 that Opus 4.5 no longer required, with more than six months of model improvement since. Practices tuned to 2025 models may already be the context bloat she warns about.",
+    "The two headline cases are estimate-versus-actual comparisons against baselines that were never executed — Bedrock Mantle's six people in 76 days against an estimate of 30 people over 18 months, Prime Video's 90-week delivery estimate cut to 24. Liguori flags the confounds herself: Mantle included two distinguished engineers, and the Prime Video sprint had no on-call, few meetings, and three weeks of task decomposition done in advance by a senior engineer.",
+    "The productivity metric changes between studies — commits for the two pathfinder teams, deployment velocity for the 50-team pilot — so the 4.5x and the 20x are not measuring the same thing and should not be placed on one scale.",
+    "Nothing here measures quality, defect rates, incidents or rework. Deployment velocity rising is not evidence that what was deployed held up."
+  ]
+}
