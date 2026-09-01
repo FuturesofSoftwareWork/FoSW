@@ -1,50 +1,50 @@
 # Handover — signal-pipeline hardening
 
-Written 2026-08-19, at the end of a session that finished the branch's code and
-docs. **The work is done and verified; it is not pushed and has no PR.** Read
-this first if you are picking it up cold.
+Written 2026-08-19 at the end of the session that finished the branch.
+**Updated 2026-09-01: the branch is merged and gone. The code strand is closed;
+what is left here is the live editorial state and the open findings below, none
+of which is derivable from the repo.** Read this first if you are picking it up
+cold.
 
-## Where we stopped
+## Where the branch went
 
 | | |
 | --- | --- |
-| **Branch** | `feat-signal-pipeline-hardening` — **local only**, no upstream, never pushed |
-| **HEAD** | `73b3fa3` — "docs: stop the prompts teaching a sourceUrl the validator rejects" |
-| **Based on** | `main` at `fdcdb1b`, which equals `origin/main` — no rebase needed |
-| **Size** | 18 commits, 40 files, +5590 / −218 |
-| **PR** | **Not opened.** `PR_DESCRIPTION_feat-signal-pipeline-hardening.md` is written and ready to use as the body |
-| **Working tree** | One modified file, `data/_seen-ledger.jsonl` — uncommitted, see below |
+| **Status** | **Merged.** PR #28, rebase-merged into `main` on 2026-09-01 as `b0a4e82` |
+| **Branch** | `feat-signal-pipeline-hardening` — deleted, local and remote |
+| **Size** | 21 commits, +5590 / −218 |
+| **PR body** | `docs/archive/merged_PRs/PR_DESCRIPTION_feat-signal-pipeline-hardening.md` |
 
-## What this branch is, in three sentences
+Do not look for the branch. Its commits are on `main` under different SHAs —
+the rebase merge means `git branch --merged` never recognised it, though the
+trees were identical before deletion.
+
+## What this branch was, in three sentences
 
 Seven pieces of pipeline work: `sourceUrl` validation, tests for the two
 state-owning scripts, a corrected Reddit diagnosis, source profiles that make
 candidate collection sector- and claim-aware, a review log recording *why* each
 editorial decision was made, and a nomination loop that lets a run's source
-discoveries survive into the next run. It closes gaps found in an audit and
-implements two written designs. The full account is in the PR description; the
-operator's view is `docs/pipeline-runbook.md`, added on this branch.
+discoveries survive into the next run. It closed gaps found in an audit and
+implemented two written designs. The full account is in the archived PR
+description; the operator's view is `docs/pipeline-runbook.md`, added on this
+branch.
 
 ## The immediate next action
 
-```bash
-git push -u origin feat-signal-pipeline-hardening
-gh pr create --base main --head feat-signal-pipeline-hardening \
-  --title "Signal-pipeline hardening: sourceUrl validation, tests, Reddit diagnosis, source profiles and the review log" \
-  --body-file PR_DESCRIPTION_feat-signal-pipeline-hardening.md
-```
-
-Decide the ledger question first — the next section.
+**Work the review queue.** It is the only thing blocking signals from reaching
+the site, and it is the deepest it has ever been — see below.
 
 ## State right now
 
-**Verified on 2026-08-19, in this tree:**
+**Verified on 2026-09-01, on `main` after the merge:**
 
 - `npm test` — **284 pass**, 0 fail (176 before this branch)
 - `npm run validate` — 102 signals valid; 10 phenomena valid, 0 published,
   launch gate still closed (needs 10 published)
-- `npm run verify:radar` — **not run.** It needs a server already running, so it
-  was never exercised this session. The deploy workflow gates on it.
+- `npm run verify:radar` — **still never run by hand.** It needs a server
+  already running. It first ran against this work in the deploy workflow on the
+  PR-28 merge.
 
 **`data/_seen-ledger.jsonl` — resolved 2026-08-19, and the diagnosis below was
 wrong.** It is not a catch-up from a promote run. The 38-line diff was **pure
@@ -56,17 +56,19 @@ which discards nothing; it has been done. Do not commit this diff "with a messag
 saying why" — there is no why, and the commit would imply state changed when it
 did not. Expect it to reappear after any `signals:prepare`.
 
-**The review queue is deep and untouched:** 26 drafts in `data/signal-drafts/`,
-**none** carrying a `_review` block yet, `accepted/` empty, and two files in
-`rejected/` (`2026-08-07-03`, `2026-08-10-01`). Dated 2026-08-07 through
-2026-08-17. All gitignored, so none of it is at risk from a branch switch — but
-none of it is backed up either.
+**The review queue is deep and untouched, and still growing:** as of 2026-09-01,
+**43** drafts in `data/signal-drafts/`, **none** carrying a `_review` block yet,
+`accepted/` empty, and two files in `rejected/` (`2026-08-07-03`,
+`2026-08-10-01`). Dated 2026-08-07 through 2026-08-31. It was 26 at the
+2026-08-19 handover; the 08-24 and 08-31 finder runs added the rest. All
+gitignored, so none of it is at risk from a branch switch — but none of it is
+backed up either, and nothing reaches the site until someone reviews it.
 
-**Two source nominations are undecided:** `data/source-nominations/`
-`andrew-diamond.json` and `dan-luu.json`, both sitting in the queue root with
-`accepted/` and `rejected/` empty. The Dan Luu one cites `2026-08-17-12` and
-argues the generic pool is thin on named practitioners who re-test other
-people's numbers. Deciding them is a folder move followed by
+**Three source nominations are undecided:** `data/source-nominations/`
+`andrew-diamond.json`, `dan-luu.json` and `github-engineering-blog.json`, all
+sitting in the queue root with `accepted/` and `rejected/` empty. The Dan Luu one
+cites `2026-08-17-12` and argues the generic pool is thin on named practitioners
+who re-test other people's numbers. Deciding them is a folder move followed by
 `npm run sources:promote`.
 
 ## Closed since the last handover — do not redo these
