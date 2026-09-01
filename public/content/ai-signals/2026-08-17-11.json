@@ -1,0 +1,46 @@
+{
+  "id": "2026-08-17-11",
+  "title": "OpenAI grew a forward-deployed engineering org from 2 people to ~140 in a year, and staffs it by deliberately pairing domain experts with outsiders",
+  "summary": "Colin Jarvis, Global Head of Forward Deployed Engineering at OpenAI, describes an org that went from two people last year to roughly 140 internally, alongside a separate OpenAI Deployment Company that has grown to about 200. The internal org is intended to stay small while the Deployment Company absorbs scale. FDEs spend roughly half their time on customer sites — around 80% in the UAE and Japan, two to three weeks a month in Europe and the US — and cycle inside a single week between consulting with a customer's teams, writing tests from what they learned, and building migration code. Staffing is deliberately mixed: domain experts are paired with engineers from unrelated industries on the reasoning that outsiders challenge the status quo. Their failure reports go back to the model teams in specific form — 'the model struggles with these types of COBOL-to-Java tasks' rather than generic complaints. The signal for engineering leaders is not that OpenAI hired consultants; it is that the company selling the models has concluded that enterprise value needs embedded engineers physically present, and has built a 340-person delivery apparatus around that conclusion in twelve months.",
+  "source": "Engineering Leadership newsletter (interview with Colin Jarvis, OpenAI)",
+  "sourceUrl": "https://newsletter.eng-leadership.com/p/inside-openais-forward-deployed-engineer",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Colin Jarvis, Global Head of Forward Deployed Engineering at OpenAI — he runs the org being described, so the operational detail is firsthand and the framing is self-interested",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-15",
+  "status": "published",
+  "tags": [
+    "forward-deployed engineering",
+    "org design",
+    "enterprise AI adoption",
+    "legacy modernisation",
+    "staffing model",
+    "OpenAI"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Business Impact",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "Because the model vendor itself is staffing a high-touch, on-site delivery arm at this rate, leaders should treat 'buy the licences and let teams adopt it' as an incomplete adoption plan and budget for embedded engineering capacity — their own or bought in.",
+    "A new senior role is forming in public — part consultant, part engineer, measured on customer outcomes rather than shipped code — and it has a visible career path at the most visible AI company. Leaders should expect it to appear in their own hiring markets and in their engineers' expectations.",
+    "The explicit anti-pattern in the staffing model is worth noting on its own: OpenAI is choosing NOT to staff purely on domain expertise, on the theory that outsiders produce better solutions. That cuts against the usual instinct to hire for sector experience when forming an AI delivery team.",
+    "The named workload is COBOL-to-Java migration. Legacy modernisation is where the vendor is putting its scarcest people, which is a signal about where AI-assisted work is currently paying for itself at enterprise scale."
+  ],
+  "recommendedActions": [
+    "If you are running an enterprise AI programme, price in embedded engineering time rather than tooling alone, and decide explicitly whether that capacity is hired, borrowed from a vendor, or grown internally.",
+    "Define what a forward-deployed or solutions-engineering role would look like on your own ladder before the market defines it for you — including how it is levelled and how success is measured if it is not shipped code.",
+    "Instrument your own model failures the way the FDE org does: capture task-specific failure descriptions rather than general dissatisfaction, so vendor conversations and internal tooling decisions rest on evidence."
+  ],
+  "risksAndCaveats": [
+    "This is a single interview with the leader of the org being described, published in a newsletter. Headcount figures, the on-site percentages and the growth rate are self-reported and were not independently verified.",
+    "OpenAI has a commercial interest in showing that enterprise deployment works and is well-supported, so the account should be read as promotional in framing even where the operational detail is credible.",
+    "One vendor's staffing model is not evidence of an industry-wide pattern. OpenAI's constraints — frontier-model access, unusual customer demand, capital to spend on a 340-person delivery arm — are not typical, and the model may not transfer to organisations buying AI rather than selling it."
+  ]
+}

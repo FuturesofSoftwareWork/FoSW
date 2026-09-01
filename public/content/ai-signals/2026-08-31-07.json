@@ -1,0 +1,51 @@
+{
+  "id": "2026-08-31-07",
+  "title": "Meta planned to cut some teams by 60% and hand the work to AI agents, then cancelled the second wave when internal data showed the agents were not delivering",
+  "summary": "Reuters, working from internal documents, reported a Meta blueprint code-named Project OT: drawn up at Zuckerberg's January 2026 Hawaii retreat, it mapped two restructuring waves — May and November — that would shrink parts of the workforce by as much as 60% and hand much of the remaining work to AI agents with minimal human oversight. The organisational unit it envisaged was the pod: two to three engineers plus a designer, and at least eleven teams were running that way by June. The first wave happened — roughly 10% of the workforce in May 2026. The second did not: Zuckerberg reversed it hours before implementation, with employees openly questioning whether the AI-native framing was a redundancy programme, and internal data reportedly showing that autonomous agents were not delivering the productivity gains executives had assumed. Meta confirmed Project OT existed and that 60% scenarios were explored, while saying it never intended to cut 60% of the total workforce and that thousands of people were redeployed instead. This is the clearest case on record of a large employer planning headcount against projected agent productivity, measuring the result, and reversing on the evidence.",
+  "source": "The Pragmatic Engineer (The Pulse), reporting on Reuters",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-pulse-meta-wanted-to-reduce-teams",
+  "sourceType": "article",
+  "signalType": "market-event",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "organisation": "Meta",
+  "magnitude": "roughly 10% of the workforce cut in May 2026; a planned second wave, targeting reductions of up to 60% in some teams, cancelled",
+  "leadTimeEstimate": "~6-12 months; boards are currently being sold agent-driven headcount plans on the same projections Meta has now tested and abandoned",
+  "corroboration": [
+    "https://www.thenews.com.pk/latest/1413696-metas-secret-plan-to-cut-60-of-some-teams-with-ai-report"
+  ],
+  "detectedAt": "2026-08-31",
+  "date": "2026-08-27",
+  "status": "published",
+  "tags": [
+    "org-design",
+    "headcount-planning",
+    "ai-agents",
+    "layoffs",
+    "team-topology",
+    "productivity-measurement"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Business Impact",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "The reversal is the signal, not the plan. Meta had the instrumentation, the agent deployment and the executive will, and its own measurement did not support the headcount projection. Any leader currently being asked to commit to agent-driven staffing reductions now has a large-scale precedent for demanding the productivity evidence before, not after, the reduction.",
+    "It also establishes that this planning is happening at board level and being written down. Organisations should assume similar blueprints exist in their own industry, and that the assumptions inside them are the thing to interrogate — specifically, the assumed rate at which agent output converts into shipped, verified, supported software.",
+    "The two-to-three engineers plus a designer pod is a concrete target structure that at least eleven Meta teams actually ran. Whether or not the headcount plan survived, that unit size is now a live experiment at scale and worth watching as a template others copy.",
+    "Employee reaction was a stated factor in the reversal. Framing an AI programme as 'AI-native transformation' while planning it as a redundancy wave is a retention and trust risk that materialised here quickly enough to change an executive decision."
+  ],
+  "recommendedActions": [
+    "If your organisation has an agent-driven efficiency target attached to headcount, write down the specific productivity assumption it rests on and the measurement that would falsify it, before the first wave rather than between waves.",
+    "Instrument agent output the way Meta apparently did — through to merged, verified and supported change, not generated code — so that a reversal decision can be made on data rather than sentiment.",
+    "Separate the communication of AI capability programmes from headcount planning. The two being read as one thing was reportedly a factor in the reversal, and that reading is the default assumption employees will make.",
+    "Treat the two-to-three engineer pod as a hypothesis to pilot in one team with explicit success criteria, not as a structure to roll out on the strength of another company's blueprint."
+  ],
+  "risksAndCaveats": [
+    "The core reporting is Reuters' reading of internal documents, and the pivotal claim — that internal data showed agents underdelivering — is second-hand and unquantified. No metric, threshold or study has been published; it may have been one input among several, alongside employee reaction and market conditions.",
+    "Meta disputes the framing, saying it never intended a 60% total-workforce cut and that people were redeployed. The 60% figure applied to some teams in an explored scenario, not to the company, and reporting that collapses those two is wrong.",
+    "Meta's scale, capital position and internal tooling are unrepresentative. That autonomous agents underperformed against Meta's assumptions in the first half of 2026 says little about what a different organisation with different work will find.",
+    "This is a business-press account of a confidential plan, not an engineering post-mortem. The mechanism by which agents fell short — whether generation quality, verification load, integration cost or coordination overhead — is not reported, and that mechanism is what would make the finding transferable."
+  ]
+}
