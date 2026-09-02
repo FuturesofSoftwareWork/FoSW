@@ -4,8 +4,8 @@ Signal bullets were slow to read. This makes them scannable — a bolded label a
 the head of each bullet, rendered rather than printed as asterisks — and changes
 the three prompts so future runs write that shape by default.
 
-Nothing published changes appearance except one signal, deliberately. The other
-108 render exactly as before.
+Nothing published changes appearance except two signals, deliberately. The other
+107 render exactly as before.
 
 ---
 
@@ -149,7 +149,7 @@ Both described claims that the hand-rewritten summary no longer makes.
 
 ## Not in scope
 
-- **No backfill.** The other 108 signals keep their current shape and render
+- **No backfill.** The other 107 signals keep their current shape and render
   unchanged. They will look inconsistent beside new ones until someone decides
   whether to trim them — that is a separate editorial call.
 - **No enforcement.** A character-length check in `promote` (warn past ~180
