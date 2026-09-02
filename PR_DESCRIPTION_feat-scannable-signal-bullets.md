@@ -126,6 +126,27 @@ when the survey was fielded, and inventing one is worse than leaving it out.
 other legacy files carrying it are left alone, but rewriting this one counts as
 emitting it.
 
+## 4. `2026-09-01-01` rewritten — the worst offender in the corpus
+
+The Amazon frontier-development signal was the heaviest item on the site at
+**1,237 words**, three times the corpus median, breaking all three caps at
+6/5/6. Rewritten in the new shape it is **552 words**, and all twelve bullets
+fit two rendered lines.
+
+Bullets were re-checked line by line against the talk transcript rather than
+against the previous bullets, so the compression did not drift from the source.
+The summary is left exactly as it was — it had already been rewritten by hand
+into three paragraphs.
+
+**`recommendedActions` deliberately keeps five bullets against a cap of four.**
+The five habits are the substance of this item and the source names exactly
+five; cutting one to satisfy a count would remove the thing the signal is for.
+The cap exists for scannability, which the two-line shape now delivers.
+
+Two caveats were dropped rather than compressed — the estimate-versus-actual
+baselines of the two pathfinder teams, and the metric changing between studies.
+Both described claims that the hand-rewritten summary no longer makes.
+
 ## Not in scope
 
 - **No backfill.** The other 108 signals keep their current shape and render
