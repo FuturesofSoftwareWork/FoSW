@@ -1,15 +1,19 @@
 {
   "id": "2026-05-20-05",
-  "title": "AI-coding fatigue: 60–75% of engineers report stress or reduced satisfaction since assistant adoption",
-  "summary": "A March 2026 Harvard Business Review report and concurrent industry surveys document a wellbeing dimension to the AI coding rollout. Between 60% and 75% of engineers report some level of AI-related fatigue, stress, or reduced job satisfaction, while overall burnout sits at 41–42% (peaking at 58% in early-stage startups). The picture is mixed: 41% of developers think AI tools could help prevent burnout, and one study found a 17% burnout-risk reduction for AI users with healthy workflows. The differentiator is how AI is integrated — constant review of plausible-but-wrong output is corrosive, while well-scoped delegation appears beneficial. For HR and engineering leaders this is now a measurable people-risk, not a soft concern.",
+  "title": "AI oversight is a cognitive-load risk: 14% of workers using AI report “brain fry”",
+  "summary": "A Harvard Business Review article reports findings from a survey of 1,488 full-time U.S. workers (by BCG). Among respondents using AI at work, 14% said they had experienced “AI brain fry”: mental fatigue caused by AI use or oversight exceeding their cognitive capacity. High AI oversight was associated with 14% more mental effort, 12% more mental fatigue, and 19% more information overload. Respondents reporting brain fry also had higher error-frequency scores and more active intent to leave.\n\nThe effects depend on how AI is used: applying it to reduce repetitive work was associated with 15% lower burnout scores. For software firms, the emerging risk is that agentic tools shift the bottleneck from producing work to supervising, checking, and coordinating it.",
   "source": "Harvard Business Review",
   "sourceUrl": "https://hbr.org/2026/03/when-using-ai-leads-to-brain-fry",
   "sourceType": "article",
-  "detectedAt": "2026-05-20",
-  "date": "2026-04-15",
+  "signalType": "field-report",
+  "sampleSize": "1,488 full-time U.S. workers across industries and functions",
+  "sponsor": "Boston Consulting Group — the study is BCG research; all six authors are BCG-affiliated",
+  "detectedAt": "2026-08-20",
+  "date": "2026-03-05",
   "status": "published",
   "tags": [
-    "burnout",
+    "cognitive load",
+    "AI oversight",
     "developer experience",
     "wellbeing",
     "retention"
@@ -19,19 +23,19 @@
     "Org & Leadership"
   ],
   "whyItMatters": [
-    "Retention risk is concentrated in roles most exposed to AI review workload — senior ICs and tech leads.",
-    "AI rollout strategy is a people-risk decision, not only a tooling decision; HR and engineering must co-own it.",
-    "Effects are bimodal: thoughtful integration can reduce burnout, careless rollout amplifies it."
+    "**Attention can become the bottleneck** — as engineers supervise more AI tools and agents, reviewing and coordinating their output may replace code production as the limiting factor.",
+    "**Usage volume misreads adoption** — more AI activity does not necessarily mean better outcomes, while brain fry is associated with higher error-frequency scores and greater intent to leave.",
+    "**How AI is used shapes the outcome** — removing repetitive work is associated with lower burnout, whereas intensive oversight and added workload are associated with greater mental fatigue."
   ],
   "recommendedActions": [
-    "Add AI-specific items to engineering pulse surveys (review fatigue, trust in outputs, cognitive load).",
-    "Cap continuous AI-review time per engineer per day in team norms.",
-    "Train managers to distinguish 'AI-assisted' from 'AI-overloaded' workflows in 1:1s and capacity planning."
+    "**Measure the load** — add cognitive load, information overload, decision fatigue and AI-related error frequency to engineering pulse surveys.",
+    "**Set spans of control** — define reasonable limits for how many AI tools or agents one engineer supervises simultaneously.",
+    "**Change the adoption metric** — judge the rollout on quality and business outcomes, not on tokens, generated code or frequency of use.",
+    "**Decide where the time goes** — state explicitly whether AI-generated time savings reduce workload or are absorbed by additional work."
   ],
   "risksAndCaveats": [
-    "Self-reported survey data; causal attribution to AI vs. broader macro stress is uncertain.",
-    "Reported ranges (60–75%) span multiple methodologies and populations.",
-    "Effects likely depend heavily on team practices, making cross-company benchmarks unreliable."
-  ],
-  "decisionHorizon": "now"
+    "**Association, not causation** — the survey is cross-sectional and self-reported, so it cannot show that AI oversight causes the fatigue it tracks.",
+    "**Not a software-engineering sample** — respondents span many U.S. industries and functions, although engineering is listed among the functions with higher reported prevalence.",
+    "**Different percentages measure different things** — figures such as 12% more fatigue and 15% lower burnout describe survey-score differences, while 14% brain fry and the quit-intent figures describe respondent shares."
+  ]
 }
