@@ -275,7 +275,7 @@ into the ledger and the item returns next run.
   "$schema": "../../schemas/signal-draft.schema.json",
   "id": "YYYY-MM-DD-XX",
   "title": "string",
-  "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work)",
+  "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work. Over ~120 words, split into paragraphs with \\n\\n — never inside the first sentence, and no **bold**)",
   "source": "string (e.g. Practitioner Blog, Hacker News Discussion, Company Blog, arXiv Preprint)",
   "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-real-article-you-read",
   "sourceType": "academic | article | social | video | discussion | release",
@@ -306,9 +306,9 @@ into the ledger and the item returns next run.
   "status": "draft",
   "tags": ["string"],
   "category": ["string"],
-  "whyItMatters": ["string (2-4 bullets, leadership implications)"],
-  "recommendedActions": ["string (0-4 concrete bullets, or [])"],
-  "risksAndCaveats": ["string (1-3 bullets)"]
+  "whyItMatters": ["string (2-4 bullets, leadership implications; **bolded 2-5 word label** — then one sentence)"],
+  "recommendedActions": ["string (0-4 concrete bullets, or []; **bolded label** — then one sentence)"],
+  "risksAndCaveats": ["string (1-3 bullets; **bolded label** — then one sentence)"]
 }
 ```
 
@@ -356,11 +356,46 @@ never re-nominate someone already collected or already declined.
 
 - Be specific: name the mechanism, what changes in practice, and who should care (CTO / VP Eng / Product / Security).
 - Prefer concrete nouns and verbs over buzzwords.
-- `whyItMatters` should read like: "Because of this, leaders should reconsider X."
 - `recommendedActions` must be operational and feasible (pilot, policy update, measurement, governance step), never vague.
 - If evidence is weak, anecdotal, vendor-produced, benchmark-limited, or stale, say so plainly in `risksAndCaveats`.
-- `risksAndCaveats` should address uncertainty, external validity, benchmark realism, data freshness, vendor bias, and adoption constraints where relevant.
+- In `risksAndCaveats`, name only what would change a reader's decision. One or two caveats that matter beat a survey of everything imperfect about the source.
 - For weak signals, state explicitly that this is a single firsthand report and has not been independently validated.
+
+### Bullet shape — the reader is scanning
+
+Every bullet in `whyItMatters`, `recommendedActions` and `risksAndCaveats` opens
+with a **bolded label of two to five words**, then an em dash, then one sentence.
+Markdown `**` is rendered, so write it literally.
+
+The label is the whole point: it is what someone skimming actually reads, so it
+must carry the claim rather than name a category. **Attention becomes the
+bottleneck** is a label. **Productivity** is not.
+
+```
+"**Attention becomes the bottleneck** — agentic development moves the constraint
+ from producing code to reviewing and coordinating what agents produce."
+```
+
+Aim for two rendered lines and never write more than three. Three quarters of the
+existing corpus runs to three lines or more with no landing point for the eye,
+which is the failure this rule exists to stop. Bold **only** the opening label —
+emphasis sprinkled mid-sentence defeats it.
+
+### Paragraphs in `summary`
+
+A summary over roughly 120 words must be broken into paragraphs with `\n\n` —
+a literal escape inside the JSON string, since JSON cannot hold a real newline.
+Two or three paragraphs, split where the subject turns: what was found, then what
+it means, then the costs or caveats.
+
+Do not use `\n\n` before the first sentence ends. The drawer lifts that sentence
+out as a lead paragraph and renders it separately, so a break inside it is lost.
+Do not put `**bold**` in a summary — emphasis belongs in the bullets, and the
+summary is prose.
+
+## Style
+
+Concise and specific. Avoid buzzwords. Do not pad.
 
 ## Ranking — prefer in this order
 

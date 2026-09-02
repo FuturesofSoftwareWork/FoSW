@@ -53,6 +53,11 @@ const DESCRIPTIONS = {
   "unrecorded": "Written by code when a decision was made without a rationale. Do not choose this by hand.",
 };
 
+/** Shared across the three bullet fields, which render inline markdown. */
+const BULLET_SHAPE =
+  "Open with a **bolded label of 2-5 words** carrying the claim, then an em dash, then one sentence. " +
+  "Two rendered lines, never more than three. Bold the label only.";
+
 const OUT = "schemas/signal-draft.schema.json";
 
 export function buildSchema() {
@@ -75,7 +80,11 @@ export function buildSchema() {
         description: "YYYY-MM-DD-NN. Must match the filename.",
       },
       title: { type: "string" },
-      summary: { type: "string", description: "3-7 sentences: what changed and why it matters for software work." },
+      summary: {
+        type: "string",
+        description:
+          "3-7 sentences: what changed and why it matters for software work. Over ~120 words, split into paragraphs with \\n\\n — but never inside the first sentence, which the drawer lifts out as a lead. Plain prose: no **bold**.",
+      },
       source: { type: "string" },
       sourceUrl: {
         type: "string",
@@ -93,9 +102,11 @@ export function buildSchema() {
       detectedAt: { type: "string" },
       date: { type: "string" },
       tags: { type: "array", items: { type: "string" } },
-      whyItMatters: { type: "array", items: { type: "string" } },
-      recommendedActions: { type: "array", items: { type: "string" } },
-      risksAndCaveats: { type: "array", items: { type: "string" } },
+      // Inline markdown is rendered in these three (and only these three), so
+      // the bolded label is a real affordance and not decoration in the JSON.
+      whyItMatters: { type: "array", items: { type: "string", description: BULLET_SHAPE } },
+      recommendedActions: { type: "array", items: { type: "string", description: BULLET_SHAPE } },
+      risksAndCaveats: { type: "array", items: { type: "string", description: BULLET_SHAPE } },
       corroboration: { type: "array", items: { type: "string" } },
       _review: {
         type: "object",

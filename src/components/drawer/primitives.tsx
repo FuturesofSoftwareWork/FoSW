@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ChevronRight } from "lucide-react";
+import Markdown from "react-markdown";
 
 /**
  * The shared vocabulary of the drawer. All three bodies consume these so the
@@ -39,6 +40,53 @@ const CHIP_TONE: Record<DrawerTone, string> = {
   amber: "border-amber-400/40 bg-amber-400/10",
   neutral: "border-white/10 bg-white/5",
 };
+
+/**
+ * Inline emphasis inside a bullet — nothing more.
+ *
+ * Signal bullets render 3+ lines at this width in three quarters of the corpus,
+ * with no landing point for the eye. A bolded label at the head of each bullet
+ * fixes that, but the bullets were plain strings passed straight to JSX, so
+ * `**like this**` reached the reader as literal asterisks.
+ *
+ * Deliberately narrower than the article renderer in `InsightContent`: no
+ * remark plugins, and `allowedElements` admits only emphasis and code. Anything
+ * else an author writes — a heading, a list — is unwrapped to its text rather
+ * than dropped, so a stray `#` costs formatting and not content. Raw HTML is
+ * inert without `rehype-raw`, which is not installed.
+ *
+ * The one exception is a markdown link: unwrapping `[text](url)` keeps the text
+ * and silently loses the URL. Bullets are not where links belong — `sourceUrl`
+ * and `corroboration` are, and the drawer renders both — but if one ever needs
+ * to go in a bullet, add `a` here rather than letting the address disappear.
+ *
+ * The single wrapping `<span>` is load-bearing. These bullets are flex rows of
+ * [dot, text]; without it every `<strong>` markdown produced would become its
+ * own flex item and the bullet would break into columns.
+ */
+export const InlineMarkdown = ({ children }: { children: string }) => (
+  <span className="min-w-0">
+    <Markdown
+      allowedElements={["p", "strong", "em", "code"]}
+      unwrapDisallowed
+      components={{
+        // A fragment, not a <p>: the parent is a flex row and a block child
+        // would claim the full width and push the text off the dot's baseline.
+        p: ({ children }) => <>{children}</>,
+        strong: ({ children }) => (
+          <strong className="font-semibold text-gray-100">{children}</strong>
+        ),
+        code: ({ children }) => (
+          <code className="rounded bg-white/10 px-1 py-0.5 font-mono text-[0.9em]">
+            {children}
+          </code>
+        ),
+      }}
+    >
+      {children}
+    </Markdown>
+  </span>
+);
 
 /** The eyebrow above the title: what kind of thing this is, and its one
  *  primary classification. Never more than that — everything else that used to

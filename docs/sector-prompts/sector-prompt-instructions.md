@@ -226,7 +226,7 @@ hand both times. Never drop the date to "tidy up" the filename.
   "$schema": "../../schemas/signal-draft.schema.json",
   "id": "YYYY-MM-DD-XX",
   "title": "string",
-  "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work)",
+  "summary": "string (3-7 sentences, business-oriented; what changed and why it matters for software work. Over ~120 words, split into paragraphs with \n\n — never inside the first sentence, and no **bold**)",
   "source": "string (e.g. Practitioner Blog, Reddit Thread, Survey Report, arXiv Preprint)",
   "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-real-article-you-read",
   "sourceType": "academic | article | social | video | discussion | release",
@@ -257,9 +257,9 @@ hand both times. Never drop the date to "tidy up" the filename.
   "status": "draft",
   "tags": ["string"],
   "category": ["string"],
-  "whyItMatters": ["string (2-4 bullets, leadership implications)"],
-  "recommendedActions": ["string (0-4 concrete bullets, or [])"],
-  "risksAndCaveats": ["string (1-3 bullets)"]
+  "whyItMatters": ["string (2-4 bullets, leadership implications; **bolded 2-5 word label** — then one sentence)"],
+  "recommendedActions": ["string (0-4 concrete bullets, or []; **bolded label** — then one sentence)"],
+  "risksAndCaveats": ["string (1-3 bullets; **bolded label** — then one sentence)"]
 }
 ```
 
@@ -378,8 +378,7 @@ and say how you know.
 
 - **Be specific.** Name the mechanism, what changes in practice, and who should
   care (CTO / VP Eng / Product / Security).
-- **`whyItMatters` should read like** "Because of this, leaders should reconsider
-  X" — not a restatement of the summary.
+- **`whyItMatters` carries the implication**, not a restatement of the summary.
 - **`recommendedActions` must be operational and feasible** — a pilot, a policy
   update, a measurement, a governance step. Never vague. `[]` is correct when an
   early firsthand report does not support confident recommendations; inventing
@@ -394,6 +393,20 @@ and say how you know.
 ## Style
 
 Concise and specific. Avoid buzzwords. Do not pad.
+
+**Bullet shape.** Every bullet in `whyItMatters`, `recommendedActions` and
+`risksAndCaveats` opens with a **bolded label of two to five words**, then an em
+dash, then one sentence. Markdown `**` is rendered, so write it literally. The
+label is what a skimming reader actually sees, so it must carry the claim and not
+name a category — **Attention becomes the bottleneck** is a label,
+**Productivity** is not. Aim for two rendered lines, never more than three, and
+bold only the opening label.
+
+**Paragraphs in `summary`.** Over roughly 120 words, break the summary into two
+or three paragraphs with `\n\n` — a literal escape, since JSON cannot hold a real
+newline — split where the subject turns. Never break inside the first sentence:
+the drawer lifts it out as a lead and renders it separately. No `**bold**` in a
+summary; emphasis belongs in the bullets.
 
 ## No results
 

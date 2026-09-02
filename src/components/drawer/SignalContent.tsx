@@ -25,6 +25,7 @@ import { formatDate, hostLabel, splitLead } from "@/lib/drawer";
 import {
   DisclosureSection,
   DrawerKicker,
+  InlineMarkdown,
   MetaList,
   Panel,
   SectionHeading,
@@ -300,7 +301,7 @@ const SignalContent = ({
                   className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-hologram-cyan"
                   aria-hidden="true"
                 />
-                {item}
+                <InlineMarkdown>{item}</InlineMarkdown>
               </li>
             ))}
           </ul>
@@ -325,7 +326,7 @@ const SignalContent = ({
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  {item}
+                  <InlineMarkdown>{item}</InlineMarkdown>
                 </li>
               ))}
             </ol>
@@ -349,7 +350,7 @@ const SignalContent = ({
                     className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400/70"
                     aria-hidden="true"
                   />
-                  {item}
+                  <InlineMarkdown>{item}</InlineMarkdown>
                 </li>
               ))}
             </ul>
