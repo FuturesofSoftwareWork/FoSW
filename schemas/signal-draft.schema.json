@@ -28,7 +28,7 @@
     },
     "summary": {
       "type": "string",
-      "description": "3-7 sentences: what changed and why it matters for software work."
+      "description": "3-7 sentences: what changed and why it matters for software work. Over ~120 words, split into paragraphs with \\n\\n — but never inside the first sentence, which the drawer lifts out as a lead. Plain prose: no **bold**."
     },
     "source": {
       "type": "string"
@@ -130,19 +130,22 @@
     "whyItMatters": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Open with a **bolded label of 2-5 words** carrying the claim, then an em dash, then one sentence. Two rendered lines, never more than three. Bold the label only."
       }
     },
     "recommendedActions": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Open with a **bolded label of 2-5 words** carrying the claim, then an em dash, then one sentence. Two rendered lines, never more than three. Bold the label only."
       }
     },
     "risksAndCaveats": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Open with a **bolded label of 2-5 words** carrying the claim, then an em dash, then one sentence. Two rendered lines, never more than three. Bold the label only."
       }
     },
     "corroboration": {
