@@ -67,6 +67,31 @@ organisational, and the item must be written from that consequence outward.
 
 The candidate pool is a starting point, not a limit. It does NOT cover LinkedIn, X/Twitter, curated practitioner newsletters, company engineering blogs, or conference talks. Actively search the web for those to fill gaps — especially named practitioners posting firsthand operational lessons. Follow promising `discussionUrl` links and read the comment threads: senior engineers routinely report what is actually working or failing there months before anyone writes it up formally.
 
+### If `prepare` and `collect` did not run
+
+They are supposed to run immediately before you, and they usually have. Check
+rather than assume: **compare the newest `date` in `data/_candidates.json`
+against today.** If the pool is more than a couple of days old, `collect` did not
+run for this session and you are looking at the previous run's pool.
+
+Neither is a reason to stop. Both change what you can trust:
+
+- **Stale `_candidates.json`** — the feed half of your retrieval is blind for the
+  period since it was written, which is usually the exact window you are meant to
+  cover. Lean much harder on deliberate web search, and expect the pool's items
+  to have been evaluated already. Say in the retrieval report that the pool was
+  stale and give its date, so a thin run is not mistaken for a quiet week.
+- **`prepare` not run** — `_seen-ledger.jsonl` is still there and still your
+  do-not-repeat list, so dedup works. What is missing is reconciliation against
+  `index.json`, so a record's `status` or `id` may be wrong, and rejected records
+  past their retention window will not have aged out. Treat a `rejected` record
+  as "seen before", not as a permanent verdict.
+
+Never run `prepare` or `collect` yourself to fix this. `prepare` rewrites the
+ledger and `collect` overwrites the pool; both are the operator's steps, and a
+finder run that rewrites its own memory mid-flight is how the audit trail gets
+lost. Report the problem instead.
+
 ## Signal freshness vs. publication date
 
 Judge items by when the underlying PRACTICE or SHIFT is happening, not when a document about it was published. Academic papers and conference proceedings describe work done 6–18 months ago — treat them as LAGGING / CONFIRMING indicators, not discoveries. An arXiv paper is only worth surfacing if it CONFIRMS or QUANTIFIES a shift you can show practitioners are already living through, or if it overturns prior consensus.
