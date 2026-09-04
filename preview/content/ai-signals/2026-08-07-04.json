@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-07-04",
+  "title": "LeadDev survey of 600 engineering leaders: reorganisation, not contraction — 22% saw manager roles fall, 19% saw them rise",
+  "summary": "The LeadDev Engineering Leadership Report 2026 surveyed 600 engineering leaders, from software engineers through CTOs across the US, UK, Europe and elsewhere, with fieldwork in March and April 2026. Restructuring teams and divisions was the most common significant organisational change at 67%, a figure that has now held steady for three years. On management layers the picture is close to balanced: 22% of respondents reported a decline in managerial roles against 19% who reported an increase. Where manager roles were cut, the cuts concentrated at middle management (65%) and line management (59%), while upper management was significantly affected in 23% of those cases — up from 18% in 2025 and 13% in 2024. Hiring freezes (35%) and layoffs (33%) ran at rates similar to 2025.\n\nWhat this survey counted is the incidence and location of structural change, not team size: it does not report how many people sit in a delivery team. On the part of the construct it does measure — management layers and manager counts — it finds reorganisation rather than systematic de-layering, and gives no support to a general collapse of the delivery unit.",
+  "source": "Research-Driven Engineering Leadership (Lizzie Matusov), analysing the LeadDev Engineering Leadership Report 2026",
+  "sourceUrl": "https://rdel.substack.com/p/rdel-149-where-is-the-flattening",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "sampleSize": "600 engineering leaders, from software engineers through CTOs, across the US, UK, Europe and beyond",
+  "fieldworkPeriod": "March to April 2026",
+  "sponsor": "Postman (sponsor of the LeadDev Engineering Leadership Report 2026)",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://leaddev.com/the-engineering-leadership-report-2026"
+  ],
+  "detectedAt": "2026-08-07",
+  "date": "2026-06-23",
+  "status": "published",
+  "tags": [
+    "org-design",
+    "flattening",
+    "engineering-management",
+    "reorganisation",
+    "middle-management",
+    "survey"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "**Narrative outruns the data** — 22% report fewer manager roles against 19% reporting more, so industry-wide flattening is a story, not a trend.",
+    "**The churn predates AI** — restructuring has held at 67% for three years, so attributing this year's reorg to AI misidentifies what is driving it.",
+    "**Flattening is higher up** — the one moving figure is upper management being hit, 13% to 18% to 23%, not the middle layer the story assumes."
+  ],
+  "recommendedActions": [
+    "**Record team sizes at reorgs** — restructures are near-universal and their effect on delivery-team shape is captured nowhere; measure before and after.",
+    "**Test the middle-management claim** — check your own headcount data before removing a management layer on the strength of the industry narrative."
+  ],
+  "risksAndCaveats": [
+    "**It does not measure team size** — the survey counts whether reorganisation happened and where manager roles moved, not delivery-unit headcount.",
+    "**Self-selected respondents** — LeadDev community members skew towards leaders at companies already engaged with engineering-leadership practice.",
+    "**The primary is gated** — the figures here come from Matusov's analysis of the report, not from reading the report itself."
+  ]
+}
