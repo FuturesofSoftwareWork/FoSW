@@ -34,15 +34,43 @@ const Hero = () => {
           className="text-xl md:text-2xl text-gray-200 mb-12 font-light leading-relaxed max-w-3xl mx-auto"
         >
           <p className="mb-4">
-            Exploring the{" "}
+            Research on{" "}
             <span className="text-neon-gold font-normal">
-              socio-technical shift
-            </span>{" "}
-            where AI meets human expertise.
+              how AI is changing software development and management
+            </span>
+            : weekly AI signals, expert insights and a foresight on the
+            shifting practice, organisation and meaning of software
+            engineering.
           </p>
           <p className="text-lg text-hologram-cyan/80">
-            A collaboration between VTT and University of Helsinki. Funded by
-            Business Finland.
+            A research project by{" "}
+            <a
+              href="https://www.vttresearch.com/en"
+              className="hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              VTT Technical Research Centre of Finland
+            </a>{" "}
+            and the{" "}
+            <a
+              href="https://www.helsinki.fi/en"
+              className="hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              University of Helsinki
+            </a>
+            , funded by{" "}
+            <a
+              href="https://www.businessfinland.fi/en"
+              className="hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Business Finland
+            </a>
+            .
           </p>
         </motion.div>
 

@@ -5,7 +5,7 @@ export const SITE_URL = "https://futuresofsoftwarework.github.io/FoSW";
 export const SITE_DEFAULTS = {
   title: "Alternative Futures of Software Work",
   description:
-    "How AI is reshaping software work — curated weekly signals, expert insights, and scenario research from VTT, University of Helsinki, and Business Finland.",
+    "Research from VTT and the University of Helsinki on how AI is changing software development and management: weekly AI signals, expert insights and foresight on the future of software engineering.",
 } as const;
 
 // Turn a relative asset path or an already-absolute URL into an absolute URL.
