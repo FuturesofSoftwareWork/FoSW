@@ -1,0 +1,48 @@
+{
+  "id": "2026-08-17-05",
+  "title": "Thoughtworks' Birgitta Böckeler ran TDD against non-TDD inside the agent loop and found no quality gain for 3-8.5x the tokens",
+  "summary": "Birgitta Böckeler, a Distinguished Engineer at Thoughtworks who has spent two years publishing structured evaluations of AI-assisted delivery, ran five batches of greenfield coding tasks with and without TDD instructions using Sonnet 4.6, then had Claude Opus 4.8 rank the results blind to which workflow produced them. Non-TDD solutions took the top two places on the small and medium tasks; across all batches both approaches produced both the best and the worst results, and mutation scores showed no meaningful difference in regression-test effectiveness. TDD runs consumed 2.96x to 8.5x more tokens depending on task size. Her explanation is that the non-TDD runs did upfront design and produced better data models and edge-case coverage, while TDD's incremental rhythm locked in early design decisions the agent never revisited. She concludes that the role of TDD 'as we've known it' is significantly smaller than before generative AI, and recommends teams stop writing prescriptive process instructions into agent prompts and instead monitor outcomes, measure regression quality with mutation testing, and trigger refactoring through static analysis and review. This is a named senior practitioner retiring a load-bearing assumption about how disciplined agent work should be organised.",
+  "source": "Practitioner Blog (martinfowler.com, Thoughtworks)",
+  "sourceUrl": "https://martinfowler.com/articles/exploring-gen-ai/tdd-in-the-agent-loop.html",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Birgitta Böckeler, Distinguished Engineer at Thoughtworks and author of the long-running 'Exploring Gen AI' series on martinfowler.com; she designed and ran the evaluation herself and published the prompts and method alongside the result",
+  "leadTimeEstimate": "~6-12 months ahead of teams that have written TDD mandates into their agent instructions",
+  "corroboration": [
+    "https://arxiv.org/abs/2603.17973"
+  ],
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-10",
+  "status": "published",
+  "tags": [
+    "tdd",
+    "coding-agents",
+    "engineering-practice",
+    "code-quality",
+    "token-cost"
+  ],
+  "category": [
+    "Quality & Testing",
+    "SDLC Change",
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "Because a practice many organisations treat as a quality floor now has firsthand evidence against it in the agent loop, leaders should stop mandating TDD for agent work on the assumption that discipline transfers from human practice, and start asking for the outcome measurement instead.",
+    "It reframes what an engineering standard is for. If prescribing the process costs 3-8.5x the tokens and buys no measurable quality, then standards need to be expressed as things you verify after the fact, not steps you instruct.",
+    "It independently corroborates an earlier finding already in our corpus that naive TDD instructions make agent regressions worse — arrived at by a completely different method, which is what makes the convergence worth acting on.",
+    "Mutation testing comes out of this as the practical way to know whether a test suite is worth anything when an agent wrote both the tests and the code."
+  ],
+  "recommendedActions": [
+    "Audit your agent instruction files for prescriptive process mandates (TDD, commit rhythm, step ordering) and check whether any of them has ever been measured against its absence.",
+    "Introduce mutation testing on agent-authored test suites as the regression-quality signal, rather than coverage, which agent-written tests inflate trivially.",
+    "Fund a small internal replication on your own codebase before changing policy: this was greenfield tasks, and legacy code is where TDD's design pressure has always mattered most."
+  ],
+  "risksAndCaveats": [
+    "This is one practitioner's exploratory evaluation, not a controlled trial: five task batches, greenfield projects only, one model generating and one model judging. It has not been independently replicated.",
+    "Using an LLM as the blind ranker introduces its own bias — a judge model may share the generating model's preferences about what good code looks like.",
+    "Greenfield tasks are the weakest case for TDD's main historical claim, which is about safely changing code that already exists. The finding may not transfer to brownfield or high-consequence systems.",
+    "The token multiplier is a cost signal, not a quality one; teams with tight budgets may over-read it relative to the quality result, which was a null finding rather than a loss."
+  ]
+}

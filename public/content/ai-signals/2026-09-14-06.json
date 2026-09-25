@@ -1,0 +1,51 @@
+{
+  "id": "2026-09-14-06",
+  "title": "Workplace AI becomes a bargaining subject: 1,900 Blizzard engineers, QA and developers ratify contracts that oblige Microsoft to negotiate before deploying AI that changes their work",
+  "summary": "On 9 September 2026 nearly 1,900 Blizzard Entertainment workers ratified their first collective agreements with Microsoft, negotiated by the Communications Workers of America across seven bargaining units that include Platform and Technology, Quality Assurance and the engineering-heavy game teams. Among wage, remote-work and just-cause provisions, the contracts require Blizzard to 'discuss, evaluate, and bargain over' the use of artificial intelligence in the workplace, a clause the CWA calls an industry first. Coverage of the contract language adds that AI-assisted workflows are to remain subject to human control and review, and that the company must bargain before introducing AI that materially changes bargaining-unit work. The agreements do not ban AI and do not give the union a veto over individual applications; they make AI adoption a negotiated change rather than a management decision.\n\nThe contracts also add a 14-month recall right for laid-off workers and four extra weeks of severance regardless of tenure. Taken together, the package is a template for how organised software workers respond to agentic tooling: not by refusing it, but by making its rollout, its effect on roles and its consequences for headcount subject to a formal process. Microsoft is one of the largest employers of software engineers and among the most aggressive adopters of coding agents, so an AI-bargaining obligation inside one of its subsidiaries is a precedent other technology workforces will cite.",
+  "source": "Communications Workers of America (press release), with contract-language reporting from mxdwn Games",
+  "sourceUrl": "https://cwa-union.org/news/releases/blizzard-entertainment-workers-ratify-historic-video-game-contracts-cwa",
+  "sourceType": "article",
+  "signalType": "regulation-standard",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "effectiveDate": "2026-09-09",
+  "jurisdiction": "Blizzard Entertainment (Microsoft), United States; seven CWA bargaining units covering nearly 1,900 workers",
+  "issuer": "Communications Workers of America and Microsoft / Blizzard Entertainment (collective agreement)",
+  "leadTimeEstimate": "~12-24 months ahead of broad practice; most software workforces are not unionised, but this is the first negotiated text that other groups can copy",
+  "corroboration": [
+    "https://games.mxdwn.com/news/blizzards-new-union-contract-makes-ai-a-bargaining-issue/",
+    "https://news.ycombinator.com/item?id=49635384"
+  ],
+  "detectedAt": "2026-09-14",
+  "date": "2026-09-09",
+  "status": "published",
+  "tags": [
+    "collective-bargaining",
+    "labour-relations",
+    "ai-governance",
+    "games-industry",
+    "microsoft",
+    "workforce-policy"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Ethics & Policy",
+    "Work Wellbeing"
+  ],
+  "whyItMatters": [
+    "**AI rollout gains a formal process** — where workers are organised, introducing agents into engineering or QA work now triggers negotiation, with the timelines and documentation that implies.",
+    "**A copyable precedent now exists** — the clause is public text inside a Microsoft subsidiary, and other technology workforces in bargaining will ask for it by name.",
+    "**Layoff terms are tied to the same package** — recall rights and severance floors sit next to the AI clause, so the cost of replacing work with agents is partly priced in advance.",
+    "**Human review becomes contractual** — if the reported control-and-review language holds, the human-in-the-loop that teams debate as practice is, here, an obligation."
+  ],
+  "recommendedActions": [
+    "**Map which teams could organise** — QA, platform and games engineering were the first units; assess where a similar process could arrive in your workforce.",
+    "**Write the AI-change notice you would give anyway** — a documented impact assessment before deploying agents into a team's work is cheap now and required later where this spreads.",
+    "**Separate tooling from role changes** — bargaining obligations attach to material changes in work, so be explicit about which agent rollouts alter roles and which do not."
+  ],
+  "risksAndCaveats": [
+    "**Contract text is not public in full** — the 'discuss, evaluate, and bargain' obligation is from the CWA's release; the human-control and material-impact language is from press coverage and should be checked against the agreement.",
+    "**Games, not general software** — Blizzard's units mix engineers with artists, designers and QA, and the games industry has a distinct labour history, so transfer to typical software employers is untested.",
+    "**Process, not outcome** — the clause guarantees negotiation, not any particular limit on AI use; what it changes in practice depends on how the first bargaining rounds go."
+  ]
+}

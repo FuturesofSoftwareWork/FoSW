@@ -1,0 +1,43 @@
+{
+  "id": "2026-08-17-04",
+  "title": "Firm-level evidence from 1,500+ organisations: the heaviest enterprise AI users are early-career workers, and managers use it least",
+  "summary": "Economists at Duke, Berkeley, Wharton and OpenAI linked ChatGPT Enterprise account records to usage, worker roles, tasks and company financials through March 2026, covering over 1,500 organisations and more than 17 million messages in the worker-level sample. Adoption concentrates in larger, higher-valued US public companies with higher R&D and SG&A spending. The finding with the sharpest edge for engineering organisations is the seniority gradient: early-career workers and trainees send roughly eight to nine more weekly messages than the average active user in the same firm, while managers, directors and executives send fewer. Engineering and technical practitioners are about 11% of weekly active users at the six-month mark, and are the group most likely to use it for technical digital work and debugging. This matters because it is firm-level rather than survey evidence, and because it cuts against the assumption that AI leverage accrues to seniority. Inside a single company, the people using the tool hardest are the ones with the least experience to check it — and the managers accountable for that output are using it least.",
+  "source": "arXiv Preprint (Duke, UC Berkeley, Wharton, OpenAI)",
+  "sourceUrl": "https://arxiv.org/abs/2608.12236",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "lagging",
+  "dataCollectedPeriod": "through March 2026",
+  "replicated": false,
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-12",
+  "status": "published",
+  "tags": [
+    "enterprise-adoption",
+    "seniority",
+    "early-career",
+    "firm-level-data",
+    "debugging"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "**Enablement targets the wrong people** — the usage data says juniors are already the power users, so the training gap sits at the top of the org chart rather than the bottom.",
+    "**Reviewers use the tool least** — the least experienced staff generate the most AI output while the people accountable for checking it are the lightest users of the same tool.",
+    "**Firm records beat adoption surveys** — account data linked to company financials is a materially stronger basis than the self-reported surveys that dominate this space.",
+    "**Adoption is concentrated, not universal** — it clusters in large, higher-valued public companies with high R&D spending, which makes cross-industry averages misleading for any single firm."
+  ],
+  "recommendedActions": [
+    "**Cut your usage by seniority** — run the same breakdown internally before designing AI training, because the gap may be with managers rather than with juniors.",
+    "**Name who checks junior work** — decide explicitly whether those reviewers have enough hands-on tool experience to judge what they are approving.",
+    "**Distrust industry adoption averages** — adoption is concentrated in large high-R&D firms, so published cross-industry rates mislead in board reporting."
+  ],
+  "risksAndCaveats": [
+    "**ChatGPT Enterprise only** — the data runs to March 2026 and says nothing about Claude Code, Copilot or Codex, where most software engineering work has since moved.",
+    "**Messages are activity, not value** — the eight-to-nine figure is a difference in weekly messages against the firm average rather than a multiple, and volume is not output delivered.",
+    "**The vendor co-authored it** — this is a non-peer-reviewed preprint, and selection into ChatGPT Enterprise is not random in a study co-written by the company supplying the data."
+  ]
+}

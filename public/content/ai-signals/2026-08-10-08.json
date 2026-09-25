@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-10-08",
+  "title": "The custodian shift: practitioners report product and design colleagues committing code as freely as engineers",
+  "summary": "InfoQ's annual Culture & Methods panel, made up of named practitioners and consultants reporting from their own organisations, converged this year on a structural change in what engineers are for. Philip Mortimer reports firsthand that he now sees 'members of the product team and the design team committing code just as freely as engineers,' with the role boundary between engineer, designer and product manager collapsing into a single class of 'builders' — enabled by engineers supplying the underlying primitives, architecture and APIs that give everyone access to the data. Yinka Omole describes the other half of the same shift: engineers moving toward platform work, 'developing platforms for agents to be able to write the code, and then for us to be able to review it more effectively,' becoming 'custodians rather than just contributors.' Read together, the engineering role is bifurcating — into building the guardrailed substrate, and into reviewing what agents and non-engineers produce inside it — while the act of writing application code disperses across the organisation. The panel is blunt that this does not reduce coordination work: it shifts effort toward orchestration, review and decision-making.",
+  "source": "InfoQ Culture & Methods Trends Report 2026",
+  "sourceUrl": "https://www.infoq.com/articles/culture-trends-2026/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "InfoQ Culture & Methods editorial panel — Shane Hastie, Philip Mortimer, Yinka Omole, Vanessa Formicola, Craig Smith, Ben Linders and Rafiq Gemmail — practitioners and consultants each reporting from their own organisations rather than from a survey",
+  "leadTimeEstimate": "~12-18 months ahead of formal role and job-architecture changes",
+  "corroboration": [
+    "https://www.infoq.com/podcasts/infoq-culture-trends-2026/"
+  ],
+  "detectedAt": "2026-08-10",
+  "date": "2026-08-07",
+  "status": "published",
+  "tags": [
+    "role change",
+    "platform engineering",
+    "org design",
+    "guardrails",
+    "developer experience"
+  ],
+  "category": [
+    "Org & Leadership",
+    "SDLC Change",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "**Headcount stops proxying capacity** — when non-engineers ship through engineer-built primitives, the platform team becomes the limit on everyone’s throughput and old ratios misprice both sides.",
+    "**Custodian is a different job** — guardrail design, review at volume and systems thinking are not what code-authorship signals select for, so levelling and promotion criteria now select wrongly.",
+    "**Coordination work does not shrink** — the panel is explicit that smaller teams raise expectations while shifting effort into orchestration and review rather than removing it.",
+    "**Both training rungs vanish** — agents absorb entry-level work from one side and product and design colleagues from the other, so where juniors learn has to be designed deliberately."
+  ],
+  "recommendedActions": [
+    "**Test your platform’s reach** — audit whether product and design colleagues can actually ship on your primitives, and treat that reach as a platform-team metric.",
+    "**Decouple levelling from code volume** — review promotion criteria for dependence on authorship signals and give explicit credit for guardrail, review and platform work.",
+    "**Decide where juniors now learn** — both agents and non-engineer builders are absorbing the tasks that used to serve as training, so the replacement needs designing rather than assuming."
+  ],
+  "risksAndCaveats": [
+    "**A panel, not a measurement** — no sample and no instrument, and the panelists are self-selected commentators whose organisations are unrepresentative early adopters.",
+    "**One account, one organisation** — the builders observation is a single panelist’s report, and the wider piece intensifies last year’s themes rather than establishing a new finding.",
+    "**This claim has failed before** — \"product managers can write code\" has accompanied every tooling wave since low-code, and whether committing code equals owning it in production is not established."
+  ]
+}
