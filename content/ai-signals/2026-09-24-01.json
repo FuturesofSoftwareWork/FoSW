@@ -1,0 +1,48 @@
+{
+  "id": "2026-09-24-01",
+  "title": "A 240% lift in coding activity arrives as 30% more releases: NBER traces where the AI productivity gain leaks out of the pipeline",
+  "summary": "Three economists at MIT and Wharton matched more than 500,000 GitHub developers to their AI usage telemetry to ask how much of the productivity gain at the keyboard survives to shipped software. Most of it does not. Autocomplete raised coding activity by 30 percent, interactive agents by 180 percent and autonomous agents by 240 percent. That 240 percent falls to 80 percent when measured in projects, and to 30 percent when measured in actual releases.\n\nThe authors then checked the far end of the pipe. Across the Apple App Store, Google Play, the Chrome Web Store and SourceForge, monthly new-app entry roughly doubled from early 2025 — and total engagement with those new apps rose in none of the four. The share of new apps that never reach even a modest audience went up everywhere, so the extra supply is concentrated in software almost nobody uses. They are careful to say they cannot yet distinguish whether those marginal apps are simply poor or whether discovery and adoption are a bottleneck of their own.\n\nTheir explanation is complementarity. The estimated elasticity of substitution between AI and human effort is 0.23, meaning the stages that remain human-paced cap what the automated stage can deliver. The paper's own conclusion is the line worth carrying: the binding constraint in software is shifting from writing code to reviewing, integrating and distributing it. It also expects this to bite harder inside companies than in the open-source data it uses, because firms add review and approval that open-source contributors largely avoid.",
+  "source": "NBER Working Paper 35275 (Demirer, Musolff and Yang)",
+  "sourceUrl": "https://www.nber.org/papers/w35275",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "dataCollectedPeriod": "GitHub commit and pull-request histories January 2020 to May 2026 (388 million commits); software marketplace panels March 2020 to August 2026",
+  "replicated": false,
+  "leadTimeEstimate": "confirms and quantifies current practice; the first measurement of the full transmission from task-level gain to shipped output",
+  "corroboration": [],
+  "detectedAt": "2026-09-24",
+  "date": "2026-09-01",
+  "status": "published",
+  "tags": [
+    "productivity-measurement",
+    "weak-link",
+    "release-throughput",
+    "complementarity",
+    "economics-of-ai",
+    "shipped-software"
+  ],
+  "category": [
+    "Productivity",
+    "Business Impact",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "**The gain leaks downstream** — a 240 percent lift in coding activity arrives as 30 percent more releases, so any capacity plan built on task-level benchmarks overstates what reaches customers by roughly eightfold.",
+    "**Complementarity, not substitution** — an elasticity of 0.23 means AI and human effort reinforce each other rather than trade off, which is evidence against headcount cuts justified by coding-speed gains.",
+    "**More software, not more used software** — new-app entry doubled across four marketplaces while usage stayed flat, so the supply-side gain has not yet appeared as value to anyone.",
+    "**Firms should expect worse** — these are open-source developers, and the authors expect review and approval processes to attenuate the gain further inside companies."
+  ],
+  "recommendedActions": [
+    "**Measure at the release layer** — report releases and shipped features rather than commits or PR counts, because the two now diverge by a factor of eight.",
+    "**Fund the downstream stages** — direct investment at review, integration and deployment capacity, which is where this paper locates the binding constraint.",
+    "**Refuse headcount maths from coding speed** — an elasticity of 0.23 does not support substituting engineers on the basis of task-level productivity gains.",
+    "**Compute your own attenuation curve** — measure the commits-to-releases ratio before and after agent adoption internally before accepting any vendor's productivity claim."
+  ],
+  "risksAndCaveats": [
+    "**Not peer reviewed** — an NBER working paper, first circulated May 2026 and revised September 2026; NBER states explicitly that these papers have not been peer-reviewed.",
+    "**Open-source behaviour** — the developer-level results come from public GitHub activity, where shipping norms, review obligations and incentives differ from those in commercial teams.",
+    "**Usage is proxied** — marketplace engagement is ratings for iOS and installs elsewhere, which need not track the value an app delivers, and the authors cannot separate low app quality from a consumer-side discovery bottleneck."
+  ]
+}

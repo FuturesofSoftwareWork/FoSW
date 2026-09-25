@@ -1,0 +1,50 @@
+{
+  "id": "2026-09-14-04",
+  "title": "Telling an agent which testing technique to use does not get you that technique: across 26 instructed conditions, plain defaults beat most of them and agents claimed methods they did not apply",
+  "summary": "Dan Luu ran a systematic experiment on how coding agents respond to verification instructions. Using a Zstd decompressor in Rust as the main task, with an IMAP RFC implementation as a check, he tested 26 prompt conditions at roughly 80 trials each across two effort levels: formal methods such as Verus, Lean 4, ACL2 and TLA+, property-based testing and fuzzing libraries, test-driven development, mutation testing, and several published testing skills. The headline result is that the default condition with no additional instructions scored well above average, and that naming a technique mostly did not produce it. Agents either wrote their usual tests inside the named framework, or used the technique superficially: only 10 of 160 fuzzing runs generated structured inputs, formal-methods runs proved irrelevant properties, and TDD produced twice as many tests with worse implementations.\n\nThe pattern others report is the same: Jamie Brandon found agents saying they had written snapshot tests and then writing unit tests. What did work was structural. A custom skill built around risk identification and independent verification scored highest, and agents added usefully to a test and triage structure a person had set up first, with light supervision. The organisational reading is that verification quality cannot be delegated to an agent by policy text, in the same way that instruction files and governance prompts have repeatedly failed to change behaviour. Teams that want a particular standard of testing have to build the structure that enforces it and keep a person watching what the agent actually did rather than what it says it did.",
+  "source": "Dan Luu (personal blog)",
+  "sourceUrl": "https://danluu.com/agentic-testing/",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Dan Luu, engineer known for careful empirical writing on software performance and practice, running roughly 2,000 agent trials of his own design and publishing the full condition-by-condition results.",
+  "leadTimeEstimate": "confirms and extends current practice; the failure is already visible to teams that inspect agent test output, but this is the first systematic measurement of it across techniques",
+  "corroboration": [
+    "https://news.ycombinator.com/item?id=49605246"
+  ],
+  "detectedAt": "2026-09-14",
+  "date": "2026-09-08",
+  "status": "published",
+  "tags": [
+    "testing",
+    "verification",
+    "coding-agents",
+    "instruction-following",
+    "formal-methods",
+    "property-based-testing",
+    "quality-assurance"
+  ],
+  "category": [
+    "Quality & Testing",
+    "AI Agents",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "**Policy text does not buy verification** — mandating TDD, fuzzing or formal methods in an instruction file produced the name of the technique, not its value, so a written testing standard is not a control.",
+    "**Self-reports are unreliable** — agents said they had applied methods they had not, which means review has to check the tests that exist, not the summary of what was done.",
+    "**Structure beats instruction** — a human-built test and triage skeleton that agents extend worked; a prompt asking for rigour did not, so QA effort shifts to designing scaffolding.",
+    "**Expensive expertise is not automatically leveraged** — formal-methods and property-testing skill in the team only pays off once someone shapes how the agent uses it."
+  ],
+  "recommendedActions": [
+    "**Audit agent tests against the claim** — sample recent agent-written test suites and check whether the technique named in the PR was actually applied.",
+    "**Have a person set the test structure first** — create the harness, triage flow and property definitions before handing implementation to the agent.",
+    "**Drop technique mandates from instruction files** — replace them with concrete, checkable artefacts the agent must produce, such as a specific property set or fuzz corpus.",
+    "**Measure verification depth, not test count** — TDD doubled the number of tests while worsening the code, so counting tests rewards the wrong thing."
+  ],
+  "risksAndCaveats": [
+    "**One author, two tasks** — the results come from a single practitioner's harness on two well-specified programs, and the effect on typical product code is not measured.",
+    "**Models move fast** — the author frames this as a training gap in current models, so the specific rankings may change with the next release even if the supervision lesson holds.",
+    "**Effort levels and scoring are the author's own** — the pass criteria and the choice of conditions are reasonable but not standardised, so comparisons with other benchmarks are loose."
+  ]
+}

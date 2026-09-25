@@ -1,0 +1,49 @@
+{
+  "id": "2026-08-31-10",
+  "title": "Median pull-request size roughly doubled across 1,500 engineering organisations in a year — AI adoption is quietly reversing a decade of small-batch delivery",
+  "summary": "Writing in LeadDev, Swarmia founder and CEO Otto Hilska reports that across a sample of 1,500 engineering organisations on his company's platform, median batch size roughly doubled between early 2025 and early 2026. His argument around the number is that the surge in bugs and incidents engineering leaders are reporting is arithmetic rather than a quality collapse: work that took eight weeks now takes one, so defects that used to surface gradually now arrive all at once after launch. He concedes in passing that bigger changes do break in more places, and recommends deciding a remediation-to-feature capacity split out loud — half of capacity to root causes for a quarter, say — rather than reactively freezing feature work. The measurement is the part worth keeping, and it points somewhere the article does not go. Small batch size is the single most consistently supported practice in modern delivery research; a doubling of it across 1,500 organisations in twelve months means AI-assisted development has reversed that practice at scale, without any team deciding to. The 'more bugs' complaint and the batch-size measurement are the same fact seen from two ends.",
+  "source": "LeadDev (sponsored by Swarmia)",
+  "sourceUrl": "https://leaddev.com/software-quality/you-didnt-create-more-bugs-you-just-found-them-faster",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "sampleSize": "1,500 engineering organisations using Swarmia",
+  "fieldworkPeriod": "early 2025 to early 2026",
+  "sponsor": "Swarmia",
+  "leadTimeEstimate": "confirms a shift already underway; the framing of it as a batch-size regression rather than a quality regression is ~6-12 months ahead of the current discourse",
+  "corroboration": [],
+  "detectedAt": "2026-08-31",
+  "date": "2026-08-25",
+  "status": "published",
+  "tags": [
+    "batch-size",
+    "continuous-delivery",
+    "code-review",
+    "software-quality",
+    "dora",
+    "delivery-metrics"
+  ],
+  "category": [
+    "SDLC Change",
+    "Quality & Testing",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**A decade of practice reversed** — every organisation that spent years driving batch size down should check whether AI adoption has quietly undone it, using a metric it already collects.",
+    "**One cause behind several symptoms** — longer review times, higher change-failure rates and unreviewable agent pull requests may share a single lever, which is a constraint on change size.",
+    "**The reassuring story counsels inaction** — \"you found them faster, you didn’t create more\" is comfortable and argues against intervening; the author’s own number argues the other way.",
+    "**The remediation split is governance** — naming what share of capacity goes to root causes turns firefighting from an emergency reflex into a stated decision."
+  ],
+  "recommendedActions": [
+    "**Pull your own batch-size trend** — compare median pull-request size for early 2025 against the most recent quarter, and treat material growth as the finding itself.",
+    "**Cap agent change size** — make oversized agent-authored pull requests visible in review tooling rather than relying on reviewer discipline.",
+    "**Publish the remediation ratio** — state what share of this quarter’s capacity goes to root causes rather than features, so the trade-off is decided rather than forced.",
+    "**Stratify failures by size** — test locally whether the bug surge is a batching effect or a real quality regression before buying more QA capacity."
+  ],
+  "risksAndCaveats": [
+    "**Vendor telemetry, vendor byline** — a sponsored placement written by Swarmia’s CEO using his own platform’s unaudited data, drawn from customers who self-select by buying engineering analytics.",
+    "**The reassuring claim is unmeasured** — no defect, escape or incident data is offered to support the argument that the bugs already existed and are merely surfacing faster.",
+    "**Batch size is never defined** — on Swarmia’s platform it usually means pull-request size, so part of the doubling may reflect how work is chunked rather than how large changes are."
+  ]
+}

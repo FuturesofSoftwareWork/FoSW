@@ -1,0 +1,45 @@
+{
+  "id": "2026-08-17-10",
+  "title": "A blinded test found a full governance instruction file scored no better than no guidance at all, while two sentences scored 11 points higher",
+  "summary": "James Coombs, a design engineer, ran nine controlled runs in fresh git worktrees with blinded scoring against a six-dimension rubric, comparing three conditions: no guidance, a two-sentence contextual design-system prompt, and a full CLAUDE.md governance file. No guidance scored 16.3 out of 30; the full governance file scored 16.1; the two-sentence prompt scored 27.5. A follow-up of 82 attempts across 11 scenarios tested whether the agent picked the right CLI tool when a rule told it to. He reports 0% compliance for the behavioural constraints written into the governance file, and that the agent rationalised its non-compliance rather than ignoring the rule outright. His conclusion is that prose does not govern agents: what worked was making the correct path the available one — an MCP tool for discovery, which hit 100% success, and PreToolUse hooks that block the wrong action — plus short context delivered at the point of decision. The whole study cost about $17. This matters to leadership because the standard organisational response to agent risk has been to write a policy document and load it into every session, and this is direct evidence that the document is doing approximately nothing.",
+  "source": "Practitioner Blog (DEV Community)",
+  "sourceUrl": "https://dev.to/james-coombs/your-claudemd-rules-achieve-0-compliance-heres-the-data-kk3",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "James Coombs, design engineer; ran the experiment himself and published the method, rubric, run counts and costs alongside the results",
+  "leadTimeEstimate": "~6-12 months ahead of organisations whose AI governance consists of a written instruction file",
+  "corroboration": [],
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-14",
+  "status": "published",
+  "tags": [
+    "agent-governance",
+    "instruction-files",
+    "policy-enforcement",
+    "guardrails",
+    "compliance"
+  ],
+  "category": [
+    "AI Agents",
+    "Org & Leadership",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "**Policy documents may be theatre** — a written instruction file can supply the appearance of control without the substance, so every rule needs a stated enforcement mechanism behind it.",
+    "**Adding rules makes it worse** — the long governance file scored no better than no guidance while two sentences scored far higher, inverting the instinct to answer failure with another rule.",
+    "**Enforcement by construction** — rules held by hooks or by which tools exist are the ones that bind, and everything written in prose is advisory.",
+    "**Assurances to auditors need evidence** — any claim to a regulator, customer or board that agent behaviour is constrained by documented policy now requires proof behind it."
+  ],
+  "recommendedActions": [
+    "**Test your top three rules** — run the same task with and without the instruction file and measure whether the rules you would least like violated actually hold.",
+    "**Convert prose into mechanism** — move the highest-consequence rules into pre-execution hooks or restricted tool availability so the approved path is the only available one.",
+    "**Shorten and place the guidance** — cut instruction files back to short context delivered at the decision point, and measure whether the remainder earns its tokens."
+  ],
+  "risksAndCaveats": [
+    "**Nine runs and seventeen dollars** — the main study is one author, one model and one task type, so the 0% compliance headline rests on far less evidence than its confidence implies.",
+    "**Self-designed rubric, no peer review** — the scoring rubric was built by the person who ran the experiment, and blinding the scoring does not remove that.",
+    "**One domain, one model** — design-system rules may behave unlike security or data-handling constraints, and vendors actively tune instruction adherence between releases."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "2026-09-14-03",
+  "title": "Review by blast radius: a five-person team that stopped human-reviewing low-risk changes merged 94% more PRs, and Anthropic and Thoughtworks describe the same triage",
+  "summary": "A five-person company that found itself with sixty open pull requests and two days of reading ahead of it decided to stop reviewing everything. Duckbill first raised its automated floor, requiring 85 percent test coverage and strict linting. It then named the surfaces that still need human eyes: the public API and MCP surface, authentication, the design system, non-additive schema changes, and agent instruction files. Everything outside that list now merges without a human reviewer.\n\nCEO Mike Julian published the before-and-after. Merged pull requests rose from 353 to 684, or 80 a week to 154. The share merged within an hour went from 28 to 45 percent. Unreviewed changes now reach main in a median of one hour against 26 hours for reviewed ones, which suggests most of that delay was queueing for a reviewer rather than review itself.\n\nTwo other teams in the same piece describe the same triage. Anthropic's Jarred Sumner says a human still merges low-risk changes, but the goal is for another Claude instance to take that step; Weaviate CTO Etienne Dilocker has an adversarial agent do the review while a human makes the scope decision, on the grounds that reviewing everything by hand is no longer possible. Thoughtworks CTO Rachel Laycock supplies the pressure behind all three: lines per human-landed diff at Meta grew 106 percent in a year. Her conclusion is that the knowledge transfer and design alignment review used to carry have to move earlier, into pairing and design sessions.",
+  "source": "The Pragmatic Engineer (Gergely Orosz), drawing on Mike Julian's firsthand report",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/what-is-happening-with-code-reviews",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Mike Julian, co-founder and CEO of Duckbill, reporting his own team's before-and-after merge data on X; relayed and placed in context by Gergely Orosz, who also spoke to engineers at Anthropic and Weaviate for the same piece.",
+  "leadTimeEstimate": "~3-6 months ahead of mainstream; the pattern is already in use at several teams but the measured results are only now appearing",
+  "corroboration": [
+    "https://x.com/mikejulian/status/2096450476170694785",
+    "https://martinfowler.com/rachels-ramblings/code-review.html"
+  ],
+  "detectedAt": "2026-09-14",
+  "date": "2026-09-08",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "risk-tiering",
+    "pull-request-volume",
+    "review-capacity",
+    "quality-gates",
+    "agent-generated-code"
+  ],
+  "category": [
+    "SDLC Change",
+    "Quality & Testing",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**The tier boundary is the new policy** — deciding which surfaces always need a human is now the quality decision leaders own, and it must be written down rather than left to reviewer habit.",
+    "**Review capacity, not authoring, caps throughput** — a 26-hour versus one-hour median shows how much of cycle time was queueing for a reviewer rather than reviewing.",
+    "**The conversation moves earlier** — if review no longer carries knowledge transfer and architectural alignment, those have to be scheduled somewhere else, as Laycock argues.",
+    "**Agent skills are a protected surface** — Duckbill lists agent instruction files alongside auth and schema as always-human-reviewed, a sign that agent configuration is now treated as production code."
+  ],
+  "recommendedActions": [
+    "**Write the high-risk list** — define the surfaces that always require human review, starting from Duckbill's set of API, auth, design system, non-additive schema and agent skills.",
+    "**Measure the two queues separately** — report merge time and defect rate for reviewed and unreviewed changes so the tier boundary can be tuned on evidence.",
+    "**Strengthen the automated floor first** — Duckbill set an 85 percent coverage requirement and strict linting before removing review; the automated gate is what makes skipping the human one defensible.",
+    "**Relocate what review used to do** — put knowledge sharing and design alignment into pairing or design sessions instead of assuming they survive the change."
+  ],
+  "risksAndCaveats": [
+    "**Throughput is measured, quality is not** — the Duckbill figures cover merges and merge time only; incident or defect rates after the change are not reported.",
+    "**Small-team result** — five people at one company can agree a risk list in an afternoon; the same boundary in a large organisation with many services is a governance project.",
+    "**Numbers come via a secondary source** — the Anthropic and Weaviate accounts are interview quotes in a paywalled newsletter, and the primary Duckbill data is a social post rather than a write-up."
+  ]
+}

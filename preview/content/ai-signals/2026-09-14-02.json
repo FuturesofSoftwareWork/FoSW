@@ -1,0 +1,51 @@
+{
+  "id": "2026-09-14-02",
+  "title": "OpenAI's research organisation now runs 3.1 agent-workdays for every human workday, with the median researcher consuming $600 of inference a day and the 90th percentile over $7,000",
+  "summary": "OpenAI has published internal telemetry on how its own researchers use coding agents. As of mid-August 2026, the median researcher integrates agents into daily work and consumes more than $600 per day of inference at API prices; the 90th percentile user consumes more than $7,000 of tokens a day. Measured in eight-hour workdays, the research organisation now uses 3.1 agent-workdays of effort for every workday of human labour, up from less than one before June 2026. Experiments per active researcher hit an all-time high in August, the share of researchers running four or more agents concurrently rose through the year, and one team stopped holding its technical-support sessions because the questions went to agents instead.\n\nThe post is candid about the limits: over half of successful four-to-eight-hour tasks needed at least one human intervention, and after an internal infrastructure compromise on July 20 OpenAI temporarily shut down its container service and restricted the most capable model class, whose GPU allocation then fell 59 percent. For engineering leaders the significance is the cost structure it implies. At a frontier lab, per-person agent spend is now comparable to a salary rather than a software subscription, and human labour is a minority of total effort on the team. That is a different budgeting, staffing and governance problem from the $200-$2,000 per developer per month that Spotify reported a week earlier, and it shows where the curve goes when the constraint on agent use is removed.",
+  "source": "OpenAI (company post on internal agent use)",
+  "sourceUrl": "https://openai.com/index/research-acceleration-view-inside-openai/",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "fieldworkPeriod": "January 2025 - mid-August 2026 (internal telemetry; headline figures as of mid-August 2026)",
+  "sponsor": "OpenAI",
+  "leadTimeEstimate": "~12-24 months ahead of ordinary engineering organisations; a frontier lab with unconstrained access to its own models is the leading edge of the spend curve, not a typical case",
+  "corroboration": [
+    "https://simonwillison.net/2026/Sep/6/research-acceleration-the-view-inside-openai/",
+    "https://news.ycombinator.com/item?id=49587217"
+  ],
+  "detectedAt": "2026-09-14",
+  "date": "2026-09-06",
+  "status": "published",
+  "tags": [
+    "agent-economics",
+    "token-spend",
+    "labour-ratio",
+    "research-engineering",
+    "concurrency",
+    "human-intervention"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Agents",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**Agent spend reaches salary scale** — $600 a day at the median is roughly $150,000 a year per researcher, so compute for agents becomes a headcount-sized line rather than a tooling line.",
+    "**Humans become the minority of effort** — at 3.1 agent-workdays per human day, planning, review and intervention capacity, not implementation, is what the organisation is staffed for.",
+    "**Long tasks still need a person in the loop** — more than half of successful four-to-eight-hour tasks required intervention, which sets a floor on how far supervision can be thinned.",
+    "**Security incidents throttle capability** — one internal compromise cut allocation of the most capable model class by 59 percent, so governance events now directly reduce engineering throughput."
+  ],
+  "recommendedActions": [
+    "**Model the spend curve, not the current bill** — project per-person agent cost under unconstrained use, using OpenAI's numbers as the upper bound, before setting next year's budget.",
+    "**Measure agent-to-human effort ratio** — track agent runtime against human hours as an organisational metric, since it exposes where supervision capacity will run out.",
+    "**Plan for intervention capacity** — staff and schedule for the human steering that long-running tasks need rather than assuming autonomy scales linearly.",
+    "**Rehearse the capability-throttle scenario** — decide in advance what work continues if a security event forces the most capable models offline."
+  ],
+  "risksAndCaveats": [
+    "**Vendor reporting on itself** — OpenAI measured its own researchers using its own models at internal prices, and the post argues for the value of that use; no outside party has checked the figures.",
+    "**Researchers are not typical engineers** — a frontier research organisation with unmetered access to unreleased models is the extreme case; the ratios will not transfer to product teams paying list price.",
+    "**No output metric behind the effort ratio** — the post reports agent effort and experiment counts, not whether research output per dollar improved."
+  ]
+}
