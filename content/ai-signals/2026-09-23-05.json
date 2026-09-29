@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-23-05",
+  "title": "Two incompatible ways of working are colliding inside the same team: engineers who read the generated code and engineers who deliberately do not",
+  "summary": "Marek Chotoborski, a product engineer, argues that teams are now quietly mixing two different working modes: engineers who read and understand what their agents produce, and engineers who deliberately delegate implementation and do not read it. He reports that agents operating in a polluted context window make obvious local mistakes and ignore dimensions no benchmark scores, giving the example of a change that left the test suite taking three times longer to run without anyone noticing.\n\nHis point is organisational rather than technical. Mixing the two modes in one codebase without declaring which is in force produces conflict over who owns the consequences of a change nobody read. A team has to state whether a given codebase will be maintained through human understanding of its code or through regeneration from specifications backed by rigorous tests, because those two futures need different review practices, different documentation and different people. That is a maintenance contract, and almost no team has written one down.",
+  "source": "Practitioner Blog (zanlib.dev)",
+  "sourceUrl": "https://zanlib.dev/blog/do-you-still-read-the-code/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Marek Chotoborski, a product engineer who builds commercial software with domain experts and describes his own reading practice and what he observes in mixed teams.",
+  "leadTimeEstimate": "~12-18 months",
+  "corroboration": [],
+  "detectedAt": "2026-09-23",
+  "date": "2026-09-14",
+  "status": "published",
+  "tags": [
+    "code-comprehension",
+    "team-composition",
+    "maintainability",
+    "agentic-development",
+    "division-of-work"
+  ],
+  "category": [
+    "SDLC Change",
+    "Org & Leadership",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "**Teams have split without deciding** — two working modes with different assumptions about who understands the code now coexist on the same teams, and nobody has been asked to choose between them.",
+    "**Maintenance strategy is now a choice** — maintaining by human understanding and maintaining by regeneration from specifications are both viable, but they demand different review, documentation and hiring.",
+    "**Ownership gets ambiguous** — when a change nobody read causes a problem, an undeclared working mode leaves no agreed answer about who was responsible for catching it."
+  ],
+  "recommendedActions": [
+    "**Declare the mode per codebase** — state explicitly whether each service is maintained through human understanding or through regeneration from specifications, and make review expectations follow from it.",
+    "**Watch the unscored dimensions** — track things no agent optimises for, such as test-suite runtime, since regressions there accumulate without failing anything."
+  ],
+  "risksAndCaveats": [
+    "**A single firsthand report** — this is one practitioner's observation with no measurement behind it and has not been independently validated; treat the framing as a hypothesis worth testing, not a finding.",
+    "**The dichotomy may be too clean** — most engineers probably move between the two modes by task and risk level, which would make it a spectrum to manage rather than two camps to separate."
+  ]
+}
