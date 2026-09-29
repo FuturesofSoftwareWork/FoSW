@@ -1,0 +1,49 @@
+{
+  "id": "2026-09-28-03",
+  "title": "Update: a month after saying established products resisted agents, 37signals makes hand-written code the exception and rebuilds HEY as native apps on a Rust backend",
+  "summary": "At the Rails World opening keynote on 23 September, David Heinemeier Hansson said 37signals has gone 'pencils down': agents now write the code as the normal way of building its products, and an engineer who finds themselves writing code by hand treats that as a sign the agent workflow needs fixing. He announced that HEY, the company's email product, is leaving the server-rendered web app model and is being rebuilt by a small team as native apps on every platform with a Rust backend written by agents. His own framing was that hand-writing code is no longer an economically viable skill for most programmers at most companies.\n\nThis is a genuine change from what the same person said in late August, which this site published: that agents accelerated new work easily but that established products such as Basecamp and HEY proved much harder, and that a designer-led experiment had damaged Basecamp's architecture. A month later the flagship established product is the one being rebuilt.\n\nThe stack choice converges with Shopify's move this month from React Native back to separate native apps. Two unrelated companies that each built their reputation on minimising duplicated work have concluded that agents make per-platform code affordable, and 37signals has done it while also abandoning the framework its founder created in favour of a language he says he dislikes.",
+  "source": "Rails World 2026 opening keynote (video), David Heinemeier Hansson",
+  "sourceUrl": "https://www.youtube.com/watch?v=vDjW_dRyKXY",
+  "sourceType": "video",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "David Heinemeier Hansson, creator of Ruby on Rails and CTO of 37signals, describing a company-wide practice change and a rebuild of a product he leads, in the opening keynote of the Rails community's main conference.",
+  "leadTimeEstimate": "~6-12 months; the stack consequence (per-platform native code becoming affordable again) is not yet reflected in mainstream architecture guidance",
+  "corroboration": [
+    "https://launchkit.codes/rails-agents/pencils-down-what-dhh-actually-said",
+    "https://www.globalnerdy.com/2026/09/27/dhhs-keynote-at-rails-world-2026-the-most-confusing-funeral-ive-ever-experienced/",
+    "https://shopify.engineering/back-to-native"
+  ],
+  "detectedAt": "2026-09-28",
+  "date": "2026-09-23",
+  "status": "published",
+  "tags": [
+    "agentic-development",
+    "stack-choice",
+    "native-apps",
+    "37signals",
+    "hand-written-code",
+    "engineering-policy"
+  ],
+  "category": [
+    "SDLC Change",
+    "Org & Leadership",
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "**Policy, not personal habit** — a company making agent-written code the default and hand-writing the exception is an operating-model decision, and it now covers established products too.",
+    "**Duplication stops deciding architecture** — two unrelated companies have dropped cross-platform or server-rendered approaches because agents make per-platform code cheap enough.",
+    "**Framework loyalty weakens** — the creator of Rails choosing Rust for his flagship backend suggests agents lower the switching cost that kept teams on familiar stacks.",
+    "**Review becomes the job** — if writing code by hand is treated as a workflow failure, the skill that carries weight is directing and reviewing agent output."
+  ],
+  "recommendedActions": [
+    "**Revisit cost-driven stack decisions** — list architecture choices made mainly to avoid duplicated work and check whether that cost still holds with agents.",
+    "**Watch the HEY rebuild ship** — treat the rebuild's delivery and quality as the evidence, and do not change your own stack on a keynote's announcement."
+  ],
+  "risksAndCaveats": [
+    "**Announced, not delivered** — the HEY rebuild is described as underway with no launch date, so none of the claimed outcomes can yet be checked.",
+    "**Keynote claims, read secondhand** — this draft relies on attendee and press accounts of the talk, which disagree on some detail such as the number of native apps; check the video before publishing figures.",
+    "**An advocate's stage** — Hansson is a founder promoting a direction to his own community, and his account of the team's size and effort is not independently verified."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "2026-09-28-04",
+  "title": "A CMU software-engineering professor rebuilt his course around oral check-ins because agents could do every assignment, and now assumes AI tool fluency as a baseline",
+  "summary": "Christian Kästner, who teaches Machine Learning in Production at Carnegie Mellon to 100 to 170 students a term, reports that AI agents could complete all of his assignments and that he has redesigned most of his assessment. Written reflections were replaced by 15-minute check-ins with a teaching assistant, in which students defend their answers orally and take follow-up questions. Graded reading quizzes were dropped, coding assignments were scaled up to projects that current agents do not solve without guidance, and the exam's share of the grade rose from 15% to 25%. LLM-based grading with human review before any penalty cut teaching-assistant grading time by 50 to 80%.\n\nTwo consequences reach beyond the classroom. Kästner now treats competence with AI coding tools as a baseline he assumes, as he previously assumed basic programming, so graduates arrive expecting to work with agents. And he says AI is pushing him away from evidence-based practice, frequent low-stakes assessment with feedback, towards fewer high-stakes checks, and that the pace of redesign is accelerating each term.\n\nFor employers the parallel is direct. Take-home work no longer shows what a candidate understands, and the remedy Kästner reached, a short oral defence of work that may have been machine-produced, is one hiring and internal skills assessment can adopt.",
+  "source": "Christian Kästner, practitioner blog (Substack)",
+  "sourceUrl": "https://thelastsoftwareengineer.substack.com/p/how-i-changed-teaching-after-ai-managed",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Christian Kästner, professor at Carnegie Mellon University's software engineering programme, who teaches the upper-level course Machine Learning in Production to 100-170 students per term and describes changes he made to his own course.",
+  "leadTimeEstimate": "~12-24 months before this cohort's expectations and the oral-defence assessment pattern show up in hiring practice",
+  "corroboration": [],
+  "detectedAt": "2026-09-28",
+  "date": "2026-09-23",
+  "status": "published",
+  "tags": [
+    "software-engineering-education",
+    "assessment",
+    "skills",
+    "hiring-signals",
+    "oral-examination",
+    "ai-fluency"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Written work no longer shows understanding** — if agents complete the assignments, a take-home test or code sample says little about what a candidate knows.",
+    "**Oral defence becomes the check** — a short conversation about work the candidate may not have written is what a leading programme settled on.",
+    "**Graduates assume agent fluency** — a course that treats AI tool use as a baseline produces hires who expect agents in their workflow from the first day.",
+    "**Feedback-rich learning is under pressure** — the practices that build skill fastest are the ones AI undermines, which carries into on-the-job training too."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**One course, one instructor** — this is a single firsthand account and has not been independently validated or compared with other programmes.",
+    "**No learning-outcome data** — Kästner says he lacks rigorous evidence on whether students learn more or less, and grade drift predates the changes."
+  ]
+}

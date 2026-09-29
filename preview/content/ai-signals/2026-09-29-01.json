@@ -1,0 +1,50 @@
+{
+  "id": "2026-09-29-01",
+  "title": "Addy Osmani reverses his own \"review every line\" advice, citing a study where defects were just 14% of review comments",
+  "summary": "Addy Osmani, now a member of technical staff at Anthropic after 14 years at Google, has publicly reversed the advice he published two years ago to review every line of generated code. He now says you do not need to read all of it: every change still needs review and a person answerable for shipping it, but a careful human read is no longer the only way, or always the best way, to provide that.\n\nHis argument rests on what review was actually for. He cites Bacchelli and Bird's 2013 Microsoft study, which card-sorted 570 comments from 200 review threads. Defect-finding was the top motivation developers named, but defects came only fourth of nine comment categories at 14%, behind code improvements at 29%, and most were superficial. Bug-catching is also what machines now do well: he reports Anthropic's automated reviewer having under 1% of its findings marked incorrect, and substantive review comments rising from 16% to 54% of pull requests. So automation covers the narrow, legible part, while the teaching and norm-setting he worries about barely registered in those comments at all — which the paper's authors attribute to its being social and hard to count rather than absent.\n\nHis sharper warning is organisational. Borrowing Madeleine Clare Elish's \"moral crumple zone\", he describes the engineer whose name is on a merge they were given no time to understand, while the pace and the budget for attention were set elsewhere. Accountability, he argues, needs matching authority. His timelines are explicit: line-by-line reading unusual in consumer software and SaaS within two years, approval shifting from the diff to the evidence in enterprise and finance over three to five, and safety-critical code still read line by line for many years.",
+  "source": "Practitioner Blog (Elevate, addyo.substack.com)",
+  "sourceUrl": "https://addyo.substack.com/p/the-code-nobody-reads",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Addy Osmani, member of technical staff at Anthropic working on Claude Code, previously 14 years at Google leading developer experience across Chrome and Cloud AI. He is revising guidance he published himself, and discloses in the post that he helps build a tool that writes code.",
+  "leadTimeEstimate": "~12-24 months for consumer software and SaaS on his own estimate; 3-5 years for enterprise and finance",
+  "corroboration": [
+    "https://sback.it/publications/icse2013.pdf",
+    "https://addyosmani.com/blog/agentic-code-review/"
+  ],
+  "detectedAt": "2026-09-29",
+  "date": "2026-09-28",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "accountability",
+    "mentoring",
+    "engineering-norms",
+    "moral-crumple-zone",
+    "verification"
+  ],
+  "category": [
+    "SDLC Change",
+    "Org & Leadership",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "**14% of comments were defects** — in the study Osmani cites defect-finding came fourth of nine comment categories, so automating it replaces a narrower slice of review than the name suggests.",
+    "**Norms must become artifacts** — a standard a reviewer used to enforce in a comment only reaches an agent once it is written into a skill file, so tacit judgement now needs explicit authoring.",
+    "**Accountability without authority fails** — holding someone answerable for a merge whose pace and checking budget were set above them is neither fair nor an effective control.",
+    "**Trust must move, not vanish** — the failure mode is stopping the reading without building the checks, which makes checking free today and charges for it later in failures nobody caught."
+  ],
+  "recommendedActions": [
+    "**Name what review still owes** — decide explicitly where teaching, context-sharing and norm-setting now happen, rather than assuming they survived the change to agent review.",
+    "**Write norms into skills** — move the standards reviewers used to enforce in comments into agent instruction files, because an agent never hears what was only ever said in review.",
+    "**Match authority to accountability** — give whoever approves a merge real say over the pace and over how much time they get to understand what they are approving.",
+    "**Keep verification independent** — derive tests and checks from a human-written spec or a reference implementation rather than from the model that wrote the code."
+  ],
+  "risksAndCaveats": [
+    "**He builds the tool** — Osmani works at Anthropic on Claude Code and cites Anthropic's own internal figures; he discloses this plainly, but those numbers are self-reported and unaudited.",
+    "**Timelines are predictions** — the two-year and three-to-five-year horizons are his forecasts, offered as falsifiable guesses rather than as observations of what teams do now.",
+    "**Comments undercount review** — the 2013 figures count what reviewers wrote, not what they read or taught, and the paper's own authors note that review's social outcomes resist this measurement."
+  ]
+}
