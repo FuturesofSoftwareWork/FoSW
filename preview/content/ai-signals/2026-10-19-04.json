@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-19-04",
+  "title": "Uber declared an internal code red after agents doubled CI jobs in a year, and now caps each engineer's AI spend with tiers a manager must approve exceeding",
+  "summary": "Uber Distinguished Engineer Uday Kiran Medisetty, who leads much of the company's agentic AI work, described how Uber engineering runs with coding agents on The Pragmatic Engineer. CI jobs more than doubled in twelve months, and earlier this year the company declared an internal code red. Its response was to move simple checks out of shared CI and into the agent's local loop, so agents run validation before a pull request is opened. Engineers still review every pull request, but an AI review, screenshots or videos and a risk score are attached first, and Medisetty calls review a major bottleneck.\n\nSpend is managed per person. Each engineer has a monthly spend tier, and going over it needs a manager's approval. All model traffic goes through an internal gateway that tracks spend per user and keeps audit trails, and Uber reports token costs fell about 50% over the last few months. Pull requests are tagged by type, and the share labelled as features is rising while maintenance falls.\n\nThe figures are Uber's own, given in an interview, and not independently checked. Linear has described the same shift of the bottleneck to CI.",
+  "source": "The Pragmatic Engineer (podcast)",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/ubers-ai-infra-from-the-inside",
+  "sourceType": "video",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Uday Kiran Medisetty, Distinguished Engineer at Uber who leads much of its agentic AI work, describing Uber's own CI load, review process and spend controls in an interview with Gergely Orosz",
+  "leadTimeEstimate": "~6-12 months before CI capacity and per-engineer AI budgets are standard planning items in large engineering orgs",
+  "corroboration": [],
+  "detectedAt": "2026-10-19",
+  "date": "2026-10-14",
+  "status": "published",
+  "tags": [
+    "continuous-integration",
+    "ai-spend",
+    "budget-governance",
+    "code-review",
+    "platform-engineering",
+    "model-gateway"
+  ],
+  "category": [
+    "SDLC Change",
+    "Costs & Economics",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**CI becomes a capacity crisis** — agent output doubled CI load in a year at Uber's scale, enough to trigger an organisation-wide emergency.",
+    "**AI spend gets a manager** — per-engineer tiers with manager approval make AI cost a line-management decision, not only a platform setting.",
+    "**Validation moves left to agents** — pushing checks into the agent's own loop shifts cost and responsibility away from shared CI."
+  ],
+  "recommendedActions": [
+    "**Track CI load per change** — measure CI jobs and queue time against agent adoption, so a doubling shows up before it becomes an emergency.",
+    "**Set spend tiers with escalation** — give engineers a default monthly AI budget and a named approver for exceptions, rather than a hard cap or none."
+  ],
+  "risksAndCaveats": [
+    "**Self-reported in an interview** — the CI, cost and pull-request figures are Uber's own and come without definitions or baselines.",
+    "**Uber's scale is unusual** — a company running thousands of services may hit CI limits that smaller organisations never will."
+  ]
+}

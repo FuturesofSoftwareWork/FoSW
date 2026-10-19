@@ -1,0 +1,48 @@
+{
+  "id": "2026-10-12-01",
+  "title": "Microsoft and Meta pull back internal Claude use: per-engineer AI caps fall from $100,000 to about $10,000 a month, and Meta's Claude Code users halve as in-house tools take over",
+  "summary": "Microsoft has cut its forecast for employee spending on Anthropic models by more than a third, from an expected $1 billion or more a year, according to reporting by The Information syndicated on 6 October. In its Cloud and AI division, monthly AI usage caps per employee fell from $100,000 to about $10,000 in most cases, and staff were steered towards GitHub Copilot and OpenAI models, which Microsoft pays less for. At Meta, internal Claude Code users fell from about 60,000 earlier in the year to about 30,000. Spring layoffs explain part of that drop, but the main driver is a move to Meta's own MetaCode tool, which now has more than 30,000 internal users.\n\nThis is the first time two of the largest engineering organisations have been reported to cut agent spending per engineer, rather than only talk about capping it. Stack Overflow's 2026 Developer Survey, published the same week, puts the practice wider: 38% of respondents say their organisation sets AI usage limits, and 28% say it reviews AI spending data. SemiAnalysis estimated on 5 October that flat-rate coding subscriptions are heavily subsidised, so the price most teams see today understates what the compute costs.\n\nNeither company has commented on the record, and the figures are caps and forecasts, not measured spend. Microsoft's total Anthropic spend is reported as roughly flat, because customer-facing Copilot use rose while internal use fell.",
+  "source": "The Information, via StockTwits on Yahoo Finance",
+  "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/meta-microsoft-reportedly-trim-anthropic-230612967.html",
+  "sourceType": "article",
+  "signalType": "market-event",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "organisation": "Microsoft; Meta",
+  "magnitude": "Microsoft internal Anthropic spend forecast cut by more than a third from at least $1B a year; per-employee caps $100,000 to about $10,000 a month; Meta Claude Code users about 60,000 to about 30,000",
+  "leadTimeEstimate": "~6-12 months before per-engineer agent budgets are standard practice outside Big Tech",
+  "corroboration": [
+    "https://www.channelinsider.com/ai/news-microsoft-meta-cut-internal-claude-use/",
+    "https://stackoverflow.blog/2026/10/06/the-results-of-the-2026-developer-survey-are-here/",
+    "https://newsletter.semianalysis.com/p/anthropic-subscriptions-offer-5x"
+  ],
+  "detectedAt": "2026-10-12",
+  "date": "2026-10-06",
+  "status": "published",
+  "tags": [
+    "token-costs",
+    "ai-budgets",
+    "vendor-strategy",
+    "claude-code",
+    "in-house-tools",
+    "finops"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Tools",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Agent spend is now a budget line** — the two organisations that spent most freely on coding agents are the first to set hard caps per engineer.",
+    "**Tool choice follows vendor economics** — both companies moved engineers to tools they own or get cheaply, not to the tool engineers preferred.",
+    "**Subsidised prices will not last** — if flat-rate plans are subsidised, today's cost per engineer is a floor for planning, not a ceiling."
+  ],
+  "recommendedActions": [
+    "**Measure spend per engineer now** — find out what your heaviest agent users cost each month before a vendor price change forces the question.",
+    "**Plan for a second tool** — check whether workflows built around one agent would survive a switch to a cheaper or in-house option."
+  ],
+  "risksAndCaveats": [
+    "**Secondhand and unconfirmed** — every figure traces to one paywalled report from The Information; neither company has confirmed it, and the caps are limits, not measured spend.",
+    "**Not a verdict on value** — both companies are replacing Claude with their own or partner tools, so this shows cost and vendor pressure, not evidence that coding agents failed to pay off."
+  ]
+}

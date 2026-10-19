@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-19-03",
+  "title": "A cheap model with a contract harness matched a frontier model's results at a third less cost, while the same harness made the frontier model seven times dearer for no gain",
+  "summary": "Naresh Jain ran a paired experiment, published on Martin Fowler's site, in which coding agents built the same greenfield Java service ten times each, with and without a harness of API contracts, examples, tests and mocks. An independent evaluator ran 178 acceptance tests on every result. The frontier model passed all ten runs either way, and the harness only made it slower and about seven times more expensive, roughly $2.68 per run against $0.41. The cost-optimised model passed three of ten runs without the harness and all ten with it, at about $0.27 per run. That is about a third cheaper than the frontier model for the same result.\n\nThe harness is therefore a cost decision that depends on the model, not a fixed best practice. Jain suggests running the checks continuously during development for cheaper, less consistent models, and only once as a final gate for frontier ones. He also argues the checks must come from human-written specifications the agent cannot change, which turns writing and maintaining those specifications into ongoing work that needs a budget.\n\nThe figures are API-equivalent estimates from one greenfield service with a detailed brief. They leave out the cost of writing the contracts.",
+  "source": "martinfowler.com",
+  "sourceUrl": "https://martinfowler.com/articles/are-harnesses-worth-the-cost.html",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Naresh Jain, founder of Specmatic, Xnsio and ConfEngine, reporting his own paired experiment: ten runs per model and condition, scored by an independent 178-test acceptance suite",
+  "leadTimeEstimate": "~6-12 months before model choice and harness spend are planned together as one budget line",
+  "corroboration": [],
+  "detectedAt": "2026-10-19",
+  "date": "2026-10-13",
+  "status": "published",
+  "tags": [
+    "harness-engineering",
+    "model-selection",
+    "unit-economics",
+    "specifications",
+    "verification",
+    "token-costs"
+  ],
+  "category": [
+    "Costs & Economics",
+    "Quality & Testing",
+    "AI Tools"
+  ],
+  "whyItMatters": [
+    "**Harness value depends on model** — the same checks were waste on a frontier model and the difference between 3 and 10 passes on a cheap one.",
+    "**Cheaper models become viable** — with a harness, a cost-optimised model matched frontier results for less, which matters for privacy and on-premises needs.",
+    "**Specifications become maintained assets** — the checks only enforce what humans write down, so someone must own and fund that writing."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Single experiment, interested author** — one greenfield service, not independently replicated, run by a founder whose company sells contract-testing tools.",
+    "**Excluded costs could reverse it** — the cost of writing and maintaining contracts and of repairing failed runs is left out of every figure."
+  ]
+}

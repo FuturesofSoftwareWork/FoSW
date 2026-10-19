@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-19-02",
+  "title": "Update on review by blast radius: Anthropic publishes the tiered review policy behind Claude Code, where reverts fell over 40% as merged PRs doubled",
+  "summary": "The Claude Code team at Anthropic has published how it reviews code now that Claude writes about 90% of the product's code. The stated goal is no longer that a human reads every line, but that total human time on review and on fixing what bad code breaks goes down without more reverts or incidents. Between June and September, merged pull requests on Claude Code more than doubled while the share that had to be reverted fell by more than 40%. Across Anthropic's monorepo, changes per day rose from about 2,500 in May to more than 30,000 in September.\n\nWhat is new since this site's 2026-09-14 item on risk-tiered review is the full policy. A classifier sets each change's risk tier from the change itself, not from who wrote it. Low-risk changes such as docs and flagged additive features merge with no human approval once automated and security checks pass. Ordinary changes need one person, and the riskiest code and paths such as CI workflows need two. Only trusted authors get the lighter paths, and an agent's approval never counts as a person's. The person who prompted an agent-written change counts as a required reviewer. Every revert or incident becomes a test case for the AI reviewer.\n\nThe account comes from the vendor of the tool being reviewed, describing its own team.",
+  "source": "Claude Code Team Blog (Anthropic)",
+  "sourceUrl": "https://claude.dev/blog/solving-code-review-at-anthropic/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Addy Osmani, Morgan Westlee Lunt and Qing Wang of Anthropic, describing the review process of the team that builds Claude Code and reporting that team's own revert and pull-request figures",
+  "leadTimeEstimate": "~6-12 months before risk-tiered, partly human-free approval is written into enterprise review policy",
+  "corroboration": [],
+  "detectedAt": "2026-10-19",
+  "date": "2026-10-15",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "risk-tiering",
+    "governance",
+    "accountability",
+    "ai-code-review",
+    "operating-model"
+  ],
+  "category": [
+    "SDLC Change",
+    "Quality & Testing",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Risk sets the review, not authorship** — a classifier decides how many humans approve a change, so review effort tracks blast radius rather than volume.",
+    "**Accountability is assigned explicitly** — the person who prompted an agent must approve its change, and agent approvals never count as human ones.",
+    "**Review quality gets a feedback loop** — turning every revert into a test case makes the reviewer something the team measures and maintains."
+  ],
+  "recommendedActions": [
+    "**Write down your risk tiers** — list which paths always need a human and which change types could merge on green checks, before review load forces it.",
+    "**Name the prompter as reviewer** — make the engineer who directed an agent a required approver, so ownership of agent-written code is never ambiguous."
+  ],
+  "risksAndCaveats": [
+    "**Vendor describing its own tool** — Anthropic sells both Claude Code and its AI code review, and the figures have not been independently checked.",
+    "**Favourable conditions** — a team building an AI coding tool, with heavy CI and staged releases, may tolerate human-free merges more easily than most."
+  ]
+}
