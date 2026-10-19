@@ -120,9 +120,33 @@ Weak signals do NOT need measurable outcomes, benchmarks, or peer review. Record
 
 Do NOT reject a weak signal under "speculation without evidence." That rule exists to filter unsupported opinion, not early firsthand practice. Label it as weak and low-confidence instead.
 
-## Corroboration as signal
+## Corroboration — the same news, reported elsewhere
 
-If the SAME emerging pattern appears independently from 2+ unrelated credible sources in a short window, that convergence is itself strong evidence something real is happening. Surface it as ONE item, list the supporting links in `corroboration`, and say so in the summary. Independent repetition by practitioners is early evidence, not duplication.
+`corroboration` holds other outlets' reports of **the same news**. When Linear
+publishes a data report, the report is `sourceUrl`, and the stories that
+InfoQ or a newsletter wrote about that report go in `corroboration`. Every
+link there is about the same event, document or announcement as `sourceUrl`.
+Read each one before you add it.
+
+Convergence is not corroboration. If Uber describes how its team sizes changed
+and Meta reports its own, those are **two items**, each with its own
+`sourceUrl`. Do not merge one into the other's `corroboration`. The radar counts
+evidence one signal at a time, and it never reads `corroboration`, so a second
+organisation's experience filed there is evidence nobody will ever count.
+Independent repetition across unrelated sources is exactly what the radar is
+built to detect, but only when each source is its own signal.
+
+Never put these in `corroboration`:
+
+- a different organisation's or practitioner's own experience of a similar
+  shift. Draft it as its own item.
+- a signal already published on this site. If it matters, name it in the
+  summary by what it reported, from the published file you actually read.
+- background or analogy that does not report this news.
+
+`signals:promote` records every `corroboration` link in the seen-ledger
+against the signal's id, so coverage of a story you drafted will not come back
+next week as a new item.
 
 ## Anti-bias rules
 
@@ -156,7 +180,7 @@ Reject items that are:
 
 - Do NOT output any item whose core claim or URL already appears in `_seen-ledger.jsonl`, regardless of `status`.
 - Revisit a ledger topic only if there is a genuinely NEW development (new data, replication, refutation, major adoption shift). If so, title it as an update and state explicitly what is new since last time.
-- Also dedupe within this run: if several sources cover one development, output a single item using the most primary source as `sourceUrl` and the others in `corroboration`.
+- Also dedupe within this run: if several outlets report the same news, output a single item with the original publication as `sourceUrl` and the other outlets' stories in `corroboration`. Two organisations reporting their own similar experience are two items, not one (see Corroboration above).
 - Do NOT write to the ledger yourself. `signals:promote` records every decision once a human has made it. Your only job is to read the ledger and respect it.
 
 ## Signal types
@@ -343,7 +367,7 @@ of `public/content/ai-signals/index.json`, `data/signal-drafts/`,
 `data/signal-drafts/accepted/` and `data/signal-drafts/rejected/`, and continue
 past it. Check all four every time: a generic run and a sector run on the same
 day will both reach for `-01`, and drafts are not listed in `index.json`.
-`corroboration` may be `[]` if there is only one source.
+`corroboration` is `[]` unless another outlet reported the same news.
 
 
 **`sourceUrl` must be the real URL you verified.** It has to be an absolute
@@ -425,7 +449,7 @@ Concise and specific. Avoid buzzwords. Do not pad.
 ## Ranking — prefer in this order
 
 1. Early leading signals of practice change with a credible firsthand basis and long lead time
-2. Independent corroboration of an emerging pattern across unrelated practitioners
+2. The same emerging pattern reported firsthand by unrelated practitioners, with each report drafted as its own item so the radar can count them
 3. Real pilots and field lessons with operational detail
 4. Strategic implications for org design, staffing, cost structure, or operating model
 5. Confirming quantified results from studies — only when not already in the ledger

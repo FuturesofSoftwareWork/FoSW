@@ -122,6 +122,41 @@ test("promoted items are recorded in the ledger as published", () => {
   assert.equal(published[0].url, "https://leaddev.com/2026-08-06-01");
 });
 
+// Corroboration is other outlets reporting the same news, so once the news is
+// decided every one of those links has been seen too. Without a ledger line the
+// next run finds the coverage, finds nothing for it in the ledger, and drafts
+// the same story again from a secondary source.
+test("corroboration links of a promoted signal are ledgered against the same id", () => {
+  const root = makeRoot({
+    accepted: [
+      draft("2026-08-06-01", {
+        corroboration: ["https://www.infoq.com/news/same-story", "https://arstechnica.com/same-story/"],
+      }),
+    ],
+  });
+
+  promote({ root });
+
+  const lines = readLedgerLines(root);
+  assert.deepEqual(
+    lines.map((r) => r.url).sort(),
+    ["https://arstechnica.com/same-story/", "https://leaddev.com/2026-08-06-01", "https://www.infoq.com/news/same-story"],
+  );
+  assert.ok(lines.every((r) => r.status === "published" && r.id === "2026-08-06-01"));
+});
+
+test("corroboration links of a rejected draft are ledgered as rejected", () => {
+  const root = makeRoot({
+    rejected: [draft("2026-08-06-07", { corroboration: ["https://www.infoq.com/news/same-story"] })],
+  });
+
+  promote({ root });
+
+  const coverage = readLedgerLines(root).find((r) => r.url === "https://www.infoq.com/news/same-story");
+  assert.equal(coverage?.status, "rejected");
+  assert.equal(coverage?.id, "2026-08-06-07");
+});
+
 test("finder rejection lines reach the ledger", () => {
   const root = makeRoot();
   writeFileSync(

@@ -23,7 +23,7 @@ import { resolve, join, dirname } from "path";
 import { spawnSync, execFileSync } from "child_process";
 import { validateSignal } from "./lib/signal-schema.mjs";
 import { validateReview, stripReviewFields, reviewEvent, REJECTED_UNDER } from "./lib/review-schema.mjs";
-import { appendRecords, recordFromSignal, keyFor } from "./ledger.mjs";
+import { appendRecords, recordsFromSignal, keyFor } from "./ledger.mjs";
 
 const SIGNALS_DIR = "public/content/ai-signals";
 const DRAFTS_DIR = "data/signal-drafts";
@@ -232,8 +232,8 @@ export function promote({ root = process.cwd() } = {}) {
   mkdirSync(resolve(root, "data"), { recursive: true });
   const declined = finderRejections(resolve(root, "data"));
   const records = [
-    ...accepted.map(({ signal }) => recordFromSignal(signal)),
-    ...rejected.map((s) => ({ ...recordFromSignal(s), status: "rejected" })),
+    ...accepted.flatMap(({ signal }) => recordsFromSignal(signal)),
+    ...rejected.flatMap((s) => recordsFromSignal(s).map((r) => ({ ...r, status: "rejected" }))),
     ...declined.map((d) => d.ledger),
   ];
   // `added` vs `skipped` distinguishes a first run from a repeat: the records

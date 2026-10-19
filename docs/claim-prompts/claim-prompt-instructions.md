@@ -128,9 +128,10 @@ Do not write to the ledger yourself. A separate step records your output.
 - Revisit a ledger topic with a new signal file only for a genuinely NEW
   development (new data, replication, refutation, major adoption shift). If so,
   title it as an update and state explicitly what is new since last time.
-- Dedupe within this run too: if several sources cover one development, output a
-  single item using the most primary source as `sourceUrl` and the others in
-  `corroboration`.
+- Dedupe within this run too: if several outlets report the same news, output a
+  single item with the original publication as `sourceUrl` and the other
+  outlets' stories in `corroboration`. Two organisations reporting their own
+  similar experience are two items, not one.
 
 ---
 
@@ -173,11 +174,18 @@ that moves a claim is **convergence across independent contexts**, not count. Te
 accounts traceable to one investor's portfolio, one vendor's customer base or one
 conference stage are one context, and the report must say so.
 
-## Corroboration as signal
+## Corroboration — the same news, reported elsewhere
 
-If the SAME pattern appears independently from 2+ unrelated credible sources in a
-short window, that convergence is itself strong evidence. Surface it as ONE item,
-list the supporting links in `corroboration`, and say so in the summary.
+`corroboration` holds other outlets' reports of **the same news**: the
+original publication is `sourceUrl`, and stories written about it go in
+`corroboration`. Read each link before you add it.
+
+Convergence is not corroboration. If two organisations each report their own
+similar experience, draft **two items**, each with its own `sourceUrl`. The
+radar counts evidence one signal at a time and never reads `corroboration`, so
+a second organisation's experience filed there is evidence nobody will count.
+Never put a different organisation's experience, a signal already published on
+this site, or background and analogy in `corroboration`.
 
 ---
 
@@ -367,8 +375,8 @@ claim run it carries the deliverable.
 ```
 
 Every item you write is `"status": "draft"` — promotion to `published` is the
-reviewer's decision, made by moving the file, not yours. `corroboration` may be
-`[]` if there is only one source. For `id`, see *Assigning ids* above.
+reviewer's decision, made by moving the file, not yours. `corroboration` is
+`[]` unless another outlet reported the same news. For `id`, see *Assigning ids* above.
 
 There is **no stance field, and no phenomenon field.** Whether an item supports,
 counters or contextualises a claim is recorded on the phenomenon's evidence
