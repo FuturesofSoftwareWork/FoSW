@@ -378,7 +378,7 @@ const SignalContent = ({
             hint={data.corroboration.map(hostLabel).join(" · ")}
           >
             <p className="mb-3 max-w-[68ch] text-sm text-gray-400">
-              Independent sources reporting the same development.
+              Other outlets reporting the same news.
             </p>
             <ul className="space-y-2">
               {data.corroboration.map((url, i) => (

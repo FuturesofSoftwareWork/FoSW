@@ -190,6 +190,29 @@ export function recordFromSignal(s) {
 }
 
 /**
+ * A signal's own record plus one per corroboration link.
+ *
+ * Corroboration is other outlets reporting the same news, so deciding the
+ * signal decides its coverage too: each link gets a line with the signal's id
+ * and status, and the next run cannot draft the same story from a secondary
+ * source. Only promote calls this. `prepare` keeps recordFromSignal, because
+ * older published signals used corroboration for related reports from other
+ * organisations, and ledgering those would stop them ever becoming signals.
+ */
+export function recordsFromSignal(s) {
+  const main = recordFromSignal(s);
+  const coverage = (Array.isArray(s.corroboration) ? s.corroboration : [])
+    .filter((url) => typeof url === "string" && url)
+    .map((url) => ({
+      ...main,
+      key: keyFor({ url, claim: main.claim }),
+      claim: `Coverage of ${s.id}: ${main.claim}`,
+      url,
+    }));
+  return [main, ...coverage];
+}
+
+/**
  * Merge two records for the same key.
  *
  * `timesSeen` takes the max rather than the sum. `prepare` re-derives every
