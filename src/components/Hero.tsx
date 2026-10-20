@@ -31,46 +31,46 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-xl md:text-2xl text-gray-200 mb-12 font-light leading-relaxed max-w-3xl mx-auto"
+          className="mb-12 max-w-3xl mx-auto"
         >
-          <p className="mb-4">
-            Research on{" "}
-            <span className="text-neon-gold font-normal">
-              how AI is changing software development and management
-            </span>
-            : weekly AI signals, expert insights and a foresight on the
-            shifting practice, organisation and meaning of software
-            engineering.
+          <p className="text-xl md:text-2xl text-neon-gold font-light leading-snug mb-5">
+            How AI is changing software development and management
           </p>
-          <p className="text-lg text-hologram-cyan/80">
-            A research project by{" "}
+          <p className="flex flex-wrap justify-center gap-x-2 md:gap-x-3 gap-y-1 text-base md:text-lg text-gray-300 font-light tracking-wide mb-8">
+            <span>Weekly signals</span>
+            <span className="text-gray-500" aria-hidden="true">·</span>
+            <span>Expert insights</span>
+            <span className="text-gray-500" aria-hidden="true">·</span>
+            <span>Foresight</span>
+          </p>
+          <p className="flex flex-wrap justify-center gap-x-2 md:gap-x-3 gap-y-2 text-xs uppercase tracking-[0.2em] text-hologram-cyan/70">
             <a
               href="https://www.vttresearch.com/en"
-              className="hover:underline"
+              className="hover:text-hologram-cyan hover:underline"
               target="_blank"
               rel="noopener noreferrer"
+              title="VTT Technical Research Centre of Finland"
             >
-              VTT Technical Research Centre of Finland
-            </a>{" "}
-            and the{" "}
+              VTT
+            </a>
+            <span aria-hidden="true">·</span>
             <a
               href="https://www.helsinki.fi/en"
-              className="hover:underline"
+              className="hover:text-hologram-cyan hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
               University of Helsinki
             </a>
-            , funded by{" "}
+            <span aria-hidden="true">·</span>
             <a
               href="https://www.businessfinland.fi/en"
-              className="hover:underline"
+              className="hover:text-hologram-cyan hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
               Business Finland
             </a>
-            .
           </p>
         </motion.div>
 
