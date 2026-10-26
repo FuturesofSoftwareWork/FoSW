@@ -1,0 +1,46 @@
+{
+  "id": "2026-10-26-02",
+  "title": "Orosz's 27-company survey: AI spend per developer runs from a $150 cap to about $3,000 a month, and spend does not predict who gains throughput",
+  "summary": "Gergely Orosz interviewed engineering leaders and senior engineers at 27 workplaces about their AI spend per developer and what happened to pull-request (PR) throughput, which he uses because it is easy to compare before and after adoption and not yet widely gamed. Spend ranged from a $150 monthly cap at a 1,500-engineer public company to about $3,000 per developer at a two-person agency, so company size did not predict it. The agency reports 5-10 times more PRs, doing work it says once needed five to seven people. A 5,000-developer public company roughly doubled PRs per developer. A 200-engineer company capped at $1,500 and an AI company capped at $2,000 saw velocity barely move.\n\nThe reasons given are about quality standards, not review speed: the 200-engineer company aims to keep its earlier PR size and quality, and a staff engineer at a 600-engineer SaaS company says research and prototyping are much faster but merged-PR velocity has barely changed, because the focus is on quality and human reviews still catch what agents and agentic review miss. Neither company blames slow review. Vendor data from CodeRabbit and Gitar shows weekly PRs per developer up about 113% in a year, with the spread put down largely to company culture.\n\nSpend peaked in June and July and has fallen, with API-plan bills roughly halving, which the article attributes mainly to a newer Opus model and open models rather than tighter control. Caps are easy to get around, some expect bills to rise five to ten times as subsidised plans end, and few companies can show a clear return.",
+  "source": "The Pragmatic Engineer",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/whats-the-roi-of-software-engineers",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "sampleSize": "27 workplaces (interviews with engineering leaders and senior-plus engineers, most anonymised at their request), plus anonymised PR data from CodeRabbit and from Gitar across hundreds of customers",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-10-26",
+  "date": "2026-10-20",
+  "status": "published",
+  "tags": [
+    "ai-spend",
+    "roi",
+    "pr-throughput",
+    "spending-caps",
+    "developer-productivity",
+    "token-costs"
+  ],
+  "category": [
+    "Costs & Economics",
+    "Productivity",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "**Spend is a weak predictor** — companies on similar budgets report anything from almost no change to a doubling or more of PRs per developer, so budget level alone says little about return.",
+    "**Quality bar caps merged output** — two firms deliberately kept their existing PR standards and human review, and saw research and prototyping speed up while merged PRs barely moved, so the quality bar is part of the ROI question.",
+    "**Falling bills may not last** — the drop since June came from cheaper models rather than control, and respondents expect five- to tenfold increases as subsidised plans end.",
+    "**Return is judged on outcomes** — the one firm with a clear answer measures AI cost against desk profit, while most engineering organisations have only PR counts to go on."
+  ],
+  "recommendedActions": [
+    "**Pair spend with a throughput baseline** — record merged PRs per developer and PR size before and after raising budgets, team by team.",
+    "**Stress-test the AI budget** — for teams on subsidised plans, rerun next year's cost at the five- to tenfold rise (as some respondents expect), and see which teams' throughput gains still justify it."
+  ],
+  "risksAndCaveats": [
+    "**Self-reported and anonymised** — most figures come from single respondents at mostly unnamed companies, one team's gain was skewed by a single highly productive engineer, and none is independently verified.",
+    "**Partly paywalled** — the Big Tech, medium- and low-spender sections and the author's full ROI analysis were not read, so the high-spender picture may be unrepresentative.",
+    "**PRs are a proxy** — counts ignore size and value, and the CodeRabbit and Gitar data cover their own customers, who may already be heavier adopters.",
+    "**Cause is one engineer's view** — the link between a quality focus and flat velocity is stated by individual respondents, and the visible text does not say whether review capacity also limits throughput."
+  ]
+}
