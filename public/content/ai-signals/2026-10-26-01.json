@@ -1,0 +1,48 @@
+{
+  "id": "2026-10-26-01",
+  "title": "Anthropic's own employment data: juniors fell from 27% to 9% of technical hires as agents came to log six times the hours of the staff directing them",
+  "summary": "Anthropic's economics team has published internal workforce data showing the junior share of its technical hires falling from 27% in early 2025 to 9%, and juniors' share of technical headcount from 21% to 14%, while technical hiring still grew in absolute terms. Over the same period employee-directed agents passed human working hours in March 2026 and reached about six times those hours by August, and code commits per engineer rose to about five times their level six months earlier.\n\nThe report also shows where the human work went. About 80% of interactive agent session time is spent waiting on a person, meta-work such as building agent tools, specs and monitors rose from 10% to 22% of employees' sessions in six months, median meeting time is up about 20%, and interviewer scorecards now mention candidates' AI tool use three to four times as often, with autonomy and judgment rising at the expense of domain expertise. Staff with a year's tenure were 50% more likely to change department each month, and the company says it is building an early-warning system for roles at risk.\n\nThis is one fast-growing AI lab measuring itself with its own tools, and the authors say the findings may not generalise and do not explain the junior slowdown. Its value is that it is a rare employer-side dataset rather than a survey, and it pairs a hiring-mix change with the workflow change that would plausibly drive it.",
+  "source": "Anthropic Research (Technical Report)",
+  "sourceUrl": "https://www.anthropic.com/research/employment-at-anthropic",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "sampleSize": "Company-wide hiring and agent-telemetry data; within-person comparison of 192 engineers who adopted coding agents and 74 who did not; interviews with 17 employees",
+  "fieldworkPeriod": "Early 2025 to August 2026",
+  "sponsor": "Anthropic",
+  "leadTimeEstimate": "~12-24 months before comparable hiring-mix shifts show up in broader employer data",
+  "corroboration": [],
+  "detectedAt": "2026-10-26",
+  "date": "2026-10-16",
+  "status": "published",
+  "tags": [
+    "junior-hiring",
+    "talent-pipeline",
+    "agent-hours",
+    "meta-work",
+    "hiring-criteria",
+    "internal-mobility",
+    "anthropic"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Skills & Learning",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "**The junior pipeline narrows first** — at the employer furthest into agent use, the hiring mix tilted sharply away from juniors while total technical hiring kept growing.",
+    "**Human attention becomes the constraint** — agents wait on people 80% of the time, and building monitors and specs for agents is now a fifth of interactive work.",
+    "**Hiring criteria are being rewritten** — interviewers weigh AI tool track record, autonomy and judgment more, and domain expertise less, than two years ago.",
+    "**Redeployment becomes routine** — faster internal moves and a role-risk early-warning system suggest workforce planning shifts from hiring to reallocating."
+  ],
+  "recommendedActions": [
+    "**Track your own hiring mix** — report the junior share of technical hires and headcount quarterly alongside agent usage so a drift is visible before it becomes policy.",
+    "**Measure meta-work explicitly** — count time spent building agent tooling, specs and monitors so it is staffed deliberately rather than absorbed as overhead.",
+    "**Review interview scorecards** — check whether your rubric now rewards judgment and AI fluency, and decide whether that is intended."
+  ],
+  "risksAndCaveats": [
+    "**One unusual employer** — a company that tripled in size and builds the tools it measures may represent no one else, as the authors themselves say.",
+    "**Shares, not counts** — the report gives no number of junior hires and no definition of junior, so the absolute decline may be smaller than the percentages suggest."
+  ]
+}

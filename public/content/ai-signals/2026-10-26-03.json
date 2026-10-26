@@ -1,0 +1,39 @@
+{
+  "id": "2026-10-26-03",
+  "title": "Engineers are directing coding agents by voice from phones and earbuds, moving development work onto commutes and dog walks",
+  "summary": "LeadDev reports a small but growing practice of voice coding: engineers speak long, unstructured instructions to Claude Code, Codex or Cursor, all of which added voice modes in the past year, and let the agent fix, test and merge. A founding engineer at Coval says his team followed him into it and he rarely returns to the keyboard; a school IT director drives Claude Code from his phone and built in hours what he estimates would have taken weeks; and the maintainer of an open-source mobile app for orchestrating coding agents says about 70 of its roughly 1,000 daily users start a voice session each day.\n\nThe workflow consequence is that agent-directed development no longer needs a desk. Practitioners describe building side projects while walking the dog and delegating whole tasks in conversation, which loosens the link between development work and a workstation, and with it the boundary between work and the rest of the day. Self-consciousness about thinking aloud is the main barrier they cite.\n\nThis is a handful of firsthand accounts gathered by a journalist, not a measured trend, and the adoption figure comes from one tool's own user base. It has not been independently validated.",
+  "source": "LeadDev",
+  "sourceUrl": "https://leaddev.com/technical-direction/engineers-are-coding-out-loud",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "LeadDev feature quoting four named practitioners: Callum Reid (founding engineer, Coval), Alon Sabi (developer and school IT director), Kirill Dubovitskiy (builder of the Happy Engineering agent app, with its usage figures) and Richard Menning",
+  "leadTimeEstimate": "~12-24 months",
+  "corroboration": [],
+  "detectedAt": "2026-10-26",
+  "date": "2026-10-26",
+  "status": "published",
+  "tags": [
+    "voice-coding",
+    "remote-work",
+    "work-boundaries",
+    "accessibility",
+    "agent-orchestration"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "AI Tools",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "**Development leaves the desk** — when the work is instructing an agent, it can happen anywhere a phone can, including outside working hours.",
+    "**Work boundaries get harder to hold** — firsthand accounts of coding on walks and commutes point to always-available work that wellbeing policies do not yet cover.",
+    "**Accessibility widens the talent pool** — voice-first agent use lets engineers with RSI or other disabilities work at full pace without a keyboard."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**A handful of enthusiasts** — four quoted practitioners and one tool's usage numbers, with no independent measure of how widespread this is.",
+    "**Security of mobile sessions** — agents driven from phones in public places raise data-exposure questions the article does not address."
+  ]
+}
