@@ -253,9 +253,19 @@ npm run build      # validate runs first, inside build
 
 Push. Stage A is done.
 
-**If it was a claim run:** apply the report's proposed evidence block to
-`public/content/phenomena/<claim-id>.json` before you run `radar:prepare`. See
-[Traps](#traps), first entry.
+**If it was a claim run:** apply its proposal before you run `radar:prepare`.
+First delete any attachment that points at a draft you just rejected — the
+report's *Waiting on promotion* list names them; `radar:apply` refuses the whole
+batch on an unpublished signal. Then:
+
+```bash
+npm run radar:apply -- data/_radar-proposal-claim-<claim-id>.<date>.json
+```
+
+Read `data/_radar-apply-report.md` afterwards: it lists each removal with its
+reason, and the run's suggestions for `contested`, `contestedNote` and
+`reachRationale`, which you edit by hand. See [Traps](#traps), *A claim run's
+signals arrive uncovered*.
 
 ---
 
@@ -523,8 +533,8 @@ Helsinki research site those are not world-readable.
   Check what a scheduled job actually runs before trusting an empty
   `signal-drafts/`.
 - **A claim run's signals arrive uncovered.** Nothing on a signal records which
-  claim it was found for. Apply the proposed evidence block to the phenomenon
-  *before* the next `prepare`, or clustering will offer you a new phenomenon
+  claim it was found for. Apply the run's `radar:apply` proposal *before* the
+  next `prepare`, or clustering will offer you a new phenomenon
   built from evidence gathered to test an old one. Applying it makes those
   signals covered and they drop out of the digest on their own.
 - **An undecided draft phenomenon hides its signals.** Covered is computed from

@@ -167,18 +167,15 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     changedSignals.get(id).add(signalId);
   };
 
-  let attached = 0;
-  for (const a of attachments) {
-    const list = evidenceOf(a.phenomenonId);
-    if (list.some((e) => e.signalId === a.signalId)) continue; // no-op, safe to re-run
-    list.push({ signalId: a.signalId, stance: a.stance, primary: a.primary, ...(a.note ? { note: a.note } : {}) });
-    noteChange(a.phenomenonId, a.signalId);
-    attached += 1;
-  }
   // Removals are recorded with their reason: an evidence item that vanishes from a
   // phenomenon with no trace of why is exactly the hand-edit the ownership split
   // exists to prevent, done by a script instead. Only applied removals are listed —
   // a detachment of something not cited changed nothing and is not a removal.
+  //
+  // Detachments run before attachments, so a detachment plus an attachment of the
+  // same signal re-stances it. The other order made the attachment a no-op (still
+  // cited) and then removed the item, silently losing a citation the proposal
+  // meant to keep.
   const removals = [];
   let detached = 0;
   for (const d of detachments) {
@@ -189,6 +186,14 @@ export function apply({ root = process.cwd(), proposal, today = new Date().toISO
     detached += 1;
     noteChange(d.phenomenonId, d.signalId);
     removals.push({ phenomenonId: d.phenomenonId, signalId: d.signalId, reason: d.reason });
+  }
+  let attached = 0;
+  for (const a of attachments) {
+    const list = evidenceOf(a.phenomenonId);
+    if (list.some((e) => e.signalId === a.signalId)) continue; // no-op, safe to re-run
+    list.push({ signalId: a.signalId, stance: a.stance, primary: a.primary, ...(a.note ? { note: a.note } : {}) });
+    noteChange(a.phenomenonId, a.signalId);
+    attached += 1;
   }
 
   // ---- build every record exactly as it would be written ----
