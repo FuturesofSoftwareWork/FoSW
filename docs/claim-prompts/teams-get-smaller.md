@@ -14,19 +14,32 @@ Phenomenon file: `public/content/phenomena/teams-get-smaller.json`
 
 ## The claim under test
 
-> The standard delivery unit in software is shrinking. A small group with machine
-> support now carries work that previously needed a full team, and the
-> consequences run past headcount into how work is coordinated, how careers
-> progress, and what a manager is for.
+The claim is the phenomenon's `thesis`, and its current standing is whatever the
+phenomenon file says on the day you run — **read both from the file, not from
+here.** This file deliberately states no ring, no evidence count and no list of
+cited signals: every one of those has changed since it was first written, and a
+claim file that restates them sends the next run to audit a phenomenon that no
+longer exists.
 
-The radar currently rates this `early-manifestations` and `contested`, on the
-strength of **one** investor field report describing portfolio teams going from
-eight to ten people down to five or fewer. Everything else cited under it
-measures employment, not team shape.
+Before you search, write down from the file, in the report's section 1:
 
-This run exists to answer: **is there anything else, in either direction?**
+- `observedReach` and `contested`
+- every `evidence` entry — `signalId`, `stance`, `primary` — and, for each,
+  what the signal actually measured
+- `evidenceProfile`: in particular `independentContexts` and `counterEvidence`
+- which contexts the `supports` items belong to (investor portfolio, vendor
+  customer base, named company), so you know which ones a new find would merely
+  thicken
+
+The question this run answers does not change: **what else, in either
+direction, measured the size of a delivery unit — and does everything currently
+cited actually measure it?**
 
 ## The construct
+
+The phenomenon's `construct` field is the authority. What follows expands it
+into search terms; where the two disagree, the file wins and the disagreement
+belongs in the report.
 
 **The size and composition of the unit that delivers a piece of software** — how
 many people are in the group that owns a service, product area, squad, pod,
@@ -76,7 +89,9 @@ counted.
 
 ## What would refute the claim
 
-These are search terms, not decoration. Give them their own passes.
+These are search terms, not decoration. Give them their own passes. Start from
+the phenomenon's `whatWouldChangeThis`, then add these, which it does not spell
+out:
 
 - Survey or benchmark data showing **median team size holding steady** through
   2025–2026 while delivery volume rises
@@ -91,7 +106,7 @@ These are search terms, not decoration. Give them their own passes.
   ratios widening for reasons unrelated to AI
 
 A credible instance of any of these is the most valuable item this run can
-return, and belongs in the proposed evidence block as `stance: "counter"`.
+return, and belongs in the proposal as an attachment with `stance: "counter"`.
 
 ---
 
@@ -166,9 +181,11 @@ instructions.
   incidental to some other question. It is not excluded — a paper with real
   team-composition data is welcome — but it is not where to spend the run.
 - **Vendor and investor content: cap at 2 items, and never as the sole context.**
-  The one source currently supporting this claim is an investor writing about its
-  own portfolio, and a run that returns three more of the same has not broadened
-  the evidence base — it has thickened one context. Where you do include such an
+  This claim's first support was an investor writing about its own portfolio,
+  and a run that returns three more of the same has not broadened the evidence
+  base — it has thickened one context. Check which contexts the current
+  `supports` items already belong to before counting a find as new. Where you
+  do include such an
   item, name the portfolio or customer base in the evidence ledger's "independent
   of" column.
 - **Comment threads are primary sources, not just leads.** A thread in which
@@ -179,9 +196,9 @@ instructions.
 
 ## Where to hunt
 
-No source profile has been written for this claim, so there is no candidate pool
-and the venue list is the whole method.
-Work through these deliberately rather than issuing one broad search:
+Unless `config/sources/claim-teams-get-smaller.json` exists, there is no
+candidate pool and the venue list is the whole method. Work through these
+deliberately rather than issuing one broad search:
 
 - **Engineering-org benchmarks** — DORA, State of DevOps, engineering-analytics
   vendors publishing aggregate customer data, developer-productivity benchmark
@@ -241,7 +258,7 @@ percentages changed and the industry swapped.
 ## Ranking — prefer in this order
 
 1. Population-level measurement of delivery-unit size, from a context independent
-   of the currently cited investor report
+   of every one the current `supports` items belong to
 2. Credible refutation: team size measured and found steady, or growing
 3. Before-and-after accounts of a real reorganisation, with numbers
 4. Practitioner accounts stating current and prior team size, where several
@@ -262,17 +279,23 @@ each circle the question.
   into the near-neighbour table — that is the exact failure this claim run was
   written to correct.
 - **Category.** `Org & Leadership` will usually be the primary `category`.
-- **Independence is the scarce resource here, not volume.** The phenomenon's
-  evidence profile currently stands at one independent context. The single most
-  useful thing this run can do is take it to two.
-- **The already-published check matters on this claim.** Six signals are cited
-  under this phenomenon today and five of them measure the wrong thing; there may
-  equally be published signals elsewhere on the site that *do* measure team shape
-  and were never cited. Search `public/content/ai-signals/index.json` for them
-  and name them in the proposed evidence block by their existing ids.
-- **The removals section is expected to be long.** Of the six current items, the
-  two `counter` entries (`2026-04-13-08`, `2026-06-29-05`) argue against
-  AI-driven job loss, not against team size, and the two `contextual`
-  `market-event` items (`2026-04-06-05`, `2026-04-13-07`) are layoff data. Assess
-  each against the construct test on its own evidence and propose accordingly —
-  but do not assume the current stances are right just because they are there.
+- **Independence is the scarce resource here, not volume.** Read
+  `evidenceProfile.independentContexts` from the file. The single most useful
+  thing this run can do is raise it by one with a context the current
+  `supports` items do not already share.
+- **The already-published check matters on this claim.** There may be published
+  signals elsewhere on the site that measure team shape and were never cited.
+  Search `public/content/ai-signals/index.json` for them and propose them as
+  attachments by their existing ids.
+- **Re-audit every current citation; do not trust its stance because it is
+  there.** This claim's history is the reason claim runs exist: on 2026-08-07,
+  five of its six citations measured employment rather than team size — two
+  `counter` items argued against AI-driven job loss, a claim this phenomenon
+  does not make, and two `contextual` items were layoff data. Those were
+  detached. The same drift can recur through any clustering run since, so apply
+  the construct test to each `evidence` entry the file now carries, and propose
+  a detachment wherever it fails.
+- **The counter side has so far come back empty.** If `counterEvidence` is still
+  `false` when you run, the refuting passes are where this run can add most —
+  and if they come back empty again, say so in the report with the queries, not
+  as a footnote.

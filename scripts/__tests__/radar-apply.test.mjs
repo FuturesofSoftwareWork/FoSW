@@ -167,6 +167,20 @@ test("a duplicate attachment and an absent detachment are both no-ops", () => {
   assert.equal(read(root, "p1").evidence.length, 1);
 });
 
+test("a detachment plus an attachment of the same signal re-stances it", () => {
+  const root = makeRoot({ signals: [sig("s1")], phenomena: [phen("p1", [{ signalId: "s1", stance: "supports", primary: true }])] });
+  const result = apply({
+    root,
+    today: "2026-08-10",
+    proposal: {
+      attachments: [{ phenomenonId: "p1", signalId: "s1", stance: "counter", primary: true, note: "n" }],
+      detachments: [{ phenomenonId: "p1", signalId: "s1", reason: "restance: measured no change" }],
+    },
+  });
+  assert.deepEqual(result.errors, []);
+  assert.deepEqual(read(root, "p1").evidence, [{ signalId: "s1", stance: "counter", primary: true, note: "n" }]);
+});
+
 test("a new phenomenon is written as a draft with no reachReviewedAt", () => {
   const root = makeRoot({ signals: [sig("s1")] });
   const result = apply({ root, today: "2026-08-10", proposal: { newPhenomena: [newPhen()] } });

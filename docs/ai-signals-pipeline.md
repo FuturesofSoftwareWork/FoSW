@@ -432,11 +432,11 @@ Three things make it different from every other run here:
 2. **It hunts both sides deliberately.** A phenomenon's `whatWouldChangeThis`
    list is a ready-made search brief for the refuting side, and refutations are
    rarer because nothing that stayed the same makes news.
-3. **Its deliverable is an evidence block, not a set of drafts.** The retrieval
-   report ends with the `evidence` array proposed for the phenomenon file,
-   including proposed removals and their consequences for `evidenceProfile
-   .counterEvidence`, `contested` and `reachRationale`. The run never edits the
-   phenomenon file; a human applies it.
+3. **Its deliverable is a `radar:apply` proposal, not a set of drafts.** The
+   run writes `data/_radar-proposal-claim-<claim-id>.<date>.json` — attachments,
+   detachments with reasons, and suggestions for the human-owned fields — and a
+   retrieval report that argues for it. The run never edits the phenomenon file;
+   a person runs `radar:apply`, the only writer of a phenomenon's evidence.
 
 The central rule is the **construct test**: a source is evidence for a claim only
 if it measured the thing the claim is about. Each claim file names the construct
@@ -457,8 +457,16 @@ Each claim prompt is launched on its own and reads
 [`claim-prompts/claim-prompt-instructions.md`](./claim-prompts/claim-prompt-instructions.md)
 first — the shared half, carrying the construct test, the schema, the output
 contract, dedup rules and the retrieval-report format. The claim file carries
-only the claim, its construct, its near neighbours, what would refute it, the
-search window, source mix, hunting grounds and hazards. The two are disjoint.
+only how to search for one claim: its construct expanded into search terms, its
+near neighbours, what would refute it, the search window, source mix, hunting
+grounds and hazards. The two are disjoint.
+
+**A claim file states no current state** — no ring, no evidence count, no list
+of cited signals. The run reads all of that from the phenomenon file. The first
+claim file restated it, and within two months the phenomenon had been pruned,
+re-evidenced and moved a ring out, so a rerun would have audited a phenomenon
+that no longer existed and gone looking for removals that had already been
+made.
 
 Run order — as with sector runs there is **no `signals:collect` step**, because
 the collector's feeds are not claim-aware:
@@ -470,11 +478,15 @@ npm run signals:prepare
 #  It writes, itself:
 #    data/signal-drafts/<id>.json                        one file per selected signal
 #    data/_finder-rejected-claim-<claim-id>.jsonl        appended, one line per rejection
-#    data/_finder-report-claim-<claim-id>.<date>.md      retrieval report + proposed evidence block
+#    data/_finder-report-claim-<claim-id>.<date>.md      retrieval report, argues for the proposal
+#    data/_radar-proposal-claim-<claim-id>.<date>.json   the radar:apply proposal
 #  review data/signal-drafts/, mv each file into accepted/ or rejected/
 npm run signals:promote
-#  then apply the report's proposed evidence block to
-#  public/content/phenomena/<claim-id>.json by hand
+#  delete from the proposal any attachment to a draft you rejected (the report's
+#  "Waiting on promotion" list names them), then:
+npm run radar:apply -- data/_radar-proposal-claim-<claim-id>.<date>.json
+#  read data/_radar-apply-report.md: the removals with reasons, and the
+#  suggestions for the human-owned fields, which you edit by hand
 ```
 
 The `claim-` infix keeps a claim run's working files clear of both the generic
@@ -488,11 +500,13 @@ There is no phenomenon field and no stance field on a signal — stance lives on
 the phenomenon's evidence entry, because the same source can be support for one
 phenomenon and context for another.
 
-Applying the proposed block is a human step, and three fields move with it:
-`evidenceProfile.counterEvidence` is derived and validated (`validate-phenomena
-.mjs` fails the build on a mismatch), `contested` gates a radar bolt that
-`scripts/verify-radar.mjs` counts by name, and `reachRationale` and
-`contestedNote` are prose that may now describe evidence no longer in the file.
+`radar:apply` refuses an attachment to any signal that is not published and is
+all-or-nothing, so the proposal applies only after `signals:promote`, and only
+once attachments to rejected drafts are removed. It recomputes the derived fields
+(`evidenceProfile`, the dates, `possibleReachChange`) itself. The human-owned
+fields that may need to move with the evidence — `contested`, `contestedNote`,
+`reachRationale` — arrive as `suggestions` in its report, and a person edits
+them.
 `observedReach` is a human judgment and a claim run may report that it no longer
 matches the evidence, but never propose a new ring value as though it were
 derived.
