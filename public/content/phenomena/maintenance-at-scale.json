@@ -1,0 +1,104 @@
+{
+  "id": "maintenance-at-scale",
+  "label": "Maintenance at scale",
+  "title": "Upkeep becomes work agents do",
+  "thesis": "Organisations are beginning to hand routine upkeep of merged code to agents running continuously: removing stale flags and dead code, repairing CI, resolving performance regressions. Deterministic tools and agentic reviewers gate each change, because production of change now outruns the human capacity to maintain it. If this holds, maintenance stops being a backlog people triage and becomes a pipeline someone owns. It would be wrong if benchmark-style regressions prove to be the norm when agents maintain real codebases, or if these pipelines stay a few large companies' bespoke tooling that others cannot reproduce.",
+  "construct": "Whether routine upkeep of an existing codebase is carried out by agents running continuously, at what volume and under what verification. Not agents writing new features, benchmark pass rates on isolated fixes, or the volume of maintenance work needed, all of which move without any upkeep being delegated.",
+  "currentPressure": "Feature-flag clean-up and migration backlogs are being worked by agent pipelines at Uber and Cockroach Labs, while benchmarks still show agents regressing previously working code in most long-term maintenance runs.",
+  "status": "published",
+  "primaryDimension": "nature-and-division-of-work",
+  "potentialImpact": "moderate",
+  "implications": [
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Upkeep that teams routinely defer once a launch ends can become a continuous pipeline owned by a platform or verification team, which changes who is accountable for the health of a codebase.",
+      "actors": [
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Delegating upkeep to agents depends on checks that run before a person sees the change - deterministic tools, per-property agentic reviewers, a regression suite that still passes - so the readiness of a codebase's tests becomes the gating decision.",
+      "actors": [
+        "engineering-manager",
+        "technical-lead"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Where agents do the work, human approval becomes the step where issues wait longest, so reviewer capacity sets the pace of maintenance rather than agent throughput.",
+      "actors": [
+        "engineering-manager"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-10-27-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Uber's AI Verification team runs a continuous agent pipeline that removes stale feature flags, with a deterministic transformation tool for the logic and parallel agentic reviewers gating each diff before a person sees it; 16,000+ flags and 1M+ lines over the system's history, not split by agent era, and no error rates reported"
+    },
+    {
+      "signalId": "2026-05-06-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Meta's capacity-efficiency platform: unified agents detect and resolve performance issues across its infrastructure with encoded engineering skills and without manual intervention; Meta's own account, so a design description rather than an outcome measure"
+    },
+    {
+      "signalId": "2026-10-12-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Cockroach Labs' MOLT migration-tools team ran a human-admitted, agent-executed pipeline for five months: 1,299 issues handled, 1,238 PRs merged, seven reverts, about $84 in tokens per issue; part of the work is new database support rather than upkeep, so this is a partial fit"
+    },
+    {
+      "signalId": "2026-03-11-02",
+      "stance": "counter",
+      "primary": true,
+      "note": "SWE-CI: 18 models over 233 simulated maintenance days across 100 codebases; agents broke previously passing tests in roughly 75% of cases. Measures whether agents can maintain code continuously, on the model generation current in early 2026"
+    },
+    {
+      "signalId": "2026-10-27-02",
+      "stance": "counter",
+      "primary": true,
+      "note": "SWE-Maintain: starting from the agent's own earlier changes lowers later-task resolution by 5.6 points (14.0 when all earlier tests must pass); the penalty traces to inherited test failures and disappears when earlier tests pass"
+    },
+    {
+      "signalId": "2026-04-13-01",
+      "stance": "contextual",
+      "primary": false,
+      "note": "Repository study: static-analysis warnings up about 18% and cognitive complexity up about 39% after agent adoption; the upkeep load that creates pressure to automate maintenance, not a measure of who does it"
+    },
+    {
+      "signalId": "2026-04-13-02",
+      "stance": "contextual",
+      "primary": false,
+      "note": "About 110,000 open-source PRs: agent-authored code is more likely to be rewritten or reverted later; measures the rework load rather than delegation of upkeep"
+    },
+    {
+      "signalId": "2026-03-23-01",
+      "stance": "contextual",
+      "primary": false,
+      "note": "DORA report: AI raises throughput while raising instability and rework, and adds Rework Rate as a formal metric; pressure on maintenance capacity, not a measure of agents doing it"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "The pressure the practice answers is general: production of change now outruns the human capacity to maintain it, so cleanup is deferred and backlogs and debt build in most organisations that ship with agents, not only in forerunners. Uber, Meta and Cockroach Labs each independently built an agent-run upkeep pipeline against that pressure, so the practice has a broad base of organisations with the same problem. It stops short of the centre because only organisations able to build verification tooling around it have reported doing so, and sustained-maintenance benchmarks still show agents regressing working code.",
+  "whatWouldChangeThis": [
+    "Independent reports that agent-run upkeep pipelines produce higher revert or incident rates than human-run upkeep",
+    "Sustained-maintenance benchmarks showing current models still regressing working code in roughly three-quarters of runs",
+    "Agent-run upkeep staying confined to a few large organisations with bespoke tooling a year from now",
+    "Organisations reporting that review of agent-produced upkeep changes cannot keep pace, so the work is not actually cleared"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 1,
+    "quartersSpanned": 2,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-03-05",
+  "latestEvidenceDate": "2026-10-20",
+  "reachReviewedAt": "2026-10-27",
+  "lastReviewed": "2026-10-27"
+}

@@ -1,0 +1,76 @@
+{
+  "id": "same-tool-different-outcomes",
+  "label": "Same tool, different outcomes",
+  "title": "Everyone bought the same assistant. Half the teams got less than 3x.",
+  "thesis": "The delivery gain from AI coding tools is decided less by which tool or how much is spent on it than by whether a team changes how it works and whether the delivery system around it can absorb faster change. If that is right, teams and companies with identical tooling and similar spend will keep showing a wide spread in delivery outcomes, and the spread will track working practice and platform quality rather than licences or budget. It would be wrong if outcomes converged once tooling is equalised, or if tool choice and spend turned out to explain most of the variance.",
+  "construct": "The spread in delivery outcome (deployment speed, merged-PR throughput, lead time) among teams or organisations that have the same access to AI tooling, and what the high and low performers differ in. Not adoption rates, share of AI-written code, self-reported time saved, tool satisfaction or spend on its own, all of which rise whether or not delivery improves.",
+  "currentPressure": "Spend per developer ranges from a $150 monthly cap to about $3,000 across companies, leaders are asked to show a return, and the same assistant has produced a 3x-or-less result in half of one company's teams and 4.5x or more in the other half.",
+  "status": "published",
+  "primaryDimension": "economics-productivity-and-value",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "Licence counts and per-developer spend are poor predictors of delivery gain, so a rollout justified by seats bought will not by itself separate teams that gain from those that do not.",
+      "actors": [
+        "executive",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "The gain comes from teams changing their routines - running agents unattended for hours, several tasks in parallel, engineers writing 1-2% of code by hand - and that change takes months and starts with a productivity dip leaders have to fund.",
+      "actors": [
+        "engineering-manager",
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Platform quality, workflow clarity and team alignment gate the return, so organisations with fragmented delivery processes should expect AI to magnify the dysfunction.",
+      "actors": [
+        "executive",
+        "technical-lead",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-09-01-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Amazon Stores, 50 teams over most of 2025, 90% on the same assistant: half under 3x faster to production, half a 4.5x median; access to the tool did not explain the gap, working practice did"
+    },
+    {
+      "signalId": "2026-10-26-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Orosz interviews at 27 workplaces: spend $150-$3,000 per developer, company size did not predict it, and spend did not predict PR throughput (near zero change to doubling at similar budgets)"
+    },
+    {
+      "signalId": "2026-05-25-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "DORA ROI report, ~5,000 professionals: payoff gated by platform quality, workflow clarity and team alignment; throughput +2-18%, with higher change-failure where observability is weak"
+    }
+  ],
+  "observedReach": "field-level-shift",
+  "reachRationale": "The centre needs a change in what the field expects, not universal adoption, and that has already happened here. The field's own reference body, DORA, now headlines that AI amplifies existing practice and that returns come from platform quality rather than the tools, and Amazon's 50-team pilot and a 27-company interview survey report the same split independently. Leaders are accordingly asked to show a return rather than count seats: spend is capped, few of the 27 companies can show a clear return, and the assumption that licences or spend buy delivery gain no longer holds as a default. What has not changed is practice: Amazon describes the rework teams did as taking months and being specific to its pilot, so expectations have moved faster than working methods.",
+  "whatWouldChangeThis": [
+    "A multi-company study showing delivery outcomes converge across teams once tooling and access are equal",
+    "Tool choice or spend per developer explaining most of the variance in PR throughput or deployment speed across a comparable set of teams",
+    "Teams that kept their old process and simply added the assistant matching the throughput of teams that changed practice"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 1,
+    "quartersSpanned": 3,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-05-25",
+  "latestEvidenceDate": "2026-10-20",
+  "reachReviewedAt": "2026-10-27",
+  "lastReviewed": "2026-10-27"
+}

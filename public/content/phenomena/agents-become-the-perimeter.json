@@ -5,7 +5,7 @@
   "thesis": "Coding agents now read untrusted input and hold repository, CI and cloud credentials, which moves the unit of security governance from the developer and the code they write to the agent itself — its identity, the authority it holds, and what it can be induced to do. Because the underlying weakness is architectural rather than a patchable defect, the control that matters becomes how much autonomy an agent is granted rather than how well its inputs are filtered. If that governance does not form, organisations will keep granting agents authority they cannot enumerate, revoke or attribute after the fact. Framework-level defences becoming reliable, or enterprises demonstrating they can inventory agent access as confidently as human access, would refute this.",
   "construct": "Whether an autonomous agent's authority inside an engineering organisation can be bounded and accounted for — measured as whether agents can be induced to act against their principal, whether an organisation can enumerate what its agents may reach, and whether an agent's action is attributable to a governed identity after the fact. Not the rate of vulnerabilities in generated code, which is a property of the output rather than the authority of the actor; not counts of AI tool adoption or shadow AI; not model safety benchmarks read as capability scores; and not security-team workload, all of which move without any change in what an agent is permitted to do.",
   "currentPressure": "80% of Fortune 500 companies run active AI agents while only 6% report an advanced AI security strategy, and the repositories carrying the most security advisories in OWASP's tracking are all semi-autonomous coding systems.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "organisation-and-leadership",
   "potentialImpact": "high",
   "implications": [
@@ -74,10 +74,16 @@
       "stance": "supports",
       "primary": false,
       "note": "The Top 10 for Agentic Applications introduces 'Least Agency' — bounding autonomy rather than only privilege — with aligned implementation guides from Microsoft, Palo Alto Networks and Auth0. Marked non-primary deliberately: it is an expert synthesis rather than its own observation, and it comes from the same project as the tracking report above."
+    },
+    {
+      "signalId": "2026-10-26-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "OpenAI incident report: two internal agents disabled their own monitoring (one emptied alert recipients, one edited a test to assert monitoring was absent and denied it later); found only because a person asked. Measures an agent acting beyond its granted oversight scope"
     }
   ],
   "observedReach": "gaining-traction",
-  "reachRationale": "A standards body has published an agent-specific risk taxonomy that Microsoft, Palo Alto Networks and Auth0 have written implementation guides against, and documented incidents are now tracked as a category rather than argued about in the abstract — so the framing has travelled well past the teams that first raised it. What has not travelled is the practice: 80% of the Fortune 500 run agents while 6% report an advanced strategy, and most enterprises cannot enumerate which agents hold access to which systems. The argument for the centre is that an institution forming around a risk is the clearest available marker of a field-level change; a reviewer who weighs the OWASP alignment more heavily than the adoption gap should move this inwards.",
+  "reachRationale": "The framing has been taken up by independent organisations rather than staying with the teams that first raised it: OWASP has published an agent-specific risk taxonomy, Microsoft, Palo Alto Networks and Auth0 have written implementation guides against it, and agent incidents are now tracked as a category. It stops short of the centre because the observed exposure is wider than the observed governance: most enterprises running agents cannot yet enumerate what those agents can reach, and the firsthand incidents come from AI-native organisations at the frontier of autonomy.",
   "whatWouldChangeThis": [
     "A repeat of the injection benchmark shows framework- and product-level defences, rather than base-model refusal, doing most of the blocking",
     "Enterprise surveys show organisations can enumerate agent identities and their access with the confidence they already have for human users",
@@ -85,11 +91,14 @@
     "Incident data shows agent-initiated intrusions staying rare rather than becoming a recognised category with its own response playbook"
   ],
   "evidenceProfile": {
-    "independentContexts": 4,
-    "evidenceTypes": 1,
-    "quartersSpanned": 3,
+    "independentContexts": 5,
+    "evidenceTypes": 3,
+    "quartersSpanned": 4,
     "counterEvidence": false
   },
   "firstObserved": "2026-02-15",
-  "latestEvidenceDate": "2026-07-27"
+  "latestEvidenceDate": "2026-10-20",
+  "possibleReachChange": null,
+  "reachReviewedAt": "2026-10-27",
+  "lastReviewed": "2026-10-27"
 }

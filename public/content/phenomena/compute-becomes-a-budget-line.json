@@ -1,10 +1,10 @@
 {
   "id": "compute-becomes-a-budget-line",
-  "label": "Managing machine spend",
-  "title": "Prices fell 60%. The bill went up 18x.",
+  "label": "Justifying machine spend",
+  "title": "From token maximising to cost consciousness",
   "thesis": "Machine work is becoming a managed operating expense that engineering organisations plan, attribute and defend — the way they already do headcount. As consumption outruns falling unit prices, the questions shift from which model is best to what a resolved task costs, who is accountable for the spend, and which work is worth running a machine on at all.",
   "currentPressure": "Per-developer token consumption has risen far faster than unit prices have fallen, so cheaper inference has produced larger bills rather than smaller ones.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "economics-productivity-and-value",
   "potentialImpact": "high",
   "implications": [
@@ -87,11 +87,41 @@
       "stance": "counter",
       "primary": true,
       "note": "Production telemetry: system prompts consume 69% of input tokens but only 28% of LLM calls use prompt caching. Measures spend structure directly and finds the management discipline the thesis describes largely absent in deployed systems."
+    },
+    {
+      "signalId": "2026-10-12-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Microsoft cut per-employee monthly AI caps from $100,000 to ~$10,000 and forecast Anthropic spend down by more than a third; Meta Claude Code users 60,000 to 30,000. Original reporting from internal figures (The Information)"
+    },
+    {
+      "signalId": "2026-10-19-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Uber: per-engineer monthly spend tiers needing manager approval to exceed, internal gateway tracking spend and audit per user; company's own account, not independently checked"
+    },
+    {
+      "signalId": "2026-10-26-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Orosz interviews at 27 workplaces: AI spend per developer from a $150 monthly cap to ~$3,000; caps and spend-versus-PR-throughput discussed per company"
+    },
+    {
+      "signalId": "2026-09-14-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "OpenAI telemetry: median researcher >$600/day of inference, p90 >$7,000, 3.1 agent-workdays per human workday; a frontier lab where agent spend is salary-scale"
+    },
+    {
+      "signalId": "2026-06-29-12",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Jellyfish survey of 635+ leaders: 42% name rising AI tool expense as the top adoption challenge, ahead of security, quality, training. Measures concern about spend, not how spend is planned or attributed, so no direction"
     }
   ],
   "observedReach": "field-level-shift",
-  "reachRationale": "An institution has formed around this specifically — the Tokenomics Foundation, backed by ten large enterprises — and the unit of account is being renegotiated in public across independent analyses. Institutions forming is the clearest available marker that a change has moved past forerunners into the field's shared infrastructure.",
-  "reachReviewedAt": "2026-08-05",
+  "reachRationale": "The change has moved from maximising token use to cost consciousness across independent contexts: caps and approval tiers at Uber, Microsoft and Meta; a 27-company survey showing caps from $150 to about $3,000 a month per developer; and an institution, the Tokenomics Foundation, backed by ten large enterprises. Per-task cost analyses show the unit of account being renegotiated in public. Counter-evidence (most agentic requests are simple) concerns how spend is distributed, not whether organisations now manage it.",
+  "reachReviewedAt": "2026-10-27",
   "contested": false,
   "contestedNote": null,
   "whatWouldChangeThis": [
@@ -118,19 +148,14 @@
   "related": [],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 4,
-    "evidenceTypes": 3,
-    "quartersSpanned": 2,
+    "independentContexts": 8,
+    "evidenceTypes": 5,
+    "quartersSpanned": 4,
     "counterEvidence": true
   },
   "firstObserved": "2026-01-09",
-  "latestEvidenceDate": "2026-06-08",
-  "possibleReachChange": {
-    "reason": "gained 1 independent context(s) since reach was last reviewed (3 -> 4)",
-    "raisedAt": "2026-08-10",
-    "signalIds": [
-      "2026-07-02-02",
-      "2026-05-06-09"
-    ]
-  }
+  "latestEvidenceDate": "2026-10-20",
+  "possibleReachChange": null,
+  "construct": "Whether engineering organisations plan, attribute, cap and justify the cost of machine work as a managed operating expense, and how that spend relates to what it delivers per task. Not model price cuts, total AI adoption, or benchmark scores, all of which move without any organisation changing how it accounts for or approves machine spend.",
+  "lastReviewed": "2026-10-27"
 }

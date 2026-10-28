@@ -1,16 +1,16 @@
 {
   "id": "configuring-the-machine",
   "label": "Configuring the machine",
-  "title": "The model isn't the product. The harness is.",
-  "thesis": "The engineering work that determines what a coding agent can actually do is moving out of the model and into the harness around it — the control loop, tool definitions, context management, retries and isolation. Capability starts to look less like a property a team buys and more like a system a team builds, which relocates the scarce skill from writing code to designing the conditions the machine works in.",
-  "currentPressure": "Teams running the same model against the same tasks get materially different results depending on the scaffolding around it, so model choice stops explaining outcomes.",
-  "status": "draft",
+  "title": "Instructions decay. Context and limits don't.",
+  "thesis": "Most teams adopt a packaged coding agent — a vendor's, or an internal platform team's, with model and harness included — and what they build is the environment it works in. As models improve, that work is changing character. Instructions about how to work are absorbed by each new model generation, while the context the agent cannot know — the organisation's domain, architecture, conventions and ownership — and the limits on what it may touch become the lasting part. The scarce skill moves from instructing the machine to informing and bounding it. This would be wrong if organisation-specific context proves no more effective than procedural instruction on work that depends on it, or if procedural instruction keeps its value across model generations.",
+  "currentPressure": "Each model generation makes more of a team's hand-written instruction redundant: controlled tests find rules files and prescribed techniques add little or nothing, and a contract harness that rescued a cheap model only slowed a frontier one. The one test that supplied context the agent could not otherwise know found a large gain.",
+  "status": "published",
   "primaryDimension": "nature-and-division-of-work",
   "potentialImpact": "high",
   "implications": [
     {
       "dimension": "nature-and-division-of-work",
-      "statement": "Engineers increasingly shape machine behaviour by designing its environment rather than by instructing it directly.",
+      "statement": "Engineers shape agent behaviour less by telling it how to work and more by supplying what it cannot know and limiting what it may touch.",
       "actors": [
         "developer",
         "technical-lead"
@@ -19,7 +19,7 @@
     },
     {
       "dimension": "skills-knowledge-and-learning",
-      "statement": "Control-loop and context design become a distinct competence, closer to systems engineering than to prompt craft.",
+      "statement": "Writing procedural instructions for agents becomes a perishable skill; curating organisational knowledge into a form agents can use becomes a lasting one.",
       "actors": [
         "developer",
         "new-entrant"
@@ -30,7 +30,7 @@
     },
     {
       "dimension": "organisation-and-leadership",
-      "statement": "Organisations standardise on a shared gateway and harness rather than on a single vendor's tool, changing what has to be agreed centrally.",
+      "statement": "Organisations standardise on a shared gateway and policy layer rather than on a single vendor's tool, changing what has to be agreed centrally.",
       "actors": [
         "organisation",
         "technical-lead"
@@ -106,22 +106,42 @@
       "stance": "counter",
       "primary": true,
       "note": "Production telemetry: 59% of agentic requests make only a single service call and just 18% make three or more. Measures how agents are actually configured in production and finds most are thin wrappers, not engineered harnesses."
+    },
+    {
+      "signalId": "2026-08-17-10",
+      "stance": "counter",
+      "primary": true,
+      "note": "blinded test, 9 runs plus 82 attempts: full CLAUDE.md governance file scored 16.1/30 vs 16.3 with no guidance, two-sentence prompt 27.5; 0% compliance with behavioural rules. Measured whether written harness configuration improves outcomes; single author, small n"
+    },
+    {
+      "signalId": "2026-09-14-04",
+      "stance": "counter",
+      "primary": true,
+      "note": "Dan Luu, 26 instructed conditions at ~80 trials each: naming a testing technique mostly did not produce it, defaults beat most instructed conditions, agents claimed methods they did not apply. Measured whether prompt-level configuration changes what the agent does"
+    },
+    {
+      "signalId": "2026-10-19-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "paired experiment, 10 runs per arm, 178 acceptance tests: contract harness (API contracts, examples, tests, mocks) took a cheap model from 3/10 to 10/10 passes at ~$0.27/run, but added ~7x cost for no gain on a frontier model. Harness value depends on the model"
     }
   ],
-  "observedReach": "gaining-traction",
-  "reachRationale": "Harness design is being practised and published independently by tool vendors, platform teams and named adopting companies, and standardising the gateway is appearing as an operating-model choice — but the vocabulary is still being argued over in public, which is not what a settled practice looks like.",
-  "reachReviewedAt": "2026-08-05",
+  "observedReach": "field-level-shift",
+  "reachRationale": "Vendors, platform teams and practitioners now explain agent outcomes through the harness rather than the model: harness-only changes lifted 15 models, adopters standardise the gateway rather than the tool, and a cheap model with a contract harness matched a frontier model at a third less cost. Studies of instruction files show much hand-written configuration does not help, which contests specific practices but not the shift of the decisive work into the harness. The vocabulary is still being argued over.",
+  "reachReviewedAt": "2026-10-27",
   "contested": false,
   "contestedNote": null,
   "whatWouldChangeThis": [
-    "A model generation arrives whose results are insensitive to harness design, collapsing the difference back into model choice",
-    "Harness construction is absorbed entirely into vendor products, so that few teams build or reason about one"
+    "Controlled tests on work that depends on organisational knowledge find organisation-specific context no more effective than procedural instruction",
+    "Procedural instructions keep their measured value across successive model generations",
+    "Agents gather organisational context themselves, from code, tickets and documentation, well enough that curating it stops paying off",
+    "Organisations leave agents' tool access, permissions and sandboxing at vendor defaults, with no one deciding what agents may touch"
   ],
   "developmentPaths": [
     {
       "id": "harness-as-engineering-discipline",
-      "title": "Harness design becomes a discipline",
-      "description": "Control-loop and context engineering develop their own patterns, roles and review practices."
+      "title": "Context curation becomes a discipline",
+      "description": "Keeping organisational knowledge in a form agents can use develops its own owners, review and upkeep, in a way documentation never did."
     },
     {
       "id": "standardise-the-gateway",
@@ -130,8 +150,8 @@
     },
     {
       "id": "harness-absorbed-by-vendors",
-      "title": "The harness disappears into products",
-      "description": "Vendors ship good-enough harnesses and the skill stops being one most teams need."
+      "title": "Capability absorbs the scaffolding",
+      "description": "Each model generation needs less of what teams write for it, and agents learn to gather organisational context themselves, until configuring their environment stops being work most teams do."
     }
   ],
   "related": [
@@ -142,22 +162,14 @@
   ],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 6,
-    "evidenceTypes": 2,
-    "quartersSpanned": 2,
+    "independentContexts": 7,
+    "evidenceTypes": 3,
+    "quartersSpanned": 3,
     "counterEvidence": true
   },
   "firstObserved": "2026-01-19",
-  "latestEvidenceDate": "2026-06-10",
-  "possibleReachChange": {
-    "reason": "gained 3 independent context(s) since reach was last reviewed (3 -> 6)",
-    "raisedAt": "2026-08-10",
-    "signalIds": [
-      "2026-03-16-01",
-      "2026-05-06-04",
-      "2026-02-18-04",
-      "2026-02-18-02",
-      "2026-05-06-09"
-    ]
-  }
+  "latestEvidenceDate": "2026-10-13",
+  "possibleReachChange": null,
+  "construct": "What software teams put into the working environment of a packaged coding agent, and which parts of it change what the agent achieves while agent and model stay the same. Three kinds are distinguished: procedure — instructions on how to work, such as rules files, prescribed workflows and techniques, and checks the agent is made to run; information — what the agent cannot otherwise know, such as domain, architecture, conventions, design system, ownership and internal interfaces; and authority — what it may touch, such as tool and MCP access, permissions, sandboxes, gateways and policy layers. The construct also covers whether each kind's effect holds, shrinks or grows across model generations, and who designs, maintains and owns the environment. Not the harness inside the agent product (control loop, tool schemas, retry logic), including teams assembling their own agent from an SDK, except for the instruction, access and workflow elements any team configures. Not model benchmarks or releases, or agent adoption rates. Not the spread in delivery outcomes between teams with the same tooling, the acceptance suite as the definition of done, or how AI-generated changes are assured before merge — those belong to neighbouring phenomena.",
+  "lastReviewed": "2026-10-27"
 }
