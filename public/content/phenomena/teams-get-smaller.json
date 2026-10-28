@@ -4,7 +4,7 @@
   "title": "The unit of delivery stops being the team of eight",
   "thesis": "The standard delivery unit in software may be shrinking. If a small group with machine support can carry work that previously needed a full team, the consequences run past headcount into how work is coordinated, how careers progress, and what a manager is for. The early reports come from forerunners and investors rather than from the field, so the size of the change is far less clear than its direction.",
   "currentPressure": "Organisations are reporting delivery from markedly smaller groups while overall demand for engineers has not fallen, so the pressure shows up in team composition rather than in total employment.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "organisation-and-leadership",
   "potentialImpact": "high",
   "implications": [
@@ -50,11 +50,29 @@
       "stance": "supports",
       "primary": true,
       "note": "The head of Instagram states the product delivery team went from roughly thirteen specialists to a pod of four to six more generalist engineers plus one 'product staff' seat. A count of the delivery unit itself, from a large established product organisation rather than a venture portfolio."
+    },
+    {
+      "signalId": "2026-08-31-09",
+      "stance": "supports",
+      "primary": true,
+      "note": "Redis (350-400 person org): delivery runs in pods of three to four engineers with a feature lead; no earlier team size given, so the shrinkage is implied rather than measured"
+    },
+    {
+      "signalId": "2026-10-26-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "one two-person agency reports 5-10x more PRs doing work it says once needed five to seven people; a single self-report, other firms in the same survey saw little change"
+    },
+    {
+      "signalId": "2026-08-31-07",
+      "stance": "supports",
+      "primary": false,
+      "note": "Meta planned pods of two to three engineers plus a designer, at least eleven teams running that way by June; reported second-hand (Reuters via The Pragmatic Engineer). The reversed 60% cut is a headcount plan and is deliberately not filed as counter"
     }
   ],
-  "observedReach": "early-manifestations",
-  "reachRationale": "Two sources measure the delivery unit itself: an investor field writeup reporting teams of eight to ten shrinking to five or fewer, and the head of Instagram describing a product team going from about thirteen specialists to a pod of four to six. The second matters because it is a large established product organisation rather than a venture portfolio. It is still two self-reported accounts with no independent survey of median team size behind them — concrete examples in forerunner settings, not a pattern replicated across contexts. The labour-market and layoff sources that once sat here as counter-evidence were detached as off-construct: they measure aggregate employment and job-cut attribution, which move for reasons that leave the size of a delivery unit untouched, so their removal is not evidence that the claim strengthened.",
-  "reachReviewedAt": "2026-08-05",
+  "observedReach": "gaining-traction",
+  "reachRationale": "Smaller delivery units are now described independently at several large established organisations: Instagram's pods of four to six, Redis's pods of three to four across a 350-400 person organisation, Meta's pods of two to three engineers plus a designer, and an investor writeup of teams shrinking from eight-to-ten to five or fewer. Some of the direction predates AI, so part of the pattern is not attributable to it. All accounts are self-reported, no independent survey measures median team size, and Meta's later reversal of a larger cut shows the pace is disputed.",
+  "reachReviewedAt": "2026-10-27",
   "contested": false,
   "whatWouldChangeThis": [
     "Independent survey data from outside the investor and consultancy circuit reports median team size falling",
@@ -85,23 +103,14 @@
   ],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 2,
+    "independentContexts": 4,
     "evidenceTypes": 2,
-    "quartersSpanned": 1,
+    "quartersSpanned": 2,
     "counterEvidence": false
   },
   "firstObserved": "2026-07-09",
-  "latestEvidenceDate": "2026-07-17",
-  "possibleReachChange": {
-    "reason": "gained 1 independent context(s) since reach was last reviewed (1 -> 2)",
-    "raisedAt": "2026-08-10",
-    "signalIds": [
-      "2026-08-07-01",
-      "2026-06-29-12",
-      "2026-04-06-05",
-      "2026-04-13-07",
-      "2026-04-13-08",
-      "2026-06-29-05"
-    ]
-  }
+  "latestEvidenceDate": "2026-10-20",
+  "possibleReachChange": null,
+  "construct": "Whether the number of people in a standard software delivery unit is falling, and how work is reorganised around smaller units — measured as team or pod size, or the staffing a given piece of work needs. Not total engineering headcount, layoffs, hiring volumes or job-cut attribution, which move for reasons that leave the size of a delivery unit unchanged.",
+  "lastReviewed": "2026-10-27"
 }

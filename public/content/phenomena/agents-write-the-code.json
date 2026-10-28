@@ -1,0 +1,106 @@
+{
+  "id": "agents-write-the-code",
+  "label": "Agents write the code",
+  "title": "Pencils down: hand-written code becomes the exception",
+  "thesis": "At the organisations furthest into agent use, agents now do most of the implementation and writing code by hand has become the thing that needs explaining. Human effort moves to directing agents, specifying work and building the tools that watch them, and human labour becomes a minority of the total effort on a team. This would be wrong if human intervention stays high enough that agents remain assistants, or if the forerunners reverse as Meta did on its headcount plan.",
+  "construct": "How much of the implementation effort in a software organisation is carried out by agents rather than people - agent-hours per human hour, share of merged code written by agents, whether hand-writing is the exception. Not the share of developers who use AI tools, tool satisfaction or market share, suggestions accepted, or output per developer, all of which rise while people still write most of the code.",
+  "currentPressure": "Agent output is outrunning the systems around it (CI load, review queues, spend), and vendors report their own teams already working this way.",
+  "status": "published",
+  "primaryDimension": "nature-and-division-of-work",
+  "potentialImpact": "transformative",
+  "implications": [
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Where agents carry the implementation, human session time goes to waiting on, directing and instrumenting them: about 80% of interactive agent session time waits on a person, and meta-work on agent tools, specs and monitors rose from 10% to 22% of sessions in six months.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Whether engineers write code by hand stops being a personal habit and becomes an operating-model decision, with an engineer who finds themselves hand-writing treated as a sign the agent workflow needs fixing.",
+      "actors": [
+        "executive",
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "When agents log about three workdays for each human workday, headcount stops measuring a team's capacity and agent consumption becomes the larger part of what the team does.",
+      "actors": [
+        "executive",
+        "engineering-manager"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-09-14-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "OpenAI research org telemetry: 3.1 agent-workdays per human workday (from under 1 before June); over half of successful 4-8 hour tasks still needed at least one human intervention"
+    },
+    {
+      "signalId": "2026-10-26-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Anthropic workforce data: employee-directed agents passed human hours in March 2026 and reached ~6x by August; commits per engineer ~5x six months earlier; ~80% of interactive agent session time spent waiting on a person"
+    },
+    {
+      "signalId": "2026-10-19-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Claude Code team says Claude writes about 90% of the product's code; changes per day across Anthropic's monorepo from ~2,500 to 30,000+ (same sponsor as 2026-10-26-01, counts as one context)"
+    },
+    {
+      "signalId": "2026-09-28-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "37signals 'pencils down': agents are the normal way of building, hand-writing treated as a sign the workflow needs fixing, HEY being rebuilt by a small team with a Rust backend written by agents; one company, own keynote"
+    },
+    {
+      "signalId": "2026-09-01-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Amazon pilot: in the better teams engineers wrote only 1-2% of the code directly and let the assistant run unattended for up to several hours"
+    },
+    {
+      "signalId": "2026-03-10-01",
+      "stance": "counter",
+      "primary": false,
+      "note": "Anthropic trends report citing research: developers use AI in roughly 60% of work but fully delegate only 0-20% of tasks; the figure is cited, not measured by the report, so not primary"
+    },
+    {
+      "signalId": "2026-03-23-03",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Pragmatic Engineer survey of 906 engineers: 56% report doing 70%+ of their engineering work with AI; self-reported share of work done with AI, including assisted use, so it shows pressure without showing agent authorship"
+    },
+    {
+      "signalId": "2026-02-19-03",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Science study of 30M+ GitHub commits: ~29% of US Python functions AI-written by end 2024; function-level classifier on a 2024 cut-off, so a share of assisted code well short of a majority"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "Reported across several kinds of organisation: an AI lab, a research organisation, a product company that has just gone 'pencils down', and the Amazon pilot teams. The reviewer's judgement is that these are examples of a theme heard widely across the field, not the full set of cases. Broad surveys still show full delegation at only 0-20% of tasks, so agent-written code is not yet the default, but the change is well beyond a few early adopters.",
+  "whatWouldChangeThis": [
+    "Independent organisations with no vendor tie reporting that humans still write most merged code in agent-heavy teams",
+    "Human-intervention rates on multi-hour agent tasks staying above half, or rising",
+    "Forerunners reversing, as Meta did on its second restructuring wave, after measuring their own agent output",
+    "A measured share of merged code written by agents at mainstream delivery organisations staying near the 0-20% full-delegation range"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 5,
+    "evidenceTypes": 2,
+    "quartersSpanned": 2,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-01-22",
+  "latestEvidenceDate": "2026-10-16",
+  "reachReviewedAt": "2026-10-27",
+  "lastReviewed": "2026-10-27"
+}
