@@ -5,7 +5,7 @@
   "thesis": "As producing code gives way to supervising machine output, the attentional structure of the working day changes: the low-stakes intervals that used to sit between hard judgements disappear, sustained concentration gives way to switching between agent sessions, and authorship of the result becomes something people feel less of. The claim is that this moves independently of productivity, so an organisation watching delivery metrics would see a healthy period while the thing that predicts attrition moved. It also does not land the same way on everyone: the same displacement reads as expanded autonomy to engineers who choose their own work and as lost ownership to newcomers who do not. If the effect turns out to be a transition cost that fades as agent workflows settle, or if it simply tracks hours worked after all, this claim is wrong.",
   "construct": "The attentional and experiential structure of the working day for people whose work has shifted from producing code to supervising machine output — sustained concentration, the recovery intervals between hard judgements, and felt authorship of the result — measured separately from throughput. Not hours worked, not burnout or job-satisfaction prevalence, not self-reported productivity, not delivery velocity, and not attrition, all of which move for many reasons and are consistent with the texture of the day being entirely unchanged.",
   "currentPressure": "82% of matched respondents in a six-month longitudinal survey report spending less time writing code, and heavy agent users describe days spent moving between multiple agent sessions rather than working in sustained stretches.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "worker-experience-identity-and-wellbeing",
   "potentialImpact": "high",
   "implications": [
@@ -81,6 +81,12 @@
       "stance": "counter",
       "primary": true,
       "note": "Two senior engineers describe the identical displacement — supervision replacing production — and report being happier and having more fun than before, one saying he no longer writes code at all. The disagreement with the accounts above is about valence, not mechanism."
+    },
+    {
+      "signalId": "2026-08-31-11",
+      "stance": "supports",
+      "primary": true,
+      "note": "Home Depot senior engineer's firsthand account: working day is now a sequence of 5-20 minute gaps while agents run instead of long blocks, with parallel-session anxiety echoed in 127 comments; one author, not a measurement"
     }
   ],
   "observedReach": "gaining-traction",
@@ -92,11 +98,14 @@
     "Teams that deliberately schedule supervision load report no better experience than teams that do not, which would locate the cause somewhere other than the shape of the day"
   ],
   "evidenceProfile": {
-    "independentContexts": 5,
+    "independentContexts": 6,
     "evidenceTypes": 2,
     "quartersSpanned": 3,
     "counterEvidence": true
   },
   "firstObserved": "2026-02-08",
-  "latestEvidenceDate": "2026-07-27"
+  "latestEvidenceDate": "2026-08-25",
+  "possibleReachChange": null,
+  "reachReviewedAt": "2026-10-27",
+  "lastReviewed": "2026-10-27"
 }

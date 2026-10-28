@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-27-07",
+  "title": "Spotify's background agent guessed field mappings from a human migration guide until a team wrote the mappings out as tables, then rolled out 240 migration PRs",
+  "summary": "A Spotify engineer describes using Honk, the company's background coding agent built on Claude Code, to migrate downstream data pipelines off a deprecated dataset across about 1,800 dependent pipelines. Honk had no skills, no custom configuration and no MCP access to read schemas or external documentation, so it could use only the context the team wrote for it.\n\nThe team first had Claude turn the migration guide written for human engineers into the agent's context file. That was not comprehensive enough: Honk guessed at field mappings, often wrongly. The team then wrote every mapping out as explicit tables, told the agent to leave use-case-specific fields alone and to link to the human guides in comments, and after that reports solid performance across most target repositories. It dropped one pipeline framework because its variety made a complete prompt impractical without skills. The rollout produced 240 automated pull requests, estimated to save about ten engineering weeks.\n\nWhat the agent could reach was fixed by the agent platform, not by the team running the migration, so that team's only lever was the context it wrote. What fixed the failures was information the agent could not otherwise know, written out explicitly, rather than procedure.",
+  "source": "Spotify Engineering blog",
+  "sourceUrl": "https://engineering.atspotify.com/2026/4/background-coding-agents-dataset-migrations-honk-part-4",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "concurrent",
+  "observer": "Devon Edwards Joseph, senior engineer at Spotify, describing a migration his team ran with Spotify's internal background coding agent",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-10-27",
+  "date": "2026-04-22",
+  "status": "published",
+  "tags": [
+    "background-agents",
+    "migrations",
+    "agent-context",
+    "platform-engineering",
+    "claude-code",
+    "internal-knowledge"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Human guides are not agent context** — a guide written for engineers left the agent guessing, because people fill gaps from knowledge the agent does not have.",
+    "**Explicit facts fixed it** — the remedy was spelling out the organisation's own mappings, not adding instructions about how to work.",
+    "**Authority sits with the platform** — what the agent could reach was fixed centrally, so delivery teams' only lever was the context they wrote."
+  ],
+  "recommendedActions": [
+    "**Write mappings, not narratives** — for fleet-wide agent migrations, give the agent the organisation-specific facts as explicit tables and keep procedural prose short."
+  ],
+  "risksAndCaveats": [
+    "**No before-and-after numbers** — the post reports the improvement qualitatively; success rates before and after the mapping tables are not given.",
+    "**One team, one migration** — the target repositories rarely had tests, so owning teams checked changes by hand, and results may differ where tests exist."
+  ]
+}

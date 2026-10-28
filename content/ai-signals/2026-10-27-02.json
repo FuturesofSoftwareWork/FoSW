@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-27-02",
+  "title": "Agents given their own earlier changes as history resolve later tasks 5.6 points less often, and the penalty traces to inherited test failures",
+  "summary": "A 10 October arXiv preprint introduces SWE-Maintain, a benchmark of 100 three-step maintenance episodes drawn from 50 real Python repositories, and asks whether agent-written changes make later maintenance harder. Each later task is run twice with the same agent and hidden tests, once starting from developers' earlier patches and once from the agent's own earlier changes. Across five coding systems and two underlying models and 1,996 paired later events, agent-written history lowers later-task resolution by 5.6 percentage points on average, and by 14.0 points when all earlier tests must also pass.\n\nThe authors find that most agent-history starting points already fail earlier tests, and very few of those events end with all tests passing. When inherited code does pass the earlier tests, the difference falls to 2.7 points and is not statistically distinguishable from zero. The cost therefore appears to come from regressions that earlier agent changes introduced, not from code that is harder to read or change.\n\nFor leaders the finding is about preconditions: agents maintaining agent-written code are only as reliable as the regression tests the earlier changes left behind.",
+  "source": "arXiv Preprint",
+  "sourceUrl": "https://arxiv.org/abs/2610.14768",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "replicated": false,
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-10-27",
+  "date": "2026-10-10",
+  "status": "published",
+  "tags": [
+    "maintenance",
+    "regression-tests",
+    "agent-history",
+    "benchmark",
+    "swe-maintain"
+  ],
+  "category": [
+    "Quality & Testing",
+    "AI Agents",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "**Regressions drive the penalty** — the extra difficulty comes from earlier agent changes breaking tested behaviour, so protecting existing tests matters more than polishing code style.",
+    "**Test health gates delegation** — a codebase whose tests already fail is a poor candidate for agent-led maintenance, which gives leaders a readiness check before handing upkeep to agents.",
+    "**Maintenance and production differ** — benchmarks of one-shot fixes miss this effect, so teams that judge agents on isolated tasks may overrate them for upkeep."
+  ],
+  "recommendedActions": [
+    "**Check suite health first** — measure how many of a repository's earlier tests still pass before moving its upkeep to agents.",
+    "**Gate agent merges on regression suites** — require the accumulated test suite, not only the new task's tests, to pass before an agent's change merges."
+  ],
+  "risksAndCaveats": [
+    "**Narrow benchmark** — the study covers 50 Python repositories, 100 episodes and two underlying models, and does not state when the data was collected.",
+    "**Preprint, not replicated** — the no-penalty result for code that passes earlier tests has a confidence interval that includes zero, so it is not established."
+  ]
+}

@@ -36,5 +36,6 @@
     "Caching reduces the linear re-processing term but does not eliminate the underlying quadratic growth of accumulating context, so very long horizons still need genuine context management.",
     "Some cost-reduction percentages come from practitioner/vendor sources and specific workloads; absolute savings should be validated on your own agent traces."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "study"
 }

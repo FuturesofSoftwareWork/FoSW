@@ -36,5 +36,6 @@
     "Heuristics like the Lethal Trifecta and Rule of Two are useful design guidance, not formal guarantees; they reduce but do not eliminate exfiltration risk.",
     "Survey figures (e.g. 63% shadow-AI) depend on self-reporting and sample composition and may not generalize across sectors."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report"
 }

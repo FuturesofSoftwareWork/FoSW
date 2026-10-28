@@ -1,0 +1,75 @@
+{
+  "id": "roles-blur-into-builders",
+  "label": "Roles blur into builders",
+  "title": "Product and design now commit code too",
+  "thesis": "The line between who specifies software and who builds it is blurring: product managers and designers are producing running software with agents, and engineers' work moves toward supplying the primitives, architecture and review that let others do so safely. It would be wrong if non-engineer commits remain marginal, or if they prove to be reverted or rebuilt by engineers often enough that the boundary re-forms. THIN: three practitioner reports, no counts of non-engineer commits.",
+  "construct": "Who in a software organisation produces working software - the share of product, design and other non-engineering roles that ship running prototypes or commits - and what engineers do in response. Not total AI tool adoption by non-engineers, headcount of any role, or hiring of new roles, which move without anyone outside engineering shipping code.",
+  "currentPressure": "Agents make implementation cheap enough for non-engineers to attempt, while the cost of deciding what to build and keeping architecture coherent has not fallen.",
+  "status": "published",
+  "primaryDimension": "nature-and-division-of-work",
+  "potentialImpact": "moderate",
+  "implications": [
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Engineers shift toward supplying the primitives, architecture and APIs others build on and reviewing what agents and non-engineers produce inside them, becoming 'custodians rather than contributors'.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "When product managers build working prototypes themselves (20-25 PMs, about one per fifteen engineers, at Redis) the specification arrives as a running artefact and changes what an engineer receives.",
+      "actors": [
+        "engineering-manager",
+        "technical-lead",
+        "developer"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Changes by non-engineers can each look defensible and still damage the architecture together, so someone has to own system-level coherence explicitly.",
+      "actors": [
+        "technical-lead",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-10-08",
+      "stance": "supports",
+      "primary": true,
+      "note": "InfoQ panel of named practitioners: one reports product and design colleagues committing code 'just as freely as engineers'; engineers building platforms for agents and review; panel reports from their own organisations"
+    },
+    {
+      "signalId": "2026-08-31-09",
+      "stance": "supports",
+      "primary": true,
+      "note": "Redis: ~20-25 product managers (about one per fifteen engineers) build working React and Claude Code prototypes themselves; specification moves from a document to a running artefact"
+    },
+    {
+      "signalId": "2026-09-04-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "DHH on the Basecamp experiment: designers used agents to implement changes directly; the PRs looked individually defensible but collectively damaged architecture and developers restored coherence by hand. Attached for designers shipping, and the architectural cost is the caution"
+    }
+  ],
+  "observedReach": "early-manifestations",
+  "reachRationale": "Seen in three forerunner organisations (an InfoQ panel's employers, Redis, 37signals' Basecamp experiment), one of which found the output harmful to architecture. No source counts non-engineer commits or shows them as common practice.",
+  "whatWouldChangeThis": [
+    "Counts of commits or merged changes by non-engineer roles showing they stay a small, flat share",
+    "Evidence that non-engineer changes are routinely reverted or rewritten by engineers",
+    "Organisations that tried this and re-established a hard boundary between specification and implementation"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 1,
+    "quartersSpanned": 1,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-08-07",
+  "latestEvidenceDate": "2026-08-27",
+  "reachReviewedAt": "2026-10-27",
+  "lastReviewed": "2026-10-27"
+}

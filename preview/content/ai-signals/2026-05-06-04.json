@@ -8,8 +8,18 @@
   "detectedAt": "2026-05-06",
   "date": "2026-05-01",
   "status": "published",
-  "tags": ["Meta", "infrastructure-optimization", "AI-agents", "SRE", "performance-engineering", "hyperscale", "institutional-knowledge"],
-  "category": ["AI Agents"],
+  "tags": [
+    "Meta",
+    "infrastructure-optimization",
+    "AI-agents",
+    "SRE",
+    "performance-engineering",
+    "hyperscale",
+    "institutional-knowledge"
+  ],
+  "category": [
+    "AI Agents"
+  ],
   "whyItMatters": [
     "The encoding of senior engineering expertise as reusable agent 'skills' addresses one of the hardest problems in scaling engineering organizations: distributing deep institutional knowledge without requiring every team to have a senior performance engineer, effectively making expert-level infrastructure reasoning available organization-wide.",
     "At hyperscale, even small inefficiencies translate into massive compute, power, and latency costs — autonomous agents that continuously optimize across the full stack represent a fundamentally different operating model from periodic human-led performance reviews.",
@@ -26,5 +36,7 @@
     "Meta's hyperscale context (billions of users, custom hardware, bespoke infrastructure) means the architectural patterns may not transfer directly to organizations operating at smaller scale with commodity infrastructure.",
     "Autonomous infrastructure optimization introduces new failure modes: agent-applied optimizations could interact with each other or with manual changes in ways that are difficult to predict and debug, potentially creating novel incident categories."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+  "signalType": "practitioner-account",
+  "observer": "Meta engineering, describing its own capacity-efficiency platform (reported by InfoQ)"
 }

@@ -1,0 +1,44 @@
+{
+  "id": "2026-10-27-03",
+  "title": "Meta's private-monorepo benchmark: developer-written context files lifted a weak agent harness 6.4 points, and gave nothing once the agent had strong navigation tools",
+  "summary": "Researchers at Meta built a coding-agent benchmark from real sessions with an internal AI coding assistant on the company's own monorepo, with solution diffs removed so agents cannot read the answer. The code is proprietary, so models cannot have seen it in training. As one case study they loaded the developer-written context files the company keeps for agents, which encode internal codebase knowledge such as coding conventions and build details, and ran the same tasks with and without them under two agent harnesses: a basic one with a small tool set and an advanced one with about three times as many tools for navigation, diagnostics and validation.\n\nOn the basic harness the context files lifted the solve rate by 6.4 percentage points. They surfaced company-specific tool calls such as targeted test runners and schema lookups, cut the sessions that ran out of iterations from 7 to 4, and made runs about 32% slower. On the advanced harness they gave no benefit and slightly hurt performance; the authors say the stronger tooling already supplies what the files encode, so loading them adds noise. An earlier version of the paper reported that languages with heavy, well-documented company conventions gained most.\n\nThis is one of the few tests of supplied organisational context on work that genuinely depends on it. Its answer is conditional: curated context paid off only while the agent could not find the same knowledge itself.",
+  "source": "arXiv Preprint (Meta; ASE 2026 Industry Showcase)",
+  "sourceUrl": "https://arxiv.org/abs/2604.01527",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "replicated": false,
+  "leadTimeEstimate": "~6-12 months before tool access, rather than curated files, becomes the default way agents get internal knowledge",
+  "corroboration": [],
+  "detectedAt": "2026-10-27",
+  "date": "2026-07-28",
+  "status": "published",
+  "tags": [
+    "context-files",
+    "agent-configuration",
+    "proprietary-codebase",
+    "internal-knowledge",
+    "agent-tooling",
+    "benchmark"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "**Curated context is conditional** — on a private codebase, hand-written knowledge files helped only while the agent lacked tools to find that knowledge itself.",
+    "**Tool access can replace documents** — giving the agent navigation and diagnostic tools made the same context files redundant, which shifts investment from writing files to exposing internal systems.",
+    "**Context has a latency cost** — even where the files helped, runs were about a third slower, so the gain has to be weighed against time."
+  ],
+  "recommendedActions": [
+    "**Test context files against tools** — before expanding an internal context library, run the same tasks with the files and with richer code-search and validation tools, and compare.",
+    "**Re-test after tooling upgrades** — when the agent's tool set improves, check whether existing context files still add anything or now only add noise."
+  ],
+  "risksAndCaveats": [
+    "**Model not named** — the paper does not say which model ran the context-file comparison, and gives only the change on the basic harness, not absolute solve rates.",
+    "**Mixed file contents** — the files combined conventions and build details, so the result does not separate organisational knowledge from procedural instruction.",
+    "**Partly self-consistent tasks** — many retained solution diffs were themselves AI-written, which the authors flag as a possible bias."
+  ]
+}

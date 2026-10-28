@@ -1,65 +1,83 @@
 {
-  "lastUpdated": "2026-08-10T13:33:56Z",
+  "lastUpdated": "2026-10-27T10:00:49Z",
   "items": [
     {
       "id": "review-shifts-to-verification",
       "file": "review-shifts-to-verification.json",
       "date": "2026-08-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "evals-become-the-spec",
       "file": "evals-become-the-spec.json",
       "date": "2026-08-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "the-vanishing-apprenticeship",
       "file": "the-vanishing-apprenticeship.json",
       "date": "2026-08-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "configuring-the-machine",
       "file": "configuring-the-machine.json",
       "date": "2026-08-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "compute-becomes-a-budget-line",
       "file": "compute-becomes-a-budget-line.json",
       "date": "2026-08-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "teams-get-smaller",
       "file": "teams-get-smaller.json",
       "date": "2026-08-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "the-management-layer-thins",
       "file": "the-management-layer-thins.json",
       "date": "2026-08-10",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "supervision-without-recovery",
       "file": "supervision-without-recovery.json",
       "date": "2026-08-10",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "agents-become-the-perimeter",
       "file": "agents-become-the-perimeter.json",
       "date": "2026-08-10",
-      "status": "draft"
+      "status": "published"
     },
     {
-      "id": "maintenance-becomes-the-constraint",
-      "file": "maintenance-becomes-the-constraint.json",
-      "date": "2026-08-10",
-      "status": "draft"
+      "id": "same-tool-different-outcomes",
+      "file": "same-tool-different-outcomes.json",
+      "date": "2026-10-26",
+      "status": "published"
+    },
+    {
+      "id": "agents-write-the-code",
+      "file": "agents-write-the-code.json",
+      "date": "2026-10-26",
+      "status": "published"
+    },
+    {
+      "id": "roles-blur-into-builders",
+      "file": "roles-blur-into-builders.json",
+      "date": "2026-10-26",
+      "status": "published"
+    },
+    {
+      "id": "maintenance-at-scale",
+      "file": "maintenance-at-scale.json",
+      "date": "2026-10-27",
+      "status": "published"
     }
   ]
 }

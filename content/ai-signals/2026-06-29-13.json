@@ -8,8 +8,18 @@
   "detectedAt": "2026-06-29",
   "date": "2026-05-19",
   "status": "published",
-  "tags": ["engineering culture", "AI amplification", "code quality", "junior developers", "mentoring", "developer experience"],
-  "category": ["Org & Leadership", "Skills & Learning"],
+  "tags": [
+    "engineering culture",
+    "AI amplification",
+    "code quality",
+    "junior developers",
+    "mentoring",
+    "developer experience"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Skills & Learning"
+  ],
   "whyItMatters": [
     "The culture-amplification finding undermines the common assumption that AI tools will 'level up' weaker teams. Leaders investing in AI to fix engineering quality problems will likely see those problems worsen — the fix must come from culture, not tooling.",
     "Declining code quality combined with management indifference creates a technical debt time bomb: the maintenance burden is concentrating among fewer engineers who still understand the codebase, and those engineers are the most likely to leave if overloaded.",
@@ -26,5 +36,7 @@
     "Self-reported workflow effectiveness is subjective; the survey does not include controlled productivity measurements to validate whether respondents' preferred workflows actually produce better outcomes.",
     "The 'culture amplification' finding may partly reflect selection bias: organizations with strong cultures may also be better at adopting any new tool, not just AI tools."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sampleSize": "900+ respondents"
 }

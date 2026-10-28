@@ -8,8 +8,18 @@
   "detectedAt": "2026-05-25",
   "date": "2026-05-25",
   "status": "published",
-  "tags": ["DORA", "ROI", "platform-engineering", "throughput", "stability"],
-  "category": ["Productivity", "SDLC Change", "Org & Leadership"],
+  "tags": [
+    "DORA",
+    "ROI",
+    "platform-engineering",
+    "throughput",
+    "stability"
+  ],
+  "category": [
+    "Productivity",
+    "SDLC Change",
+    "Org & Leadership"
+  ],
   "whyItMatters": [
     "Throughput gains (2–18%) are real but modest — they will not justify large agent licensing on their own without platform investment.",
     "The J-Curve framing gives leadership a defensible narrative for why year-1 returns are negative, useful in board-level ROI debates.",
@@ -25,5 +35,8 @@
     "DORA findings generalize across industries; regulated sectors should weight stability findings more heavily.",
     "'Amplifier' framing is intuitive but hard to falsify; specific magnitude estimates carry wide confidence intervals."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "Google Cloud (DORA)",
+  "sampleSize": "About 5,000 technology professionals plus 100+ hours of interviews"
 }

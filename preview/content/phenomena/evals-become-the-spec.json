@@ -4,7 +4,7 @@
   "title": "What you write down stops being the code",
   "thesis": "As machines write more of the implementation, the artifact that defines what \"done\" means shifts from the code and the product document toward an executable evaluation suite. Teams increasingly specify behaviour as acceptance criteria a machine can run, and the eval set rather than the source becomes the thing under deliberate human authorship.",
   "currentPressure": "Generated implementations vary between runs and between models, so reading the code no longer tells a team whether the intended behaviour holds.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "skills-knowledge-and-learning",
   "potentialImpact": "transformative",
   "implications": [
@@ -116,5 +116,7 @@
     "counterEvidence": true
   },
   "firstObserved": "2026-01-08",
-  "latestEvidenceDate": "2026-07-27"
+  "latestEvidenceDate": "2026-07-27",
+  "construct": "Whether the artifact that defines 'done' for software is shifting from code and product documents to an executable evaluation or acceptance suite that humans deliberately author — including the practices and roles that form around it. Not how much developers trust or verify AI code, model benchmark scores, or general testing practice, which move without the eval suite becoming the specification.",
+  "lastReviewed": "2026-10-27"
 }

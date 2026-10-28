@@ -4,7 +4,7 @@
   "title": "If AI does the junior work, where do seniors come from?",
   "thesis": "The tasks that historically taught new software engineers their judgement — small fixes, boilerplate, reading unfamiliar code slowly — are the tasks machines now absorb first. If entry to the profession stops running through that work, the field must either find another way to manufacture senior judgement or accept a narrowing pipeline into it. Evidence currently points in both directions, which is itself the finding.",
   "currentPressure": "Entry-level postings and internships have fallen sharply while overall engineering demand has not, so the contraction is concentrated at the point where the profession recruits.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "careers-occupations-and-labour-markets",
   "potentialImpact": "transformative",
   "implications": [
@@ -71,18 +71,6 @@
       "note": "comprehension debt: the gap between code that exists and code anyone understands"
     },
     {
-      "signalId": "2026-04-13-08",
-      "stance": "counter",
-      "primary": true,
-      "note": "engineering roles doubled since the 2023 trough with 67,000+ positions open"
-    },
-    {
-      "signalId": "2026-06-29-05",
-      "stance": "counter",
-      "primary": true,
-      "note": "hiring tracked across 80 million companies shows engineering among the most resilient functions"
-    },
-    {
       "signalId": "2026-02-19-04",
       "stance": "supports",
       "primary": true,
@@ -105,15 +93,33 @@
       "stance": "contextual",
       "primary": true,
       "note": "Observed-exposure metric ranks computer programmers the most exposed occupation, finds no statistically meaningful rise in unemployment for exposed workers, and only suggestive evidence that hiring has slowed for younger entrants into exposed occupations. The pipeline is measured; the direction is unsettled."
+    },
+    {
+      "signalId": "2026-10-26-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Anthropic workforce data: junior share of technical hires 27% to 9%, of technical headcount 21% to 14%, while technical hiring still grew; authors say it is one fast-growing AI lab and the cause is not explained"
+    },
+    {
+      "signalId": "2026-04-13-08",
+      "stance": "contextual",
+      "primary": false,
+      "note": "CNN: software engineering job openings rebound on AI project demand; aggregate demand, not junior entry, so context for the composition-effect reading rather than counter-evidence"
+    },
+    {
+      "signalId": "2026-06-29-05",
+      "stance": "contextual",
+      "primary": false,
+      "note": "SignalFire: engineering the most resilient job function; aggregate demand, not junior entry, so context for the composition-effect reading rather than counter-evidence"
     }
   ],
   "observedReach": "gaining-traction",
   "reachRationale": "The contraction in entry-level hiring is visible across independent labour-market datasets rather than at individual employers, and the learning mechanism now has field evidence behind it — but aggregate engineering demand has held up, so this has not become a settled change in how the profession recruits.",
-  "reachReviewedAt": "2026-08-05",
-  "contested": true,
-  "contestedNote": "Labour-market datasets disagree: entry-level postings and junior employment at AI-adopting firms are down sharply, while total engineering demand and role resilience are up. Both sets of evidence are independent and credible, and the disagreement may be a composition effect — fewer junior roles within a growing whole — rather than a contradiction.",
+  "reachReviewedAt": "2026-10-27",
+  "contested": false,
+  "contestedNote": null,
   "firstObserved": "2026-01-29",
-  "latestEvidenceDate": "2026-07-28",
+  "latestEvidenceDate": "2026-10-16",
   "whatWouldChangeThis": [
     "Entry-level postings recover to their 2023 share of engineering hiring and hold for two quarters",
     "Cohorts entering through AI-supervision roles reach senior-level judgement on the same timescale as earlier cohorts"
@@ -138,19 +144,12 @@
   "related": [],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 7,
-    "evidenceTypes": 2,
-    "quartersSpanned": 3,
-    "counterEvidence": true
+    "independentContexts": 8,
+    "evidenceTypes": 3,
+    "quartersSpanned": 4,
+    "counterEvidence": false
   },
-  "possibleReachChange": {
-    "reason": "gained 3 independent context(s) since reach was last reviewed (4 -> 7)",
-    "raisedAt": "2026-08-10",
-    "signalIds": [
-      "2026-02-19-04",
-      "2026-08-06-01",
-      "2026-06-29-13",
-      "2026-03-09-01"
-    ]
-  }
+  "possibleReachChange": null,
+  "construct": "Whether the routes by which new software engineers build judgement are narrowing — entry-level hiring, the work juniors are given, and what juniors learn when machines do it first. Not overall engineering demand, total layoffs, or the share of developers using AI, which move without any change in how juniors enter or learn the profession.",
+  "lastReviewed": "2026-10-27"
 }

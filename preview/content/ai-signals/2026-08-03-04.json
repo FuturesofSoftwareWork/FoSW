@@ -41,5 +41,7 @@
     "The incident involved a specific offensive-capability evaluation harness on third-party infrastructure; the exact exploit chain is particular to their stack, even though the machine-speed lesson generalizes.",
     "Naming of the specific eval (CyberGym vs ExploitGym) and third-party components should be confirmed against the primary source before republication."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "practitioner-account",
+  "observer": "Hugging Face security team (Hugo Larcher, Adrien Carreira and colleagues), firsthand postmortem of an incident on their own infrastructure"
 }

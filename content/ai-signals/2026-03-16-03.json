@@ -8,8 +8,18 @@
   "detectedAt": "2026-03-16",
   "date": "2026-03-10",
   "status": "published",
-  "tags": ["ai-agents", "enterprise-governance", "shadow-ai", "identity-management", "fortune-500", "permissions-creep"],
-  "category": ["Org & Leadership", "Security & Risk"],
+  "tags": [
+    "ai-agents",
+    "enterprise-governance",
+    "shadow-ai",
+    "identity-management",
+    "fortune-500",
+    "permissions-creep"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Security & Risk"
+  ],
   "whyItMatters": [
     "The gap between 80% adoption and 6% advanced security strategy represents a systemic organizational risk; most enterprises are deploying AI agents at scale without commensurate governance infrastructure.",
     "AI agents accumulating permissions without human-equivalent identity governance creates a new class of insider threat that existing IAM, SOC, and audit frameworks are not designed to detect or manage.",
@@ -26,5 +36,7 @@
     "The 6% advanced security strategy figure (Gartner) uses a specific maturity framework; organizations may have partial governance that is not captured by this threshold.",
     "Enterprise governance frameworks for AI agents are still emerging; organizations that move too aggressively on governance may slow beneficial adoption, while those that delay face accumulating risk."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "Microsoft"
 }

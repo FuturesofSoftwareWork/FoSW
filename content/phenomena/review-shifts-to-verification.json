@@ -4,7 +4,7 @@
   "title": "From reading code to verifying evidence",
   "thesis": "As AI-generated changes exceed the capacity for line-by-line human review, software assurance shifts from inspecting code towards verifying intended behaviour, test evidence, security properties and architectural constraints. Automated systems take over routine checking, while human attention concentrates on intent, high-risk decisions, exceptions and accountability.",
   "currentPressure": "Generation capacity is growing faster than review capacity, producing longer queues and lower acceptance rates for AI-authored changes.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "nature-and-division-of-work",
   "potentialImpact": "high",
   "implications": [
@@ -117,21 +117,51 @@
       "stance": "contextual",
       "primary": true,
       "note": "200 security practitioners: 62% say keeping up with the volume of code requiring security review is getting harder, and 66% spend over half their time validating findings rather than fixing. Measures assurance capacity under strain; shows no direction on how assurance is performed."
+    },
+    {
+      "signalId": "2026-08-31-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "interview study (5 practitioners) of how review, linting, testing and CI are repurposed into three supervision layers when change volume exceeds review capacity; small n, a description of the operating model, not a prevalence"
+    },
+    {
+      "signalId": "2026-09-14-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "Duckbill, 5-person team: raised the automated floor (85% coverage, strict linting), named five surfaces that still get human review, merges the rest unreviewed; merged PRs 353 to 684, unreviewed changes reach main in 1h vs 26h"
+    },
+    {
+      "signalId": "2026-10-19-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Anthropic Claude Code team publishes its tiered review policy: classifier sets human approvers by change risk, low-risk changes merge with no human approval, reverts fell >40% while merged PRs doubled; vendor describing its own team"
+    },
+    {
+      "signalId": "2026-09-29-01",
+      "stance": "supports",
+      "primary": false,
+      "note": "Osmani reversing 'review every line', citing Bacchelli and Bird (defects 14% of 570 review comments) and Anthropic's automated reviewer (<1% findings marked incorrect); commentary on others' data, so not primary"
+    },
+    {
+      "signalId": "2026-10-19-04",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Uber: engineers still review every PR, but an AI review, screenshots and a risk score are attached first and simple checks moved into the agent's local loop; review called a major bottleneck. Shows the pressure and a partial move, not assurance leaving human reading"
     }
   ],
   "observedReach": "gaining-traction",
-  "reachRationale": "Automated first-pass review is running in production at several unrelated organisations and tooling vendors are building for it, but assurance practice outside those forerunners is still diff-centric.",
-  "reachReviewedAt": "2026-08-05",
+  "reachRationale": "Review is being redistributed: automated review agents, linters and layered guardrails take over routine checking at Cloudflare, Anthropic and a small team that reviews by blast radius, so human attention goes to the highest-risk changes; leading practitioners have changed their stated advice. Review agents without humans still merge far less than human-reviewed work, and assurance practice elsewhere remains diff-centric.",
+  "reachReviewedAt": "2026-10-27",
   "evidenceProfile": {
-    "independentContexts": 6,
-    "evidenceTypes": 3,
-    "quartersSpanned": 4,
+    "independentContexts": 9,
+    "evidenceTypes": 4,
+    "quartersSpanned": 5,
     "counterEvidence": true
   },
   "contested": false,
   "contestedNote": null,
   "firstObserved": "2025-12-01",
-  "latestEvidenceDate": "2026-07-30",
+  "latestEvidenceDate": "2026-10-15",
   "whatWouldChangeThis": [
     "Review practice stays diff-centric through 2027 despite sustained volume growth",
     "Automated reviewers are rolled back after escaped-defect rates rise"
@@ -160,14 +190,7 @@
   ],
   "related": [],
   "indicators": [],
-  "possibleReachChange": {
-    "reason": "gained 3 independent context(s) since reach was last reviewed (3 -> 6)",
-    "raisedAt": "2026-08-10",
-    "signalIds": [
-      "2026-05-06-03",
-      "2026-03-11-05",
-      "2026-02-19-02",
-      "2026-05-06-02"
-    ]
-  }
+  "possibleReachChange": null,
+  "construct": "Whether the assurance of AI-generated changes is moving from humans reading diffs to automated and layered checks — review agents, linters, tests, guardrails, risk-tiered review — with human attention reserved for the highest-risk changes. Not the volume of code generated, review queue length or acceptance rates on their own, or security-vulnerability rates, which show pressure on review but not any change in how assurance is done.",
+  "lastReviewed": "2026-10-27"
 }
