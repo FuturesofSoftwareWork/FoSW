@@ -45,7 +45,9 @@
  *         checks did not catch.
  *   11    No hover card may leave the viewBox with labels off. Added because
  *         this is a state no other check ever enters, and hover cards were
- *         never exercised by anything above.
+ *         never exercised by anything above. It also requires the card to
+ *         paint after every blip: it used to sit inside its own blip's group,
+ *         and any blip later in the array covered it.
  *   12    No two blip circles may overlap. `placeBlip` hashes each id
  *         independently, so two ids in the same ring-and-sector cell could
  *         land on top of each other; `placeBlips` nudges them apart. Note
@@ -138,10 +140,10 @@ try {
 
   // 2. Ring placement by distance from centre.
   const bandOf = (d) => (d <= 90 ? "field-level-shift" : d <= 165 ? "gaining-traction" : d <= 250 ? "early-manifestations" : "outside");
-  const spend = blips.find((b) => b.label.startsWith("Managing machine spend"));
+  const spend = blips.find((b) => b.label.startsWith("Justifying machine spend"));
   const evals = blips.find((b) => b.label.startsWith("Evals become the spec"));
   check(
-    "Managing machine spend is in the innermost ring",
+    "Justifying machine spend is in the innermost ring",
     spend && bandOf(spend.dist) === "field-level-shift",
     spend ? `dist=${spend.dist.toFixed(1)} band=${bandOf(spend.dist)}` : "not found",
   );
@@ -374,7 +376,8 @@ try {
   // 11. Hover card must stay inside the viewBox for every blip, in both halves
   //     of the radar. It is now the only way a blip's name appears on the
   //     canvas, and its box is sized from the label, so a long name near the rim
-  //     is exactly the case that would push it out.
+  //     is exactly the case that would push it out. It must also paint above
+  //     every blip, not only the ones before it in the array.
   const hoverViolations = [];
   const blipHandles = await page.$$('svg[aria-label^="Futures radar"] g[role="button"]');
   for (const handle of blipHandles) {
@@ -384,7 +387,18 @@ try {
     const bad = await page.evaluate((el) => {
       const svg = el.closest("svg");
       const size = svg.viewBox.baseVal.width;
-      const nodes = [...el.querySelectorAll("rect"), ...el.querySelectorAll("text")];
+      // The card is drawn in its own layer after every blip, because SVG paints
+      // in document order: a card inside its blip's group was hidden behind any
+      // blip that came later. So it must exist, and nothing blip-shaped may
+      // follow it.
+      const card = svg.querySelector("[data-hover-card]");
+      if (!card) return [{ tag: "card", text: "missing", x: 0, xEnd: 0, y: 0, yEnd: 0 }];
+      const groups = svg.querySelectorAll("g[data-status]");
+      const last = groups[groups.length - 1];
+      if (last && !(last.compareDocumentPosition(card) & 4 /* DOCUMENT_POSITION_FOLLOWING */)) {
+        return [{ tag: "card", text: "painted under a blip", x: 0, xEnd: 0, y: 0, yEnd: 0 }];
+      }
+      const nodes = [...card.querySelectorAll("rect"), ...card.querySelectorAll("text")];
       const out = [];
       for (const n of nodes) {
         const bb = n.getBBox();
@@ -405,7 +419,7 @@ try {
     for (const b of bad) hoverViolations.push({ label, ...b });
   }
   check(
-    "hover card for every blip stays within the viewBox with labels off",
+    "hover card for every blip paints on top and stays within the viewBox with labels off",
     hoverViolations.length === 0,
     hoverViolations.length === 0
       ? `no clipping across all ${blips.length} blips`
@@ -455,8 +469,10 @@ try {
   });
   check(
     "every draft blip carries the dashed draft mark",
-    draftMarks.count > 0 && draftMarks.unmarked === 0,
-    `${draftMarks.count} draft(s), ${draftMarks.unmarked} unmarked`,
+    draftMarks.unmarked === 0,
+    draftMarks.count === 0
+      ? "no drafts on the radar, nothing to mark"
+      : `${draftMarks.count} draft(s), ${draftMarks.unmarked} unmarked`,
   );
 } catch (e) {
   check("harness ran without throwing", false, e.stack || e.message);
