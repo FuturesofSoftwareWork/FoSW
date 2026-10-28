@@ -8,8 +8,20 @@
   "detectedAt": "2026-04-13",
   "date": "2026-02-15",
   "status": "published",
-  "tags": ["OWASP", "agentic-AI", "security-framework", "least-agency", "agent-governance", "supply-chain-security", "trust-exploitation", "goal-hijacking"],
-  "category": ["Security & Risk", "AI Agents"],
+  "tags": [
+    "OWASP",
+    "agentic-AI",
+    "security-framework",
+    "least-agency",
+    "agent-governance",
+    "supply-chain-security",
+    "trust-exploitation",
+    "goal-hijacking"
+  ],
+  "category": [
+    "Security & Risk",
+    "AI Agents"
+  ],
   "whyItMatters": [
     "This framework creates a shared vocabulary and risk taxonomy for AI agent security",
     "The 'Least Agency' principle reframes security governance: it is no longer sufficient to restrict what data or systems an agent can access (Least Privilege); organizations must also govern how much autonomous decision-making authority an agent is granted.",
@@ -25,5 +37,9 @@
     "Implementation guidance varies by vendor and may introduce vendor-specific bias — organizations should evaluate multiple implementation approaches rather than adopting a single vendor's interpretation.",
     "The framework addresses known risk patterns but cannot anticipate emergent behaviors in novel multi-agent architectures or agent-to-agent interaction patterns that have not yet been observed at scale."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "regulation-standard",
+  "effectiveDate": "2026-02-15",
+  "issuer": "OWASP",
+  "jurisdiction": "None (voluntary industry framework)"
 }

@@ -8,8 +8,19 @@
   "detectedAt": "2026-04-13",
   "date": "2026-04-12",
   "status": "published",
-  "tags": ["coding-agents", "code-quality", "technical-debt", "static-analysis", "cognitive-complexity", "developer-productivity", "MSR-2026"],
-  "category": ["AI Agents", "Quality & Testing"],
+  "tags": [
+    "coding-agents",
+    "code-quality",
+    "technical-debt",
+    "static-analysis",
+    "cognitive-complexity",
+    "developer-productivity",
+    "MSR-2026"
+  ],
+  "category": [
+    "AI Agents",
+    "Quality & Testing"
+  ],
   "whyItMatters": [
     "The velocity gains from coding agents are real but conditional and diminishing — engineering leaders should not expect compounding productivity improvements when layering agents on top of existing AI IDE tools.",
     "The persistent 18–39% increase in quality degradation metrics represents a hidden cost that may erode velocity gains over time through increased maintenance burden, slower onboarding, and higher defect rates.",
@@ -26,5 +37,6 @@
     "The AIDev dataset's agent detection methodology may not capture all agent usage, particularly in private or enterprise contexts where agent tooling is configured differently.",
     "Static-analysis warnings and cognitive complexity are proxy metrics for code quality; they do not directly measure defect rates, security vulnerabilities, or long-term maintainability."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "study"
 }

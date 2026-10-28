@@ -8,8 +8,20 @@
   "detectedAt": "2026-03-23",
   "date": "2026-03-17",
   "status": "published",
-  "tags": ["DORA", "DevOps", "software-delivery", "platform-engineering", "amplifier-effect", "rework-rate", "engineering-maturity"],
-  "category": ["Productivity", "SDLC Change", "Org & Leadership"],
+  "tags": [
+    "DORA",
+    "DevOps",
+    "software-delivery",
+    "platform-engineering",
+    "amplifier-effect",
+    "rework-rate",
+    "engineering-maturity"
+  ],
+  "category": [
+    "Productivity",
+    "SDLC Change",
+    "Org & Leadership"
+  ],
   "whyItMatters": [
     "The amplifier finding inverts the common assumption that AI adoption alone drives improvement; engineering leaders must now treat foundational practices (CI/CD, code review, documentation, platform engineering) as prerequisites for AI ROI, not afterthoughts.",
     "The new 'Rework Rate' metric signals that AI-assisted throughput gains come at the cost of increased instability and rework, forcing leaders to measure net delivery value rather than raw velocity.",
@@ -26,5 +38,7 @@
     "The six-capability model is new and untested as a predictive framework; it reflects correlational patterns from 2025 data, not causal validation.",
     "Google sponsors DORA research, which may influence emphasis on platform engineering and infrastructure maturity as key enablers."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "Google Cloud (DORA)"
 }

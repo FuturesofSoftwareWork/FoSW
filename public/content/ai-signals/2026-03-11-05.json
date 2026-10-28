@@ -8,8 +8,17 @@
   "detectedAt": "2026-03-11",
   "date": "2026-02-24",
   "status": "published",
-  "tags": ["devops", "ai-adoption", "devops-maturity", "qa-transformation", "governance", "engineering-culture"],
-  "category": ["Org & Leadership"],
+  "tags": [
+    "devops",
+    "ai-adoption",
+    "devops-maturity",
+    "qa-transformation",
+    "governance",
+    "engineering-culture"
+  ],
+  "category": [
+    "Org & Leadership"
+  ],
   "whyItMatters": [
     "The 4x gap in AI integration (72% vs 18%) between mature and immature DevOps organizations means AI adoption may widen the performance gap between well-run and poorly-run engineering organizations rather than closing it.",
     "The shift of 55% of QA teams from test execution to quality analytics signals a structural role transformation that engineering leaders need to plan for in hiring, training, and team design.",
@@ -26,5 +35,8 @@
     "Self-reported DevOps maturity is subjective; the 72% vs 18% gap may partly reflect self-assessment bias rather than objective capability differences.",
     "The 820-person sample may skew toward organizations that are already engaged with DevOps practices and tooling, potentially missing perspectives from organizations with no formal DevOps adoption."
   ],
-  "decisionHorizon": "now"
+  "decisionHorizon": "now",
+  "signalType": "field-report",
+  "sponsor": "Perforce",
+  "sampleSize": "820 technology professionals"
 }

@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-27-01",
+  "title": "Uber runs a continuous agent pipeline that removes stale feature flags, and every change must pass agentic reviewers before a human sees it",
+  "summary": "Uber's AI Verification team published a description of AutoClean, a system that finds stale feature flags across its monorepos and turns each into a tested code change for human review. An agent removes the flag and traces its effects through call sites and tests, relying on a deterministic transformation tool for boolean simplification because small logic mistakes can change production behaviour. CI failures go first to cheap deterministic fixers and then to tightly scoped agentic fixers, and a set of agentic reviewers each check one property in parallel, such as no added behaviour and no drift from the original intent. A change reaches a person only if every check passes.\n\nThe authors say leftover flag code is tech debt that is routinely deprioritised once a rollout ends, and that dead code also makes agents' own sessions longer and costlier. They report that AutoClean has cleaned up more than 16,000 flags and over a million lines of code, though the figure covers the system's history and the post does not say how much of it was done since agents joined the pipeline. Uber describes the design, not an outcome study, and gives no figures on error or revert rates.",
+  "source": "Company Engineering Blog (Uber)",
+  "sourceUrl": "https://www.uber.com/in/en/blog/ai-code-cleanup/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Uber's AI Verification team (Daniel Ramos, Diego Marcilio, Nikhil Parasaram) with the Programming Systems team, describing a system they run in Uber's own monorepos",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-10-27",
+  "date": "2026-10-20",
+  "status": "published",
+  "tags": [
+    "maintenance",
+    "tech-debt",
+    "feature-flags",
+    "agent-pipelines",
+    "agentic-review",
+    "uber"
+  ],
+  "category": [
+    "SDLC Change",
+    "AI Agents",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**Upkeep becomes a pipeline** — routine maintenance that teams skip once a launch ends is being turned into a continuous process with an owning team instead of a backlog.",
+    "**Verification gates the delegation** — Uber lets agents change production code only because deterministic tools and per-property agentic reviewers check each diff first, which sets the pattern for what must exist before handing upkeep to agents.",
+    "**Platform teams own it** — the work sits with a developer-platform and AI-verification group, not with product teams, which moves who is accountable for codebase health."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Single firsthand account** — this is Uber's own description of its own system, with no independent validation and no reported error or revert rates.",
+    "**Scale figure is not agent-specific** — the 16,000 flags and million lines cover several years of AutoClean, so how much reflects the agentic pipeline is not stated."
+  ]
+}
