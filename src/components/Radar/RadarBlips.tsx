@@ -41,6 +41,52 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
     [phenomena],
   );
 
+  // The hover card is drawn once, after every blip, rather than inside the
+  // hovered blip's own group. SVG has no z-index — paint order is document
+  // order — so a card drawn inside its blip's group was covered by any blip
+  // that came later in the array.
+  //
+  // The card carries the label and nothing else. Ring, contested and draft all
+  // used to be repeated here, and all three are already on the canvas: the ring
+  // is the blip's distance from the centre — the radar's entire subject — the
+  // bolt marks contested, and the dashed outline marks a draft. Restating them
+  // costs a second line of text per blip and teaches the reader that the
+  // position is not to be trusted on its own. They remain in `aria-label`,
+  // where a reader who cannot see the position needs them stated.
+  const hoveredCard = (() => {
+    const i = phenomena.findIndex((p) => p.id === hovered);
+    if (i < 0) return null;
+    const p = phenomena[i];
+    if (activeDimension !== null && !deriveImpacts(p).includes(activeDimension)) return null;
+    const { x, y } = positions[i];
+    const r = BLIP_RADIUS[freshnessOf(p)];
+    const labelRight = x <= VIEWBOX.cx;
+    const width = p.label.length * HOVER_CHAR + HOVER_PAD * 2;
+    return (
+      <g pointerEvents="none" data-hover-card="">
+        <rect
+          x={labelRight ? x + r + 4 : x - r - 4 - width}
+          y={y - HOVER_H / 2}
+          width={width}
+          height={HOVER_H}
+          rx={3}
+          fill="#0b1220"
+          stroke="#334155"
+        />
+        <text
+          x={labelRight ? x + r + 4 + HOVER_PAD : x - r - 4 - HOVER_PAD}
+          y={y + HOVER_FONT * 0.36}
+          textAnchor={labelRight ? "start" : "end"}
+          fontSize={HOVER_FONT}
+          fontFamily="monospace"
+          fill="#e2e8f0"
+        >
+          {p.label}
+        </text>
+      </g>
+    );
+  })();
+
   return (
     <g>
       {phenomena.map((p, arrayIndex) => {
@@ -52,7 +98,6 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
         const dimmed =
           activeDimension !== null && !deriveImpacts(p).includes(activeDimension);
         const isHovered = hovered === p.id;
-        const labelRight = x <= VIEWBOX.cx;
 
         return (
           <g
@@ -110,44 +155,10 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
                 transform={`translate(${x} ${y}) scale(${r / 7})`}
               />
             )}
-            {/* The hover card carries the label and nothing else. Ring, contested
-                and draft all used to be repeated here, and all three are already
-                on the canvas: the ring is the blip's distance from the centre —
-                the radar's entire subject — the bolt marks contested, and the
-                dashed outline marks a draft. Restating them costs a second line
-                of text per blip and teaches the reader that the position is not
-                to be trusted on its own. They remain in `aria-label`, where a
-                reader who cannot see the position needs them stated. */}
-            {isHovered && !dimmed && (
-              <g pointerEvents="none">
-                <rect
-                  x={
-                    labelRight
-                      ? x + r + 4
-                      : x - r - 4 - (p.label.length * HOVER_CHAR + HOVER_PAD * 2)
-                  }
-                  y={y - HOVER_H / 2}
-                  width={p.label.length * HOVER_CHAR + HOVER_PAD * 2}
-                  height={HOVER_H}
-                  rx={3}
-                  fill="#0b1220"
-                  stroke="#334155"
-                />
-                <text
-                  x={labelRight ? x + r + 4 + HOVER_PAD : x - r - 4 - HOVER_PAD}
-                  y={y + HOVER_FONT * 0.36}
-                  textAnchor={labelRight ? "start" : "end"}
-                  fontSize={HOVER_FONT}
-                  fontFamily="monospace"
-                  fill="#e2e8f0"
-                >
-                  {p.label}
-                </text>
-              </g>
-            )}
           </g>
         );
       })}
+      {hoveredCard}
     </g>
   );
 };
