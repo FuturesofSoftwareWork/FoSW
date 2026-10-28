@@ -87,6 +87,13 @@ searched for on the other side and came back empty-handed.
 Where you find a genuine refutation, treat it as the most valuable item of the
 run and write it up with the same care as a supporting one.
 
+**When the evidence the claim file ranks highest does not exist,** say so as a
+finding in its own right — in section 7's *Consequences*, and as a `suggestions`
+entry on `thesis` or `whatWouldChangeThis` if a part of the claim has no direct
+test at all. Do not quietly promote a weaker proxy into its place. Use a proxy
+only where the claim file names it as one, and say in the item's `note` that it
+is a proxy.
+
 ## Stance — only after the construct test
 
 Every item you propose to cite gets one stance. **All three require that the
@@ -115,6 +122,17 @@ Two tests before you write `contextual`:
    it is `wrong-construct`.
 2. Could the item, read alone, tell a reviewer whether the claim is true? If yes,
    it has a direction and is `supports` or `counter`, not `contextual`.
+
+**A source carries a stance only on the part of the claim it measured.** A team
+describing a practice with no outcome measured can support or counter a claim
+that teams do something, but not a claim that doing it works. Say in the `note`
+which part it speaks to.
+
+**Prevalence and content data** — how many teams do something, what their files
+contain, how often they change — has a direction whenever the claim predicts a
+prevalence, a content or a trend; cite it `supports` or `counter` by that
+prediction. If the claim predicts nothing about what the data counted, the data
+is not evidence for it, and `contextual` is not a home for it.
 
 **Do not manufacture balance.** If everything that measured the construct points
 one way, cite it that way. Filing one item as `counter` for the look of
@@ -203,6 +221,11 @@ Do not write to the ledger yourself. A separate step records your output.
 - Revisit a ledger topic with a new signal file only for a genuinely NEW
   development (new data, replication, refutation, major adoption shift). If so,
   title it as an update and state explicitly what is new since last time.
+- **Unreviewed drafts are neither new nor citable.** A file still in
+  `data/signal-drafts/` (not `accepted/` or `rejected/`) is waiting for a
+  person. If one measures the construct, do not redraft it and do not attach it:
+  list it by id in the report's section 6 as *awaiting review*, with the stance
+  it would take, so the reviewer can prioritise it and a later run can cite it.
 - Dedupe within this run too: if several outlets report the same news, output a
   single item with the original publication as `sourceUrl` and the other
   outlets' stories in `corroboration`. Two organisations reporting their own
@@ -449,10 +472,14 @@ Write all four keys, even when empty, so a reader can see you considered each.
   detachment, never a change of stance to `contextual` — an item that did not
   measure the construct is noise under this claim, and keeping it as context
   makes a thin evidence base look furnished.
-- **Changing an existing citation's stance** — `radar:apply` treats an
-  attachment of an already-cited signal as a no-op, so a stance change is a
-  detachment (reason: `restance: <why>`) plus an attachment with the new stance,
-  both in this file.
+- **Changing an existing citation's stance or `primary` flag** — `radar:apply`
+  treats an attachment of an already-cited signal as a no-op, so a change is a
+  detachment (reason: `restance: <why>`) plus an attachment with the new values,
+  both in this file. The test runs in both directions and is the same one you
+  apply to a new find: *what would this source be if you found it today?* A
+  `supports` can become `counter` as readily as the reverse, and a `primary`
+  flag on a signal whose `sourceUrl` is someone else's write-up should be
+  corrected the same way.
 - **`newPhenomena`** — always `[]` on a claim run. If your `wrong-construct`
   rejections turn out to measure the same different thing, that is a cluster;
   say so in the report and leave it for the clustering pass.
@@ -579,6 +606,10 @@ a guessed feed URL is a plausible 404 that contributes nothing forever after.
 Check the profile's existing feeds and all three nomination folders first, and
 never re-nominate someone already collected or already declined.
 
+`profile` is `claim-<claim-id>` only if `config/sources/claim-<claim-id>.json`
+exists; otherwise it is `generic`. `sources:promote` appends to an existing
+profile file and cannot create one.
+
 ## The retrieval report
 
 Write `data/_finder-report-claim-<claim-id>.<YYYY-MM-DD>.md` with these seven sections. The
@@ -596,8 +627,10 @@ are the claim run's deliverable.
    summary. Separate the supporting-side searches from the refuting-side ones so
    the balance of effort is visible. Include the queries that returned nothing.
 3. **Venue breakdown of output** — for each item you selected, where it came
-   from, classified as forum / personal blog / social / survey / academic /
-   journalism. Mark every item redrafted under *Exception 2* with the code it
+   from, classified as forum / personal blog / company engineering blog /
+   vendor / social / survey / academic / journalism. "Vendor" is a company
+   writing about its own product or a customer's use of it; a company writing
+   about how its own engineers work is a company engineering blog. Mark every item redrafted under *Exception 2* with the code it
    was previously declined under and why that does not apply here.
 4. **Source-mix check** — how your selection measured against the floors and caps
    in the claim file's source-mix section.
@@ -613,6 +646,14 @@ are the claim run's deliverable.
    "Independent of" names the sponsor, portfolio, vendor or event that the source
    belongs to, so a reviewer can see at a glance how many genuinely separate
    contexts are in play. Two rows naming the same one are not two contexts.
+
+   Below the table, list two things the proposal cannot carry:
+   - **Faults in cited signals** — a published signal that misstates its source
+     (wrong model, wrong figure, a method it did not use) or lacks a required
+     type field. Give what the signal says and what the source says. The run
+     cannot fix a published signal; a person can.
+   - **Awaiting review** — unreviewed drafts that measure the construct, per
+     *Deduplication*.
 7. **The proposal, argued** — the path of the `radar:apply` proposal file, then
    a human-readable account of it. The JSON is what gets applied; this section
    is what a reviewer reads to decide whether to apply it.
@@ -621,10 +662,9 @@ are the claim run's deliverable.
      whether it is unchanged, attached or re-stanced.
    - **Detachments** — every currently-cited item you propose removing, with
      what it actually measured. These match the proposal's `detachments`.
-   - **Waiting on promotion** — the attachments that point at drafts from this
-     run. They cannot apply until those drafts are published; any the reviewer
-     rejects must be deleted from the proposal before `radar:apply`, or it will
-     refuse the whole batch.
+   - **Waiting on promotion** — one line: which attachments point at this run's
+     drafts. Any the reviewer rejects must be deleted from the proposal before
+     `radar:apply`, or it refuses the whole batch.
    - **Consequences** — what you expect `radar:derive` to compute differently:
      whether `independentContexts` rises or falls and by how much, and whether
      `counterEvidence` flips. A fall in `independentContexts` raises

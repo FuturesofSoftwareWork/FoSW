@@ -452,6 +452,7 @@ Currently written:
 | Claim | Prompt |
 |-------|--------|
 | `teams-get-smaller` | [`claim-prompts/teams-get-smaller.md`](./claim-prompts/teams-get-smaller.md) |
+| `configuring-the-machine` | [`claim-prompts/configuring-the-machine.md`](./claim-prompts/configuring-the-machine.md) |
 
 Each claim prompt is launched on its own and reads
 [`claim-prompts/claim-prompt-instructions.md`](./claim-prompts/claim-prompt-instructions.md)
