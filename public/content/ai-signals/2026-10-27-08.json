@@ -1,0 +1,45 @@
+{
+  "id": "2026-10-27-08",
+  "title": "Stripe's unattended coding agents merge 1,300 PRs a week inside an environment Stripe maintains: directory-scoped rules, a curated tool subset from a 500-tool server, and sandboxes with no production access",
+  "summary": "Stripe describes the environment around Minions, the unattended coding agents it runs internally on its own fork of Block's Goose agent. Over 1,300 pull requests a week are now produced entirely by these agents and reviewed by people, up from 1,000 when Stripe first wrote about them.\n\nThree parts of that environment are maintained deliberately. Rules written by Stripe engineers are scoped to subdirectories and file patterns and attach as the agent moves through the code; global rules are kept to a minimum because the codebase would otherwise fill the context window, and the same files serve Cursor and Claude Code. Tools come from Toolshed, a central internal server with nearly 500 MCP tools; agents get an intentionally small default subset, and engineers can add themed sets through their own configuration. Agents run in isolated QA devboxes with no real user data, production services or arbitrary network access, which is why Stripe lets them act with full permissions and no confirmation prompts.\n\nLinting and pushes run as fixed steps, and CI failures go back to an agent at most once before a person takes over. Stripe gives no comparison showing which of these parts drives the results.",
+  "source": "Stripe Engineering blog",
+  "sourceUrl": "https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents-part-2",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Alistair Gray, Stripe engineer, describing the coding agents Stripe runs internally and the infrastructure around them",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [
+    "https://www.infoq.com/news/2026/03/stripe-autonomous-coding-agents/"
+  ],
+  "detectedAt": "2026-10-27",
+  "date": "2026-02-19",
+  "status": "published",
+  "tags": [
+    "unattended-agents",
+    "agent-permissions",
+    "sandboxing",
+    "mcp",
+    "rules-files",
+    "platform-engineering"
+  ],
+  "category": [
+    "AI Agents",
+    "Security & Risk",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Isolation buys autonomy** — Stripe grants full permissions only because the sandbox bounds the damage, which makes the sandbox the precondition for unattended work.",
+    "**Tool access is curated centrally** — a shared tool server with a small default set lets one addition reach every agent while keeping each agent focused.",
+    "**Context is scoped, not global** — rules attach by location in the codebase, a way of keeping organisational knowledge relevant without flooding the agent."
+  ],
+  "recommendedActions": [
+    "**Sandbox before granting autonomy** — run unattended agents only in environments without production data or open network access, then relax approval prompts inside them.",
+    "**Start agents with few tools** — give agents a small default tool set and let teams opt into more, rather than exposing every internal tool."
+  ],
+  "risksAndCaveats": [
+    "**Description, not measurement** — Stripe reports volume but no merge rates and no comparison isolating the effect of rules, tools or sandboxing.",
+    "**Built in-house** — the agent is Stripe's own fork, so its rules and tool layout are partly harness choices that teams buying an agent would not control."
+  ]
+}

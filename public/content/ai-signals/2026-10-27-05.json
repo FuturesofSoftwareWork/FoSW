@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-27-05",
+  "title": "Vercel's agent evals: an 8KB docs index in AGENTS.md took pass rates on post-training Next.js APIs from 53% to 100%, while an on-demand docs skill went unused",
+  "summary": "Vercel ran its own agent evaluations on Next.js 16 APIs that it says are absent from current models' training data, such as the 'use cache' directive, connection() and the new proxy file. With no documentation, agents passed 53% of the evals across build, lint and test checks. A skill packaging the same documentation, left for the agent to invoke when it chose, also scored 53%: it was never invoked in 56% of cases. Telling the agent explicitly to use the skill raised the score to 79%, but small changes in that instruction's wording moved results a lot.\n\nA compressed 8KB index in the project's AGENTS.md, mapping documentation paths to local doc files plus one line telling the agent to prefer retrieval over its training, reached 100% on build, lint and test. What made the difference was information the model could not otherwise know, made always available rather than left to the agent to fetch.\n\nFor teams, the lesson is about delivery as much as content: agents did not reliably go looking for knowledge they did not know they were missing.",
+  "source": "Vercel (company engineering blog)",
+  "sourceUrl": "https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals",
+  "sourceType": "article",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "replicated": false,
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-10-27",
+  "date": "2026-01-27",
+  "status": "published",
+  "tags": [
+    "agents-md",
+    "agent-skills",
+    "documentation",
+    "context-delivery",
+    "post-training-knowledge",
+    "evals"
+  ],
+  "category": [
+    "AI Agents",
+    "AI Tools",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "**Missing knowledge is the lever** — the large gain came on APIs the model had not seen, which is where supplied information can change outcomes.",
+    "**Agents do not fetch what they lack** — a skill holding the right documentation went unused in over half the runs, so availability beat on-demand retrieval.",
+    "**Internal APIs look the same** — an organisation's own services are as unknown to a model as a new framework release, which makes this pattern relevant beyond Next.js."
+  ],
+  "recommendedActions": [
+    "**Index internal docs for agents** — for internal libraries and services, test a compact index of documentation paths in the agent's standing context against leaving it to search.",
+    "**Check whether skills are invoked** — log how often agents actually load the skills a team publishes before counting on them."
+  ],
+  "risksAndCaveats": [
+    "**Vendor's own eval** — Vercel maintains Next.js and ran the evaluation itself; the post does not give the number of evals, the agent or the model, and nobody has replicated it.",
+    "**May close with better models** — the authors expect the gap between always-loaded and on-demand context to narrow as models improve at tool use."
+  ]
+}

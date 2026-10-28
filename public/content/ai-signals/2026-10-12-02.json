@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-12-02",
+  "title": "Cockroach Labs ran a migration-tools team as a hospital of agents for five months: humans admit the work and approve every merge, and issues cost about $84 each in tokens",
+  "summary": "Two senior Cockroach Labs engineers, Adam Storm and Rafi Shamim, report five months of running work on CockroachDB's MOLT migration tools through an agent pipeline organised like a hospital. Issues are patients. Humans decide which ones are admitted, and agent roles take each one through workup, a reviewed treatment plan, implementation, code review and discharge. From April to September the pipeline handled 1,299 issues, nearly half of them filed by agents, and merged 1,238 pull requests with seven reverts. It used just over $135,000 in tokens, about $84 per issue. Adding Db2 support took under two days and $4,172. The authors compare that with nine months and about $160,000 for Oracle support in 2024.\n\nMost of what they describe is management, not code. No code is written until a separate reviewer agent approves a plan, and changes over 1,000 lines must be split into smaller issues. After the first week of Db2 work every merge needed human approval, and human review is now where issues wait longest. They also added rules that hand a pull request to a human after repeated rework rounds, and a log of past human decisions that agents check before escalating. In July an audit found that 23% of the pipeline's 100,000 words of instructions could be removed without changing any gate.\n\nThis is one team's account of its own system, on a codebase it knows well.",
+  "source": "Cockroach Labs Engineering Blog",
+  "sourceUrl": "https://www.cockroachlabs.com/blog/experiment-running-hospital-code/",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Adam Storm and Rafi Shamim, senior engineers at Cockroach Labs who built and ran the pipeline, reporting their own five-month figures for issues, pull requests, reverts and token cost",
+  "leadTimeEstimate": "~12-18 months before staged, human-gated agent pipelines are a common way to staff maintenance work",
+  "corroboration": [],
+  "detectedAt": "2026-10-12",
+  "date": "2026-10-09",
+  "status": "published",
+  "tags": [
+    "agent-pipelines",
+    "human-in-the-loop",
+    "code-review",
+    "token-costs",
+    "triage",
+    "operating-model"
+  ],
+  "category": [
+    "SDLC Change",
+    "AI Agents",
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "**Cost per issue becomes visible** — at about $84 per issue in tokens, leaders can compare agent maintenance work directly with staffing costs.",
+    "**Humans move to admission and approval** — the people decide what enters the pipeline and what merges, and their review time sets the pace.",
+    "**Process design is the real work** — plan gates, size limits, escalation rules and rework limits did more for quality than the choice of model."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Single team, favourable ground** — this is one firsthand report on a well-tested codebase the authors know deeply, and has not been independently validated.",
+    "**The comparison is loose** — the 2024 Oracle effort was done by a different team under different conditions, so the speed and cost multiples are illustrative, not measured."
+  ]
+}

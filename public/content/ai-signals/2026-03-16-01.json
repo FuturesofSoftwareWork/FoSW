@@ -8,8 +8,18 @@
   "detectedAt": "2026-03-16",
   "date": "2026-03-13",
   "status": "published",
-  "tags": ["ai-coding-agents", "agent-architecture", "context-engineering", "open-source", "terminal-tools", "rust"],
-  "category": ["AI Agents", "SDLC Change"],
+  "tags": [
+    "ai-coding-agents",
+    "agent-architecture",
+    "context-engineering",
+    "open-source",
+    "terminal-tools",
+    "rust"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change"
+  ],
   "whyItMatters": [
     "The dual-agent (planner/executor) architecture pattern is emerging as a consensus design for reliable coding agents; teams building internal AI tooling should evaluate this separation early rather than retrofitting it later.",
     "Context degradation and instruction fade-out are identified as practical failure modes in long agent sessions, directly affecting code quality and task completion in real engineering workflows.",
@@ -25,5 +35,6 @@
     "Open-source terminal agents face adoption friction in organizations standardized on IDE-integrated tools (VS Code, JetBrains) with established security and compliance workflows.",
     "Model routing and dual-agent patterns add operational complexity; smaller teams may find simpler single-agent designs more practical despite theoretical advantages."
   ],
-  "decisionHorizon": "0,5 - 2 years"
+  "decisionHorizon": "0,5 - 2 years",
+  "signalType": "study"
 }
