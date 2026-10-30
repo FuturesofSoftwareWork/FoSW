@@ -168,3 +168,12 @@ test("CATEGORIES matches the thirteen documented values", () => {
   assert.ok(CATEGORIES.includes("Other"));
   assert.ok(!CATEGORIES.includes("other"));
 });
+
+test("sourceId and primarySourceId are optional strings", () => {
+  assert.deepEqual(validateSignal(valid({ sourceId: "b1f0c2d4", primarySourceId: "a9e8d7c6" })), []);
+  assert.deepEqual(validateSignal(valid()), []);
+  for (const field of ["sourceId", "primarySourceId"]) {
+    const errors = validateSignal(valid({ [field]: 42 }));
+    assert.ok(errors.some((e) => e.includes(field)), `${field} = 42 should be rejected`);
+  }
+});

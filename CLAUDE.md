@@ -125,6 +125,8 @@ Optional signal-typing / radar-provenance fields (all optional; render condition
 - `signalStage`: one of `leading`, `concurrent`, `lagging`
 - `leadTimeEstimate`: human-readable string, e.g. `"~6-12 months"`
 - `corroboration`: array of supporting source URLs
+- `sourceId`: string; id of the stored source record in the signal pipeline that the signal was drafted from. Written by the pipeline's export, not by hand
+- `primarySourceId`: string; id of the underlying primary source's record, when the captured page reports on a study or report published elsewhere
 - `observer`: who reported it and why credible (expected for `signalType: practitioner-account`)
 - `sampleSize`, `fieldworkPeriod`, `sponsor`: expected for `signalType: field-report`
 - `dataCollectedPeriod`, `replicated`: expected for `signalType: study`

@@ -110,6 +110,13 @@ export function validateSignal(s) {
     }
   }
 
+  // Ids of the pipeline's stored source records; optional, strings when present.
+  for (const field of ["sourceId", "primarySourceId"]) {
+    if (s[field] !== undefined && typeof s[field] !== "string") {
+      errors.push(`'${field}' must be a string, got ${typeof s[field]}`);
+    }
+  }
+
   const urlProblem = checkSourceUrl(s.sourceUrl);
   if (urlProblem) errors.push(urlProblem);
 
