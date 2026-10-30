@@ -67,7 +67,7 @@
       "signalId": "2026-03-11-08",
       "stance": "counter",
       "primary": true,
-      "note": "agent-generated tests provide only marginal utility, undercutting the labour saving the practice depends on"
+      "note": "Across six models on SWE-bench Verified, agents' own tests mostly act as observational feedback (print statements over assertions), and prompt-induced changes in test volume did not significantly change outcomes; the authors conclude agent-written testing reshapes process and cost more than final results."
     },
     {
       "signalId": "2026-02-18-02",

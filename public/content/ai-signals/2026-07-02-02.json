@@ -1,8 +1,8 @@
 {
   "id": "2026-07-02-02",
-  "title": "The caching flip: the bigger prompt is now the cheaper prompt — agentic cost is a harness-design property, not a model-price choice",
-  "summary": "New evidence is inverting a decade of 'trim your prompts to save money' intuition. The arXiv study 'Don't Break the Cache' shows that in long-horizon agent loops the dominant cost driver is structural: naive agents re-serialize and re-inject the entire history every turn, so token cost grows quadratically with session length. Exact-prefix prompt caching collapses that curve toward linear and cuts input-token costs by up to ~90% (practitioner reports put API savings at 41–80%), and since agentic sessions run 20–25x more input than output tokens, this is where the bill actually lives. The counterintuitive corollary: a larger, stable cached prefix is often cheaper than a lean, churning one, because every reformat or aggressive context compaction is a cache reset that forces full recomputation. The insight for engineering leaders: the biggest cost lever in agentic coding is not switching to a cheaper model — it is harness and context-engineering discipline (stable prefixes, cache-aware tools, compaction timed 'like a database vacuum'). Two teams on the identical model can see an order-of-magnitude cost gap purely from loop design, which means cost optimization is an in-house engineering capability, not just a procurement decision.",
-  "source": "arXiv Preprint ('Don't Break the Cache: An Evaluation of Prompt Caching for Long-Horizon Agentic Tasks'), with corroborating practitioner analyses",
+  "title": "Prompt caching cuts agent API costs by 41–80% across three providers, but what is cached matters: caching everything can slow responses",
+  "summary": "The arXiv preprint 'Don't Break the Cache' (Lumer et al., January 2026) evaluates prompt caching for long-horizon agentic tasks across OpenAI, Anthropic and Google, using more than 500 agent sessions on the DeepResearch Bench with 10,000-token system prompts. Caching reduced API costs by 41–80% and time to first token by 13–31%. Controlling which content is cached beat naively caching the full context: caching everything can paradoxically increase latency, while placing dynamic content at the end of the system prompt, avoiding dynamic function calling and excluding dynamic tool results gave more consistent benefits. In an ablation across prompt sizes, cost savings scaled linearly with prompt size, from 10–45% at 500 tokens to 54–89% at 50,000 tokens (89% for GPT-5.2, 88% for Claude Sonnet 4.5, 54% for GPT-4o). The authors note that summarizing or pruning old tool calls breaks cached representations, that cache lifetimes range from 5 minutes to 24 hours depending on the provider, and that practitioners should test on representative workloads rather than rely on published benchmarks.",
+  "source": "arXiv Preprint ('Don't Break the Cache: An Evaluation of Prompt Caching for Long-Horizon Agentic Tasks')",
   "sourceUrl": "https://arxiv.org/abs/2601.06007",
   "sourceType": "academic",
   "detectedAt": "2026-07-02",
@@ -20,21 +20,21 @@
     "Costs & Economics"
   ],
   "whyItMatters": [
-    "The dominant driver of agentic bills is loop architecture (quadratic context re-injection), not headline per-token price — so the highest-ROI cost work is engineering the harness, not renegotiating the model.",
-    "Old 'trim the prompt' advice is now actively counterproductive: a stable, well-cached large prefix can be cheaper and better-performing than a lean prompt that keeps breaking the cache.",
-    "Because two teams on the same model can differ ~10x on cost through loop design, cost efficiency becomes an internal engineering competency and a real differentiator, not merely a vendor-selection outcome.",
-    "Context compaction — which many agents (and defaults) trigger automatically near context limits — silently resets the cache and can spike cost; it needs to be timed and governed, not left implicit."
+    "Cost savings were positive for every model, prompt size and tool count tested, so enabling prompt caching is a low-risk first step for agent workloads; the choice of cache strategy mostly affected latency.",
+    "Savings grew with prompt size, so teams with long, stable system prompts stand to gain the most from caching.",
+    "How the harness is built matters: the paper found that keeping dynamic content out of the cached prefix gave more consistent benefits than caching the full context.",
+    "Context compaction may cost cache hits: the paper notes that summarizing or pruning old tool calls breaks cached representations. It did not measure how large that effect is in practice."
   ],
   "recommendedActions": [
     "Instrument cache-hit rate and input-token cost per agent session as first-class metrics, not just total spend.",
-    "Design harnesses for stable, append-only context prefixes and cache-aware tool ordering; avoid per-turn reformatting that invalidates the cache.",
-    "Treat context compaction as a deliberate, timed operation (like a DB vacuum) with measured cost/benefit, rather than an automatic trigger at the context ceiling.",
-    "Before switching models to save money, run a caching/context-engineering pass on the existing harness — it is often the larger and faster win."
+    "Design harnesses with a stable prefix and dynamic content at the end; avoid per-turn reformatting that invalidates the cache.",
+    "Treat context compaction as a deliberate operation and measure its effect on cache hits, since summarizing or pruning old context breaks cached prefixes.",
+    "Before switching models to save money, test caching on your own agent traces; the authors advise testing on representative workloads rather than relying on published benchmarks."
   ],
   "risksAndCaveats": [
-    "Caching economics depend on provider implementations (Anthropic, OpenAI, Google differ), cache TTLs, and request routing across replicas, so realized savings vary and can erode if traffic patterns break prefix reuse.",
-    "Caching reduces the linear re-processing term but does not eliminate the underlying quadratic growth of accumulating context, so very long horizons still need genuine context management.",
-    "Some cost-reduction percentages come from practitioner/vendor sources and specific workloads; absolute savings should be validated on your own agent traces."
+    "Savings depend on provider implementation (OpenAI, Anthropic and Google differ), cache lifetimes of 5 minutes to 24 hours, and server load and routing, which the authors say can change results.",
+    "The study uses a single benchmark (DeepResearch Bench, web-research agent tasks) with a 10,000-token system prompt, so it does not show results for coding agents specifically.",
+    "It is a preprint; the paper's own advice is to validate on your own workloads before relying on the percentages."
   ],
   "decisionHorizon": "now",
   "signalType": "study"

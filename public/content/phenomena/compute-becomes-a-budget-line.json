@@ -80,7 +80,7 @@
       "signalId": "2026-07-02-02",
       "stance": "supports",
       "primary": true,
-      "note": "Cost of long-horizon agent loops grows quadratically with session length under naive context re-injection; exact-prefix caching cuts input cost by up to ~90% (41–80% in practitioner reports). Two teams on the same model can differ ~10x on cost from loop design alone."
+      "note": "Prompt caching cut API costs by 41–80% across OpenAI, Anthropic and Google models in long-horizon agent sessions, and savings rose with prompt size (up to 89% at 50,000 tokens)."
     },
     {
       "signalId": "2026-05-06-09",
