@@ -134,7 +134,7 @@
       "signalId": "2026-10-19-02",
       "stance": "supports",
       "primary": true,
-      "note": "Anthropic Claude Code team publishes its tiered review policy: classifier sets human approvers by change risk, low-risk changes merge with no human approval, reverts fell >40% while merged PRs doubled; vendor describing its own team"
+      "note": "Anthropic Claude Code team publishes its tiered review policy: classifier sets human approvers by change risk, low-risk changes merge with no human approval, the share of PRs reverted fell by more than 40% while merged PRs doubled; vendor describing its own team"
     },
     {
       "signalId": "2026-09-29-01",
