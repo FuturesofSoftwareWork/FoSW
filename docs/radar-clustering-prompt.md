@@ -365,12 +365,44 @@ practitioner report.
 
 ### `thesis`, `title`, `label`, `currentPressure`
 
-- **`thesis`** — the forward-looking claim, stated so that it could be wrong.
-  Name the mechanism and say what would change. Two to four sentences. If a
-  reader cannot imagine evidence that would refute it, rewrite it.
-- **`title`** — the headline, written to make a reader want the rest. Must differ
-  from the thesis; the validator checks.
-- **`label`** — the blip label. **Four words maximum**, validator-enforced, and
+- **`thesis`** — the forward-looking claim, stated so that it could be wrong,
+  written for a reader who will take a few seconds to understand the
+  phenomenon. If a reader cannot imagine evidence that would refute it, rewrite
+  it. Rules:
+  - **Length:** about 70 words is the sweet spot (roughly 40 to 80). Go longer
+    only when every extra sentence gives a new reader something they need.
+  - **About the phenomenon, not the studies.** State the broad claim and the
+    mechanism; do not build it around one report. Name a source only where one
+    figure makes the claim concrete, and then say what it is ("an NBER study of
+    500,000 GitHub developers"), never a bare number. Never let the thesis read
+    as a summary of one signal.
+  - **Prefer the newest evidence.** The field changes quickly, so lead with the
+    most recent findings and let older ones carry the claim only where nothing
+    newer replaces or contradicts them.
+  - **Plain words.** No insider jargon, no metaphor, no unexplained acronyms.
+  - **The claim only.** Do not write "This would be wrong if…" or any other
+    refutation condition into the thesis: that belongs in `whatWouldChangeThis`.
+    Reviewer notes and evidence-quality markers ("THIN: …") do not belong in it
+    either; they go in `reachRationale` or `currentPressure`.
+- **`title`** — a plain, descriptive headline: a reader who sees only the title
+  should understand what is changing. Must differ from the thesis; the validator
+  checks. Rules:
+  - **One sentence, about 6 to 12 words,** naming what changes and where.
+    Good: *"Individual speed-ups shrink at team and company level"*; *"The unit
+    of delivery stops being the team of eight"*.
+  - **No metaphors, idioms or riddles.** Bad: *"Pencils down: hand-written code
+    becomes the exception"*, where the metaphor has to be decoded first.
+  - **Not tied to one study, company or number.** Bad: *"Fifty to one, then back
+    again"*, which only makes sense to someone who knows the single case behind
+    it. Use a figure only if it is the general finding.
+  - **No two-part headlines** of short sentences or fragments. Bad: *"Output
+    held steady. The day got worse."* Besides being a pair of claims, it asserts
+    something the evidence may not support (here, that output stayed steady).
+    State one claim the evidence supports.
+  - Before proposing, test it: could someone who reads only this title say what
+    the phenomenon is?
+- **`label`** — the blip label. Plain and descriptive, like the title, with no
+  metaphor. **Four words maximum**, validator-enforced, and
   `radar:apply` slugifies it into the id and the filename ("Teams get smaller" →
   `teams-get-smaller.json`). Two labels that slugify identically collide and abort
   the batch, and a label that collides with an existing file aborts it too —
@@ -457,6 +489,7 @@ against, and the review then measures your fluency rather than the world.
 `whatWouldChangeThis` is a short list of observations that would force a
 rethink — stated concretely enough that someone could go and look. It is the
 field that keeps the thesis falsifiable in practice rather than in principle.
+Everything that would refute the thesis goes here, not into the thesis text.
 `potentialImpact` is one of `low`, `moderate`, `high`, `transformative`, and it
 is about consequence if true, entirely separate from reach.
 

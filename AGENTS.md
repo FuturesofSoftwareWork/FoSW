@@ -133,6 +133,7 @@ Only include a type-specific field when its value is actually stated in the sour
 - Evidence `stance` must be one of: `supports`, `counter`, `contextual`
 - Work dimensions (seven): `nature-and-division-of-work`, `organisation-and-leadership`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
 - `construct` — what a source must measure to count as evidence here. Optional on drafts, **required on published**.
+- Wording of `label`, `title` and `thesis`: the title is a plain descriptive sentence (no metaphor, nothing tied to one study), the thesis is about 70 words about the phenomenon rather than one report, and refutation conditions go in `whatWouldChangeThis`, never in the thesis. Rules and examples are in `docs/radar-clustering-prompt.md`.
 - `possibleReachChange` — derived candidate for reach review. Carries no ring.
 - `reachReviewedAt` is now **required on published only**; its absence means no human has judged reach yet, and `radar:accept` refuses on it.
 
