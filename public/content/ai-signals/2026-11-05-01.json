@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-05-01",
+  "title": "Revolut makes self-hosted GLM the default for about 2,000 engineers after a $300-a-month Claude Code budget showed little impact, and reports paying about a tenth as much",
+  "summary": "David Abitbol, who leads AI operations at Revolut, told conference audiences that the bank now serves about 2,000 engineers with the open-weight GLM model on 56 NVIDIA B200 GPUs, and that open models have become its default for coding agents. Revolut launched Claude Code in January 2026 with a budget of $300 per engineer per month. He says that was not enough to last an engineer the month. From April 2026 it offered self-hosted GLM with the promise of unlimited tokens, keeping Anthropic and OpenAI models as a smaller, budgeted option for the hardest problems. He reports a blended cost of $0.30 per million tokens, about a tenth of the earlier cost, on a flat invoice, and says tuning alone cut time to first token by 88% with the GPU count unchanged. ",
+  "source": "AI Engineer NYC 2026 (conference talk), also given at NVIDIA GTC Berlin 2026",
+  "sourceUrl": "https://ai.engineer/nyc/2026/talks/revolut",
+  "sourceType": "video",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "David Abitbol, who leads AI operations at Revolut, describing Revolut's own AI rollout, costs and engineering metrics in two conference talks",
+  "leadTimeEstimate": "~12-24 months before open models as the default for coding agents are common in large engineering organisations",
+  "corroboration": [
+    "https://www.nvidia.com/en-us/on-demand/session/gtcberlin26-sb61234/",
+    "https://www.binance.com/en/square/post/384250946705439"
+  ],
+  "detectedAt": "2026-11-05",
+  "date": "2026-10-13",
+  "status": "published",
+  "tags": [
+    "open-weight-models",
+    "self-hosting",
+    "ai-spend",
+    "budget-governance",
+    "inference",
+    "lead-time"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Agents",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**Budgets shape what agents do** — Abitbol's account suggests a tight per-engineer limit keeps agents on the work engineers think is worth the money.",
+    "**Flat bills change the question** — where others are tightening per-engineer caps, Revolut moved routine work to capacity with a flat invoice.",
+    "**Frontier becomes the exception** — a regulated bank treats open models as the default and keeps frontier models as a budgeted option for the hardest problems."
+  ],
+  "recommendedActions": [
+    "**Analyse potential of open weight models** — review the costs, engineering effort, and capacity requirements before committing to self-hosting."
+  ],
+  "risksAndCaveats": [
+    "**Vendor-linked source** — the figures are Revolut's own, the NVIDIA session was presented by Together AI, and a slide names Together alongside the GPUs without explaining its role."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "2026-10-05-04",
+  "title": "Wagtail's core team spent a month on a cheap open-weight model: a billion tokens cost $68, and the lesson was that energy and spend need budgets, not that the model fell short",
+  "summary": "Wagtail, the open-source CMS, set its core team a September challenge: do AI-assisted development on GLM 5.3 Flash, an efficient open-weight model, rather than frontier models. Thibaud Colas reports that the team used about 2 billion tokens, half of them on GLM 5.3 Flash at a cost of $68, and completed UI, documentation and evaluation work on it. They missed their energy target by 3.5 times. Much of the overrun came from one hastily built MCP server prototype that burned 450 million tokens almost overnight on an unsuitable model, and from benchmarking 14 models. Provider capacity for the popular open model also degraded under demand.\n\nThe team's October decisions are organisational rather than technical: measure energy and spend continuously, give R&D its own budget separate from production work, and stop treating tokens consumed as a measure of progress. Vercel's aggregate data shows the same pattern at scale. Open-weight models handled 56% of tokens on its AI Gateway in August, up from 7% in December, but only 14% of spend.\n\nCheap models are now good enough for most routine engineering work. The cost risk has moved to unmonitored experiments and runaway agent loops.",
+  "source": "Wagtail Blog",
+  "sourceUrl": "https://wagtail.org/blog/one-month-on-glm-53-flash/",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Thibaud Colas, Wagtail core team member, reporting the core team's own month-long experiment with token, cost and energy figures",
+  "leadTimeEstimate": "~6-12 months before per-team token and energy budgets are routine",
+  "corroboration": [
+    "https://vercel.com/blog/ai-gateway-production-index-september-2026"
+  ],
+  "detectedAt": "2026-10-05",
+  "date": "2026-10-02",
+  "status": "published",
+  "tags": [
+    "open-weight-models",
+    "token-costs",
+    "energy",
+    "model-routing",
+    "finops",
+    "open-source"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Tools",
+    "Ethics & Policy"
+  ],
+  "whyItMatters": [
+    "**Routine work runs cheaply now** — a real maintainer team did a month of everyday development on an open-weight model for tens of dollars.",
+    "**Cost risk sits in experiments** — the overrun came from one prototype and from model benchmarking, not from the daily work the team set out to make efficient.",
+    "**Energy becomes a managed number** — a team that measured energy found it was 3.5 times over target, which most organisations would never have seen."
+  ],
+  "recommendedActions": [
+    "**Separate R&D from production budgets** — give agent experiments and prototypes their own token allowance so they cannot quietly consume the operating budget.",
+    "**Run a routine-work trial on an open model** — pick one team and one month, as Wagtail did, and compare cost and output quality against your current default."
+  ],
+  "risksAndCaveats": [
+    "**Single team's report** — this is one open-source core team's firsthand account and has not been independently validated or repeated elsewhere.",
+    "**Capacity is not guaranteed** — popular open models degraded under demand during the trial, so cheap inference may not be reliable at the moment you need it."
+  ]
+}

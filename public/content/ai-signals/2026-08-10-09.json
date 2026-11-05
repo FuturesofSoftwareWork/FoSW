@@ -1,0 +1,45 @@
+{
+  "id": "2026-08-10-09",
+  "title": "Snowflake's SVP of Engineering: about 5% of engineers explore AI tools unprompted, and you cannot hire for the trait",
+  "summary": "Vivek Raghunathan, SVP of Engineering at Snowflake, argues from running a large engineering organisation through AI adoption that roughly 5% of engineers are 'explorers' who experiment with new tools and push boundaries without being asked, while about 95% are 'exploiters' who work effectively inside structures someone else defines — a continuum, not a judgment. His operationally interesting claim is the second one: you cannot recruit for this. Who becomes a high performer with AI is not predictable in advance from seniority or track record, because the traits that matter are curiosity, adaptability and willingness to learn, and those do not survive an interview loop as reliable signals. His conclusion inverts the prevailing '10x/100x engineer' narrative: the return does not come from finding or copying outliers, it comes from systematically moving the middle of the distribution up through structured learning and mentorship. He proposes a corresponding metric — stop counting breakthrough stories, start tracking how many people moved up a meaningful notch this quarter.",
+  "source": "Stack Overflow Blog (Leaders of Code podcast)",
+  "sourceUrl": "https://stackoverflow.blog/2026/08/05/the-myth-of-the-100x-engineer/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Vivek Raghunathan, SVP of Engineering at Snowflake, speaking from running a large engineering organisation through AI-tool adoption; reported by Eira May, B2B Editor at Stack Overflow",
+  "leadTimeEstimate": "~12 months ahead of mainstream hiring and performance-management practice",
+  "corroboration": [],
+  "detectedAt": "2026-08-10",
+  "date": "2026-08-05",
+  "status": "published",
+  "tags": [
+    "hiring",
+    "talent",
+    "performance management",
+    "AI adoption",
+    "engineering leadership"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Org & Leadership",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "It directly contradicts the hiring strategy many organisations adopted this year — recruiting for 'AI-native' engineers at a premium. If the trait is not identifiable from outside, that premium buys noise, and the same budget spent on internal enablement has a knowable return.",
+    "It reframes the AI productivity question from a talent-acquisition problem into a distribution problem: the value is in the 95%, and the leadership job is raising the middle rather than celebrating the tail.",
+    "The proposed metric — people who moved up a notch this quarter — is measurable, resistant to anecdote, and points enablement budget at something falsifiable. Most current AI-productivity reporting counts activity or celebrates individual wins, neither of which survives scrutiny.",
+    "If only ~5% explore unprompted, then adoption programmes that rely on organic spread will stall at that 5%, and structured mentorship is not a nice-to-have but the actual transmission mechanism."
+  ],
+  "recommendedActions": [
+    "Stop screening for 'AI-native' as a hiring filter until you can show it predicts anything, and redirect the premium into structured internal enablement.",
+    "Instrument a quarterly measure of how many engineers advanced a level of AI-tool proficiency, and hold enablement programmes to it instead of to adoption or usage counts.",
+    "Identify your existing explorers and give them an explicit mandate to teach, rather than treating their output as the benchmark everyone else is failing to meet."
+  ],
+  "risksAndCaveats": [
+    "This is a single senior leader's framework offered in a podcast, with no original data, no measurement and no comparative case — the 5%/95% split is an estimate, not a finding, and should not be quoted as a statistic.",
+    "Snowflake is a large, well-resourced infrastructure company; the claim that explorers cannot be hired may reflect a labour market where such candidates are simply outbid rather than genuinely unidentifiable.",
+    "It has not been independently validated, and the advice is self-consistent with an incumbent's interest in retaining and developing existing staff rather than competing for scarce external talent."
+  ]
+}
