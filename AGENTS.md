@@ -25,7 +25,7 @@ Alternative Futures of Software Work — a research communication site by VTT, U
 - `npm run build:preview` — the same build based at `/FoSW/preview/`; set `VITE_RADAR_PREVIEW=1` alongside it to force drafts and the radar on
 - `npm run lint` — ESLint (zero warnings allowed)
 - `npm run preview` — preview production build
-- `npm run verify:radar <baseUrl>` — 15 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
+- `npm run verify:radar <baseUrl>` — 18 headless Puppeteer checks against a server that is *already running*. Not wired into `build`/`test`/`lint`, since it would fail spuriously without one. Point it at `npm run dev` or a preview build — an ordinary production build has no radar to check.
 - `npm run signals:promote` — move reviewed drafts from `data/signal-drafts/accepted/` into `public/content/ai-signals/`, append their `index.json` entries, and record every decision in the seen-ledger. See the pipeline section below.
 - `npm run radar:prepare` — digest uncovered signals for the clustering pass
 - `npm run radar:apply -- <proposal.json>` — apply a proposal; the only writer of a phenomenon's `evidence`, and the only thing that writes machine-owned fields from a proposal (`radar:derive` writes the derived ones on its own)
@@ -95,6 +95,7 @@ scripts/
 - **One workflow, one deploy.** `.github/workflows/deploy.yml` builds production, stashes it, builds the preview, verifies the radar against it, assembles `_site/` with the preview nested at `_site/preview/`, and pushes `gh-pages` **once**. It used to be two workflows pushing separately; each push spawns a GitHub Pages deployment, only one may be in flight, and the two raced — on 2026-08-06 one wedged in `building` and the site served a stale build for two hours while every run showed green. A `concurrency:` group cannot fix that, because it governs the workflows and not the deployments GitHub spawns from their pushes. Do not split this back into two workflows. `verify:radar` now gates production as well as the preview.
 - **SPA fallback:** every build emits `dist/404.html`, a copy of the prerendered shell. GitHub Pages serves it *without redirecting*, so `/FoSW/<kind>/<id>/` deep links — the URLs the drawer's Copy-link button hands out — resolve instead of hard-404ing. The production copy also forwards `/preview/` paths via `sessionStorage["radarDeepLink"]`, restored by the inline snippet in `index.html`, for the case where Pages answers a preview miss with the root 404 page.
 - **Blip placement:** `placeBlips` in `src/config/radarGeometry.ts` seeds from the per-id hash and then nudges overlapping pairs apart, clamped to each blip's own ring band and sector wedge. A cell holds about five blips at this spacing; beyond that it stays crowded on purpose, because moving a blip out of its cell would misstate how far that change has reached.
+- **Blip size and fade:** size is `potentialImpact` and fill strength is the age of `latestEvidenceDate` (`BLIP_RADIUS`, `BLIP_FADE` in `radarGeometry.ts`, `freshnessOf` in `phenomenon.ts`). Age is worked out at render time, so blips fade without a deploy. A blip fades to a floor and never disappears, because quiet does not mean false, and the floor stays above the filter's 0.18 dim. A published phenomenon must carry a rating. Size reads as importance on a public page, so treat changing a rating as an editorial decision.
 
 ## Content Schema
 
@@ -133,6 +134,7 @@ Only include a type-specific field when its value is actually stated in the sour
 - Evidence `stance` must be one of: `supports`, `counter`, `contextual`
 - Work dimensions (seven): `nature-and-division-of-work`, `organisation-and-leadership`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
 - `construct` — what a source must measure to count as evidence here. Optional on drafts, **required on published**.
+- `potentialImpact` — one of `low`, `moderate`, `high`, `transformative`: consequence if true, separate from reach. Sets the blip's size. Optional on drafts, **required on published**.
 - Wording of `label`, `title` and `thesis`: the title is a plain descriptive sentence (no metaphor, nothing tied to one study), the thesis is about 70 words about the phenomenon rather than one report, and refutation conditions go in `whatWouldChangeThis`, never in the thesis. Rules and examples are in `docs/radar-clustering-prompt.md`.
 - `possibleReachChange` — derived candidate for reach review. Carries no ring.
 - `reachReviewedAt` is now **required on published only**; its absence means no human has judged reach yet, and `radar:accept` refuses on it.

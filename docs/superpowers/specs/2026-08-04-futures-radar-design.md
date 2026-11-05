@@ -122,11 +122,11 @@ A radar of phenomena where:
 | How reach is set | Human judgment with a written rationale; never computed |
 | Evidence | An auditable **profile** in the drawer; does not determine position |
 | Contestation | Separate marker; does not affect the ring |
-| `potentialImpact` | Kept as a drawer field; the alternate radius mode is deferred to v2 |
+| `potentialImpact` | Sets blip size (changed 2026-11-05; see Freshness). The alternate radius mode stays deferred |
 | Sectors | Work dimensions, config-driven, `360/N`, **7 as built** (9 as first specced) |
 | Taxonomy | One work-dimension vocabulary: primary = sector, rest = derived tags |
 | What changes | `implications[]` — statements, not just dimension tags |
-| Blip size | Freshness (how recently reinforced) |
+| Blip size | Potential impact (changed 2026-11-05; freshness moved to fill strength) |
 | Contested marker | Lightning bolt inside the blip, no ring |
 | Evidence profile | Independent contexts × evidence types × quarters, never a raw count |
 | Contested | Independent flag; set editorially |
@@ -370,7 +370,7 @@ Field notes:
 | `contested` | Independent of `observedReach` — a phenomenon may be field-level and contested. Suggested by `radar:derive`, confirmed editorially. Renders the lightning bolt. |
 | `contestedNote` | Why it is contested, in one sentence. Required when `contested` is true. |
 | `firstObserved` | Earliest evidence date. Derived. |
-| `latestEvidenceDate` | **Newest evidence publication date.** Derived. Drives blip size. |
+| `latestEvidenceDate` | **Newest evidence publication date.** Derived. Drives blip fade. |
 | `lastReviewed` | When a human last accepted changes. Set by `radar:accept`, **never** by `radar:apply` — see *Who writes what*. |
 | `reachHistory` | Appended by `radar:snapshot` from the reviewed reach at snapshot time. |
 | `whatWouldChangeThis` | Falsifiability. Also a guard against over-abstraction — a phenomenon nobody can falsify is too vague for an evidence-based radar. |
@@ -757,15 +757,20 @@ harder to defend in a paper than a stated judgment, and wrong in both directions
 
 ## Freshness
 
-`freshness = today − latestEvidenceDate`, bucketed into four steps driving blip
-radius:
+> **Changed 2026-11-05.** Freshness used to set blip radius, and now sets fill
+> strength. Readers take a bigger blip to mean a more important one, so size now
+> carries `potentialImpact`. A faded blip keeps a solid outline, and fading stops
+> at a floor, because quiet does not mean false.
 
-| bucket | age of `latestEvidenceDate` | blip radius |
+`freshness = today − latestEvidenceDate`, bucketed into four steps driving fill
+strength:
+
+| bucket | age of `latestEvidenceDate` | fill strength |
 | --- | --- | --- |
-| `current` | within the current quarter | 9 |
-| `recent` | 3–6 months | 7.5 |
-| `ageing` | 6–12 months | 6 |
-| `stale` | over 12 months | 4.5 |
+| `current` | up to 92 days | 1 |
+| `recent` | 93–183 days | 0.8 |
+| `ageing` | 184–365 days | 0.65 |
+| `stale` | over 365 days, or no date | 0.5 |
 
 Orthogonal to reach, and it answers a question the ring cannot: *is this still
 moving, or did we last see evidence a year ago?* Silent staleness is a real failure
@@ -787,7 +792,7 @@ freshly maintained while the world's signal is stale.
 | `latestEvidenceDate` | Publication date of the **newest** evidence | yes, from `evidence[]` |
 | `lastReviewed` | When a human last accepted changes | no, stamped by `radar:accept` |
 
-Blip size uses `latestEvidenceDate` — the world's activity, not ours. All three
+Blip fade uses `latestEvidenceDate` — the world's activity, not ours. All three
 appear in the drawer, because they answer different questions, and `lastReviewed`
 supports a warning the others cannot: *this claim has not been re-examined in nine
 months*, which is distinct from *no new evidence has appeared*.
@@ -834,7 +839,8 @@ Three things to learn, and no more:
 | --- | --- |
 | Ring | `observedReach` |
 | Sector + colour | `primaryDimension` |
-| Size | recent evidence activity (freshness) |
+| Size | `potentialImpact` |
+| Fill strength | recent evidence activity (freshness) |
 | Lightning bolt inside the blip | `contested` |
 
 Reach is deliberately **not** repeated in fill, opacity, or glow — position already
@@ -1330,4 +1336,4 @@ solved; label layout is not.
 | **Traction inferred from article volume.** Ten pieces about one dark factory look like spread and are not. | Reach is never computed. The rationale must name *independent contexts* or *field effects*, not signal counts; raw counts are excluded from the drawer summary and the hover card. |
 | **Forerunner cases prematurely called field-level.** The most interesting phenomena are the most tempting to overcall. | A short human-reviewed `reachRationale` is mandatory, and field-level requires a stated effect on expectations, operating models, institutions or competitive conditions — not merely impressive examples. |
 | **Ring positions drift too easily.** Weekly runs nudging blips would make the axis meaningless. | Routine evidence linking cannot change `observedReach` at all; `radar:apply` is barred from the field and the validator enforces it. Movement requires a person and a `reachHistory` entry. |
-| **Ring positions never change.** The opposite failure: with no automatic movement, a radar can silently freeze. | `radar:derive` raises `possibleReachChange` when evidence suggests replication or field effects; freshness shrinks blips that have gone quiet; the quarterly snapshot forces a look at every phenomenon. |
+| **Ring positions never change.** The opposite failure: with no automatic movement, a radar can silently freeze. | `radar:derive` raises `possibleReachChange` when evidence suggests replication or field effects; freshness fades blips that have gone quiet; the quarterly snapshot forces a look at every phenomenon. |

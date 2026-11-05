@@ -49,7 +49,8 @@ confusion has a signature you can catch in a rationale:
   precisely so it does not have to double as a ring.
 - *Importance.* That is `potentialImpact`, a separate field. Transformative and
   barely spread is an ordinary combination, and arguably the most interesting one
-  a futures radar can show.
+  a futures radar can show. It sets the size of the blip on the public radar, so
+  have the person confirm the rating in this review too. It never moves the ring.
 - *Desirability.* Reach is agnostic. A widely-spread change nobody wanted is a
   field-level shift.
 

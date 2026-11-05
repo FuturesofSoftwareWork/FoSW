@@ -47,7 +47,7 @@ const DAY = 24 * 60 * 60 * 1000;
 
 /**
  * How recently the world produced evidence — deliberately not how recently we
- * touched the record. Drives blip size.
+ * touched the record. Drives how far a blip fades.
  */
 export function freshnessOf(
   p: Phenomenon,

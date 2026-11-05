@@ -3,8 +3,10 @@ import { WORK_DIMENSIONS } from "@/config/radarDimensions";
 import {
   RINGS,
   RING_EDGES,
+  RING_FONT,
   RING_LABEL,
   VIEWBOX,
+  ringLabelBox,
   sectorAngles,
   wrapSectorLabel,
 } from "@/config/radarGeometry";
@@ -13,12 +15,6 @@ const pointOnCircle = (deg: number, r: number) => {
   const rad = ((deg - 90) * Math.PI) / 180;
   return { x: VIEWBOX.cx + r * Math.cos(rad), y: VIEWBOX.cy + r * Math.sin(rad) };
 };
-
-/** Ring labels name the axis the whole radar is built on, so they are sized to
- *  be read rather than to stay out of the way. They sit on each band's outer
- *  boundary, where placeBlip's radial inset keeps blips clear of them. */
-const RING_FONT = 11;
-const RING_CHAR = RING_FONT * 0.62; // monospace advance width
 
 const SECTOR_FONT = 13;
 const SECTOR_LINE = 15;
@@ -70,25 +66,18 @@ const RadarCanvas = ({ children }: { children: ReactNode }) => {
         );
       })}
 
-      {/* Ring labels sit on each band's outer boundary — where placeBlip's radial
-          inset structurally keeps blips at least ~13px clear — rather than at
-          the band midpoint, where blips are free to land. A backing rect keeps
-          them readable over the gradient. The wording says evidence has spread,
+      {/* Ring labels sit on each band's outer boundary, and placeBlips keeps blips
+          off their boxes. A backing rect keeps them readable over the gradient. The wording says evidence has spread,
           not that we are certain — the axis is reach, not confidence. */}
       {RINGS.map((ring, i) => {
-        const edge = VIEWBOX.r * RING_EDGES[i + 1];
-        const y = VIEWBOX.cy - edge;
         const label = RING_LABEL[ring];
-        // Backing-rect width tracks the font: these are the only labels drawn
-        // over the gradient, and a rect sized for a smaller font leaves the ends
-        // of the word sitting on the background it was meant to mask.
-        const half = (label.length * RING_CHAR) / 2 + 3;
+        const box = ringLabelBox(i);
         return (
           <g key={ring}>
-            <rect x={VIEWBOX.cx - half} y={y - RING_FONT} width={half * 2} height={RING_FONT + 5} fill="#030711" />
+            <rect x={box.x} y={box.y} width={box.width} height={box.height} fill="#030711" />
             <text
               x={VIEWBOX.cx}
-              y={y}
+              y={box.baseline}
               textAnchor="middle"
               fontSize={RING_FONT}
               fontFamily="monospace"

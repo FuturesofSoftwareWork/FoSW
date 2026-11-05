@@ -385,7 +385,7 @@ npm run radar:reject -- <id> [<id>...] --reason "why"
 the real validator, so a bad batch is a refusal rather than a red build — and
 because `validate` runs first inside `npm run build`, a red build would block
 everyone from building, previewing or deploying anything. The refusals worth
-anticipating are a missing `reachReviewedAt` and a missing `construct`; both
+anticipating are a missing `reachReviewedAt`, `construct` or `potentialImpact`; all
 mean the reach review has not happened yet.
 
 It **warns without refusing** when reach was judged before the newest evidence
@@ -510,6 +510,7 @@ Helsinki research site those are not world-readable.
 | `radar:apply` aborts | unknown id, unpublished signal, slug collision, or a new phenomenon with no `construct` | fix `_radar-proposal.json`; re-running is safe |
 | `radar:accept` refuses "no reachReviewedAt" | the reach review has not happened for that id | run B5. Do not hand-write the date |
 | `radar:accept` refuses on `construct` | required on published, absent on the draft | write one during the reach review |
+| `radar:accept` refuses on `potentialImpact` | required on published, because it sets the blip's size | a person rates it during the reach review |
 | `radar:accept` warns about a stale reach | reach was judged before the newest evidence | not a blocker; decide whether to re-review first |
 | build fails on `evidenceProfile` / `firstObserved` / `latestEvidenceDate` | someone hand-edited a derived field | `npm run radar:derive` |
 | build fails "referenced by index.json but missing on disk" | a phenomenon was deleted by hand | that is what `radar:reject` exists to prevent; restore the file or remove the index entry |
