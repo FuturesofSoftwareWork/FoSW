@@ -1,8 +1,8 @@
 {
   "id": "configuring-the-machine",
   "label": "Configuring the machine",
-  "title": "Instructions decay. Context and limits don't.",
-  "thesis": "Most teams adopt a packaged coding agent — a vendor's, or an internal platform team's, with model and harness included — and what they build is the environment it works in. As models improve, that work is changing character. Instructions about how to work are absorbed by each new model generation, while the context the agent cannot know — the organisation's domain, architecture, conventions and ownership — and the limits on what it may touch become the lasting part. The scarce skill moves from instructing the machine to informing and bounding it. This would be wrong if organisation-specific context proves no more effective than procedural instruction on work that depends on it, or if procedural instruction keeps its value across model generations.",
+  "title": "What lasts is the agent's context and limits, not its instructions",
+  "thesis": "Most teams use a ready-made coding agent and build the environment around it. Each new model absorbs more of the instructions teams write, so those matter less over time. What lasts is the context the agent cannot know, such as the organisation's domain, architecture and ownership, and the limits on what it may touch. The scarce skill shifts from instructing the machine to informing and bounding it.",
   "currentPressure": "Each model generation makes more of a team's hand-written instruction redundant: controlled tests find rules files and prescribed techniques add little or nothing, and a contract harness that rescued a cheap model only slowed a frontier one. The one test that supplied context the agent could not otherwise know found a large gain.",
   "status": "published",
   "primaryDimension": "nature-and-division-of-work",

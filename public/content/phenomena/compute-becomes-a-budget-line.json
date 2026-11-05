@@ -1,8 +1,8 @@
 {
   "id": "compute-becomes-a-budget-line",
-  "label": "Justifying machine spend",
-  "title": "From token maximising to cost consciousness",
-  "thesis": "Machine work is becoming a managed operating expense that engineering organisations plan, attribute and defend — the way they already do headcount. As consumption outruns falling unit prices, the questions shift from which model is best to what a resolved task costs, who is accountable for the spend, and which work is worth running a machine on at all.",
+  "label": "Justifying AI spend",
+  "title": "From token maximising to managing the AI bill",
+  "thesis": "AI work is becoming a managed operating expense that engineering organisations plan, attribute and defend — the way they already do headcount. As consumption outruns falling unit prices, most respond by capping and approving spend per engineer, while a first reported case moves routine work to open models on capacity with a flat bill. The questions shift from which model is best to what a resolved task costs, who is accountable for the spend, and who decides which work is worth using AI on.",
   "currentPressure": "Per-developer token consumption has risen far faster than unit prices have fallen, so cheaper inference has produced larger bills rather than smaller ones.",
   "status": "published",
   "primaryDimension": "economics-productivity-and-value",
@@ -10,7 +10,7 @@
   "implications": [
     {
       "dimension": "economics-productivity-and-value",
-      "statement": "Engineering budgets acquire a variable, consumption-driven line item that behaves unlike either headcount or conventional infrastructure.",
+      "statement": "Engineering budgets acquire a variable, consumption-driven line item that behaves unlike either headcount or conventional infrastructure, unless routine work moves to dedicated capacity, where the bill flattens and the limit becomes capacity and response time.",
       "actors": [
         "engineering-manager",
         "executive",
@@ -30,8 +30,20 @@
       ]
     },
     {
+      "dimension": "organisation-and-leadership",
+      "statement": "Choosing between metered services and dedicated capacity becomes a leadership decision, and dedicated capacity needs someone who owns its tuning, planning and model updates.",
+      "actors": [
+        "executive",
+        "engineering-manager",
+        "technical-lead"
+      ],
+      "pathIds": [
+        "flat-cost-capacity"
+      ]
+    },
+    {
       "dimension": "nature-and-division-of-work",
-      "statement": "Deciding whether a task is worth machine effort becomes a routine judgement developers make many times a day.",
+      "statement": "Where AI work is metered, deciding whether a task is worth AI effort becomes a routine judgement developers make many times a day. Where it is unmetered, that judgement moves to whoever sets capacity.",
       "actors": [
         "developer",
         "technical-lead"
@@ -126,12 +138,13 @@
   "contestedNote": null,
   "whatWouldChangeThis": [
     "Per-developer spend flattens for two consecutive quarters despite continued adoption, making the line item unremarkable",
-    "Vendors move decisively to flat per-seat pricing, removing the variable component that forces the management question"
+    "Vendors move decisively to flat per-seat pricing, removing the variable component that forces the management question",
+    "Routine AI work moves widely to flat-cost capacity, so the variable bill stops being what organisations have to manage"
   ],
   "developmentPaths": [
     {
       "id": "managed-machine-expenditure",
-      "title": "Managed machine expenditure",
+      "title": "Managed AI expenditure",
       "description": "Spend is attributed, budgeted and reviewed like any other operating cost, with named owners."
     },
     {
@@ -142,7 +155,12 @@
     {
       "id": "two-tier-access",
       "title": "Two-tier access",
-      "description": "Well-funded organisations run machine work freely while others ration it, widening capability gaps."
+      "description": "Well-funded organisations run AI work freely while others ration it, widening capability gaps."
+    },
+    {
+      "id": "flat-cost-capacity",
+      "title": "Flat-cost capacity",
+      "description": "Routine work moves to open models on dedicated capacity with a flat bill, and frontier models become the exception."
     }
   ],
   "related": [],
@@ -156,6 +174,6 @@
   "firstObserved": "2026-01-09",
   "latestEvidenceDate": "2026-10-20",
   "possibleReachChange": null,
-  "construct": "Whether engineering organisations plan, attribute, cap and justify the cost of machine work as a managed operating expense, and how that spend relates to what it delivers per task. Not model price cuts, total AI adoption, or benchmark scores, all of which move without any organisation changing how it accounts for or approves machine spend.",
+  "construct": "Whether engineering organisations plan, attribute, cap and justify the cost of AI work as a managed operating expense, and how that spend relates to what it delivers per task. Not model price cuts, total AI adoption, or benchmark scores, all of which move without any organisation changing how it accounts for or approves AI spend.",
   "lastReviewed": "2026-10-27"
 }

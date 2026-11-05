@@ -1,8 +1,8 @@
 {
   "id": "evals-become-the-spec",
   "label": "Evals become the spec",
-  "title": "What you write down stops being the code",
-  "thesis": "As machines write more of the implementation, the artifact that defines what \"done\" means shifts from the code and the product document toward an executable evaluation suite. Teams increasingly specify behaviour as acceptance criteria a machine can run, and the eval set rather than the source becomes the thing under deliberate human authorship.",
+  "title": "Teams specify behaviour with tests a machine can run",
+  "thesis": "As machines write more of the implementation, the definition of \"done\" is moving from the code and the product document to an evaluation suite a machine can run. The evals, not the source code, become what people deliberately author.",
   "currentPressure": "Generated implementations vary between runs and between models, so reading the code no longer tells a team whether the intended behaviour holds.",
   "status": "published",
   "primaryDimension": "skills-knowledge-and-learning",
