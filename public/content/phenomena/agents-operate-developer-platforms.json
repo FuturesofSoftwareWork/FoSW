@@ -5,7 +5,7 @@
   "thesis": "Agents are becoming the main users of developer platforms, and platforms are being rebuilt around them. Vendors report that coding agents make up 48% of Cloudflare's CLI use, trigger over half of Vercel's deployments and created nearly half of the issues in Linear in one week; Cloudflare has built a new CLI with agents as its first user.",
   "construct": "The share of activity on developer and work-tracking platforms (CLI commands, deployments, created issues) that originates from agents rather than people or fixed scripts, and whether platform design changes to treat the agent as the primary user. Not how much of the implementation effort agents carry (agents-write-the-code), not whether agents' authority is bounded (agents-become-the-perimeter), and not adoption of agent tools by developers.",
   "currentPressure": "Platform vendors report agent activity rising from a small share to about half within a year, and are shipping agent-first interfaces.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "nature-and-division-of-work",
   "potentialImpact": "moderate",
   "implications": [
@@ -49,7 +49,7 @@
     }
   ],
   "observedReach": "gaining-traction",
-  "reachRationale": "The crossover is reported by independent platforms (Cloudflare, Harness, Vercel via Cloudflare's post, Linear) in the same quarter, and Cloudflare has rebuilt its CLI around the assumption, so it is beyond one forerunner. It is vendor-reported platform telemetry from the vendors' own customer bases and does not show it is the norm across the field's tooling, which a reviewer may argue keeps it at the rim.",
+  "reachRationale": "Four platforms (Cloudflare, Harness, Vercel and Linear) report the same crossover to agent-driven activity in the same quarter, so it is more than one forerunner. It is still a relatively new development, and the figures are vendor-reported telemetry from their own customers.",
   "whatWouldChangeThis": [
     "Agent share of CLI use, deployments or issue creation stalling or falling on these platforms in later reports",
     "Evidence that the agent share is mostly scripted or retry traffic with no change in what is actually done",
@@ -63,5 +63,7 @@
     "counterEvidence": false
   },
   "firstObserved": "2026-08-17",
-  "latestEvidenceDate": "2026-09-28"
+  "latestEvidenceDate": "2026-09-28",
+  "reachReviewedAt": "2026-11-05",
+  "lastReviewed": "2026-11-05"
 }

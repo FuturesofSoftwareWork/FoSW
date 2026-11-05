@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-05T10:19:18Z",
+  "lastUpdated": "2026-11-05T12:06:15Z",
   "items": [
     {
       "id": "review-shifts-to-verification",
@@ -83,19 +83,19 @@
       "id": "competence-checks-get-redesigned",
       "file": "competence-checks-get-redesigned.json",
       "date": "2026-11-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "agents-operate-developer-platforms",
       "file": "agents-operate-developer-platforms.json",
       "date": "2026-11-05",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "the-gain-shrinks-downstream",
       "file": "the-gain-shrinks-downstream.json",
       "date": "2026-11-05",
-      "status": "draft"
+      "status": "published"
     }
   ]
 }

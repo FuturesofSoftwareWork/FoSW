@@ -5,7 +5,7 @@
   "thesis": "AI makes individual developers noticeably faster, but the gain at team and company level is much smaller. The latest large study, by NBER on more than 500,000 GitHub developers through mid-2026, finds coding activity up 240% for autonomous agents but releases up only 30%. Teams that change how they work can keep more of the gain: in an Amazon pilot, half of 50 teams reached a median 4.5 times faster delivery to production.",
   "construct": "The size of AI's measured effect on software productivity at each level (self-reported value, coding activity, task time, team throughput, releases) and the gap between those levels, including which delivery stage absorbs the difference. Not adoption rates, share of AI-written code, spend, how review assurance is done (review-shifts-to-verification), or the spread between teams with the same tools (same-tool-different-outcomes).",
   "currentPressure": "Adoption is near universal and executives expect acceleration, but organisation-level measurements show gains of roughly 2-18% in throughput and measurement practice lags.",
-  "status": "draft",
+  "status": "published",
   "primaryDimension": "economics-productivity-and-value",
   "potentialImpact": "high",
   "implications": [
@@ -186,8 +186,8 @@
       "note": "Reuters from internal documents: Meta cancelled a second restructuring wave after internal data reportedly showed agents not delivering assumed gains. About restructuring, not a measured productivity effect"
     }
   ],
-  "observedReach": "gaining-traction",
-  "reachRationale": "Independent studies at different scales (NBER, DX, DORA, Science, METR) report organisation-level gains well below task-level ones, and Meta reportedly cancelled a restructuring when internal data showed agents were not delivering the assumed gains. Most planning still starts from large task-level multipliers, so it has not reached the centre. A reviewer could argue for the centre because few now deny that headline gains overstate what organisations see.",
+  "observedReach": "field-level-shift",
+  "reachRationale": "The finding is consistent across independent datasets at different scales, and few now deny that headline gains overstate what organisations see. That agreement is itself a change in what the field expects.",
   "whatWouldChangeThis": [
     "Telemetry or controlled studies showing releases and organisation-level throughput rising roughly in step with coding activity",
     "Replications of the DX and DORA findings showing organisation-level gains well above 20%",
@@ -202,12 +202,7 @@
   },
   "firstObserved": "2026-01-14",
   "latestEvidenceDate": "2026-10-13",
-  "possibleReachChange": {
-    "reason": "lost 1 independent context(s) since reach was last reviewed (14 -> 13); the blip may need to move outward",
-    "raisedAt": "2026-11-05",
-    "signalIds": [
-      "2026-10-19-07",
-      "2026-08-31-07"
-    ]
-  }
+  "possibleReachChange": null,
+  "reachReviewedAt": "2026-11-05",
+  "lastReviewed": "2026-11-05"
 }
