@@ -7,6 +7,9 @@
   "markdownFile": "ai-makes-coding-faster-rest-of-workflow.md",
   "date": "2026-08-28",
   "status": "published",
+  "relatedPhenomena": [
+    "the-gain-shrinks-downstream"
+  ],
   "tags": [
     "productivity",
     "AI-assisted-development",
