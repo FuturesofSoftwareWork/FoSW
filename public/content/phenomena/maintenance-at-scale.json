@@ -7,7 +7,7 @@
   "currentPressure": "Feature-flag clean-up and migration backlogs are being worked by agent pipelines at Uber and Cockroach Labs, while benchmarks still show agents regressing previously working code in most long-term maintenance runs.",
   "status": "published",
   "primaryDimension": "nature-and-division-of-work",
-  "potentialImpact": "moderate",
+  "potentialImpact": "high",
   "implications": [
     {
       "dimension": "nature-and-division-of-work",
