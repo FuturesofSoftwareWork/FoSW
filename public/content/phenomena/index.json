@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-27T10:00:49Z",
+  "lastUpdated": "2026-11-05T10:19:18Z",
   "items": [
     {
       "id": "review-shifts-to-verification",
@@ -78,6 +78,24 @@
       "file": "maintenance-at-scale.json",
       "date": "2026-10-27",
       "status": "published"
+    },
+    {
+      "id": "competence-checks-get-redesigned",
+      "file": "competence-checks-get-redesigned.json",
+      "date": "2026-11-05",
+      "status": "draft"
+    },
+    {
+      "id": "agents-operate-developer-platforms",
+      "file": "agents-operate-developer-platforms.json",
+      "date": "2026-11-05",
+      "status": "draft"
+    },
+    {
+      "id": "the-gain-shrinks-downstream",
+      "file": "the-gain-shrinks-downstream.json",
+      "date": "2026-11-05",
+      "status": "draft"
     }
   ]
 }

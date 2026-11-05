@@ -1,8 +1,8 @@
 {
   "id": "agents-write-the-code",
   "label": "Agents write the code",
-  "title": "Pencils down: hand-written code becomes the exception",
-  "thesis": "At the organisations furthest into agent use, agents now do most of the implementation and writing code by hand has become the thing that needs explaining. Human effort moves to directing agents, specifying work and building the tools that watch them, and human labour becomes a minority of the total effort on a team. This would be wrong if human intervention stays high enough that agents remain assistants, or if the forerunners reverse as Meta did on its headcount plan.",
+  "title": "At the leading teams, writing code by hand is the exception",
+  "thesis": "At the organisations furthest into agent use, agents now do most of the implementation, and writing code by hand is what needs explaining. Human work moves to directing agents, specifying tasks and building the tools that watch them, so people become a minority of the effort on a team.",
   "construct": "How much of the implementation effort in a software organisation is carried out by agents rather than people - agent-hours per human hour, share of merged code written by agents, whether hand-writing is the exception. Not the share of developers who use AI tools, tool satisfaction or market share, suggestions accepted, or output per developer, all of which rise while people still write most of the code.",
   "currentPressure": "Agent output is outrunning the systems around it (CI load, review queues, spend), and vendors report their own teams already working this way.",
   "status": "published",
