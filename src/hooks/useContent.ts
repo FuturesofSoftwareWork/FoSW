@@ -92,6 +92,7 @@ export const useContent = ({
           fetchContentItems<ExpertInsightIndexEntry, ExpertInsight>(
             "expert-insights",
             maxInsights,
+            includeDrafts() ? ["published", "draft"] : ["published"],
           ),
           fetchContentItems<PhenomenonIndexEntry, Phenomenon>(
             "phenomena",

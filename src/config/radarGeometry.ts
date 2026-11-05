@@ -77,9 +77,21 @@ function polarToXY(radius: number, deg: number): { x: number; y: number } {
 }
 
 /**
+ * Distance from the centre, in viewBox units, for a blip placed by editorial
+ * choice rather than by hash. Each value must stay inside the blip's own ring.
+ * "Justifying AI spend" is a field-level shift that has only just got there, so
+ * it sits just inside the ring's outer edge (90): its centre stays in the ring
+ * while its edge touches the border with "gaining traction".
+ */
+const RADIUS_OVERRIDE: Readonly<Record<string, number>> = {
+  "compute-becomes-a-budget-line": 84,
+};
+
+/**
  * The polar box a blip may occupy: its own ring band and its own sector wedge,
  * inset off both borders so a blip never sits on a boundary where the ring or
- * sector it belongs to would be ambiguous.
+ * sector it belongs to would be ambiguous. An entry in RADIUS_OVERRIDE is the one
+ * deliberate exception, and fixes the radius so a nudge can only change the angle.
  */
 function cellBounds(p: Phenomenon, dimensionIndex: number, dimensionCount: number) {
   const foundRing = RINGS.indexOf(p.observedReach);
@@ -91,10 +103,11 @@ function cellBounds(p: Phenomenon, dimensionIndex: number, dimensionCount: numbe
   const safeIndex = Math.min(Math.max(0, dimensionIndex), dimensionCount - 1);
   const { start, end } = sectorAngles(dimensionCount)[safeIndex];
   const angularInset = (end - start) * 0.22;
+  const fixedRadius = RADIUS_OVERRIDE[p.id];
 
   return {
-    minRadius: inner + radialInset,
-    maxRadius: outer - radialInset,
+    minRadius: fixedRadius ?? inner + radialInset,
+    maxRadius: fixedRadius ?? outer - radialInset,
     minDeg: start + angularInset,
     maxDeg: end - angularInset,
   };

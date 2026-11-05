@@ -74,8 +74,10 @@ function App() {
         onClose={closeDrawer}
         signals={signals}
         phenomena={phenomena}
+        insights={insights}
         onOpenSignal={(signal) => pushDrawer({ type: "signal", data: signal })}
         onOpenPhenomenon={(p) => pushDrawer({ type: "phenomenon", data: p })}
+        onOpenInsight={(insight) => pushDrawer({ type: "insight", data: insight })}
         onBack={stack.length > 1 ? popDrawer : undefined}
       />
     </div>

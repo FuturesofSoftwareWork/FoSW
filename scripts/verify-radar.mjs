@@ -140,10 +140,10 @@ try {
 
   // 2. Ring placement by distance from centre.
   const bandOf = (d) => (d <= 90 ? "field-level-shift" : d <= 165 ? "gaining-traction" : d <= 250 ? "early-manifestations" : "outside");
-  const spend = blips.find((b) => b.label.startsWith("Justifying machine spend"));
+  const spend = blips.find((b) => b.label.startsWith("Justifying AI spend"));
   const evals = blips.find((b) => b.label.startsWith("Evals become the spec"));
   check(
-    "Justifying machine spend is in the innermost ring",
+    "Justifying AI spend is in the innermost ring",
     spend && bandOf(spend.dist) === "field-level-shift",
     spend ? `dist=${spend.dist.toFixed(1)} band=${bandOf(spend.dist)}` : "not found",
   );

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState, isValidElement } from "react";
-import { ExternalLink, Calendar, Tag, BookOpen } from "lucide-react";
+import { ArrowRight, ExternalLink, Calendar, Tag, BookOpen, Link as LinkIcon } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { ExpertInsight } from "@/types/content";
+import type { Phenomenon } from "@/types/phenomenon";
 
 const countWords = (text: string): number =>
   text.trim().split(/\s+/).filter(Boolean).length;
@@ -17,7 +18,15 @@ const extractFootnotes = (markdown: string): Record<string, string> => {
   return map;
 };
 
-const InsightContent = ({ data }: { data: ExpertInsight }) => {
+const InsightContent = ({
+  data,
+  relatedPhenomena,
+  onOpenPhenomenon,
+}: {
+  data: ExpertInsight;
+  relatedPhenomena: Phenomenon[];
+  onOpenPhenomenon: (p: Phenomenon) => void;
+}) => {
   const [fetchedMarkdown, setFetchedMarkdown] = useState<string | null>(null);
 
   useEffect(() => {
@@ -319,6 +328,34 @@ const InsightContent = ({ data }: { data: ExpertInsight }) => {
               {tag}
             </span>
           ))}
+        </div>
+      )}
+
+      {/* On the radar */}
+      {relatedPhenomena.length > 0 && (
+        <div className="mt-8 font-sans">
+          <p className="mb-3 font-mono text-xs font-bold uppercase tracking-widest text-neon-gold">
+            On the radar
+          </p>
+          <ul className="flex flex-wrap gap-2">
+            {relatedPhenomena.map((p) => (
+              <li key={p.id}>
+                <button
+                  type="button"
+                  onClick={() => onOpenPhenomenon(p)}
+                  className="group flex cursor-pointer items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-sm text-gray-200 transition-colors duration-200 hover:border-hologram-cyan/40 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-electric-blue/50 motion-reduce:transition-none"
+                >
+                  <LinkIcon size={12} aria-hidden="true" className="shrink-0 text-hologram-cyan" />
+                  {p.label}
+                  <ArrowRight
+                    size={12}
+                    aria-hidden="true"
+                    className="shrink-0 text-gray-600 group-hover:text-hologram-cyan"
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

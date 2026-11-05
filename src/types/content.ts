@@ -139,6 +139,9 @@ export interface ExpertInsight {
   tags?: string[];
   url?: string;
   image?: string;
+  /** Ids of the phenomena this post discusses. Not evidence: it adds a reading
+   *  link in both directions and never touches the phenomenon or its profile. */
+  relatedPhenomena?: string[];
 }
 
 export interface AISignalIndexEntry {

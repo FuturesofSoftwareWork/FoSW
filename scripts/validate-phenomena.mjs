@@ -29,6 +29,7 @@ import {
 
 const PHENOMENA_DIR = "public/content/phenomena";
 const SIGNALS_DIR = "public/content/ai-signals";
+const INSIGHTS_DIR = "public/content/expert-insights";
 
 const isBlank = (v) => typeof v !== "string" || v.trim() === "";
 
@@ -220,6 +221,33 @@ export function validatePhenomenon(p, ctx) {
   return errors;
 }
 
+/**
+ * A blog post may name the phenomena it discusses. The link lives on the post so
+ * that no phenomenon file — and so nothing in the radar pipeline — changes, and it
+ * is never evidence. A dangling id would simply render no link, which nobody would
+ * notice, so it fails the build instead.
+ *
+ * @param {object} insight        the expert insight
+ * @param {Set<string>} phenomenonIds
+ * @returns {string[]} one message per problem
+ */
+export function validateInsightLinks(insight, phenomenonIds) {
+  const links = insight.relatedPhenomena;
+  if (links === undefined) return [];
+  if (!Array.isArray(links)) return ["relatedPhenomena must be an array of phenomenon ids"];
+
+  const errors = [];
+  const seen = new Set();
+  for (const id of links) {
+    if (seen.has(id)) errors.push(`relatedPhenomena lists ${JSON.stringify(id)} more than once`);
+    seen.add(id);
+    if (!phenomenonIds.has(id)) {
+      errors.push(`relatedPhenomena id ${JSON.stringify(id)} does not resolve to a known phenomenon`);
+    }
+  }
+  return errors;
+}
+
 // --- CLI ---------------------------------------------------------------------
 
 function main() {
@@ -261,6 +289,14 @@ function main() {
     if (file === "index.json" || file === "editions.json" || !file.endsWith(".json")) continue;
     if (!items.some((it) => it.file === file)) {
       problems.push(`${file}: exists on disk but is not listed in index.json (invisible to the site)`);
+    }
+  }
+
+  const { items: insightItems, errors: insightLoadErrors } = readItems(INSIGHTS_DIR, readIndex(INSIGHTS_DIR));
+  problems.push(...insightLoadErrors);
+  for (const { file, data } of insightItems) {
+    for (const msg of validateInsightLinks(data, phenomenonIds)) {
+      problems.push(`expert-insights/${file}: ${msg}`);
     }
   }
 

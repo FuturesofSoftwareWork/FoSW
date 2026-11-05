@@ -167,12 +167,14 @@ export const StatChip = ({
  *  so sections are told apart by silhouette rather than by dot colour alone. */
 export const Panel = ({
   tone = "neutral",
+  className = "",
   children,
 }: {
   tone?: DrawerTone;
+  className?: string;
   children: ReactNode;
 }) => (
-  <div className={`rounded-lg border p-4 ${PANEL_TONE[tone]}`}>{children}</div>
+  <div className={`rounded-lg border p-4 ${PANEL_TONE[tone]} ${className}`}>{children}</div>
 );
 
 /**
