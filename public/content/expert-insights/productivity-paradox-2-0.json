@@ -7,5 +7,8 @@
   "markdownFile": "productivity-paradox-2-0.md",
   "date": "2026-02-24",
   "status": "published",
+  "relatedPhenomena": [
+    "the-gain-shrinks-downstream"
+  ],
   "tags": ["productivity", "measurement", "AI-impact"]
 }
