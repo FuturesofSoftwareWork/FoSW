@@ -1,0 +1,49 @@
+{
+  "id": "2026-08-24-01",
+  "title": "Six of ten CTO-level leaders Gergely Orosz canvassed are leaving or taking a career break, and the reasons they give are mostly about AI",
+  "summary": "Gergely Orosz spoke with almost twenty CTOs, VPs of Engineering and Heads of Engineering who are on a career break or seriously considering one, after a Bay Area head of engineering told him that two of the four startups he was interviewing with had lost their founding engineering leader to a full break. Among the CTO-level people Orosz then asked privately, six of ten said they are on the way out. The reasons he groups are specific and mostly AI-shaped: boards and founders expecting the CTO to make the company 'AI-native' while also cutting engineering costs 20-50%; founders going hands-on and shipping what one CTO called 'founder slop' — the example given is a founder merging a 60,000-line pull request 'gleaming with joy at how much more productive they've become'; smaller teams meaning less need for leaders; and AI startups paying individual contributors more than non-AI startups pay executives. Two structural reasons are not about AI capability at all but about AI's effect on company value: leaders judging that their equity sits behind a preference stack their company will never clear, and leaders concluding they are not AI-native enough for their other skills to stay marketable. This is a canvass, not a survey, and Orosz says plainly that he has not seen this many capable engineering leaders opt out in twenty years in the industry.",
+  "source": "The Pragmatic Engineer (Gergely Orosz)",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-great-engineering-leader-career-break",
+  "sourceType": "social",
+  "signalType": "field-report",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "sampleSize": "almost 20 engineering leaders on or considering a career break, canvassed privately; of ten CTO-level people asked directly, six said they are leaving. Named on-record contributors include Charity Majors, Claire Vo, Karthik Hariharan, Katelyn Lesse and Matt Boyle; the quoted departing CTOs and VPEs are anonymous.",
+  "leadTimeEstimate": "~9-18 months ahead of it showing up in executive-tenure data or recruiter reporting",
+  "corroboration": [],
+  "detectedAt": "2026-08-24",
+  "date": "2026-08-18",
+  "status": "published",
+  "tags": [
+    "cto",
+    "vp-engineering",
+    "attrition",
+    "founder-mode",
+    "career-break",
+    "org-design",
+    "equity"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Work Wellbeing",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "The engineering leadership layer is where an AI transformation is actually executed. If the people asked to run it are the ones leaving, a board that has mandated 'AI-native by next year' is losing the only role that can deliver it.",
+    "The mechanism named most often is not overwork but a mandate contradiction: transform the company with AI while cutting 20-50% of engineering cost. That is a brief a board can withdraw or rewrite, unlike burnout, which is usually treated as the individual's problem.",
+    "'Founder slop' names a governance gap that is new: when a founder or CEO ships code directly, the accountability rules of you-build-it-you-own-it do not resolve who is on call for it, and the CTO has no standing to refuse the merge.",
+    "Two of the ten reasons are financial rather than operational — worthless equity behind a preference stack, and AI startups paying ICs more than executives elsewhere. Retention packages aimed at workload will not touch either."
+  ],
+  "recommendedActions": [
+    "Write down the engineering leader's mandate explicitly and check it for contradiction: an AI-native transformation target and a 20-50% cost-reduction target in the same year is the pattern these leaders describe leaving over.",
+    "Set an accountability rule for founder- and executive-authored code before it becomes an incident: who reviews it, who is on call for it, and whether it can bypass the standards everyone else follows.",
+    "For Director+ retention, check whether the equity is actually reachable given the preference stack, rather than assuming the grant size is doing the retaining."
+  ],
+  "risksAndCaveats": [
+    "This is a self-selected canvass by a journalist, not a survey. There is no denominator, no sampling frame, and the '6 of 10' is from people Orosz chose to ask because he suspected the pattern.",
+    "The most damaging quotes are anonymous, so neither the companies nor the claims can be independently checked.",
+    "Executive churn at startups is high in every cycle, and this article cannot separate an AI-specific effect from a downturn in venture funding — the equity and growth reasons it gives would apply with no AI at all.",
+    "The source is paywalled, which limits independent verification by readers.",
+    "Career-break trends are visible early in networks like this one and can fail to appear in population-level data at all."
+  ]
+}

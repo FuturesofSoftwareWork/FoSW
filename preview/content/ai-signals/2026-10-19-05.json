@@ -1,0 +1,47 @@
+{
+  "id": "2026-10-19-05",
+  "title": "Agents now write nearly half of all issues in Linear, and the people managing that work spend more time on it, not less",
+  "summary": "Linear's first data report, drawn from activity in its paid workspaces, finds that agents and MCP clients now create nearly as many issues as people do. Two years ago fewer than one issue in a thousand came from AI. In the week of 3 August 2026, agents and MCP clients created about 2.4 million issues, against about 2.5 million from people and integrations.\n\nThe extra work has not saved anyone time. Between June 2025 and June 2026, the minutes each user spent creating and triaging issues, assigning and updating them, and commenting rose in almost every function. The biggest rise was for founders: triage went from 40 to 57 minutes a month and commenting from 39 to 64. Engineers' triage time went from 24 to 28 minutes. Planning work, such as handling customer requests and writing docs and projects, did not change. Chatting with AI and delegating to agents appeared as a new layer on top, and Linear's head of data says the gains have not shown up as time saved.\n\nThe backlog is increasingly written by machines, and the human job moves toward deciding which of that work is worth doing. The figures cover only work done inside Linear, and they come from a vendor that sells agent features.",
+  "source": "Linear (company data report)",
+  "sourceUrl": "https://linear.app/data",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "sampleSize": "Issue counts across Linear's paid workspaces; time-use figures from 54,300 users (June 2025) and 89,000 users (June 2026)",
+  "fieldworkPeriod": "June 2024 - August 2026",
+  "sponsor": "Linear",
+  "leadTimeEstimate": "~6-12 months before triaging machine-generated work is recognised as a staffed responsibility",
+  "corroboration": [
+    "https://news.ycombinator.com/item?id=49353432"
+  ],
+  "detectedAt": "2026-10-19",
+  "date": "2026-08-17",
+  "status": "published",
+  "tags": [
+    "issue-tracking",
+    "triage",
+    "coordination-load",
+    "agent-generated-work",
+    "time-use",
+    "jevons-paradox"
+  ],
+  "category": [
+    "Org & Leadership",
+    "AI Agents",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**The backlog writes itself** — when agents file half the issues, deciding what is worth doing becomes the scarce human work.",
+    "**Coordination load grows, not shrinks** — time spent on triage, assignment and comments rose while planning time stayed flat.",
+    "**Founders absorb the most** — the largest increases fall on founders, which suggests the extra coordination lands on the people with the least spare time."
+  ],
+  "recommendedActions": [
+    "**Separate agent-filed issues** — label or route machine-created issues so that triage effort and acceptance rates can be measured on their own.",
+    "**Assign triage ownership explicitly** — name who decides which agent-generated work is admitted, rather than letting it spread across everyone's week."
+  ],
+  "risksAndCaveats": [
+    "**Vendor platform data** — Linear sells AI and agent features, and changes to its own product can move the share of AI-created issues.",
+    "**Only time inside Linear** — minutes spent outside the tool are not visible, so the report shows where coordination time moved, not total workload."
+  ]
+}

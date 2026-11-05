@@ -1,0 +1,208 @@
+{
+  "id": "the-gain-shrinks-downstream",
+  "label": "The gain shrinks downstream",
+  "title": "Individual speed-ups shrink at team and company level",
+  "thesis": "AI makes individual developers noticeably faster, but the gain at team and company level is much smaller. The latest large study, by NBER on more than 500,000 GitHub developers through mid-2026, finds coding activity up 240% for autonomous agents but releases up only 30%. Teams that change how they work can keep more of the gain: in an Amazon pilot, half of 50 teams reached a median 4.5 times faster delivery to production.",
+  "construct": "The size of AI's measured effect on software productivity at each level (self-reported value, coding activity, task time, team throughput, releases) and the gap between those levels, including which delivery stage absorbs the difference. Not adoption rates, share of AI-written code, spend, how review assurance is done (review-shifts-to-verification), or the spread between teams with the same tools (same-tool-different-outcomes).",
+  "currentPressure": "Adoption is near universal and executives expect acceleration, but organisation-level measurements show gains of roughly 2-18% in throughput and measurement practice lags.",
+  "status": "published",
+  "primaryDimension": "economics-productivity-and-value",
+  "potentialImpact": "high",
+  "implications": [
+    {
+      "dimension": "economics-productivity-and-value",
+      "statement": "Business cases and capacity plans built on task-level multipliers or self-reported savings overstate organisational gains: evidence runs from a measured -4% (METR trial) to 2-18% throughput (DORA) and 30% more releases (NBER).",
+      "actors": [
+        "executive",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Review, merge and deployment capacity absorbs part of the gain, so faster coding moves the constraint downstream: review times up 91%, 4.6x longer review waits, and git itself a bottleneck at Anthropic.",
+      "actors": [
+        "reviewer",
+        "technical-lead"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Measuring the effect is itself hard: usage leaderboards were dropped at several large companies and 26% of practitioners name productivity measurement as a top challenge.",
+      "actors": [
+        "executive",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-09-24-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "NBER, 500,000+ GitHub developers: coding activity +240% for autonomous agents, +80% in projects, +30% in releases"
+    },
+    {
+      "signalId": "2026-04-06-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "DX, 121,000 developers: 92.6% use AI monthly, yet self-reported time savings stuck near 4 hours a week since Q2 2025; no organisation-level breakthrough (vendor study)"
+    },
+    {
+      "signalId": "2026-05-25-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "DORA ROI report, ~5,000 professionals: AI lifts throughput 2-18%, payoff gated by platform quality"
+    },
+    {
+      "signalId": "2026-04-13-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "ICSE 2026, 2,989 developers: reported time savings modest, far below marketed multipliers"
+    },
+    {
+      "signalId": "2026-02-19-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "Science study, ~160k GitHub developers: ~29% of US Python functions AI-written, aggregate output up ~3.6% (data to end of 2024)"
+    },
+    {
+      "signalId": "2026-03-16-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "Opsera benchmark, 250,000+ developers: time-to-PR down 48-58%, but AI PRs wait 4.6x longer in review and carry 15-18% more vulnerabilities (vendor benchmark)"
+    },
+    {
+      "signalId": "2026-06-29-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Faros telemetry, 22,000 developers: task throughput rose, but review queues, delays and incidents grew faster"
+    },
+    {
+      "signalId": "2026-05-15-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "METR survey, 349 respondents: self-reported 1.4-2x value uplift; METR warns surveys overstate, its 2025 trial found developers 19% slower while feeling 20% faster"
+    },
+    {
+      "signalId": "2026-03-11-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "METR revised trial (57 developers, 800+ tasks): measured slowdown shrank to -4% (CI -15% to +9%); authors say magnitude of any benefit is uncertain"
+    },
+    {
+      "signalId": "2026-05-20-04",
+      "stance": "supports",
+      "primary": false,
+      "note": "Reported: code review time up 91% on high-AI-adoption teams as PR throughput overwhelms reviewers"
+    },
+    {
+      "signalId": "2026-03-30-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Harness, 700 engineers: among very frequent AI users 45% deploy daily or faster but 69% report persistent deployment problems"
+    },
+    {
+      "signalId": "2026-06-29-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "142,652 agent PRs: 27.67% hit merge conflicts, ~540 conflicting lines on average"
+    },
+    {
+      "signalId": "2026-08-17-09",
+      "stance": "supports",
+      "primary": true,
+      "note": "Vendict: within a month of agents contributing at volume the constraint became review velocity (single team, weak)"
+    },
+    {
+      "signalId": "2026-09-04-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "37signals CTO: agents did all implementation on a new product, but established products proved much harder to accelerate (single account, weak)"
+    },
+    {
+      "signalId": "2026-09-01-01",
+      "stance": "counter",
+      "primary": true,
+      "note": "Amazon Stores, 50 teams: half under 3x faster to production, the other half a median 4.5x, some over 10x; large gains do reach production where teams change how they work"
+    },
+    {
+      "signalId": "2026-03-23-01",
+      "stance": "contextual",
+      "primary": true,
+      "note": "2025 DORA report: AI amplifies existing engineering quality; weak foundations see instability, not gains"
+    },
+    {
+      "signalId": "2026-06-29-13",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Pragmatic Engineer survey, 900+ developers: AI amplifies existing culture, benefits larger on strong foundations"
+    },
+    {
+      "signalId": "2026-01-14-01",
+      "stance": "contextual",
+      "primary": false,
+      "note": "Workday research: ~40% of AI time saved lost to rework (vendor claim, not software-specific)"
+    },
+    {
+      "signalId": "2026-02-03-01",
+      "stance": "contextual",
+      "primary": false,
+      "note": "BNY Mellon paper: same 2,989-developer survey as the ICSE study; output proxies miss effects, so counts of 'more shipped' mislead"
+    },
+    {
+      "signalId": "2026-05-25-05",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Harness survey, 700 practitioners: measuring productivity (26%) and proving ROI (18%) rank among top challenges"
+    },
+    {
+      "signalId": "2026-08-24-02",
+      "stance": "contextual",
+      "primary": false,
+      "note": "LeadDev: token leaderboards dropped at Meta, Amazon and others; Uber's CTO says maximising tokens raised costs without improving productivity"
+    },
+    {
+      "signalId": "2026-04-20-04",
+      "stance": "contextual",
+      "primary": false,
+      "note": "Executive survey: 98% expect agentic AI to accelerate delivery, only 9% expect game-changing improvements"
+    },
+    {
+      "signalId": "2026-08-06-05",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Auckland longitudinal survey, 95 matched developers: self-reported productivity flat and high while developer experience worsened"
+    },
+    {
+      "signalId": "2026-10-19-07",
+      "stance": "contextual",
+      "primary": false,
+      "note": "Anthropic: merged changes rose from about 2,500 to 30,000+ a day and git became the main bottleneck. Measures volume, not a productivity effect; shows pressure on downstream stages (self-reported)"
+    },
+    {
+      "signalId": "2026-08-31-07",
+      "stance": "contextual",
+      "primary": false,
+      "note": "Reuters from internal documents: Meta cancelled a second restructuring wave after internal data reportedly showed agents not delivering assumed gains. About restructuring, not a measured productivity effect"
+    }
+  ],
+  "observedReach": "field-level-shift",
+  "reachRationale": "The finding is consistent across independent datasets at different scales, and few now deny that headline gains overstate what organisations see. That agreement is itself a change in what the field expects.",
+  "whatWouldChangeThis": [
+    "Telemetry or controlled studies showing releases and organisation-level throughput rising roughly in step with coding activity",
+    "Replications of the DX and DORA findings showing organisation-level gains well above 20%",
+    "Evidence that gains of 4.5x or more to production, as in the stronger half of Amazon's teams, become the norm rather than the exception",
+    "Larger, less selected controlled trials showing a clear net speed-up for experienced developers"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 13,
+    "evidenceTypes": 3,
+    "quartersSpanned": 3,
+    "counterEvidence": true
+  },
+  "firstObserved": "2026-01-14",
+  "latestEvidenceDate": "2026-10-13",
+  "possibleReachChange": null,
+  "reachReviewedAt": "2026-11-05",
+  "lastReviewed": "2026-11-05"
+}

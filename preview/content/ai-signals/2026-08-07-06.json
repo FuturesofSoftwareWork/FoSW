@@ -1,0 +1,42 @@
+{
+  "id": "2026-08-07-06",
+  "title": "Pragmatic Engineer canvass: ~20 engineering leaders report shrinking teams, including a 10,000-developer agriculture firm moving from six-to-ten to three-to-four",
+  "summary": "Gergely Orosz reported on 24 February 2026 that around 20 engineering leaders he spoke with — many at large enterprises, some at small startups — said their engineering teams are shrinking. One account carries numbers and a described organisation: a Head of Engineering at a 200-year-old agriculture company with more than 10,000 developers said 'we are already seeing the end of two-pizza teams (6-10 people) thanks to AI. Our teams are slowly but surely becoming one-pizza teams (3-4 people) across the business.' The value of that particular account is where it comes from: a traditional physical-goods manufacturer, not a software startup and not a venture portfolio company, which is the population the forerunner-only reading of this change predicts would be last to move. The canvass itself is informal — leaders self-selected into two invitation-based industry events, roughly 500 attendees at the Pragmatic Summit and 50 at a Future of Software Development workshop — and only the one account is quantified; the other nineteen are summarised in a single sentence with no companies, sizes or figures attached.",
+  "source": "The Pragmatic Engineer (Gergely Orosz)",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/the-future-of-software-engineering-with-ai",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "sampleSize": "around 20 engineering leaders spoken with, drawn from two invitation-based industry events (Pragmatic Summit, ~500 attendees; Future of Software Development workshop, ~50 attendees); one account quantified",
+  "leadTimeEstimate": "~12-18 months ahead of population-level benchmark confirmation",
+  "corroboration": [],
+  "detectedAt": "2026-08-07",
+  "date": "2026-02-24",
+  "status": "published",
+  "tags": [
+    "team-size",
+    "two-pizza-team",
+    "org-design",
+    "enterprise",
+    "team-structure"
+  ],
+  "category": [
+    "Org & Leadership",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "The one quantified account is from a 200-year-old agriculture manufacturer with 10,000-plus developers. If the shrinking-team pattern were confined to well-funded startups, this is precisely where it should not be appearing.",
+    "Six-to-ten down to three-to-four is a halving of the delivery unit stated as an ongoing programme rather than a target, which is a different kind of claim from a reorg announcement.",
+    "Nineteen of the twenty accounts carry no numbers. Leaders reading 'teams are shrinking' as an established industry fact should know how thin the quantified base underneath that sentence is."
+  ],
+  "recommendedActions": [
+    "Ask peers reporting smaller teams for the two numbers — before and after — rather than accepting the direction of travel. This item exists because almost nobody in the canvass supplied them."
+  ],
+  "risksAndCaveats": [
+    "The canvass is informal and self-selected: leaders who attend AI-focused industry events are not a representative sample of engineering organisations.",
+    "Only one of roughly twenty accounts is quantified, and the company is described rather than named, so the figure cannot be independently checked.",
+    "'Team' is not defined in the source. The 6-10 and 3-4 figures are presented as two-pizza and one-pizza teams, which is a norm rather than a measured unit.",
+    "The account states a transition in progress ('slowly but surely becoming'), not a completed measurement of current team sizes."
+  ]
+}

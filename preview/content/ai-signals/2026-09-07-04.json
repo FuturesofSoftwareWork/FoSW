@@ -1,0 +1,47 @@
+{
+  "id": "2026-09-07-04",
+  "title": "Six months without typing code: an engineer describes scaling to twenty concurrent agents and what replaced human code review",
+  "summary": "Maisem Ali imposed a rule on himself in February 2026: no hand-written code, forcing every change through agents so that improving his direction of them was the only way to get work done. He broke the rule once, for three minutes, in six months. The account is useful less for the abstinence than for what the practice turned into. He moved off a laptop onto isolated cloud VMs, scaled to roughly twenty running concurrently, and then had to build a dashboard just to keep track of what his agents were doing across machines.\n\nWhat replaced traditional code review is the part worth reading: agent-to-agent review of generated changes, browser-based validation of the running system rather than inspection of the diff, and human attention redirected to architectural design discussions before work starts. His own coordination tool eventually became unmaintainable and was discarded, which he treats as a cheap learning cost rather than a failure - a disposability that would be an unacceptable position for a platform team maintaining shared infrastructure.\n\nThis is one engineer's experience, and he works at a company selling cloud VMs for exactly this workflow.",
+  "source": "Practitioner Engineering Blog (blog.exe.dev)",
+  "sourceUrl": "https://blog.exe.dev/engineering-with-ai",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Maisem Ali, an experienced systems engineer, describing his own six-month practice; he works at exe.dev, which provides cloud VMs for AI agents.",
+  "leadTimeEstimate": "~12-18 months ahead of mainstream; almost no team currently runs twenty concurrent agents per engineer",
+  "corroboration": [
+    "https://news.ycombinator.com/item?id=49465119"
+  ],
+  "detectedAt": "2026-09-07",
+  "date": "2026-08-27",
+  "status": "published",
+  "tags": [
+    "coding-agents",
+    "code-review",
+    "parallel-work",
+    "developer-workflow",
+    "architecture",
+    "weak-signal"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "**Review shifts from diff to behaviour** — validating the running system in a browser rather than reading the change is a different skill, a different toolchain and a different definition of done.",
+    "**Coordination becomes the engineer's real job** — at twenty concurrent agents the binding constraint is tracking state across machines, which is a management problem wearing an engineering costume.",
+    "**Design discussion moves earlier and matters more** — when generation is cheap, the expensive decisions all land before work starts, which changes where senior time should be spent.",
+    "**Agent infrastructure may be deliberately disposable** — treating orchestration tooling as throwaway conflicts with how platform teams are funded and measured."
+  ],
+  "recommendedActions": [
+    "**Try the constraint on one bounded project** — a no-hand-coding rule surfaces where direction is weak far faster than optional adoption does.",
+    "**Decide who validates behaviour** — if diff review stops being the gate, name what replaces it before the volume arrives, not after."
+  ],
+  "risksAndCaveats": [
+    "**Single unvalidated account** — one engineer, self-reported, with no measurement of defect rates, delivery speed or maintainability against a baseline.",
+    "**Commercially interested** — the author's employer sells cloud VMs for agent workflows, and the post doubles as a case for that product.",
+    "**Solo work, not team work** — nothing here tests whether agent-to-agent review and disposable tooling survive shared ownership, on-call or handover."
+  ]
+}

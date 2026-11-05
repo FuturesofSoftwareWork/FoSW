@@ -1,0 +1,48 @@
+{
+  "id": "2026-08-17-06",
+  "title": "Engineering managers doing hands-on technical work rose from 20% to 35% in a year, and two independent accounts say the ladder is being rewritten",
+  "summary": "LeadDev's Engineering Leadership Report 2026 finds the share of engineering managers doing more hands-on technical work than the previous year rose from 20% in 2025 to 35% in 2026, with 37% of engineering leaders overall reporting the same shift. The increase is present at every level of the ladder — tech leads 41%, managers of engineers 31%, managers of managers 30%, CTOs or equivalent 44% — which makes it a change in the shape of the role rather than a few individuals reverting. The stated mechanism is that AI collapses the cost of turning an idea into working software, so a leader can gather context, generate a proof of concept and challenge an assumption without booking an engineer's week. In the same fortnight, Jay Rungta, an engineering manager at YouTube running payments and royalty infrastructure, published an independent argument that managers who keep building are pulling ahead, because hands-on work is now how a manager keeps the judgment to tell good work from plausible work in review. The two arrive from different directions — survey data and firsthand practice — at the same conclusion, which is the part worth acting on. For leadership this reopens a settled question: the industry spent a decade telling managers that writing code was a failure to delegate.",
+  "source": "Industry Report (LeadDev Engineering Leadership Report 2026), reported by LeadDev",
+  "sourceUrl": "https://leaddev.com/management/engineering-managers-are-back-in-the-codebase",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "leadTimeEstimate": "confirms a shift already underway; ~6 months ahead of competency frameworks and promotion criteria catching up",
+  "corroboration": [
+    "https://leaddev.com/management/engineering-managers-who-build-are-pulling-ahead",
+    "https://leaddev.com/the-engineering-leadership-report-2026"
+  ],
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-10",
+  "status": "published",
+  "tags": [
+    "engineering-management",
+    "role-change",
+    "career-ladder",
+    "code-review",
+    "org-design"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Skills & Learning",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "Because the manager job description is changing underneath the competency frameworks that evaluate it, leaders should check whether their promotion and performance criteria still penalise a manager for time spent in the codebase.",
+    "A 15-point year-on-year move concentrated at every level, not just tech leads, is a structural change in the role rather than individual preference — and the CTO figure being the highest (44%) suggests it is being modelled from the top.",
+    "The corroborating practitioner argument names the mechanism that matters for quality: as agents produce more code than humans can carefully read, the reviewer's judgment becomes the scarce resource, and judgment decays when a manager stops building.",
+    "It cuts against the delegation norm that shaped a decade of engineering management training. If that norm is now wrong, the coaching and manager onboarding built on it is teaching the wrong instinct."
+  ],
+  "recommendedActions": [
+    "Review your engineering manager competency matrix and promotion rubric for language that treats hands-on coding as a regression, and decide deliberately whether to keep it.",
+    "Set an explicit expectation for how much technical time a manager is entitled to, rather than leaving it as something done at the edges of the week — an unstated allowance defaults to zero.",
+    "Distinguish in policy between a manager building to keep review judgment sharp and a manager taking delivery work off the team's critical path; the second is the failure mode the old norm was protecting against."
+  ],
+  "risksAndCaveats": [
+    "The headline figures are self-reported survey responses about a change relative to last year, which is a perception measure and prone to recency and desirability bias; the report's sample size and composition are not stated in the article.",
+    "LeadDev surveys its own audience of engineering leaders, so the respondents are self-selected toward people engaged with the profession's discourse.",
+    "The corroborating piece is advocacy from a single practitioner with no data, and its examples (Zuckerberg, Brin coding again) are drawn from an unrepresentative tier of the industry.",
+    "Correlation with AI adoption is asserted rather than measured — flat organisations and hiring freezes would push managers back into the codebase with no AI involved at all."
+  ]
+}

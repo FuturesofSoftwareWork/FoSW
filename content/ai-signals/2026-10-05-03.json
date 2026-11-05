@@ -1,0 +1,47 @@
+{
+  "id": "2026-10-05-03",
+  "title": "Update on forward-deployed engineering: Anthropic commits $100M to credential 10,000 engineers by 2027, with consultancies and banks in the first cohort",
+  "summary": "On 2 October Anthropic launched the Claude Frontier Academy, committing $100 million to train 10,000 'Frontier Deployed Engineers' by the end of 2027. The programme pairs a multi-day in-person block with Anthropic engineers, including a simulated enterprise deployment and a graded practical, with a 12-week residency in which participants lead a real Claude project inside their own organisation. It awards two vendor badges along the way. The first cohorts come from Accenture, Bain, Capgemini, Deloitte, McKinsey, Morgan Stanley, Commonwealth Bank of Australia and Novo Nordisk, and Anthropic's stated rationale is that people who can make AI work inside a real business have become the hardest talent to find.\n\nWhen we covered OpenAI's forward-deployed engineering group in August, it was an in-house team of about 140 staff. What is new is that a model vendor is now training and certifying the role at scale inside its customers and their consultancies. Hiring markets and job architectures will soon have a named, vendor-defined profile for the engineer who takes AI from pilot through security review to production.\n\nFor engineering leaders, the question is whether that capability is built in-house, rented from a consultancy whose staff hold the badge, or tied to a single model vendor's curriculum.",
+  "source": "Anthropic News",
+  "sourceUrl": "https://www.anthropic.com/news/claude-frontier-academy",
+  "sourceType": "release",
+  "signalType": "market-event",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "organisation": "Anthropic",
+  "magnitude": "$100M; 10,000 engineers by end of 2027",
+  "leadTimeEstimate": "~6-12 months before the credential appears in job ads and consultancy proposals",
+  "corroboration": [
+    "https://mixed-news.com/en/anthropic-claude-frontier-academy-100-million-10000-engineers/"
+  ],
+  "detectedAt": "2026-10-05",
+  "date": "2026-10-02",
+  "status": "published",
+  "tags": [
+    "forward-deployed-engineer",
+    "new-roles",
+    "certification",
+    "consultancies",
+    "vendor-strategy",
+    "ai-implementation"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Org & Leadership",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "**A new role gets a vendor standard** — the engineer who takes AI from pilot to production now has a defined curriculum and badge, and it belongs to a model vendor.",
+    "**Consultancies get the credential first** — four of the eight first-cohort organisations are consultancies, so certified capacity will be sold to clients before most companies have trained their own.",
+    "**Skills tied to one stack** — a credential built around one vendor's models makes that capability harder to carry to another provider."
+  ],
+  "recommendedActions": [
+    "**Decide where this capability lives** — choose deliberately between building it in-house, buying it from consultancies, or a mix, before the market sets the price.",
+    "**Define the role in your own terms** — write an internal job profile for AI deployment engineering so hiring is not defined by a vendor badge.",
+    "**Ask your account team about nomination** — participation is by nomination, so organisations wanting in-house capacity need to ask rather than wait."
+  ],
+  "risksAndCaveats": [
+    "**Vendor announcement, no outcomes yet** — the first graduates are not expected until early 2027, so this shows intent and investment rather than evidence that the training works.",
+    "**Commercial interest is explicit** — the programme is also a channel for Claude adoption, and the claim of a talent shortage comes from the company that benefits from closing it."
+  ]
+}

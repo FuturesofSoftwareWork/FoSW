@@ -1,0 +1,43 @@
+{
+  "id": "2026-08-12-01",
+  "title": "Senior engineers independently report the same thing: agent-mediated work is eroding their own thinking",
+  "summary": "Three unrelated credible sources in a six-week window describe the same self-observed effect, in nearly the same words. Andrew Diamond, a developer of 20+ years, writes that \"months of working with AI have made me noticeably lazier and stupider, at least when it comes to coding\", that he is \"no longer so deeply immersed\" and \"doesn't learn on the job the way I once did\", and that programming has been \"reduced to the task of minding the bots\". Sean Goedecke, writing five weeks later, reports the same worry from the inside — that LLM work is \"biasing me towards the quick skimming and judging parts of my mental toolkit\" — and describes deliberately writing prose to keep the other parts alive. On the Hacker News thread under Diamond's post, 15 distinct commenters describe their own experience in the same terms, including one who reached severe burnout in 2025 and cut to part-time. What makes this a signal rather than a mood is the convergence: none of these people is citing the others, and each is reporting on themselves rather than on the industry. The mechanism they each name is the same — supervision and review displace immersion, and the skills that immersion built are not being exercised.",
+  "source": "Practitioner Blog",
+  "sourceUrl": "https://adiamond.me/2026/06/software-engineering-in-the-age-of-ai/",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "observer": "Andrew Diamond, software engineer of 20+ years and published novelist, writing about his own work as he winds down his engineering career",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "leadTimeEstimate": "~12-18 months ahead of survey instruments, which do not yet ask about self-perceived cognitive erosion",
+  "corroboration": [
+    "https://www.seangoedecke.com/how-to-keep-thinking/",
+    "https://news.ycombinator.com/item?id=48708721"
+  ],
+  "detectedAt": "2026-08-12",
+  "date": "2026-06-28",
+  "status": "published",
+  "tags": [
+    "cognitive-erosion",
+    "craft",
+    "identity",
+    "deskilling",
+    "convergence"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Skills & Learning"
+  ],
+  "whyItMatters": [
+    "The people reporting this are senior and self-aware, and they are describing a loss they cannot easily measure or prove — which means it will not appear in any productivity dashboard before it appears in retention and judgment quality.",
+    "Because leaders should reconsider what review-heavy roles do to the reviewer over a period of years, not just whether throughput went up this quarter.",
+    "If immersion is where senior judgment was built, an organisation that removes immersion from every role has no mechanism left for producing the people it relies on to check the machines."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "Self-reported cognitive decline is not measured cognitive decline. None of these accounts includes a test, a baseline or a control, and self-perception of one's own competence is exactly the thing least reliably introspected.",
+    "Selection: people who feel a loss write about it, and people who are content do not. The Hacker News thread is a self-selected sample of an already self-selected community, and it contains dissent that this item does not weight equally.",
+    "Diamond states he is winding down his career, which is an independent reason to experience work as diminished; the mechanism he names may be correctly observed and wrongly attributed.",
+    "The primary account is from 2026-06-28, outside this sector's 14-30 day priority window. It is surfaced because the Goedecke piece of 2026-08-07 independently replicates it in-window, which is the corroboration rule rather than an exception to the freshness rule."
+  ]
+}

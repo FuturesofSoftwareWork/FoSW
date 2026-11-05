@@ -1,0 +1,50 @@
+{
+  "id": "2026-10-02-01",
+  "title": "Finland's entry-level IT collapse has an educational tier: 40% of vocational IT graduates were in work a year on, and the statistics office says the qualification does not match the market",
+  "summary": "Only 40% of Finns who completed a vocational basic qualification in IT were in work a year after graduating, against 66% across all vocational basic qualifications. Statistics Finland's senior statistician Mika Witting puts the cause plainly: in IT, the qualification does not match what the labour market needs. A further 28% of those graduates were still studying a year on, against 19% across all fields, which the article reads as the qualification having failed to produce work.\n\nThe same reporting makes a distinction the junior-jobs debate usually collapses. Higher-educated technology graduates are largely holding: about 83% found work within six months of graduating in 2025, down from 86% a couple of years earlier. TEK's summer report concluded that large-scale AI adoption has not yet visibly weakened new IT graduates' prospects relative to other fields, and doctorates show the lowest unemployment, followed by master's-level then bachelor's-level engineers. The damage is concentrated at one tier rather than spread across entry-level work.\n\nOn AI, TEK's Juhani Nokela is deliberately two-handed. The preliminary finding is that using AI increases technology development and therefore jobs, alongside empirical signs that it removes some, and he notes Finland's business cycle is tangled up with any AI effect. His one firm estimate is that the largest risk falls on jobs at the start of a career, and that getting into the field is becoming harder. The named loser is the basic-level coder, for whom there is no longer enough work once AI writes the code and a specialist supervises. TEK and Technology Industries of Finland propose the same remedy: smoother routes from vocational education into higher education.",
+  "source": "Ilta-Sanomat / Taloussanomat (Elina Ranta), reporting Statistics Finland register data and a TEK report",
+  "sourceUrl": "https://www.is.fi/taloussanomat/art-2000012294366.html",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "lagging",
+  "sampleSize": "Statistics Finland register data covering all 2023 graduates in Finland rather than a sample, alongside TEK's survey of recent technology graduates",
+  "fieldworkPeriod": "2023 graduates observed one year later in 2024 (Statistics Finland); TEK employment figures measure 2025 graduates six months after graduating",
+  "leadTimeEstimate": "confirms current practice in one national market; the vocational-versus-higher-education breakdown is not yet published for most other countries",
+  "corroboration": [
+    "https://yle.fi/a/74-20232871",
+    "https://www.tek.fi/fi/tietoa-tekista/tutkimus/tek-graduate-survey"
+  ],
+  "detectedAt": "2026-10-02",
+  "date": "2026-09-28",
+  "status": "published",
+  "tags": [
+    "entry-level-employment",
+    "vocational-education",
+    "finland",
+    "skills-mismatch",
+    "junior-pipeline",
+    "labour-market"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Business Impact",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**The collapse has a tier** — entry-level damage in Finnish IT concentrates at vocational level, where 40% work a year out, rather than spreading evenly across everyone entering the field.",
+    "**Curriculum is the named cause** — the national statistics office attributes it to the qualification not matching the market, which makes this an education-policy problem before it is an AI one.",
+    "**Higher education has barely moved** — 83% employed within six months against 86% two years earlier is a soft decline, and it cuts against claims that AI has closed the graduate market.",
+    "**Experience outranks the degree** — a year of relevant work experience more than doubled the odds of permanent work in field, so placements matter more than curriculum reform in the short run."
+  ],
+  "recommendedActions": [
+    "**Separate the two cohorts** — stop reporting entry-level hiring as a single number and track vocational and higher-education entrants apart, because they are moving in different directions.",
+    "**Pay for the first year** — if relevant experience doubles employment odds, funded internships and company thesis projects do more than any statement about curriculum.",
+    "**Check your own junior funnel** — compare where your entry-level hires came from educationally against who you actually retain and promote two years later."
+  ],
+  "risksAndCaveats": [
+    "**Cycle and AI are tangled** — TEK says plainly that Finland's downturn is mixed into any AI effect, so none of these figures isolates what AI caused.",
+    "**The hard number predates agents** — the 40% measures 2023 graduates observed in 2024, so it sits before much of the agentic coding adoption the article discusses.",
+    "**TEK represents the beneficiaries** — the remedy TEK and Technology Industries both propose, moving people up into higher education, expands the constituency TEK exists to represent."
+  ]
+}

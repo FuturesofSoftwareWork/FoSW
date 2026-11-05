@@ -1,0 +1,47 @@
+{
+  "id": "2026-10-19-06",
+  "title": "Product managers and designers are opening pull requests: in Linear's data their share rose from 3% to 10% and from 1% to 8%, almost all of it in the last year",
+  "summary": "Linear's first data report tracks how many users in each function attached a pull request in a 30-day window. Across 166,000 paid users in June 2026, 10% of product managers and 8% of designers had done so. Two years earlier the figures were 3% and 1%, and in June 2025 they were still 3% and 2%. Founders rose from 11% to 23% and go-to-market staff from 1% to 3%. Engineers rose too, from 20% to 34%, so pull requests are spreading across functions rather than moving away from engineering.\n\nAlmost all of the change happened between June 2025 and June 2026. Leadership is moving the same way. Between January and June 2026, AI use among CEOs of companies with over 200 staff rose from 9% to 36%. Linear's head of data reads this as everyone becoming a builder, in a direction if not yet in volume.\n\nFor engineering leaders, the practical question is who reviews and owns code written by people outside engineering. The report does not define what attaching a pull request involves, so it may include linking a change someone else wrote.",
+  "source": "Linear (company data report)",
+  "sourceUrl": "https://linear.app/data",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "sampleSize": "166,000 paid users (June 2026) for pull-request attachment; 13,300 executives for executive adoption",
+  "fieldworkPeriod": "June 2024 - June 2026",
+  "sponsor": "Linear",
+  "leadTimeEstimate": "~12-18 months before code contribution by non-engineers is covered by explicit review and access policy",
+  "corroboration": [
+    "https://news.ycombinator.com/item?id=49353432"
+  ],
+  "detectedAt": "2026-10-19",
+  "date": "2026-08-17",
+  "status": "published",
+  "tags": [
+    "role-boundaries",
+    "non-engineer-code",
+    "product-management",
+    "design",
+    "code-ownership",
+    "executive-adoption"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Skills & Learning",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "**Code contribution leaves engineering** — one product manager in ten and one designer in twelve now attach pull requests, up from almost none.",
+    "**Review and ownership need rules** — code from people outside engineering still needs reviewers, repository access and someone accountable for it.",
+    "**Role descriptions drift** — when PMs and designers ship changes, hiring profiles and career ladders for those roles start to include code."
+  ],
+  "recommendedActions": [
+    "**Decide who reviews non-engineer PRs** — set a review path and repository access policy for product, design and founder contributions before volumes grow.",
+    "**Count contributions by function** — track who opens pull requests in your own repositories to see whether this shift is already happening."
+  ],
+  "risksAndCaveats": [
+    "**Attaching is not authoring** — the report does not define attaching a pull request, so some of the rise may be people linking changes engineers wrote.",
+    "**Vendor data, Linear users only** — the sample is Linear's paid customers, roles come from normalised job titles, and Linear sells the AI features involved."
+  ]
+}

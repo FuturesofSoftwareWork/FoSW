@@ -1,0 +1,51 @@
+{
+  "id": "2026-08-10-06",
+  "title": "Databricks publishes its agentic-coding cost controls — and deliberately rejects the hard spending cap Uber reached for",
+  "summary": "Databricks engineering has published how it governs agentic coding spend internally, and the notable part is what it refuses to do. Rather than capping developer spend, it runs graduated friction: self-clearing warnings, then manager approval gates, then automatic downshifting to cheaper models, with suspension only as a last resort. The stated mandate is 'broad access with minimal friction' while holding aggregate cost inside a roughly fixed envelope per user. Their justification is an economic claim leaders have not yet internalised: 'the efficiency frontier is advancing far faster than the intelligence frontier,' so the lever is routing and harness design, not developer restraint — their internal Smart Router reports >30% cost reduction while roughly matching top-model quality, and harness tuning cut generated tokens by almost 50% with no observed quality loss. This lands three months after Uber burned its entire 2026 AI budget in four months across ~5,000 engineers and responded with a flat $1,500/month/tool cap. Two large engineering organisations have now made opposite governance choices on the same problem, in public, within one quarter.",
+  "source": "Databricks Engineering Blog",
+  "sourceUrl": "https://www.databricks.com/blog/managing-ai-coding-costs-scale",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Patrick Wendell (Databricks co-founder and VP of Engineering) with Akshat Bhatia, Vinay Gaba, Erich Elsen and Ivan Zhou, describing controls Databricks runs on its own engineering organisation rather than a customer case study",
+  "leadTimeEstimate": "~6-12 months ahead of mainstream FinOps practice for coding agents",
+  "corroboration": [
+    "https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/",
+    "https://news.ycombinator.com/item?id=49214468",
+    "https://leaddev.com/ai/ai-governance-is-now-an-engineering-problem"
+  ],
+  "detectedAt": "2026-08-10",
+  "date": "2026-08-07",
+  "status": "published",
+  "tags": [
+    "FinOps",
+    "agentic coding",
+    "cost governance",
+    "model routing",
+    "engineering management"
+  ],
+  "category": [
+    "Costs & Economics",
+    "Org & Leadership",
+    "AI Tools"
+  ],
+  "whyItMatters": [
+    "The choice between a hard cap and graduated friction is now a real, contested management decision with two named large-org precedents — not a hypothetical. A cap is legible to finance and easy to defend; it also converts your most productive engineers into your most constrained ones partway through every month.",
+    "Databricks locates the cost lever in platform configuration — routing, model allow-lists, caching and compaction settings — rather than in developer behaviour. If that is right, agentic spend is a platform-engineering responsibility, and asking developers to 'use it wisely' is the wrong intervention entirely.",
+    "Uber's overrun is a governance failure worth studying rather than a spending failure: internal leaderboards ranked engineers by Claude Code usage while the teams driving adoption carried none of the budget. Leaders should audit any adoption incentive that is not owned by whoever holds the cost.",
+    "Because the efficiency frontier moves faster than the capability frontier, model selection becomes a recurring procurement decision rather than a one-time standard — which argues for a gateway layer that lets you swap models centrally without touching developer workflow."
+  ],
+  "recommendedActions": [
+    "Instrument per-developer and per-team agent spend with visible dashboards before setting any limit — Databricks' controls all depend on the developer seeing the number first.",
+    "Replace or supplement any hard cap with graduated responses (warning, approval gate, automatic downshift to a cheaper model) and measure whether downshifted work actually degrades in quality.",
+    "Check whether any adoption metric, leaderboard or OKR rewards token consumption, and move it to the team that owns the budget.",
+    "Benchmark two or three cheaper models on your own coding tasks rather than trusting public leaderboards; both Databricks and Stripe report that the newest, priciest model did not improve their results."
+  ],
+  "risksAndCaveats": [
+    "Databricks sells the Unity AI Gateway described in the post, so this is vendor-adjacent content — the savings table (20-50% ranges) is explicitly directional rather than measured, and no absolute spend, per-developer cost or adoption figures are disclosed.",
+    "The >30% router saving and ~50% token reduction are self-reported, self-measured, and specific to Databricks' own workloads and harness; 'no observed quality degradation' is not a controlled result.",
+    "This is one company's design, published once. Whether graduated friction actually holds a budget under Uber-scale adoption pressure is untested in public — Uber reached for a cap only after the softer controls it had did not hold.",
+    "Practitioner spend figures in the corroborating Hacker News thread ($80-200/day, $3k/week, ~$400/month/engineer appetite) are anonymous, self-reported and skewed toward small startups with unusual budgets."
+  ]
+}

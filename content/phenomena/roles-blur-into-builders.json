@@ -2,7 +2,7 @@
   "id": "roles-blur-into-builders",
   "label": "Roles blur into builders",
   "title": "Product and design now commit code too",
-  "thesis": "The line between who specifies software and who builds it is blurring: product managers and designers are producing running software with agents, and engineers' work moves toward supplying the primitives, architecture and review that let others do so safely. It would be wrong if non-engineer commits remain marginal, or if they prove to be reverted or rebuilt by engineers often enough that the boundary re-forms. THIN: three practitioner reports, no counts of non-engineer commits.",
+  "thesis": "Product managers and designers are starting to produce working software with agents, which blurs the line between who specifies software and who builds it. Engineers' work moves towards providing the architecture, building blocks and review that let others do this safely.",
   "construct": "Who in a software organisation produces working software - the share of product, design and other non-engineering roles that ship running prototypes or commits - and what engineers do in response. Not total AI tool adoption by non-engineers, headcount of any role, or hiring of new roles, which move without anyone outside engineering shipping code.",
   "currentPressure": "Agents make implementation cheap enough for non-engineers to attempt, while the cost of deciding what to build and keeping architecture coherent has not fallen.",
   "status": "published",

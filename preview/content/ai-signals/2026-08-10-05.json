@@ -1,0 +1,52 @@
+{
+  "id": "2026-08-10-05",
+  "title": "The EU AI Act's 2 August 2026 high-risk deadline did not land: the Digital Omnibus moved it to December 2027, six days before it would have applied",
+  "summary": "Regulation (EU) 2026/1744, the Digital Omnibus on AI, was published in the Official Journal on 24 July 2026 and entered into force on 27 July — three days after publication, an urgency the recitals attribute to the imminent general application of the AI Act on 2 August 2026. It amends Regulation (EU) 2024/1689 and pushes full high-risk obligations for standalone Annex III systems from 2 August 2026 to 2 December 2027, and for Annex I systems embedded in products already covered by EU product-safety law to 2 August 2028. Two earlier signals in this corpus (2026-03-23-05 and 2026-06-29-15) were written on the assumption that the August date would hold; the high-risk half of that expectation is now wrong. What did not move is Article 50: transparency obligations still applied from 2 August 2026, so providers of chatbots and generative systems must still disclose that a user is interacting with AI, synthetic audio, image, video and text must still be marked as artificially generated, and deepfake disclosure still applies. For software organisations the practical position is a split calendar — the disclosure and labelling work that touches product surfaces is live now; the conformity-assessment, technical-documentation, risk-management and CE-marking programme for Annex III systems has sixteen more months.",
+  "source": "EUR-Lex (Official Journal of the European Union)",
+  "sourceUrl": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng",
+  "sourceType": "article",
+  "signalType": "regulation-standard",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "effectiveDate": "2026-07-27",
+  "jurisdiction": "European Union",
+  "issuer": "European Parliament and Council of the European Union",
+  "corroboration": [
+    "https://www.nicfab.eu/en/posts/digital-omnibus-ai-official-journal/",
+    "https://secureprivacy.ai/blog/eu-ai-act-digital-omnibus-the-new-high-risk-ai-deadlines-after-council-approval",
+    "https://labs.cloudsecurityalliance.org/research/csa-research-note-eu-ai-act-high-risk-deadline-omnibus-20260/"
+  ],
+  "detectedAt": "2026-08-10",
+  "date": "2026-07-24",
+  "status": "published",
+  "tags": [
+    "eu-ai-act",
+    "regulation",
+    "compliance",
+    "transparency",
+    "digital-omnibus",
+    "high-risk"
+  ],
+  "category": [
+    "Ethics & Policy",
+    "Security & Risk",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "Teams that sequenced their compliance work around 2 August 2026 now have a different critical path. The expensive Annex III programme has slack; the cheap-sounding Article 50 labelling work is already overdue if it was deprioritised behind it.",
+    "This corrects two signals already published here. Anyone who read the earlier items and planned from them should re-check what they committed to and when.",
+    "A deadline moved by emergency legislation six days before it applied is itself information about the regime: the schedule is negotiable under industry pressure, which argues for building compliance capability rather than date-driven projects.",
+    "Deferral is not repeal. December 2027 for Annex III means the risk-management system, data governance, documentation and human-oversight requirements still have to exist, and organisations that stand down entirely will rebuild the same programme under worse time pressure."
+  ],
+  "recommendedActions": [
+    "Verify that Article 50 disclosure and synthetic-content marking are actually shipped in EU-facing products, since these obligations applied from 2 August 2026 regardless of the deferral.",
+    "Re-baseline the Annex III compliance plan to 2 December 2027 rather than cancelling it, and keep the classification work — knowing which of your systems are high-risk is the input to everything else and does not expire.",
+    "Check whether any internal AI use touches Annex III employment use cases such as worker evaluation or task allocation; AI-assisted coding tools generally do not, but AI applied to developer performance management can.",
+    "Have counsel confirm the position for your specific systems before standing anything down. This item summarises the regulation; it is not legal advice and the amendments also touch aviation and machinery regulations."
+  ],
+  "risksAndCaveats": [
+    "The regulation number, publication and entry-into-force dates and the new deadlines are confirmed against EUR-Lex. The detail that Article 50 transparency obligations were unaffected and applied from 2 August 2026 is taken from secondary legal commentary, which was consistent across sources but was not verified against the consolidated text in this run.",
+    "Attempts to retrieve two law-firm analyses (Gibson Dunn, Latham & Watkins) were blocked during this run, so the reading here rests on the Official Journal citation plus non-law-firm commentary.",
+    "National implementation, enforcement bodies and penalty practice vary by member state and are not covered by the deferral; the changed date says nothing about how strictly the obligations that do apply will be enforced."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "2026-09-07-01",
+  "title": "Spotify routes cheap agent work to a cheap model and cuts token use 90% on bulk reads, as per-developer AI spend runs $200-$2,000 a month",
+  "summary": "Spotify's engineering blog describes Portal, an internal platform its teams use to stop frontier models doing work that does not need them. The motivating number is a budget one: engineering leaders are already spending $200-$500 per developer per month on tokens, with some exceeding $2,000, and Spotify cites projections that by 2028 AI coding costs will pass the average developer's salary. Portal exposes declarative agents on ephemeral serverless runtimes, and two of them - a bulk-reader and a code-writer, both running Gemini 2.5 Flash - absorb the I/O-heavy work that agents otherwise spend expensive reasoning tokens on. A Claude Code plugin enforces the routing through hooks rather than relying on the developer to choose.\n\nThe reported saving is a 90% mean token reduction on bulk-read operations across a Java monorepo, at a cost of 10-30 seconds of added latency per delegation. The organisational point is bigger than the number: model routing is being pulled out of the developer's hands and into platform infrastructure, which makes agent cost a platform-engineering line item with an owner, a measurement and a roadmap rather than a per-seat subscription nobody controls.",
+  "source": "Spotify Engineering Blog",
+  "sourceUrl": "https://engineering.atspotify.com/2026/9/portal-by-spotify-cut-my-claude-code-token-usage-by-90",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Dimitri Mazmanov, Principal Product Manager at Spotify, writing on Spotify's engineering blog about a platform his own organisation built, runs and measured.",
+  "leadTimeEstimate": "~6-12 months ahead of mainstream; most organisations are still capping spend rather than re-architecting where tokens go",
+  "corroboration": [
+    "https://www.databricks.com/blog/managing-ai-coding-costs-scale"
+  ],
+  "detectedAt": "2026-09-07",
+  "date": "2026-09-03",
+  "status": "published",
+  "tags": [
+    "agent-costs",
+    "platform-engineering",
+    "model-routing",
+    "token-economics",
+    "internal-platforms",
+    "coding-agents"
+  ],
+  "category": [
+    "Costs & Economics",
+    "AI Agents",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Agent spend gets an owner** — routing at the platform layer turns an uncontrolled per-seat cost into infrastructure a named team can budget, measure and optimise.",
+    "**Frontier models become a tier, not a default** — the saving comes from stratifying tasks by what they actually require, which is a procurement and architecture decision rather than a developer preference.",
+    "**A new platform-team responsibility appears** — someone must build and maintain the routing layer, and that job currently sits in no standard org chart.",
+    "**Cost trajectory is the forcing function** — $200-$500 per developer per month, with outliers above $2,000, is already large enough to change tooling strategy at mid-sized engineering organisations."
+  ],
+  "recommendedActions": [
+    "**Measure where tokens actually go** — split current agent spend between reasoning and bulk file I/O before assuming a cheaper subscription is the answer.",
+    "**Assign routing to platform, not developers** — enforce model selection through hooks or gateways so the choice does not depend on individual discipline.",
+    "**Budget the latency** — 10-30 seconds per delegation is a real tax on interactive work, so decide which workflows can absorb it.",
+    "**Treat agent cost as a capacity plan** — forecast per-developer token spend alongside headcount rather than discovering it in a quarterly bill."
+  ],
+  "risksAndCaveats": [
+    "**Single-company result** — the 90% figure is Spotify's own measurement on its own Java monorepo, with no independent replication and no reported effect on output quality.",
+    "**Vendor-adjacent framing** — the post promotes an internal Spotify product, and the cost projections it cites are forecasts rather than measured spend.",
+    "**Savings may not survive model churn** — routing rules tuned to today's price and capability gaps between models will need continuous maintenance as those gaps move."
+  ]
+}

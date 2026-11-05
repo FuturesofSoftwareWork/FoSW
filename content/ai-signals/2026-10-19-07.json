@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-19-07",
+  "title": "Anthropic replaced git with an in-house system as agent-written merges grew twelvefold, and its engineers now review intent rather than lines",
+  "summary": "Anthropic's source control team reports that merged changes in its monorepo rose from about 2,500 a day in May 2026 to over 30,000 a day by September, and that git became the main bottleneck on development. Seven engineers built a replacement version control system and a new code review tool in five months and moved the main repository onto them.\n\nThe organisational part is how work changed around it. Reviewers now check the intent of each change rather than every line, and the team says a large part of the job is rejecting agent-written changes that break system constraints, for example by brute-forcing a lookup through the commit log. It dropped the global merge-queue lock in favour of testing after merge and before release, accepting that Claude will typically be asked to fix the conflicts that follow, and it runs agents that watch the health of individual components.\n\nThe authors expect this class of scaling problem to reach other companies within six to 12 months. This is Anthropic describing its own systems and its own model, at internal token spending the authors concede is far above what most businesses would see, so the figures are self-reported and the setting is unusual.",
+  "source": "Company Engineering Blog",
+  "sourceUrl": "https://www.anthropic.com/engineering/redesigning-source-control",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Nick G. and the seven-person Anthropic source control team, who built and run the system and wrote the post under the company's engineering blog",
+  "leadTimeEstimate": "~6-12 months (the authors' own estimate for when other companies hit the same scaling limits)",
+  "corroboration": [],
+  "detectedAt": "2026-10-19",
+  "date": "2026-10-13",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "source-control",
+    "agent-throughput",
+    "merge-queue",
+    "intent-review",
+    "anthropic"
+  ],
+  "category": [
+    "SDLC Change",
+    "AI Agents",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "**Review moves from lines to intent** — a team merging 30,000 changes a day cannot read each line, so reviewers judge whether a change is the right change and whether it respects system rules.",
+    "**Plumbing becomes the constraint** — version control, CI and merge gating were designed for human commit rates, and an agent-heavy organisation may find them failing before its staffing plan does.",
+    "**Small teams own critical systems** — seven people built the replacement for the core development system in five months, which is a statement about what staffing agents make possible, if the self-report holds."
+  ],
+  "recommendedActions": [
+    "**Measure merge volume per week** — track merged changes and CI checkouts now so you can see which shared system saturates first as agent use grows.",
+    "**Define what reviewers reject** — write down the system constraints agents tend to violate in your codebase and make them the explicit focus of human review."
+  ],
+  "risksAndCaveats": [
+    "**Vendor self-report** — Anthropic sells the model it credits, the efficiency figures are not independently checked, and the post says the system is not a general git replacement.",
+    "**Unusual scale** — the authors say their token spend is far above what most businesses will see, so the same bottlenecks may not appear in ordinary teams for some time."
+  ]
+}

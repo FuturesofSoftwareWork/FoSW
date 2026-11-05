@@ -1,0 +1,66 @@
+{
+  "id": "competence-checks-get-redesigned",
+  "label": "Competence checks get redesigned",
+  "title": "Employers and teachers are replacing coding tests with demonstrations",
+  "thesis": "Coding tests, take-home tasks and written assignments no longer show who is good at software, because AI agents can complete them. Employers and teachers are replacing them with portfolios, short oral defences and proof of skill with AI tools. Early examples: an Anthropic hiring manager dropped coding interviews in October, and a Carnegie Mellon course swapped written reflections for 15-minute oral check-ins.",
+  "construct": "What employers and educators ask a person to produce or do to show software competence, and how it is judged: interview tasks, take-homes, coursework, portfolios, oral defence, assumed tool access. Not entry-level hiring volume or junior employment (the-vanishing-apprenticeship), not the share of candidates or students using AI, and not how skills are acquired on the job, all of which move without any change in how competence is assessed.",
+  "currentPressure": "Agents complete the assignments and small coding tasks that assessments relied on, and tool vendors have withdrawn free and student tiers.",
+  "status": "published",
+  "primaryDimension": "skills-knowledge-and-learning",
+  "potentialImpact": "moderate",
+  "implications": [
+    {
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Coding challenges and take-home work that agents can do stop separating candidates, and portfolios of small prototypes and short oral defences replace them as the screening artefact.",
+      "actors": [
+        "technical-lead",
+        "new-entrant"
+      ]
+    },
+    {
+      "dimension": "careers-occupations-and-labour-markets",
+      "statement": "Interview loops that presume paid agentic tooling measure purchasing power and free time alongside ability, which compounds disadvantage for candidates the junior pipeline already fails.",
+      "actors": [
+        "new-entrant",
+        "organisation"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-11-02-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Anthropic engineering manager stopped coding interviews because Claude does the tasks better than candidates; screens portfolios for prototypes showing taste"
+    },
+    {
+      "signalId": "2026-09-28-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "CMU course: agents could complete every assignment; written reflections replaced by 15-minute oral check-ins, exam share 15% to 25%"
+    },
+    {
+      "signalId": "2026-08-17-08",
+      "stance": "supports",
+      "primary": false,
+      "note": "LeadDev reports interview loops asking for agentic coding proficiency and AI-assisted take-homes, presuming paid tool access (reported practice, no counts)"
+    }
+  ],
+  "observedReach": "early-manifestations",
+  "reachRationale": "A hiring manager at an AI lab, a university course and a trade report describe the same change: judging people by what they build and defend rather than by timed coding tasks. These are concrete forerunner cases, and no source counts how many employers have changed their loops, so nothing yet shows that a common expectation has shifted.",
+  "whatWouldChangeThis": [
+    "A survey of employers showing standard algorithmic or take-home coding assessments still used by a large majority and unchanged since 2025",
+    "Evidence that performance on traditional coding challenges still predicts job performance",
+    "Programmes that reverted to written or take-home assessment after trying oral or project formats"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 2,
+    "evidenceTypes": 1,
+    "quartersSpanned": 2,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-08-12",
+  "latestEvidenceDate": "2026-10-27",
+  "reachReviewedAt": "2026-11-05",
+  "lastReviewed": "2026-11-05"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "2026-09-14-01",
+  "title": "Shopify reverses its 2020 React Native bet because agents make building an app twice cheap enough: a rebuilt native Shop app shipped in 12 weeks",
+  "summary": "Shopify is moving its mobile apps from React Native back to native Swift and Kotlin, six years after it chose React Native to stop building every feature twice. The stated reason is not React Native's shortcomings but a change in the cost structure: by late 2025, coding agents could implement a feature on Android using the iOS version as the reference and vice versa, ramp developers up outside their primary stack, and carry most of the parity work, so code sharing stopped being the deciding factor. The rebuilt Shop app went from proof of concept to the app stores in 12 weeks; the 300-plus-screen Shopify app is following later this year.\n\nThe post also describes the discipline that made agents usable at this scale: a checkpoint system called Helix in which every increment must prove its behaviour with tests, match the running app in a visual review and survive two adversarial code reviewers, plus a CLI that lets agents iterate on business logic headlessly. For leaders, the durable point is that a platform strategy chosen to economise on engineering effort can be unwound once agents change what effort costs, and that the migration required deliberate re-training of teams on native before going all in. The HN discussion is sceptical: Shopify has so far shown that agents make a rewrite cheap, not that they make years of two-codebase parity maintenance cheap, and the post reports no parity-bug, cost or review-burden data.",
+  "source": "Shopify Engineering Blog",
+  "sourceUrl": "https://shopify.engineering/back-to-native",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "observer": "Mustafa Ali, engineering leader at Shopify, writing on the company's engineering blog about a platform decision his organisation made and is executing; Shopify was one of the most-cited enterprise React Native adopters, so its reversal carries weight beyond one company.",
+  "leadTimeEstimate": "~12-18 months ahead of mainstream; most organisations are still treating agents as a productivity aid inside an unchanged platform strategy rather than re-opening the strategy itself",
+  "corroboration": [
+    "https://news.ycombinator.com/item?id=49643982"
+  ],
+  "detectedAt": "2026-09-14",
+  "date": "2026-09-10",
+  "status": "published",
+  "tags": [
+    "platform-strategy",
+    "mobile-engineering",
+    "coding-agents",
+    "cross-platform",
+    "cost-structure",
+    "verification-gates"
+  ],
+  "category": [
+    "SDLC Change",
+    "Business Impact",
+    "AI Tools"
+  ],
+  "whyItMatters": [
+    "**Architecture bets are up for renegotiation** — a strategy chosen to save engineering effort, from cross-platform frameworks to shared services, can be reversed once agents change what that effort costs.",
+    "**Parity work is the first thing agents absorb** — translating a finished feature to a second platform is bounded, well-specified work with a reference implementation, which is exactly where agents perform best.",
+    "**Gates replace trust** — Shopify let agents run for hours only after building test, visual-review and adversarial-review checkpoints, so the enabling investment is verification infrastructure, not the agent.",
+    "**Retraining still had to happen** — teams were ramped onto native before the switch, so the agent did not remove the skills question, it changed which skills were worth building."
+  ],
+  "recommendedActions": [
+    "**Re-examine effort-saving architecture decisions** — list the platform choices made to avoid duplicated work and test whether agents change their economics before the next major investment.",
+    "**Pilot on a bounded rewrite first** — Shopify started with the smaller Shop app; use a contained product to learn what the gates must catch before touching the flagship.",
+    "**Fund the checkpoint system before the migration** — budget for tests, visual review and adversarial review as the precondition for letting agents run unattended.",
+    "**Instrument parity from day one** — track parity bugs, review burden and model spend per feature, since these are the numbers the strategy depends on and the post does not report."
+  ],
+  "risksAndCaveats": [
+    "**Rewrite evidence, not maintenance evidence** — the 12-week result shows agents make a rebuild cheap; whether they keep two codebases in sync over years, at acceptable review and model cost, is still unproven.",
+    "**No cost or quality numbers** — the post gives no engineer count, model spend, parity-bug rate or review-time data, so the economic claim is a judgement Shopify made, not a measurement it published.",
+    "**Shopify-specific capacity** — a company that can build Helix and a custom agent CLI is not typical; smaller teams may not be able to afford the gates that made the approach safe."
+  ]
+}

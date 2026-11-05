@@ -2,7 +2,7 @@
   "id": "review-shifts-to-verification",
   "label": "Review becomes verification",
   "title": "From reading code to verifying evidence",
-  "thesis": "As AI-generated changes exceed the capacity for line-by-line human review, software assurance shifts from inspecting code towards verifying intended behaviour, test evidence, security properties and architectural constraints. Automated systems take over routine checking, while human attention concentrates on intent, high-risk decisions, exceptions and accountability.",
+  "thesis": "AI produces more changes than people can read line by line, so assurance is shifting from inspecting code to verifying behaviour, test evidence, security properties and architectural limits. Automated checks take over routine review, and human attention goes to intent, high-risk decisions and accountability.",
   "currentPressure": "Generation capacity is growing faster than review capacity, producing longer queues and lower acceptance rates for AI-authored changes.",
   "status": "published",
   "primaryDimension": "nature-and-division-of-work",

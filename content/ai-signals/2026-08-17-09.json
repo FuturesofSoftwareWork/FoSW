@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-17-09",
+  "title": "A team that rebuilt its SDLC around agents reports the bottleneck moved to review velocity within a month",
+  "summary": "Daniel Kravets, a founding engineer at Vendict, describes restructuring his team's software development lifecycle as the context layer for coding agents rather than relying on instruction files, and reports what broke. Within a month of agents contributing at volume, the constraint stopped being implementation speed and became review velocity — the humans who approve work. His concrete responses are organisational rather than technical: separate subagents for implementation, testing, failure analysis and verification, each in an isolated context, because an agent reviewing its own work rationalises rather than reviews; a circuit breaker after three test-fix cycles, so an agent cannot grind indefinitely against a failing test; PR size caps of 500 lines soft and 1,000 hard, with test files exempted so agents are not pressured to consolidate tests to stay under the limit; and specification and plan kept as separate review surfaces shipped in one PR. His most quotable finding is that almost every critical issue traced back to the specification and to insufficiently thoughtful planning, not to the code. That relocates engineering quality upstream into work that is done by people, at exactly the moment agents make the downstream work cheap.",
+  "source": "Trade Publication (LeadDev)",
+  "sourceUrl": "https://leaddev.com/software-quality/your-sdlc-is-your-context-engineering",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Daniel Kravets, founding engineer at Vendict, reporting firsthand on his own team's SDLC redesign and the failure modes it produced",
+  "leadTimeEstimate": "~6-12 months ahead of teams still treating agent adoption as a tooling rollout rather than an SDLC redesign",
+  "corroboration": [],
+  "detectedAt": "2026-08-17",
+  "date": "2026-08-10",
+  "status": "published",
+  "tags": [
+    "sdlc",
+    "code-review",
+    "coding-agents",
+    "bottleneck",
+    "specification"
+  ],
+  "category": [
+    "SDLC Change",
+    "Quality & Testing",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "Because the constraint moves rather than disappears, leaders should expect agent adoption to convert an implementation bottleneck into a review bottleneck, and should plan reviewer capacity before the backlog appears rather than after.",
+    "If critical defects originate in specification and planning, then the highest-leverage investment is in the human upstream work — and headcount plans that cut the people who write specifications are cutting the wrong thing.",
+    "The builder-reviewer separation is a governance principle, not a tooling trick: an agent grading its own homework produces confident approval, and the same logic applies to any single-agent quality gate an organisation is currently trusting.",
+    "The test-file exemption is a small but instructive case of a metric being gamed by a non-human actor, which is a category of risk most engineering metrics were not designed against."
+  ],
+  "recommendedActions": [
+    "Measure review queue time and PR age now, before scaling agent contribution, so you can see the bottleneck move rather than infer it from frustration.",
+    "Require that any automated quality gate be run by a separate context from the one that produced the work, and treat self-review by the authoring agent as unreviewed.",
+    "Put a hard stop on agent retry loops (a fixed number of test-fix cycles) so a failing task escalates to a person instead of consuming budget silently.",
+    "Re-examine each engineering metric for how an agent optimising against it would behave, starting with any size or count limit."
+  ],
+  "risksAndCaveats": [
+    "A single team's firsthand account with no quantitative data — no before-and-after figures on review time, defect rate or throughput are given, so the effect sizes are unknown.",
+    "The author is a founding engineer at an AI-native security company; the team is small, well-resourced and unusually motivated to make agent workflows succeed, which limits how far this generalises to large or regulated organisations.",
+    "Specific thresholds (500/1,000 line caps, three test-fix cycles) are one team's calibration, not established practice, and are presented without the experimentation that produced them.",
+    "'Review velocity became the bottleneck' after one month may reflect an adoption spike rather than a steady state; nothing here shows whether it persisted."
+  ]
+}

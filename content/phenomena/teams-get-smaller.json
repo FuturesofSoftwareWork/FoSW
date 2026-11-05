@@ -1,8 +1,8 @@
 {
   "id": "teams-get-smaller",
   "label": "Teams get smaller",
-  "title": "The unit of delivery stops being the team of eight",
-  "thesis": "The standard delivery unit in software may be shrinking. If a small group with machine support can carry work that previously needed a full team, the consequences run past headcount into how work is coordinated, how careers progress, and what a manager is for. The early reports come from forerunners and investors rather than from the field, so the size of the change is far less clear than its direction.",
+  "title": "Small groups are doing work that used to need a full team",
+  "thesis": "A small group with machine support may now carry work that once needed a full team, so the standard delivery team in software may be shrinking. The effects go beyond headcount to how work is coordinated, how careers progress and what a manager is for. The early reports come from forerunners and investors, so the size of the change is much less clear than its direction.",
   "currentPressure": "Organisations are reporting delivery from markedly smaller groups while overall demand for engineers has not fallen, so the pressure shows up in team composition rather than in total employment.",
   "status": "published",
   "primaryDimension": "organisation-and-leadership",

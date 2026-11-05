@@ -1,0 +1,39 @@
+{
+  "id": "2026-10-19-08",
+  "title": "One practitioner at Spare says he reviews the agent's plan, not its code, and lets small changes auto-merge behind guardrails",
+  "summary": "Alexey Indeev, writing from work on Spare's internal operations platform, reports that he no longer reads agent-written code line by line. He reviews the plan, reads agent-generated progress reports instead of diffs, and relies on a gate that every pull request must clear before it enters the merge queue: unit tests, end-to-end tests, CI and two automated review and security tools.\n\nWhen an agent gets something wrong, the team asks which guardrail was missing and builds it, rather than blaming the output. A coordinator agent holds only the plan and status while sub-agents do the work, changes merge in small pieces behind feature flags, and he gives agents outcomes such as a business problem rather than tickets. He says he runs two to four long goals in parallel, some overnight or for days, and reports 562 pull requests merged in two weeks.\n\nThis is one person's account on his own blog, with no independent measurement of quality or incidents, and the platform is internal tooling rather than customer-facing software. It is useful as an early description of what a human role looks like once review is moved up to plans and guardrails.",
+  "source": "Practitioner Blog (Substack)",
+  "sourceUrl": "https://alexeyindeev.substack.com/p/i-stopped-reviewing-my-agents-code",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Alexey Indeev, who builds Spare's internal operations platform with his team and writes The Leveraged Mind; the post does not state his job title",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-10-19",
+  "date": "2026-10-04",
+  "status": "published",
+  "tags": [
+    "plan-review",
+    "guardrails",
+    "merge-queue",
+    "parallel-agents",
+    "outcome-based-tasking"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**The reviewed artifact changes** — the human checkpoint moves from the diff to the plan and the automated gate, which changes what a reviewer needs to be good at.",
+    "**Mistakes become guardrail work** — treating each agent error as a missing check turns incident follow-up into a steady investment in tests and policy rather than in reviewer attention.",
+    "**Tasks become outcomes** — assigning a business problem to a long-running agent goal replaces ticket breakdown, which affects planning and ownership."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Single self-reported account** — the 562-PR figure and the working method come from one blog post and have not been independently validated or tied to defect or incident data.",
+    "**Internal tooling context** — failures in an internal operations tool cost less than failures in customer-facing or regulated software, so the approach may not transfer."
+  ]
+}

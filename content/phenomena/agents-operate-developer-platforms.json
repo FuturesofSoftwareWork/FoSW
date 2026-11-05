@@ -1,0 +1,69 @@
+{
+  "id": "agents-operate-developer-platforms",
+  "label": "Agents operate developer platforms",
+  "title": "Agents now generate about half of the activity on developer platforms",
+  "thesis": "Agents are becoming the main users of developer platforms, and platforms are being rebuilt around them. Vendors report that coding agents make up 48% of Cloudflare's CLI use, trigger over half of Vercel's deployments and created nearly half of the issues in Linear in one week; Cloudflare has built a new CLI with agents as its first user.",
+  "construct": "The share of activity on developer and work-tracking platforms (CLI commands, deployments, created issues) that originates from agents rather than people or fixed scripts, and whether platform design changes to treat the agent as the primary user. Not how much of the implementation effort agents carry (agents-write-the-code), not whether agents' authority is bounded (agents-become-the-perimeter), and not adoption of agent tools by developers.",
+  "currentPressure": "Platform vendors report agent activity rising from a small share to about half within a year, and are shipping agent-first interfaces.",
+  "status": "published",
+  "primaryDimension": "nature-and-division-of-work",
+  "potentialImpact": "moderate",
+  "implications": [
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Platforms are redesigned for agents as the primary user, with JSON by default and thousands of API operations exposed, so internal platforms built for human operators begin to look dated.",
+      "actors": [
+        "technical-lead",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Access policies, audit trails and incident attribution designed around a human typing commands or a fixed CI script do not describe an actor that exercises an engineer's credentials with broader command coverage.",
+      "actors": [
+        "organisation",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "When agents file about half the issues, triage and coordination time per person rose rather than fell, and deciding which work is worth doing becomes the scarce human task.",
+      "actors": [
+        "engineering-manager",
+        "developer"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-10-05-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Cloudflare: coding agents 48% of Wrangler use (from a quarter in March); Harness: agent commands outnumber scripted ones; Vercel: over half of deployments triggered by agents"
+    },
+    {
+      "signalId": "2026-10-19-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "Linear paid workspaces: agents and MCP clients created ~2.4 million issues vs ~2.5 million from people and integrations in one week; per-user triage minutes rose"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "Four platforms (Cloudflare, Harness, Vercel and Linear) report the same crossover to agent-driven activity in the same quarter, so it is more than one forerunner. It is still a relatively new development, and the figures are vendor-reported telemetry from their own customers.",
+  "whatWouldChangeThis": [
+    "Agent share of CLI use, deployments or issue creation stalling or falling on these platforms in later reports",
+    "Evidence that the agent share is mostly scripted or retry traffic with no change in what is actually done",
+    "Platforms with large developer bases reporting agent share under about a tenth",
+    "Platforms keeping human-readable interfaces as the primary design, with agent access as an add-on"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 2,
+    "evidenceTypes": 2,
+    "quartersSpanned": 1,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-08-17",
+  "latestEvidenceDate": "2026-09-28",
+  "reachReviewedAt": "2026-11-05",
+  "lastReviewed": "2026-11-05"
+}

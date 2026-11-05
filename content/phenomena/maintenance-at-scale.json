@@ -2,7 +2,7 @@
   "id": "maintenance-at-scale",
   "label": "Maintenance at scale",
   "title": "Upkeep becomes work agents do",
-  "thesis": "Organisations are beginning to hand routine upkeep of merged code to agents running continuously: removing stale flags and dead code, repairing CI, resolving performance regressions. Deterministic tools and agentic reviewers gate each change, because production of change now outruns the human capacity to maintain it. If this holds, maintenance stops being a backlog people triage and becomes a pipeline someone owns. It would be wrong if benchmark-style regressions prove to be the norm when agents maintain real codebases, or if these pipelines stay a few large companies' bespoke tooling that others cannot reproduce.",
+  "thesis": "Some organisations now let agents handle routine upkeep of merged code around the clock: removing stale feature flags and dead code, repairing CI and fixing performance regressions. Automated checks and agent reviewers gate each change. Maintenance then stops being a backlog people triage and becomes a pipeline someone owns.",
   "construct": "Whether routine upkeep of an existing codebase is carried out by agents running continuously, at what volume and under what verification. Not agents writing new features, benchmark pass rates on isolated fixes, or the volume of maintenance work needed, all of which move without any upkeep being delegated.",
   "currentPressure": "Feature-flag clean-up and migration backlogs are being worked by agent pipelines at Uber and Cockroach Labs, while benchmarks still show agents regressing previously working code in most long-term maintenance runs.",
   "status": "published",
