@@ -1,0 +1,45 @@
+{
+  "id": "2026-08-07-07",
+  "title": "Gartner forecasts 60% of organisations on smaller engineering teams by 2029, from 15% in 2026",
+  "summary": "Gartner announced on 7 July 2026 that it expects 60% of organisations to adopt smaller software engineering teams at scale by 2029, up from 15% in 2026. Principal analyst Aliyah Camacho says today's 'tiny teams' typically have four to five members and some as few as two to three, and describes their composition as a specialist product manager alongside a UX or agent-experience designer and at least one AI-native engineer. Gartner frames this as restructuring to exploit human and machine strengths rather than as cost reduction, and states that AI is fuelling demand for more software engineers rather than fewer. Two things should be kept apart here. The 2029 figure is a prediction and carries no evidential weight for whether delivery units are shrinking now. The 15% figure is a claim about current practice, but Gartner's press release states no survey sample, fieldwork period or methodology behind it, so it cannot be treated as a measurement either. This item is included because the number is being cited across the trade press as though it settled the question, and readers need to know what does and does not sit behind it.",
+  "source": "Gartner press release",
+  "sourceUrl": "https://www.gartner.com/en/newsroom/press-releases/2026-07-07-gartner-predicts-60-percent-of-organizations-will-adopt-smaller-software-engineering-teams-by-2029",
+  "sourceType": "article",
+  "signalType": "forecast",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "forecaster": "Gartner (Aliyah Camacho, Principal Analyst)",
+  "horizonDate": "2029",
+  "leadTimeEstimate": "three-year horizon; no observation of current practice with stated methodology",
+  "corroboration": [
+    "https://www.ciodive.com/news/engineering-teams-shrink-from-ai-responsibilities/824995/",
+    "https://www.itpro.com/software/development/nearly-two-thirds-of-enterprises-could-reduce-software-engineering-teams-by-2029-but-tiny-teams-wont-be-a-disaster-for-engineers"
+  ],
+  "detectedAt": "2026-08-07",
+  "date": "2026-07-07",
+  "status": "published",
+  "tags": [
+    "team-size",
+    "tiny-teams",
+    "forecast",
+    "org-design",
+    "gartner"
+  ],
+  "category": [
+    "Org & Leadership",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "This prediction is now the most-cited number in the smaller-teams debate and is being repeated as a finding. Leaders quoting it in planning documents should know it is a forecast with no published methodology.",
+    "The composition Gartner describes — product manager, UX or agent-experience designer, at least one AI-native engineer — is a specific staffing template that vendors and consultancies will sell against, whether or not the forecast holds.",
+    "Gartner's own framing contradicts the headcount reading of this trend: it says AI is increasing demand for software engineers. Smaller teams and more engineers is only coherent if the number of teams rises, which nobody is currently measuring."
+  ],
+  "recommendedActions": [
+    "If this forecast appears in an internal business case, ask what evidence of current practice supports the 15% figure before any headcount decision is taken on the strength of it."
+  ],
+  "risksAndCaveats": [
+    "This is a prediction, not an observation, and carries no weight as evidence that delivery units are shrinking today.",
+    "The 15%-in-2026 figure is stated without a sample size, fieldwork period or methodology in the press release, so it cannot be verified or compared against other measurements.",
+    "Gartner's press release was not directly retrievable for this run (the server returned 403 to automated retrieval); the figures here are taken from Gartner's own published wording as quoted consistently by CIO Dive and IT Pro, both of which cite the same release."
+  ]
+}

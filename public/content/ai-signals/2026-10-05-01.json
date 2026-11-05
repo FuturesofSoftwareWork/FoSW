@@ -1,0 +1,47 @@
+{
+  "id": "2026-10-05-01",
+  "title": "Agents are becoming the main operators of developer infrastructure: nearly half of Cloudflare's CLI use now comes from coding agents, and Harness says agent commands outnumber scripted ones",
+  "summary": "Cloudflare reports that coding agents accounted for 48% of Wrangler use, its developer CLI, in the week before its 28 September post, up from a quarter in March. Agent sessions use almost twice as many distinct commands per day as human ones. Cloudflare's response was to build a new CLI, cf, that covers more than 3,000 API operations and defaults to JSON rather than human-readable tables, on the stated assumption that agents will be its primary user and humans will be one step removed.\n\nThe same week, Harness said that agent-issued commands now outnumber script-issued ones on its delivery-platform CLI, with Claude Code the leading source, and that the CLI is becoming the interface agents use rather than a developer convenience. In June, Vercel put the share of its deployments triggered by coding agents at over half, from under 3% six months earlier. Three unrelated platforms reporting the same crossover in one quarter suggests this is a general shift, not a quirk of one vendor's customer base.\n\nThe consequence for engineering organisations is that the actor holding deploy, configuration and infrastructure credentials is increasingly an agent acting on an engineer's behalf. Access policies, audit trails and incident attribution designed around a human typing commands, or a CI script with a fixed job, do not describe that actor.",
+  "source": "Cloudflare Blog",
+  "sourceUrl": "https://blog.cloudflare.com/cloudflare-cf-cli-launch/",
+  "sourceType": "article",
+  "signalType": "tool-shift",
+  "signalStrength": "emerging",
+  "signalStage": "leading",
+  "leadTimeEstimate": "~6-12 months before agent identity and permissions become a standard platform-team concern",
+  "corroboration": [
+    "https://www.harness.io/blog/shipped-in-september-2026",
+    "https://siliconangle.com/2026/06/17/vercel-launches-new-framework-enterprise-controls-agentic-ai-infrastructure/"
+  ],
+  "detectedAt": "2026-10-05",
+  "date": "2026-09-28",
+  "status": "published",
+  "tags": [
+    "coding-agents",
+    "platform-engineering",
+    "developer-tooling",
+    "access-control",
+    "devops",
+    "agent-identity"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change",
+    "Security & Risk"
+  ],
+  "whyItMatters": [
+    "**The operator is now an agent** — on at least three major platforms, agents rather than people or scripts now account for roughly half of the activity on the tools that change infrastructure.",
+    "**Tooling is being redesigned for agents** — vendors are dropping human-readable defaults, so internal platforms built for human operators will start to look dated to the teams using them.",
+    "**Credentials outlive their assumptions** — tokens issued to an engineer are being exercised by an agent with broader command coverage and less hesitation, which existing access reviews do not model.",
+    "**Incident attribution gets harder** — when a change is made via an engineer's session but chosen by an agent, the audit log no longer says who decided."
+  ],
+  "recommendedActions": [
+    "**Measure your own agent share** — ask platform teams what fraction of CLI, API and deploy actions in your estate are agent-initiated, and how they would know.",
+    "**Give agents distinct identities** — issue agent sessions separate, narrower credentials so audit logs and permissions distinguish them from the engineer.",
+    "**Review internal platform interfaces** — treat agents as a primary consumer when prioritising internal CLI and API work, including machine-readable output and clear errors."
+  ],
+  "risksAndCaveats": [
+    "**Vendors measuring their own adoption** — all three figures are self-reported by companies selling agent-ready platforms, with no published method for classifying a command as agent-issued.",
+    "**Harness gives no number** — its claim is a single sentence without a share or sample, so it corroborates the direction rather than the size."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-02-01",
+  "title": "Anthropic hiring manager stops asking coding interview questions, screens for prototypes that show taste",
+  "summary": "Felix Rieseberg, an engineering manager at Anthropic who has led engineering for Claude.ai, Cowork and Claude Code Desktop, wrote on 27 October that this month he stopped giving candidates traditional coding interviews. His reasoning is that small coding challenges used to be a weak but useful predictor of success on his teams, and no longer give signal because Claude does those tasks better than people do. He adds that the top builders on his teams succeed regardless of how they do on such tests.\n\nIn their place he scans resumes and portfolios for small prototypes that show taste, empathy and principled thinking, and says plainly that he has not yet worked out a full interview format for people who build well with AI and invites readers to share anything better.\n\nThe post pairs this with advice to engineers without status or tenure: execution is cheap enough that a weekend prototype can substitute for a PRD and buy-in process. He cites two newer Anthropic engineers who built a working prototype of a Claude Code graphical interface in a weekend, with a first public version about eight days later.",
+  "source": "Practitioner Blog",
+  "sourceUrl": "https://felixrieseberg.com/hunger-beats-tenure-advice-for-junior-engineers",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Felix Rieseberg, engineering manager at Anthropic who has led Claude.ai, Cowork and Claude Code Desktop engineering; Electron co-maintainer; previously at Notion, Stripe, Slack and Microsoft.",
+  "leadTimeEstimate": "~6-12 months before hiring-loop changes are widely discussed",
+  "corroboration": [],
+  "detectedAt": "2026-11-02",
+  "date": "2026-10-27",
+  "status": "published",
+  "tags": [
+    "hiring",
+    "interviews",
+    "skills",
+    "junior engineers",
+    "prototyping"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Interview signal has decayed** — a task that AI does better than candidates no longer separates strong from weak engineers, so loops built on it select on little.",
+    "**Hiring shifts to judgement evidence** — portfolios of small, opinionated prototypes become the screening artefact instead of timed problem solving.",
+    "**Cheap prototypes replace approval steps** — if a weekend build can prove an idea, status and process-heavy buy-in lose weight as a way to decide what gets built."
+  ],
+  "recommendedActions": [
+    "**Audit your hiring loop** — review each stage of recruitment and ask whether it still tests something a frontier model now does better than candidates.",
+    "**Run your coding screen through a model** — check whether your take-home or live coding task is passed by an AI; if so, it no longer separates candidates.",
+    "**Pilot a new signal alongside the old** — trial a prototype or portfolio review on a few candidates and compare it with how they perform on the job, before changing the loop."
+  ],
+  "risksAndCaveats": [
+    "**Single manager, no replacement yet** — this is one hiring manager's account of his own team, and he states he has no validated new format; it has not been independently confirmed.",
+    "**Portfolio screening has its own bias** — favouring visible prototypes can disadvantage candidates with little spare time or public work."
+  ]
+}

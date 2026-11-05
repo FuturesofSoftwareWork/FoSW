@@ -1,0 +1,49 @@
+{
+  "id": "2026-08-10-07",
+  "title": "Agents reviewing agents is directional: a weaker reviewer destroyed four times more correct code than it fixed",
+  "summary": "The write-then-review agent pairing has spread fast — two coding agents, one drafting and one reviewing — on the intuition that a second model catches what the first missed. The first controlled test of that assumption says the direction matters more than the pairing. Across 116 hard and medium LiveCodeBench tasks in six conditions, Claude reviewing Codex drafts lifted pass rates from 71.6% to 89.7%, but Codex reviewing Claude drafts pushed them DOWN from 91.4% to 82.8%. The mechanism is the damaging part: the weaker reviewer fixed three of the stronger model's failures while turning 13 correct solutions into incorrect ones. Claude reviewing itself changed nothing at all. LeadDev's coverage adds that the pairing roughly doubled cost per task ($0.19 to $0.44) and tripled latency (38.5s to 112.4s). The practical consequence is that an agent-review stage is a staffing decision with a hierarchy, not a safety net you can add cheaply in either direction — and a team that wires its cheapest model into the reviewer slot to control cost may be paying to make its output worse.",
+  "source": "arXiv Preprint (accepted, Agentic SE @ KDD'26)",
+  "sourceUrl": "https://arxiv.org/abs/2607.21656",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "replicated": false,
+  "leadTimeEstimate": "~3-6 months ahead of tooling defaults — multi-agent review is shipping in products now, largely without direction guidance",
+  "corroboration": [
+    "https://leaddev.com/ai/your-ai-coding-agents-might-need-an-org-chart",
+    "https://dev.to/anchildress1/i-recreated-management-with-ai-9-things-i-do-differently-3j8g"
+  ],
+  "detectedAt": "2026-08-10",
+  "date": "2026-07-22",
+  "status": "published",
+  "tags": [
+    "multi-agent",
+    "code review",
+    "agent orchestration",
+    "quality",
+    "model selection"
+  ],
+  "category": [
+    "Quality & Testing",
+    "AI Agents",
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "Teams are adopting adversarial cross-model review as a quality control — practitioners are publicly describing exactly this setup — and this result says an ungoverned version of it can be net negative. The review slot needs an explicit model-capability policy, not whatever is cheapest or already licensed.",
+    "It reframes agent selection as an org-design question: the reviewer must outrank the author, the same rule engineering organisations already apply to humans. That is a governable, auditable policy leaders can actually write down.",
+    "The cost profile matters for anyone budgeting agent pipelines: roughly 2x cost and 3x latency for a step that only pays off in one direction. Adding review stages 'because more review is safer' is not free and not reliably beneficial.",
+    "It is a caution for the broader pattern of stacking agents into pipelines. Composition was assumed to be additive; here it is asymmetric, and the failure mode is silent — correct work being rewritten into incorrect work, with no signal that it happened."
+  ],
+  "recommendedActions": [
+    "Write down which model may occupy the reviewer slot relative to the author model, and block configurations where the reviewer is the weaker model.",
+    "If you already run cross-model review, measure regressions specifically — count solutions that were correct before the review step and wrong after, which is the failure this study exposes and which pass-rate averages hide.",
+    "Re-run the comparison against your own repositories before trusting the direction, since the finding is tied to two specific model versions that will both be superseded within months."
+  ],
+  "risksAndCaveats": [
+    "The benchmark is competitive-programming tasks (LiveCodeBench), not real repository work — no legacy context, no architectural judgment, no unfamiliar codebase, which is where real review value sits. External validity to production code review is unestablished.",
+    "The reviewer could not execute tests, which approximates review but removes the single strongest signal a real reviewing agent would have.",
+    "n=116 tasks with two specific model versions (Claude Opus 4.7, Codex GPT-5.5). The general lesson — direction matters — is more durable than the specific recommendation, which will age within a model generation.",
+    "Not replicated, and a preprint accepted to a workshop rather than a peer-reviewed venue. The cost and latency figures come from LeadDev's reporting rather than the abstract."
+  ]
+}

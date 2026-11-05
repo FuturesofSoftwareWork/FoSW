@@ -1,0 +1,47 @@
+{
+  "id": "2026-08-24-02",
+  "title": "Tokenmaxxing is being unwound: Meta killed its Claudeonomics leaderboard, Amazon retired KiroRank, and Uber's CTO says the company has moved on",
+  "summary": "Earlier in 2026 several large engineering organisations started ranking staff by AI token consumption, a practice that acquired the name tokenmaxxing after Meta's internal leaderboard went public. LeadDev reports that the practice has been walked back at four named companies inside months: Meta shut down its 'Claudeonomics' leaderboard over concerns it rewarded consumption rather than impact; Amazon retired its KiroRank dashboard after employees began optimising for usage itself, with leaders telling staff not to 'use AI just for the sake of using AI'; Uber's CTO Praveen Neppalli Naga says maximising tokens raised AI costs without improving developer productivity or business outcomes; and Microsoft EVP Jay Parikh wrote in an internal email seen by 404 Media that 'tokenmaxxing is not what we are optimizing for'. LeadDev's own AI Impact Report 2026 finds the metric is still widespread but not believed: 58% of respondents say their organisation currently measures AI impact through token usage, 57% say it fails to gauge real value, and only 19% call it effective. The replacement metrics named by the practitioners quoted are all paired activity-and-quality measures — change failure rate, review burden, rework and churn, time to first contribution, verification throughput — rather than a single consumption number. Ankit Jain's diagnosis is that the failure was not adopting the metric but 'letting an onboarding metric be used for performance-management'.",
+  "source": "LeadDev (Chantal Kapani), citing LeadDev AI Impact Report 2026",
+  "sourceUrl": "https://leaddev.com/reporting/the-tokenmaxxing-hype-didnt-last-long",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "leadTimeEstimate": "confirms a reversal already under way inside large engineering orgs; ~3-6 months ahead of it reaching mid-market measurement practice",
+  "corroboration": [],
+  "detectedAt": "2026-08-24",
+  "date": "2026-08-17",
+  "status": "published",
+  "tags": [
+    "metrics",
+    "productivity-measurement",
+    "goodharts-law",
+    "tokens",
+    "performance-management",
+    "dora"
+  ],
+  "category": [
+    "Productivity",
+    "Org & Leadership",
+    "Costs & Economics"
+  ],
+  "whyItMatters": [
+    "This is a rare documented case of a productivity metric being adopted and abandoned inside one year at four large firms. Leaders currently under pressure to show AI adoption numbers now have four named precedents for why a consumption metric will not survive contact with performance management.",
+    "The failure mode named is specific and portable: an onboarding metric was promoted into performance management. Any org tracking seat activation, agent invocations or prompt counts to prove adoption is one management decision away from the same outcome.",
+    "58% of respondents still measure AI impact by token usage while 57% say it does not gauge value. That gap is the actual finding — the practice outlives the belief in it, so it will not stop on its own.",
+    "The replacement set the practitioners propose shifts measurement from output to verification: review burden, rework and churn, and whether teams can validate changes as fast as they can generate them."
+  ],
+  "recommendedActions": [
+    "Check whether any AI adoption metric currently reported upward is also used in performance conversations. If it is, separate the two before the metric starts being gamed.",
+    "Pair every AI activity metric with a quality metric on the same dashboard — change failure rate against volume, rework rate against PRs merged — so gaming shows up as a divergence rather than as growth.",
+    "Add review burden and rework/churn to engineering reporting now if they are not there; both are named as the replacement measures and neither is instrumented by default."
+  ],
+  "risksAndCaveats": [
+    "The survey is LeadDev's own AI Impact Report 2026, described in this article as upcoming. No sample size, sampling frame or fieldwork window is given, so the 58/57/19 figures cannot be weighted.",
+    "The company reversals are reported secondhand; only the Microsoft email is sourced to a document (via 404 Media), and none of the four companies is quoted confirming the shutdown directly.",
+    "Several of the practitioners quoted sell or advise on engineering measurement, which gives them an interest in the conclusion that a simple metric is inadequate.",
+    "That leaderboards were retired does not mean token spend stopped being tracked for cost control, which is a different and entirely reasonable use.",
+    "An adjacent opinion piece on the same theme was declined by an earlier run for having no original data; this item is included because it adds named organisational reversals and survey figures, not because the argument is new."
+  ]
+}

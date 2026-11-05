@@ -1,0 +1,51 @@
+{
+  "id": "2026-09-07-02",
+  "title": "Debian's developers reject an outright AI ban and adopt a personal-responsibility rule instead, setting a reference policy for every project downstream",
+  "summary": "After a two-month debate and a ballot of eight competing options, Debian's 1,045 eligible developers chose \"Responsible Use of Generative AI\" over both a Social Contract amendment banning LLM contributions and a fully permissive stance. The winning option beat its nearest rival by 55 votes head to head. Its substance is short and unusually transferable: contributions must meet existing standards regardless of the tools used to create them, the contributor bears full responsibility for what they submit, disclosure of AI assistance is encouraged but not required, confidential project information must never be sent to third-party AI services, and large-scale automated contributions require prior discussion.\n\nThe contrast with the rest of the ecosystem is what makes this a signal rather than a housekeeping note. GCC, QEMU, SDL, Gentoo and Zig reject AI-assisted contributions outright, Codeberg, Sourcehut and Flathub ban AI-generated code and bug reports at the platform level, and the Linux kernel requires the model used to be credited. One survey of 120 open source projects found 37 had chosen a total ban. Debian sits upstream of Ubuntu, Raspberry Pi OS and thousands of derivatives, so its wording is likely to be copied rather than merely observed - and the norm it encodes is accountability for every line, not restriction of the tool.",
+  "source": "Debian Project (General Resolution vote result)",
+  "sourceUrl": "https://www.debian.org/vote/2026/vote_002",
+  "sourceType": "article",
+  "signalType": "regulation-standard",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "effectiveDate": "2026-08-28",
+  "jurisdiction": "Debian Project and its contributor base; influential across the distributions and platforms built on it",
+  "issuer": "Debian Project",
+  "leadTimeEstimate": "confirms current practice in open source; ~6-12 months ahead of most corporate contribution policies",
+  "corroboration": [
+    "https://optimizedbyotto.com/post/why-open-source-projects-ban-ai/"
+  ],
+  "detectedAt": "2026-09-07",
+  "date": "2026-08-28",
+  "status": "published",
+  "tags": [
+    "open-source",
+    "contribution-policy",
+    "governance",
+    "ai-disclosure",
+    "upstream",
+    "policy"
+  ],
+  "category": [
+    "Ethics & Policy",
+    "Org & Leadership",
+    "Security & Risk"
+  ],
+  "whyItMatters": [
+    "**Upstream contributions can now be rejected** — engineers who contribute to OSS on company time face project-specific AI rules that range from Debian's responsibility test to outright bans, and no internal policy currently tracks which is which.",
+    "**Confidentiality clause is the enterprise-relevant part** — a blanket prohibition on sending project information to third-party AI services is exactly the clause corporate contributors are most likely to breach without noticing.",
+    "**Accountability, not attribution, is the emerging norm** — Debian made disclosure optional and responsibility mandatory, which is a cheaper and more enforceable shape than provenance tracking.",
+    "**A reference text now exists** — organisations writing their own AI contribution policy can adopt tested wording that survived eight competing proposals rather than drafting from scratch."
+  ],
+  "recommendedActions": [
+    "**Inventory which projects your engineers contribute to** — and record each one's current AI policy, because bans and responsibility rules now differ project by project.",
+    "**Check the confidentiality exposure** — verify that agents used on upstream work cannot send project or employer-confidential context to third-party services.",
+    "**Adopt the responsibility test internally** — require that the submitter understands, has reviewed and can defend every change, irrespective of what produced it.",
+    "**Gate bulk automated contributions** — require prior discussion before pointing agents at an upstream repository at scale, as Debian now does."
+  ],
+  "risksAndCaveats": [
+    "**A norm, not an enforcement mechanism** — the policy rests on contributor self-declaration, and Debian has no way to detect AI assistance that a contributor chooses not to disclose.",
+    "**The community is split** — outright-ban options drew substantial support, so the position may be revisited if AI-assisted contribution quality problems accumulate.",
+    "**The 37-of-120 figure is second-hand** — it comes via a practitioner blog citing another author's survey, and the sampling method behind it is not described in that source."
+  ]
+}
