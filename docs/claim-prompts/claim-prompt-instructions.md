@@ -486,7 +486,10 @@ Write all four keys, even when empty, so a reader can see you considered each.
 - **`suggestions`** — everything human-owned you think needs revisiting:
   `contested`, `contestedNote`, `reachRationale`, `thesis`, `observedReach`,
   `whatWouldChangeThis`. One entry per field, with `observation` saying what no
-  longer reads true against the new evidence and why. `radar:apply` writes
+  longer reads true against the new evidence and why. A suggested rewrite of a
+  `title` or `thesis` follows the wording rules in
+  `docs/radar-clustering-prompt.md` (descriptive title, thesis about the
+  phenomenon rather than one study, refutation conditions kept out of it). `radar:apply` writes
   these into its report and changes none of them; a person does. For
   `observedReach`, say that the evidence no longer matches the ring and why,
   never which ring it should move to.

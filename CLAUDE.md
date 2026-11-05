@@ -106,7 +106,7 @@ config/
 - **Preview deployment:** `/FoSW/preview/` is the same commit as `/FoSW/`, built with a different base and drafts on, so going live is publishing the tenth phenomenon rather than migrating anything. It is `noindex, nofollow` (applied by the `previewNoindex` plugin in `vite.config.ts`, keyed on the base) and ships no sitemap. Note that `robots.txt` under `/FoSW/` is never actually fetched — crawlers read it from the domain root only — so the meta tag is the control that works.
 - **One workflow, one deploy.** `.github/workflows/deploy.yml` builds production, stashes it, builds the preview, verifies the radar against it, assembles `_site/` with the preview nested at `_site/preview/`, and pushes `gh-pages` **once**. It used to be two workflows pushing separately; each push spawns a GitHub Pages deployment, only one may be in flight, and the two raced — on 2026-08-06 one wedged in `building` and the site served a stale build for two hours while every run showed green. A `concurrency:` group cannot fix that, because it governs the workflows and not the deployments GitHub spawns from their pushes. Do not split this back into two workflows. `verify:radar` now gates production as well as the preview.
 - **SPA fallback:** every build emits `dist/404.html`, a copy of the prerendered shell. GitHub Pages serves it *without redirecting*, so `/FoSW/<kind>/<id>/` deep links — the URLs the drawer's Copy-link button hands out — resolve instead of hard-404ing. The production copy also forwards `/preview/` paths via `sessionStorage["radarDeepLink"]`, restored by the inline snippet in `index.html`, for the case where Pages answers a preview miss with the root 404 page.
-- **Blip placement:** `placeBlips` in `src/config/radarGeometry.ts` seeds from the per-id hash and then nudges overlapping pairs apart, clamped to each blip's own ring band and sector wedge. A cell holds about five blips at this spacing; beyond that it stays crowded on purpose, because moving a blip out of its cell would misstate how far that change has reached.
+- **Blip placement:** `placeBlips` in `src/config/radarGeometry.ts` seeds from the per-id hash and then nudges overlapping pairs apart, clamped to each blip's own ring band and sector wedge. A cell holds about five blips at this spacing; beyond that it stays crowded on purpose, because moving a blip out of its cell would misstate how far that change has reached. `RADIUS_OVERRIDE` in the same file fixes a blip's distance from the centre by editorial choice; a value must stay inside that blip's own ring, and it never replaces `observedReach`.
 
 ## Content Schema
 
@@ -140,7 +140,9 @@ Only include a type-specific field when its value is actually stated in the sour
 
 **Expert Insight** (`public/content/expert-insights/*.json`):
 - Required: `id`, `title`, `author`, `authorRole`, `excerpt`, `paragraphs`, `date`, `status`
-- Optional: `tags`
+- Optional: `tags`, `relatedPhenomena`
+- `relatedPhenomena`: phenomenon ids the post discusses. Renders an "Our analysis" card on the phenomenon and an "On the radar" link on the post. The link lives on the post so that no phenomenon file changes and the radar pipeline is not involved. It is not evidence and counts toward nothing. `validate-phenomena.mjs` fails the build on an id that does not resolve.
+- `status: "draft"` insights load in dev and preview builds only (`includeDrafts()`), so they can be read in context before publishing. Production never fetches them, but the files under `public/` can still be opened by direct URL once pushed.
 
 **Phenomenon** (`public/content/phenomena/*.json`):
 - Required (`REQUIRED_FIELDS`): `id`, `label`, `title`, `thesis`, `status`, `primaryDimension`, `implications`, `evidence`, `observedReach`, `reachRationale`
@@ -148,6 +150,7 @@ Only include a type-specific field when its value is actually stated in the sour
 - Evidence `stance` must be one of: `supports`, `counter`, `contextual`
 - Work dimensions (seven): `nature-and-division-of-work`, `organisation-and-leadership`, `skills-knowledge-and-learning`, `careers-occupations-and-labour-markets`, `worker-experience-identity-and-wellbeing`, `economics-productivity-and-value`, `ethics-responsibility-and-society`
 - `construct` — what a source must measure to count as evidence here. Optional on drafts, **required on published**.
+- Wording of `label`, `title` and `thesis`: the title is a plain descriptive sentence (no metaphor, nothing tied to one study), the thesis is about 70 words about the phenomenon rather than one report, and refutation conditions go in `whatWouldChangeThis`, never in the thesis. Rules and examples are in `docs/radar-clustering-prompt.md`.
 - `possibleReachChange` — derived candidate for reach review. Carries no ring.
 - `reachReviewedAt` is now **required on published only**; its absence means no human has judged reach yet, and `radar:accept` refuses on it.
 
