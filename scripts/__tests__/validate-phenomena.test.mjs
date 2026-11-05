@@ -15,6 +15,7 @@ const valid = () => ({
   title: "From reading code to verifying evidence",
   thesis: "Assurance shifts from inspecting code towards verifying evidence.",
   construct: "whether assurance work inspects code or verifies evidence",
+  potentialImpact: "high",
   status: "published",
   primaryDimension: "nature-and-division-of-work",
   implications: [
@@ -58,6 +59,16 @@ test("a published phenomenon may not omit reachReviewedAt", () => {
     errors.some((e) => e.includes("reachReviewedAt")),
     `expected a reachReviewedAt error, got: ${errors.join("; ")}`,
   );
+});
+
+test("a draft may omit potentialImpact", () => {
+  const p = { ...withOut("potentialImpact"), status: "draft" };
+  assert.ok(!validatePhenomenon(p, ctx).some((e) => e.includes("potentialImpact")));
+});
+
+test("a published phenomenon may not omit potentialImpact", () => {
+  const errors = validatePhenomenon(withOut("potentialImpact"), ctx);
+  assert.ok(errors.some((e) => e.includes("potentialImpact")), `expected an error, got: ${errors.join("; ")}`);
 });
 
 test("a draft may omit construct", () => {

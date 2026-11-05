@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import type { Phenomenon } from "@/types/phenomenon";
 import type { WorkDimensionId } from "@/config/radarDimensions";
 import { WORK_DIMENSIONS } from "@/config/radarDimensions";
-import { BLIP_RADIUS, RING_LABEL, VIEWBOX, placeBlips } from "@/config/radarGeometry";
+import { BLIP_FADE, RING_LABEL, VIEWBOX, blipRadius, placeBlips } from "@/config/radarGeometry";
 import { deriveImpacts, freshnessOf } from "@/lib/phenomenon";
 
 interface RadarBlipsProps {
@@ -23,6 +23,14 @@ const HOVER_CHAR = HOVER_FONT * 0.62; // monospace advance width
 const HOVER_PAD = 8;
 const HOVER_H = HOVER_FONT + 11;
 
+/** Fading is visual, so a reader who cannot see it gets it stated. */
+const EVIDENCE_AGE_NOTE: Record<ReturnType<typeof freshnessOf>, string> = {
+  current: "",
+  recent: " — no new evidence for over 3 months",
+  ageing: " — no new evidence for over 6 months",
+  stale: " — no new evidence for over a year",
+};
+
 const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => {
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -34,7 +42,7 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
         phenomena.map((p) => ({
           p,
           dimensionIndex: WORK_DIMENSIONS.findIndex((d) => d.id === p.primaryDimension),
-          radius: BLIP_RADIUS[freshnessOf(p)],
+          radius: blipRadius(p),
         })),
         WORK_DIMENSIONS.length,
       ),
@@ -59,7 +67,7 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
     const p = phenomena[i];
     if (activeDimension !== null && !deriveImpacts(p).includes(activeDimension)) return null;
     const { x, y } = positions[i];
-    const r = BLIP_RADIUS[freshnessOf(p)];
+    const r = blipRadius(p);
     const labelRight = x <= VIEWBOX.cx;
     const width = p.label.length * HOVER_CHAR + HOVER_PAD * 2;
     return (
@@ -93,11 +101,13 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
         const index = WORK_DIMENSIONS.findIndex((d) => d.id === p.primaryDimension);
         const colour = WORK_DIMENSIONS[index]?.colour ?? "#94a3b8";
         const { x, y } = positions[arrayIndex];
-        const r = BLIP_RADIUS[freshnessOf(p)];
+        const r = blipRadius(p);
+        const freshness = freshnessOf(p);
         const isDraft = p.status === "draft";
         const dimmed =
           activeDimension !== null && !deriveImpacts(p).includes(activeDimension);
         const isHovered = hovered === p.id;
+        const fade = isHovered ? 1 : BLIP_FADE[freshness];
 
         return (
           <g
@@ -108,7 +118,7 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
             role="button"
             tabIndex={dimmed ? -1 : 0}
             aria-hidden={dimmed || undefined}
-            aria-label={`${p.label} — ${RING_LABEL[p.observedReach]}${isDraft ? " — draft" : ""}`}
+            aria-label={`${p.label} — ${RING_LABEL[p.observedReach]}${p.potentialImpact ? ` — ${p.potentialImpact} potential impact` : ""}${EVIDENCE_AGE_NOTE[freshness]}${isDraft ? " — draft" : ""}`}
             onClick={dimmed ? undefined : () => onOpen(p)}
             onKeyDown={
               dimmed
@@ -131,7 +141,10 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
             {/* Drafts read as outlines: same position, same colour, visibly
                 provisional. A reviewer needs to know whether the claim they are
                 commenting on is settled or still being written, and the
-                "N of 10 published" banner does not say which is which. */}
+                "N of 10 published" banner does not say which is which. A faded
+                blip keeps a solid outline at full colour: fill alone would drop
+                purple near the bright centre to under 2:1, and the outline keeps
+                its shape as visible as an unfaded one. */}
             <circle
               // Marks the blip proper, as opposed to the hover ring drawn in
               // the same group. The verification harness needs to tell them
@@ -141,9 +154,9 @@ const RadarBlips = ({ phenomena, activeDimension, onOpen }: RadarBlipsProps) => 
               cy={y}
               r={r}
               fill={colour}
-              fillOpacity={isDraft ? 0.15 : 1}
-              stroke={isDraft ? colour : "none"}
-              strokeWidth={isDraft ? 1.5 : 0}
+              fillOpacity={isDraft ? 0.15 : fade}
+              stroke={isDraft || fade < 1 ? colour : "none"}
+              strokeWidth={isDraft ? 1.5 : fade < 1 ? 1 : 0}
               strokeDasharray={isDraft ? "3 2" : undefined}
             />
             {p.contested && (

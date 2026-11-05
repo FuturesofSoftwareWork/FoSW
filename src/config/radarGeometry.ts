@@ -1,4 +1,4 @@
-import type { Phenomenon, ObservedReach } from "@/types/phenomenon";
+import type { Phenomenon, ObservedReach, PotentialImpact } from "@/types/phenomenon";
 
 /** Centre outwards. Established practice sits in the lit middle; the frontier is
  *  at the dark rim. */
@@ -14,11 +14,32 @@ export const RING_LABEL: Record<ObservedReach, string> = {
   "early-manifestations": "EARLY MANIFESTATIONS",
 };
 
-export const BLIP_RADIUS = {
-  current: 9,
-  recent: 7.5,
-  ageing: 6,
-  stale: 4.5,
+/**
+ * Blip size is potential impact: bigger already reads as more important, so that
+ * is what it says. The steps are far enough apart to tell at a glance.
+ */
+export const BLIP_RADIUS: Record<PotentialImpact, number> = {
+  low: 5.5,
+  moderate: 7.5,
+  high: 10,
+  transformative: 13,
+};
+
+/** A draft may not be rated yet, and the smallest size would claim it is minor. */
+export const blipRadius = (p: Phenomenon): number =>
+  BLIP_RADIUS[p.potentialImpact ?? "moderate"];
+
+/**
+ * Fill strength by how recent the newest evidence is. A blip fades but never
+ * disappears, because quiet does not mean false: a field-level shift can stop
+ * making news by becoming normal. The floor stays well above the filter's 0.18,
+ * so "no recent evidence" and "filtered out" cannot be mistaken for each other.
+ */
+export const BLIP_FADE = {
+  current: 1,
+  recent: 0.8,
+  ageing: 0.65,
+  stale: 0.5,
 } as const;
 
 export const VIEWBOX = { size: 760, cx: 380, cy: 380, r: 250 } as const;
@@ -29,6 +50,29 @@ export const VIEWBOX = { size: 760, cx: 380, cy: 380, r: 250 } as const;
  * put blips outside the rings that are meant to contain them.
  */
 export const RING_EDGES = [0, 0.36, 0.66, 1] as const;
+
+/** Ring labels name the axis the whole radar is built on, so they are sized to
+ *  be read rather than to stay out of the way. */
+export const RING_FONT = 11;
+const RING_CHAR = RING_FONT * 0.62; // monospace advance width
+
+/**
+ * The backing rect of a ring's label, on the ring's outer boundary at 12 o'clock.
+ * Width tracks the font: a rect sized for a smaller font leaves the ends of the
+ * word sitting on the background it was meant to mask. Shared because the canvas
+ * draws this box and placeBlips keeps blips off it.
+ */
+export function ringLabelBox(ringIndex: number) {
+  const half = (RING_LABEL[RINGS[ringIndex]].length * RING_CHAR) / 2 + 3;
+  const baseline = VIEWBOX.cy - VIEWBOX.r * RING_EDGES[ringIndex + 1];
+  return {
+    x: VIEWBOX.cx - half,
+    y: baseline - RING_FONT,
+    width: half * 2,
+    height: RING_FONT + 5,
+    baseline,
+  };
+}
 
 /** Sector angular spans in degrees, measured clockwise from 12 o'clock. */
 export function sectorAngles(count: number): { start: number; end: number }[] {
@@ -115,6 +159,8 @@ function cellBounds(p: Phenomenon, dimensionIndex: number, dimensionCount: numbe
 
 /** How much clear space to leave between two blip edges, in viewBox units. */
 const BLIP_GAP = 4;
+/** The same around a ring label. */
+const LABEL_GAP = 2;
 /** Enough passes to settle a realistic cell; bounded so a full one cannot spin. */
 const NUDGE_PASSES = 24;
 
@@ -166,6 +212,7 @@ export function placeBlips(
   });
 
   const at = (i: number) => polarToXY(polar[i].radius, polar[i].deg);
+  const labelBoxes = RINGS.map((_, i) => ringLabelBox(i));
 
   for (let pass = 0; pass < NUDGE_PASSES; pass++) {
     let moved = false;
@@ -192,6 +239,25 @@ export function placeBlips(
           const cur = at(k);
           polar[k] = toPolar(cur.x + ux * push * sign, cur.y + uy * push * sign, k);
         }
+        moved = true;
+      }
+
+      // Blips paint over ring labels, and a large one can reach a label while
+      // staying inside its own cell. Boxes rather than radii, because a boundary
+      // curves away from a flat label.
+      for (const box of labelBoxes) {
+        const a = at(i);
+        const nx = clamp(a.x, box.x, box.x + box.width);
+        const ny = clamp(a.y, box.y, box.y + box.height);
+        const dist = Math.hypot(a.x - nx, a.y - ny);
+        const need = entries[i].radius + LABEL_GAP;
+        if (dist >= need) continue;
+
+        // Centre inside the box: head outwards, away from the radar's centre.
+        const ux = dist === 0 ? 0 : (a.x - nx) / dist;
+        const uy = dist === 0 ? -1 : (a.y - ny) / dist;
+        const push = need - dist + 0.01;
+        polar[i] = toPolar(a.x + ux * push, a.y + uy * push, i);
         moved = true;
       }
     }

@@ -57,6 +57,15 @@
  *   13    Every `draft` phenomenon renders with the dashed outline. Drafts and
  *         published phenomena used to be identical blips, so a reviewer could
  *         not tell whether the claim they were commenting on was settled.
+ *   14    Blip size follows `potentialImpact`, and every published blip has a
+ *         rating. Size reads as importance whatever a legend says, so a wrong
+ *         size is a wrong public claim.
+ *   15    Older evidence is never drawn stronger than newer. Date-independent on
+ *         purpose: every blip's age changes daily, so no fixed value can be
+ *         asserted here.
+ *   16    No blip covers a ring label. Added when sizing blips by impact put a
+ *         transformative blip over FIELD-LEVEL SHIFT; check 10 compares text
+ *         with text and never looks at blips.
  */
 /* global document, MouseEvent -- this file runs in Node, but the callbacks
    passed to page.evaluate()/page.$eval() are serialised and executed inside
@@ -485,6 +494,89 @@ try {
     draftMarks.count === 0
       ? "no drafts on the radar, nothing to mark"
       : `${draftMarks.count} draft(s), ${draftMarks.unmarked} unmarked`,
+  );
+
+  // 14-15. Size and fade carry what the legend says they carry. Compared pair by
+  //    pair from the content rather than against literals: ratings are an
+  //    editorial judgment and every blip's age changes daily, so neither can be
+  //    fixed here. Drafts are skipped because their faint fill is the draft mark.
+  await page.mouse.move(0, 0); // a hovered blip is drawn at full strength
+  await new Promise((r) => setTimeout(r, 150));
+  const marks = await page.evaluate(() =>
+    [...document.querySelectorAll('svg[aria-label^="Futures radar"] g[role="button"]')].map((g) => {
+      const c = g.querySelector("circle[data-blip]");
+      return {
+        ariaLabel: g.getAttribute("aria-label"),
+        status: g.getAttribute("data-status"),
+        r: +c.getAttribute("r"),
+        fade: +(c.getAttribute("fill-opacity") ?? 1),
+      };
+    }),
+  );
+  const content = await Promise.all(
+    index.items.map((item) =>
+      fetch(new URL(`content/phenomena/${item.file}`, BASE)).then((r) => r.json()),
+    ),
+  );
+  const rated = marks
+    .filter((m) => m.status === "published")
+    .map((m) => ({ ...m, p: content.find((c) => m.ariaLabel.startsWith(c.label)) }));
+  const IMPACT_ORDER = ["low", "moderate", "high", "transformative"];
+  const rank = (m) => IMPACT_ORDER.indexOf(m.p?.potentialImpact);
+  const age = (m) => -new Date(m.p?.latestEvidenceDate ?? 0).getTime();
+  const sizeBad = [];
+  const fadeBad = [];
+  for (const a of rated) {
+    for (const b of rated) {
+      if (rank(a) > rank(b) && a.r <= b.r) sizeBad.push(`${a.p?.label} (r=${a.r}) vs ${b.p?.label} (r=${b.r})`);
+      if (rank(a) === rank(b) && a.r !== b.r) sizeBad.push(`${a.p?.label} (r=${a.r}) vs ${b.p?.label} (r=${b.r})`);
+      if (age(a) > age(b) && a.fade > b.fade) fadeBad.push(`${a.p?.label} (${a.fade}) vs ${b.p?.label} (${b.fade})`);
+    }
+  }
+  const missing = rated.filter((m) => !m.p || rank(m) === -1).map((m) => m.ariaLabel);
+  const distinctFades = new Set(rated.map((m) => m.fade)).size;
+  const oldestDays = (Date.now() + Math.max(...rated.map(age))) / 86400000;
+  check(
+    "blip size follows potentialImpact",
+    missing.length === 0 && sizeBad.length === 0 && new Set(rated.map((m) => m.r)).size > 1,
+    missing.length ? `no rating: ${missing.join("; ")}` : sizeBad.slice(0, 3).join("; ") || "all pairs in order",
+  );
+  check(
+    "older evidence is never drawn stronger than newer, and a blip past 92 days has faded",
+    fadeBad.length === 0 && (oldestDays <= 92 || distinctFades > 1),
+    fadeBad.slice(0, 3).join("; ") || `${distinctFades} fade level(s) in use`,
+  );
+
+  // 16. No blip covers a ring label. Blips paint over the labels, and the labels
+  //     extend into the next band out, so a large blip beside 12 o'clock can land
+  //     on one while staying inside its own cell.
+  const labelCovers = await page.evaluate(() => {
+    const svg = document.querySelector('svg[aria-label^="Futures radar"]');
+    const labels = [...svg.querySelectorAll(":scope > g > rect")].map((r) => ({
+      x: +r.getAttribute("x"),
+      y: +r.getAttribute("y"),
+      w: +r.getAttribute("width"),
+      h: +r.getAttribute("height"),
+      text: r.parentElement.textContent,
+    }));
+    const out = [];
+    for (const g of svg.querySelectorAll('g[role="button"]')) {
+      const c = g.querySelector("circle[data-blip]");
+      const cx = +c.getAttribute("cx");
+      const cy = +c.getAttribute("cy");
+      const r = +c.getAttribute("r");
+      for (const q of labels) {
+        const nx = Math.max(q.x, Math.min(cx, q.x + q.w));
+        const ny = Math.max(q.y, Math.min(cy, q.y + q.h));
+        if (Math.hypot(cx - nx, cy - ny) < r) out.push(`${g.getAttribute("aria-label")} covers ${q.text}`);
+      }
+    }
+    return { labels: labels.length, out };
+  });
+  check(
+    "no blip covers a ring label",
+    labelCovers.labels === 3 && labelCovers.out.length === 0,
+    labelCovers.out.join("; ") || `clear of all ${labelCovers.labels} ring labels`,
   );
 } catch (e) {
   check("harness ran without throwing", false, e.stack || e.message);

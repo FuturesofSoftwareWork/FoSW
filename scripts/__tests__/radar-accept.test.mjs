@@ -6,6 +6,7 @@ import { sig, phen, makeRoot, read, index } from "./helpers/radar-fixtures.mjs";
 /** A draft that is ready in every respect: reviewed reach, construct, minimums. */
 const ready = (id, over = {}) => phen(id, [{ signalId: "s1", stance: "supports", primary: true }], {
   reachReviewedAt: "2026-08-09",
+  potentialImpact: "high",
   implications: [
     { dimension: "organisation-and-leadership", statement: "One." },
     { dimension: "organisation-and-leadership", statement: "Two." },
@@ -34,6 +35,12 @@ test("a draft with no reachReviewedAt is refused", () => {
   const result = accept({ root, ids: ["p1"], today: "2026-08-10" });
   assert.ok(result.errors.some((e) => e.includes("reachReviewedAt")));
   assert.equal(read(root, "p1").status, "draft");
+});
+
+test("a draft with no potentialImpact is refused", () => {
+  const p = ready("p1"); delete p.potentialImpact;
+  const root = makeRoot({ signals: [sig("s1")], phenomena: [p] });
+  assert.ok(accept({ root, ids: ["p1"], today: "2026-08-10" }).errors.some((e) => e.includes("potentialImpact")));
 });
 
 test("a draft with no construct is refused", () => {

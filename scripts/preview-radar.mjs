@@ -37,7 +37,7 @@ Look at the radar as the preview deployment will serve it.
 
 Options
   --no-build     serve the existing dist/ instead of rebuilding
-  --no-verify    skip the 15 radar checks
+  --no-verify    skip the 18 radar checks
   --port N       port to serve on (default 4180)
   --help         this text
 

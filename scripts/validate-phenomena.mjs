@@ -69,6 +69,11 @@ export function validatePhenomenon(p, ctx) {
   if (published && isBlank(p.reachReviewedAt)) {
     e("a published phenomenon needs reachReviewedAt — the date a human judged its reach");
   }
+  // Blip size is the rating, so an unrated published blip would state an impact
+  // nobody judged.
+  if (published && isBlank(p.potentialImpact)) {
+    e("a published phenomenon needs potentialImpact — it sets the size of its blip");
+  }
   if (published && isBlank(p.construct)) {
     e("a published phenomenon needs construct — what a source must measure to be evidence here");
   }
