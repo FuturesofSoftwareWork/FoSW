@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  BookOpen,
   Check,
   Layers,
   Link as LinkIcon,
@@ -10,7 +11,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import type { AISignal } from "@/types/content";
+import type { AISignal, ExpertInsight } from "@/types/content";
 import type { Phenomenon, EvidenceStance } from "@/types/phenomenon";
 import { WORK_DIMENSIONS } from "@/config/radarDimensions";
 import { RADAR_ACTORS } from "@/config/radarActors";
@@ -97,6 +98,8 @@ interface PhenomenonContentProps {
   onOpenSignal: (signal: AISignal) => void;
   related: Phenomenon[];
   onOpenPhenomenon: (p: Phenomenon) => void;
+  linkedInsights: ExpertInsight[];
+  onOpenInsight: (insight: ExpertInsight) => void;
 }
 
 const PhenomenonContent = ({
@@ -105,6 +108,8 @@ const PhenomenonContent = ({
   onOpenSignal,
   related,
   onOpenPhenomenon,
+  linkedInsights,
+  onOpenInsight,
 }: PhenomenonContentProps) => {
   const impacts = deriveImpacts(data);
   const byId = new Map(signals.map((s) => [s.id, s]));
@@ -139,7 +144,7 @@ const PhenomenonContent = ({
         </span>
       </DrawerKicker>
 
-      <h2 className="mb-6 max-w-[24ch] font-serif text-2xl leading-tight text-white md:text-3xl">
+      <h2 className="mb-6 font-serif text-2xl leading-tight text-white md:text-3xl">
         {data.title}
       </h2>
 
@@ -259,10 +264,18 @@ const PhenomenonContent = ({
       {data.developmentPaths && data.developmentPaths.length > 0 && (
         <section className="mb-10">
           <SectionHeading icon={Telescope}>Where it could lead</SectionHeading>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Four paths go two by two: three columns would strand the fourth on
+              a row of its own. Rows share one height so the boxes stay even. */}
+          <ul
+            className={
+              data.developmentPaths.length === 4
+                ? "grid auto-rows-fr gap-3 sm:grid-cols-2"
+                : "grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            }
+          >
             {data.developmentPaths.map((p) => (
               <li key={p.id}>
-                <Panel>
+                <Panel className="h-full">
                   <p className="mb-1.5 text-sm font-semibold text-gray-100">
                     {p.title}
                   </p>
@@ -292,6 +305,49 @@ const PhenomenonContent = ({
                   aria-hidden="true"
                 />
                 {w}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Our reading of the change, deliberately apart from the evidence below:
+          a post is interpretation, not an observation, and counts toward nothing. */}
+      {linkedInsights.length > 0 && (
+        <section className="mb-10">
+          <SectionHeading icon={BookOpen} tone="gold">
+            Our analysis
+          </SectionHeading>
+          <ul className="space-y-3">
+            {linkedInsights.map((insight) => (
+              <li key={insight.id}>
+                <button
+                  type="button"
+                  onClick={() => onOpenInsight(insight)}
+                  className="group flex w-full cursor-pointer gap-3 rounded-lg border border-neon-gold/25 bg-neon-gold/5 p-4 text-left transition-colors duration-200 hover:border-neon-gold/50 hover:bg-neon-gold/10 focus:outline-none focus:ring-2 focus:ring-neon-gold/50 motion-reduce:transition-none"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-serif text-base font-bold leading-snug text-white">
+                      {insight.title}
+                    </span>
+                    <span className="mt-1 block text-xs italic text-neon-gold">
+                      {insight.author} ·{" "}
+                      {new Date(insight.date).toLocaleDateString("en-GB", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                    <span className="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-400">
+                      {insight.excerpt}
+                    </span>
+                  </span>
+                  <ArrowRight
+                    size={14}
+                    aria-hidden="true"
+                    className="mt-1 shrink-0 text-gray-600 group-hover:text-neon-gold"
+                  />
+                </button>
               </li>
             ))}
           </ul>
@@ -328,7 +384,13 @@ const PhenomenonContent = ({
             )}
 
             {STANCE_ORDER.map((stance) => {
-              const items = resolvedEvidence.filter((e) => e.stance === stance);
+              // Newest first, by when the source appeared. The file keeps attachment
+              // order, because radar:apply owns it; only the display is sorted.
+              const items = resolvedEvidence
+                .filter((e) => e.stance === stance)
+                .sort((a, b) =>
+                  (byId.get(b.signalId)?.date ?? "").localeCompare(byId.get(a.signalId)?.date ?? ""),
+                );
               if (items.length === 0) return null;
               const { heading, icon: StanceIcon, className } = STANCE_META[stance];
               return (
@@ -354,6 +416,14 @@ const PhenomenonContent = ({
                               className={`mt-0.5 shrink-0 ${className}`}
                             />
                             <span className="flex-1">
+                              <span className="mb-0.5 block font-mono text-xs text-gray-500">
+                                {new Date(signal.date).toLocaleDateString("en-GB", {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                  timeZone: "UTC",
+                                })}
+                              </span>
                               <span className="block text-sm text-gray-200">
                                 {signal.title}
                               </span>

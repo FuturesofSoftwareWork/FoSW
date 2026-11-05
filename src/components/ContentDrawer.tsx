@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft, X, Link2, Check } from "lucide-react";
-import type { AISignal, DrawerContent } from "@/types/content";
+import type { AISignal, DrawerContent, ExpertInsight } from "@/types/content";
 import type { Phenomenon } from "@/types/phenomenon";
 import SignalContent from "@/components/drawer/SignalContent";
 import InsightContent from "@/components/drawer/InsightContent";
@@ -58,8 +58,10 @@ interface ContentDrawerProps {
   onClose: () => void;
   signals: AISignal[];
   phenomena: Phenomenon[];
+  insights: ExpertInsight[];
   onOpenSignal: (signal: AISignal) => void;
   onOpenPhenomenon: (p: Phenomenon) => void;
+  onOpenInsight: (insight: ExpertInsight) => void;
   onBack?: () => void;
 }
 
@@ -68,8 +70,10 @@ const ContentDrawer = ({
   onClose,
   signals,
   phenomena,
+  insights,
   onOpenSignal,
   onOpenPhenomenon,
+  onOpenInsight,
   onBack,
 }: ContentDrawerProps) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -243,7 +247,15 @@ const ContentDrawer = ({
                   onOpenPhenomenon={onOpenPhenomenon}
                 />
               )}
-              {content.type === "insight" && <InsightContent data={content.data} />}
+              {content.type === "insight" && (
+                <InsightContent
+                  data={content.data}
+                  relatedPhenomena={(content.data.relatedPhenomena ?? [])
+                    .map((id) => phenomena.find((p) => p.id === id))
+                    .filter((p): p is Phenomenon => p !== undefined)}
+                  onOpenPhenomenon={onOpenPhenomenon}
+                />
+              )}
               {content.type === "phenomenon" && (
                 <PhenomenonContent
                   data={content.data}
@@ -253,6 +265,12 @@ const ContentDrawer = ({
                     .map((r) => phenomena.find((p) => p.id === r.id))
                     .filter((p): p is Phenomenon => p !== undefined)}
                   onOpenPhenomenon={onOpenPhenomenon}
+                  // Only what is loaded, so a draft post appears exactly where
+                  // drafts are fetched and nowhere else. Newest first.
+                  linkedInsights={insights
+                    .filter((i) => i.relatedPhenomena?.includes(content.data.id))
+                    .sort((a, b) => b.date.localeCompare(a.date))}
+                  onOpenInsight={onOpenInsight}
                 />
               )}
             </div>
