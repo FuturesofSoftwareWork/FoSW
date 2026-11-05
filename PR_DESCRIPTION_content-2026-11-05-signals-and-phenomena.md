@@ -16,12 +16,16 @@ Publishes this week's reviewed signals, adds three phenomena to the radar (16 pu
 - **Instruction files.** `docs/radar-clustering-prompt.md` now has rules for `title`, `thesis` and `label` (plain descriptive title, about 70-word thesis, no "would be wrong if" in the thesis, no bare figures from one study). `claim-prompt-instructions.md`, `CLAUDE.md` and `AGENTS.md` point to them.
 - **Expert insights.** Three articles now list `the-gain-shrinks-downstream` in `relatedPhenomena`: the workflow article, "Your Developers Are More Productive", and "Productivity Paradox 2.0".
 - **Already in the working tree before this run (commit 4c8cf2e).** Expert-insight links and charts, drawer and radar-geometry changes, and validator/verify-script updates, committed separately so they can be reviewed or dropped on their own.
+- **`verify:radar` filter check.** It hardcoded 4 blips for the skills dimension, which `competence-checks-get-redesigned` correctly makes 5. Because this check gates the deploy, merging would have failed it. The expected count now comes from the content, like the harness's other checks.
 
 ## Verification
 
-- `npm run validate`: 166 signals, 16 phenomena valid (16 published), launch gate open
-- `tsc`: clean
-- **Not run:** `npm run build`, `npm test`, `build:preview` and `verify:radar`. They could not be run where this was prepared, because `node_modules` is installed for Windows. The UI and validator changes in 4c8cf2e were never built. Please run `npm run build` and `npm test` before merging.
+Run on the branch, on Windows:
+
+- `npm run build`: passes (includes `npm run validate`: 166 signals, 16 phenomena valid, launch gate open)
+- `npm test`: 293 of 293 pass
+- `npm run lint`: clean
+- `npm run build:preview` + `verify:radar`: 15 of 15 pass, across 16 blips
 
 ## Open questions
 
@@ -30,5 +34,3 @@ Publishes this week's reviewed signals, adds three phenomena to the radar (16 pu
 - After deploy, check `gh api repos/FuturesofSoftwareWork/FoSW/pages --jq .status` returns `built`.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-https://claude.ai/code/session_01ETtN95r5g1nMtZj47AihWw

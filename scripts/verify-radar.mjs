@@ -225,7 +225,19 @@ try {
   }
   check("reloading places every blip at identical coordinates", allSame, diffs.join("; ") || "all identical");
 
-  // 6. Filtering by skills-knowledge-and-learning leaves 4 blips undimmed.
+  // 6. Filtering by skills-knowledge-and-learning leaves undimmed exactly the
+  //    phenomena with an implication in that dimension. Counted from the content,
+  //    not a literal: publishing a phenomenon there is an ordinary editorial
+  //    decision, and a hardcoded count turned it into a failed deploy.
+  const expectedUndimmed = await Promise.all(
+    index.items
+      .filter((item) => item.status === "published" || showsDrafts)
+      .map((item) =>
+        fetch(new URL(`content/phenomena/${item.file}`, BASE))
+          .then((r) => r.json())
+          .then((p) => (p.implications ?? []).some((im) => im?.dimension === "skills-knowledge-and-learning")),
+      ),
+  ).then((hits) => hits.filter(Boolean).length);
   const legendClicked = await page.evaluate(() => {
     const btns = [...document.querySelectorAll("button[aria-pressed]")];
     const btn = btns.find((b) => /skills, knowledge & learning/i.test(b.textContent || ""));
@@ -237,8 +249,8 @@ try {
   const filtered = await getBlips();
   const undimmed = filtered.filter((b) => b.opacity !== "0.18");
   check(
-    "filtering by skills-knowledge-and-learning leaves 4 blips undimmed",
-    legendClicked && undimmed.length === 4,
+    `filtering by skills-knowledge-and-learning leaves ${expectedUndimmed} blips undimmed`,
+    legendClicked && undimmed.length === expectedUndimmed,
     `legendClicked=${legendClicked}, undimmed=${undimmed.length} [${undimmed.map((b) => b.label).join(", ")}]`,
   );
 
