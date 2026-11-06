@@ -119,8 +119,9 @@ configured; see *Known source limitations* in
 
 **A sector or claim run uses `signals:collect` only if a profile exists** for it
 at `config/sources/<name>.json`; otherwise it skips straight to web search. Both
-always run `signals:prepare`. `worker-experience-identity-and-wellbeing` has a
-profile; no claim profile has been written yet.
+always run `signals:prepare`. `worker-experience-identity-and-wellbeing` and
+`ethics-responsibility-and-society` have profiles; no claim profile has been
+written yet.
 
 Even with a profile, a sector run still dedupes by hand: the pool covers feeds
 and search APIs only, and everything found by web search — most of a sector
