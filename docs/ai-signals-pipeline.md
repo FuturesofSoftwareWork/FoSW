@@ -364,6 +364,7 @@ Currently written:
 | Sector | Prompt |
 |--------|--------|
 | `worker-experience-identity-and-wellbeing` | [`sector-prompts/worker-experience-identity-and-wellbeing.md`](./sector-prompts/worker-experience-identity-and-wellbeing.md) |
+| `ethics-responsibility-and-society` | [`sector-prompts/ethics-responsibility-and-society.md`](./sector-prompts/ethics-responsibility-and-society.md) |
 
 Each sector prompt is launched on its own and reads
 [`sector-prompts/sector-prompt-instructions.md`](./sector-prompts/sector-prompt-instructions.md)
