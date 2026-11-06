@@ -69,7 +69,7 @@ implication and not as a finding.
 - **Governance:** who decides, who signs off and who answers when something goes
   wrong. See *Governance over security* below.
 - **Careers and the labour market:** which roles appear or disappear; hiring,
-  layoffs, pay and contract terms; how people enter, move through or leave the
+  pay and contract terms; how people enter, move through or leave the
   profession; who is doing the work, where, and under what employment arrangement.
 - **Employee wellbeing and identity:** workload, pace, recovery, autonomy,
   confidence, meaning, trust and belonging. This needs a specific, situated
@@ -146,7 +146,7 @@ The candidate pool is a starting point, not a limit. It does NOT cover LinkedIn,
 
 **Search for these three deliberately on every run**, because no feed will bring them to you:
 
-- **Careers and the labour market:** job-posting data, statistics offices, layoffs and hiring at named employers including IT-services firms, pay and contract terms, graduate outcomes.
+- **Careers and the labour market:** job-posting data, statistics offices, hiring at named employers including IT-services firms, pay and contract terms, graduate outcomes. Layoff reports only when they explain how AI use led to the cuts (see Filtering).
 - **Employee wellbeing:** firsthand accounts of how the working day changed, developer and occupational-health surveys, HCI and software-engineering-psychology research. Look for accounts of the work improving as well as worsening.
 - **Society and governance:** collective bargaining and worker representation, professional bodies, education providers, open-source projects setting rules on AI contributions, regulation that changes someone's duties.
 
@@ -254,7 +254,7 @@ Output an item only if it has clear implications for software work AND at least 
 - measurable impact on the work or the people doing it (cycle time, quality, reliability, cost, workload, satisfaction, confidence, retention intent)
 - a change in organisation, management or governance (structure, roles, budgets and sourcing decisions, who decides, who is accountable)
 - a change in which skills are valued or how people learn them
-- a change in careers or the labour market for software workers (hiring, layoffs, pay, contract terms, entry routes, who is doing the work and where)
+- a change in careers or the labour market for software workers (hiring, pay, contract terms, entry routes, who is doing the work and where)
 - a credible firsthand account of how the experience of software work changed
 - a societal consequence that reaches people through software work (access to the profession, education, regional employment, public-interest and open-source work, professional responsibility)
 - a credible new method, result, policy, or firsthand practice bearing on any of the above
@@ -269,6 +269,16 @@ Reject items that are:
 - correct but low-altitude: the durable takeaway is a command, flag, config or
   library choice rather than a change in the work or for the people doing it
   (see Altitude above)
+- **general layoff news.** A report that jobs were cut adds nothing here, and there
+  is far too much of it. Announcements, head counts, trackers and reports that simply
+  attribute cuts to AI are rejected under `wrong-construct`, however large the numbers.
+  A layoff item qualifies only when the source **explains the mechanism**: how AI was
+  actually used, which tasks or workflows it took over, how that led to these roles
+  being cut, and what happened to the remaining work. An employer naming AI as its
+  reason is not a mechanism, and neither is cutting staff to pay for AI investment.
+  Write the item about the mechanism, with the head count in the background. A source
+  that mentions layoffs can also qualify for something else it shows, such as a ruling
+  or a contract term.
 - **agent-performance studies.** Benchmarks and repository-mining studies whose
   only finding is about the agent or the artefact: how context files, skills,
   plugins, harnesses, prompt settings, languages or models change pass rates,
@@ -309,7 +319,7 @@ is genuinely known.
 | `study` | Academic paper or formal benchmark | `dataCollectedPeriod`, `replicated` |
 | `tool-shift` | Release or capability change that the source shows has already changed organisation, management, wellbeing or the work itself (see *Tool news*) | `version`, `availability` |
 | `regulation-standard` | Law, policy or standard with a real date | `effectiveDate` (hard-required), `jurisdiction`, `issuer` |
-| `market-event` | Layoffs and hiring shifts; funding or acquisitions only when the source shows a change in the work (see *Tool news*) | `organisation`, `magnitude` |
+| `market-event` | Hiring shifts; funding or acquisitions only when the source shows a change in the work (see *Tool news*); layoffs only when the source explains how AI use led to them (see Filtering) | `organisation`, `magnitude` |
 | `forecast` | A prediction about the future, not an observation of the present | `forecaster`, `horizonDate` |
 | `primary-research` | This project's own interviews and workshops | `method` (`interview` \| `workshop` \| `other`), `participants`, `fieldworkPeriod` |
 
