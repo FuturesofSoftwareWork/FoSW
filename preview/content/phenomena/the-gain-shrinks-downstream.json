@@ -1,6 +1,6 @@
 {
   "id": "the-gain-shrinks-downstream",
-  "label": "The gain shrinks downstream",
+  "label": "Productivity gain shrinks downstream",
   "title": "Individual speed-ups shrink at team and company level",
   "thesis": "AI makes individual developers noticeably faster, but the gain at team and company level is much smaller. The latest large study, by NBER on more than 500,000 GitHub developers through mid-2026, finds coding activity up 240% for autonomous agents but releases up only 30%. Teams that change how they work can keep more of the gain: in an Amazon pilot, half of 50 teams reached a median 4.5 times faster delivery to production.",
   "construct": "The size of AI's measured effect on software productivity at each level (self-reported value, coding activity, task time, team throughput, releases) and the gap between those levels, including which delivery stage absorbs the difference. Not adoption rates, share of AI-written code, spend, how review assurance is done (review-shifts-to-verification), or the spread between teams with the same tools (same-tool-different-outcomes).",
