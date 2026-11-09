@@ -1,17 +1,13 @@
 {
   "profile": "ethics-responsibility-and-society",
-  "description": "Sector run: ethics, responsibility and society. Written as the COMPLEMENT of the generic run: labour, policy and China-facing publications it does not collect. Every URL was fetched and read as a feed on 2026-11-06, with items published within the previous ten days. Most of what these feeds publish has nothing to do with software work, so the pool is a floor to be filtered by the finder, and the prompt's jurisdiction searches are the real method. hackerNewsTerms is deliberately empty: measured on 2026-11-06, 'union AI contract', 'collective bargaining AI', 'works council AI', 'court AI layoff', 'fired replaced by AI' and 'AI layoffs lawsuit' each returned ZERO stories in 60 days at the collector's points>30 threshold, and the other terms tried returned only unrelated launches, apart from one story. Tried and left out: the ETUC feed, whose newest item was from 2024; UNI Global Union, whose newest item was from June 2026; and CWA, China Labour Bulletin and UTAW, for which no feed was found at the conventional paths. Those stay part of the prompt's manual method. windowDays matches the prompt's 45-day window.",
+  "description": "Sector run: ethics, responsibility and society, scoped to the norms, values and responsibilities of software engineering. Written as the COMPLEMENT of the generic run: publications covering open-source and community governance of AI-written code, which the generic run does not collect. Both URLs were fetched and parsed as feeds on 2026-11-09, each with items from the previous week. The pool is a thin floor; the prompt's searches are the real method. hackerNewsTerms is deliberately empty: measured on 2026-11-09, 'AI contribution policy', 'AI-generated code policy', 'Assisted-by', 'AI generated code liability', 'AI slop pull requests', 'AI disclosure commits' and 'Cyber Resilience Act' each returned ZERO stories in 60 days at the collector's points>30 threshold, and the other terms tried returned only unrelated launches. Tried and left out: Phoronix (mostly hardware and release news), The Register's DevOps feed (newest item August 2026), the Open Source Initiative (policy rather than engineering practice) and Tech Policy Press (platform policy). The labour and China feeds of the first version (Sixth Tone, Rest of World, Labor Notes, AlgorithmWatch, Connected by Data) were dropped with the labour beat. windowDays matches the prompt's 45-day window.",
   "hackerNewsTerms": [],
   "devtoTags": [],
   "subreddits": [],
   "githubRepos": [],
   "feeds": [
-    { "name": "Sixth Tone", "url": "https://www.sixthtone.com/rss" },
-    { "name": "Rest of World", "url": "https://restofworld.org/feed/latest" },
-    { "name": "Labor Notes", "url": "https://labornotes.org/rss.xml" },
-    { "name": "AlgorithmWatch", "url": "https://algorithmwatch.org/en/feed/" },
-    { "name": "Connected by Data", "url": "https://connectedbydata.org/feed.xml" },
-    { "name": "Tech Policy Press", "url": "https://www.techpolicy.press/rss/feed.xml" }
+    { "name": "LWN", "url": "https://lwn.net/headlines/rss" },
+    { "name": "Software Freedom Conservancy", "url": "https://sfconservancy.org/feeds/blog/" }
   ],
   "substacks": [],
   "windowDays": 45

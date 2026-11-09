@@ -79,10 +79,12 @@ implication and not as a finding.
   what happens to regional employment, how public-interest and open-source work
   is sustained, and what professional responsibility now means.
 
-A societally important topic qualifies when it reaches people through software
-work, usually by way of careers, wellbeing or governance. "AI will change
-society" does not qualify. "Graduates of a national IT programme are no longer
-finding work, and the statistics office says why" does.
+A societally important topic must be directly linked to software work or software
+engineering. AI in the workplace in general is too broad, and so is a contract, ruling or
+policy that merely covers software workers among others. "AI will change society" does not
+qualify. "Graduates of a national IT programme are no longer finding work, and the statistics
+office says why" does. For an item from outside Europe, check that the issue arises in Europe
+and Finland at all, and reject it if European law already settles it.
 
 **Industry and ecosystem news qualifies only through the work.** Vendor
 consolidation, funding, repricing, market share and open-source politics are not
@@ -127,8 +129,11 @@ is answerable for, what a contract lets workers negotiate, what a regulation
 adds to someone's job, who is blamed when an agent's change breaks production. An
 enterprise AI policy, a regulation or a framework with no visible effect on
 anyone's work is not a signal for this publication, however important it is
-elsewhere. A regulation that has changed nothing yet is reported only if the
-source names who must do what, by when.
+elsewhere. Most regulation and standards news describes what a law requires of a
+software business: compliance cost, market access, deadlines, fines. That does not
+qualify. A regulation or standard qualifies only when the source shows engineers,
+teams or projects working differently because of it, or when its own text places a
+duty on how code is written, reviewed or released.
 
 A security item qualifies only when it passes the same test. A vulnerability
 writeup, exploit chain, malware campaign, incident reconstruction, proof of
@@ -148,7 +153,7 @@ The candidate pool is a starting point, not a limit. It does NOT cover LinkedIn,
 
 - **Careers and the labour market:** job-posting data, statistics offices, hiring at named employers including IT-services firms, pay and contract terms, graduate outcomes. Layoff reports only when they explain how AI use led to the cuts (see Filtering).
 - **Employee wellbeing:** firsthand accounts of how the working day changed, developer and occupational-health surveys, HCI and software-engineering-psychology research. Look for accounts of the work improving as well as worsening.
-- **Society and governance:** collective bargaining and worker representation, professional bodies, education providers, open-source projects setting rules on AI contributions, regulation that changes someone's duties.
+- **Society and governance:** collective bargaining and worker representation, professional bodies, education providers, open-source projects setting rules on AI contributions, regulation that visibly changes how engineers work.
 
 Say in the retrieval report what you searched for under each of the three. If nothing qualified, say which of "no signal exists" or "I could not reach the signal" is the reason. Do not pad a run to fill a route: an empty route is a valid result.
 
