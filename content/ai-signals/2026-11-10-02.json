@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-10-02",
+  "title": "Stack Overflow's 2026 survey: most developers use AI daily but trust it only where they can check the output, and 38% face usage limits",
+  "summary": "Coding assistants and agents are now the most common way developers use AI, according to Stack Overflow's 2026 Developer Survey of 30,903 respondents in 169 countries, collected in June–August 2026. Of the AI questions' respondents, 66% use coding assistants or agents, 73% of those use them daily, and almost a third of daily AI users spend four or more hours a day with it. Generating code in a familiar area (69%), debugging (64%) and writing tests (58%) are the most common uses.\n\nTrust stays conditional. 48% trust AI output when they can easily validate it, and only a small minority extend trust to important work decisions, so working with a human in the loop remains the norm. Six in ten cite some reason to avoid AI at work: 17% fear losing their skills or training their replacement, and 15% name moral or ethical concerns.\n\nEmployers are managing the cost. Stack Overflow reports that 38% of respondents' organisations set limits on AI usage, 28% review spending data, 27% route different work to different models and 25% limit who may use AI, while 21% say their organisation is spending more.",
+  "source": "Developer survey (Stack Overflow)",
+  "sourceUrl": "https://survey.stackoverflow.co/2026/ai",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "sampleSize": "30,903 valid responses from 169 countries; the AI questions were answered by roughly 11,000 to 14,000",
+  "fieldworkPeriod": "23 June – 5 August 2026",
+  "sponsor": "Stack Overflow",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-11-10",
+  "date": "2026-10-06",
+  "status": "published",
+  "tags": [
+    "developer survey",
+    "coding agents",
+    "trust",
+    "AI spending",
+    "usage limits",
+    "Stack Overflow"
+  ],
+  "category": [
+    "AI Tools",
+    "Costs & Economics",
+    "Ethics & Policy"
+  ],
+  "whyItMatters": [
+    "**Daily use, conditional trust** — developers rely on AI every day for technical work but trust it where they can check the result, which keeps verification at the centre of the job.",
+    "**Cost control is now common** — over a third of respondents' employers limit AI usage and a quarter limit who may use it, so access to AI is becoming a managed resource rather than a given.",
+    "**Values shape avoidance** — the reasons developers give for avoiding AI include skill loss and moral or ethical concerns, not only doubts about quality."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Recruited through Stack Overflow** — the survey was promoted on Stack Overflow's own site and email list, while 64% of respondents say AI has made them visit less for simple questions, so those still reached may lean towards developers more sceptical of AI and the figures may understate AI use.",
+    "**Unweighted, with heavy drop-off** — results are not reweighted to the developer population, and the AI questions were answered by well under half of valid respondents, two-thirds of whom found the survey too long.",
+    "**Use and trust, not code share** — the survey measures how developers use and trust AI, not how much of their code agents write, so it cannot be compared directly with surveys that measure code share."
+  ]
+}

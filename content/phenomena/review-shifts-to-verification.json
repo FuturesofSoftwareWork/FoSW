@@ -171,6 +171,12 @@
       "stance": "supports",
       "primary": true,
       "note": "Shopify native rebuild: every agent increment must pass tests, a visual review against the running app and two adversarial code reviewers (Helix checkpoints) before agents are let run for hours"
+    },
+    {
+      "signalId": "2026-11-10-02",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Stack Overflow Developer Survey 2026: 48% trust AI output only when they can easily validate it and human-in-the-loop remains the dominant mode; shows verification pressure but not a change in how assurance is done"
     }
   ],
   "observedReach": "gaining-traction",
