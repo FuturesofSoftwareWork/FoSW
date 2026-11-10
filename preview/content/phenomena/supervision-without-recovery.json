@@ -1,7 +1,7 @@
 {
   "id": "supervision-without-recovery",
   "label": "Supervision without recovery",
-  "title": "Productivity held steady, but the working day got worse",
+  "title": "Supervising coding agents leaves engineers less recovery time during the working day",
   "thesis": "When people supervise machine output instead of writing code, the quiet stretches between hard decisions disappear, long periods of concentration give way to switching between agent sessions, and people feel less ownership of the result. This can happen while productivity looks healthy. It lands differently on different people: engineers who choose their own work may feel more autonomy, while newcomers feel less ownership.",
   "construct": "The attentional and experiential structure of the working day for people whose work has shifted from producing code to supervising machine output — sustained concentration, the recovery intervals between hard judgements, and felt authorship of the result — measured separately from throughput. Not hours worked, not burnout or job-satisfaction prevalence, not self-reported productivity, not delivery velocity, and not attrition, all of which move for many reasons and are consistent with the texture of the day being entirely unchanged.",
   "currentPressure": "82% of matched respondents in a six-month longitudinal survey report spending less time writing code, and heavy agent users describe days spent moving between multiple agent sessions rather than working in sustained stretches.",
@@ -87,10 +87,28 @@
       "stance": "supports",
       "primary": true,
       "note": "Home Depot senior engineer's firsthand account: working day is now a sequence of 5-20 minute gaps while agents run instead of long blocks, with parallel-session anxiety echoed in 127 comments; one author, not a measurement"
+    },
+    {
+      "signalId": "2026-11-09-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "KAIST/CMU observation of 19 experienced developers: waiting on agents is a distinct stage, filled with planning and instructing the next task rather than rest; work becomes overlapping supervision (preprint)"
+    },
+    {
+      "signalId": "2026-11-09-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "engineer running three to five agent tasks at once reports more time switching between them, more mental tiredness at day's end, while his PR output rose 11x (single account)"
+    },
+    {
+      "signalId": "2026-08-12-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "three unrelated senior engineers, plus 15 HN commenters, each report on themselves that minding and skimming agent output has replaced immersion in the code (self-reports of felt immersion, not measured)"
     }
   ],
   "observedReach": "gaining-traction",
-  "reachRationale": "This has been observed in the same 95 people six months apart, and independently by unconnected practitioners at different companies and by newcomers in a separate interview study, so it is neither confined to one setting nor only visible in the heaviest agent users. What has not happened is any organisational response: nothing in the evidence shows a company measuring flow or recovery, scheduling supervision load deliberately, or treating any of this as more than individual coping — the disciplines participants credit for making their use sustainable are still personal habits carried by the least senior people. The working day has changed widely; the field has not yet formed an expectation about it.",
+  "reachRationale": "This has been observed in the same 95 people six months apart, and independently by unconnected practitioners at different companies and by newcomers in a separate interview study, so it is neither confined to one setting nor only visible in the heaviest agent users. An observation study of 19 experienced developers now shows the mechanism directly: the waits while agents run are filled with planning the next task rather than rest. Organisational responses are rare: one team-level example, an AI-free day at Honeycomb mentioned in passing, against advice that otherwise places recovery on individual engineers, and the disciplines participants credit for making their use sustainable are still mostly personal habits. The working day has changed widely; the field has not yet formed an expectation about it.",
   "whatWouldChangeThis": [
     "A second matched longitudinal cohort finds flow and cognitive load stable or improving as agent workflows mature",
     "Practitioner accounts converge on the positive valence the two senior engineers report, rather than staying split",
@@ -98,14 +116,13 @@
     "Teams that deliberately schedule supervision load report no better experience than teams that do not, which would locate the cause somewhere other than the shape of the day"
   ],
   "evidenceProfile": {
-    "independentContexts": 6,
+    "independentContexts": 9,
     "evidenceTypes": 2,
-    "quartersSpanned": 3,
+    "quartersSpanned": 4,
     "counterEvidence": true
   },
   "firstObserved": "2026-02-08",
-  "latestEvidenceDate": "2026-08-25",
-  "possibleReachChange": null,
-  "reachReviewedAt": "2026-10-27",
+  "latestEvidenceDate": "2026-11-03",
+  "reachReviewedAt": "2026-11-09",
   "lastReviewed": "2026-10-27"
 }

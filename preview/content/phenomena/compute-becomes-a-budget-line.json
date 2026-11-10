@@ -1,8 +1,8 @@
 {
   "id": "compute-becomes-a-budget-line",
   "label": "Justifying AI spend",
-  "title": "From token maximising to managing the AI bill",
-  "thesis": "AI work is becoming a managed operating expense that engineering organisations plan, attribute and defend — the way they already do headcount. As consumption outruns falling unit prices, most respond by capping and approving spend per engineer, while a first reported case moves routine work to open models on capacity with a flat bill. The questions shift from which model is best to what a resolved task costs, who is accountable for the spend, and who decides which work is worth using AI on.",
+  "title": "Engineering organisations manage AI spend as a budgeted operating cost",
+  "thesis": "AI work is becoming a managed operating expense that engineering organisations plan, attribute and defend — the way they already do headcount. As consumption outruns falling unit prices, most respond by capping and approving spend per engineer, and a growing number route routine work to cheaper or self-hosted open models. The questions shift from which model is best to what a resolved task costs, who is accountable for the spend, and who decides which work is worth using AI on.",
   "currentPressure": "Per-developer token consumption has risen far faster than unit prices have fallen, so cheaper inference has produced larger bills rather than smaller ones.",
   "status": "published",
   "primaryDimension": "economics-productivity-and-value",
@@ -129,11 +129,35 @@
       "stance": "contextual",
       "primary": true,
       "note": "Jellyfish survey of 635+ leaders: 42% name rising AI tool expense as the top adoption challenge, ahead of security, quality, training. Measures concern about spend, not how spend is planned or attributed, so no direction"
+    },
+    {
+      "signalId": "2026-08-10-06",
+      "stance": "supports",
+      "primary": true,
+      "note": "Databricks governs agentic coding spend inside a roughly fixed per-user envelope: warnings, manager approval gates, automatic downshift to cheaper models, suspension last; router cut cost >30%"
+    },
+    {
+      "signalId": "2026-09-07-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Spotify Portal enforces routing of bulk reads to a cheap model via hooks, 90% mean token cut; per-developer token spend $200-$500 a month, some above $2,000; routing owned by the platform team"
+    },
+    {
+      "signalId": "2026-11-05-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Revolut: $300/engineer/month Claude Code budget did not last the month; self-hosted GLM made default for ~2,000 engineers on a flat invoice at ~$0.30 per million tokens, frontier models kept as a budgeted option"
+    },
+    {
+      "signalId": "2026-10-05-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Wagtail core team: ~2 billion tokens in a month, half on an open-weight model for $68; decided to measure spend and energy continuously and give R&D its own budget (small OSS team)"
     }
   ],
   "observedReach": "field-level-shift",
-  "reachRationale": "The change has moved from maximising token use to cost consciousness across independent contexts: caps and approval tiers at Uber, Microsoft and Meta; a 27-company survey showing caps from $150 to about $3,000 a month per developer; and an institution, the Tokenomics Foundation, backed by ten large enterprises. Per-task cost analyses show the unit of account being renegotiated in public. Counter-evidence (most agentic requests are simple) concerns how spend is distributed, not whether organisations now manage it.",
-  "reachReviewedAt": "2026-10-27",
+  "reachRationale": "The change has moved from maximising token use to cost consciousness across independent contexts: caps and approval tiers at Uber, Microsoft and Meta; a 27-company survey showing caps from $150 to about $3,000 a month per developer; and an institution, the Tokenomics Foundation, backed by ten large enterprises. The same management appears beyond the largest technology firms: Databricks replaces hard caps with escalating approval, Spotify routes bulk work to a cheap model, Revolut moved about 2,000 engineers to a self-hosted open model, and an open-source core team now budgets spend and energy. Per-task cost analyses show the unit of account being renegotiated in public. Counter-evidence (most agentic requests are simple) concerns how spend is distributed, not whether organisations now manage it.",
+  "reachReviewedAt": "2026-11-09",
   "contested": false,
   "contestedNote": null,
   "whatWouldChangeThis": [
@@ -166,14 +190,13 @@
   "related": [],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 8,
+    "independentContexts": 12,
     "evidenceTypes": 5,
     "quartersSpanned": 4,
     "counterEvidence": true
   },
   "firstObserved": "2026-01-09",
   "latestEvidenceDate": "2026-10-20",
-  "possibleReachChange": null,
   "construct": "Whether engineering organisations plan, attribute, cap and justify the cost of AI work as a managed operating expense, and how that spend relates to what it delivers per task. Not model price cuts, total AI adoption, or benchmark scores, all of which move without any organisation changing how it accounts for or approves AI spend.",
   "lastReviewed": "2026-10-27"
 }

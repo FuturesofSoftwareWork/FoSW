@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-09-02",
+  "title": "Update on tokenmaxxing: Amazon tells its software engineers and their managers that AI-usage metrics are deeply flawed, but keeps them for use with judgement",
+  "summary": "Amazon has published a memo from Terk Terkowitz, a vice president and distinguished engineer in its stores business, addressed to its software development engineers and software development managers. It was first circulated internally in September and posted publicly on 27 October. The memo defines the developer's role by impact on customers, the business and the team rather than by AI use, and says that work which does not benefit from current AI tools is a finding, not a failing.\n\nWhat is new since this site's August item on companies retiring AI-usage leaderboards is Amazon's own written position. The memo says Amazon has sometimes used input metrics such as token usage, AI-tool adoption, code changes and reviews, and calls them deeply flawed because they are disconnected from what matters. It does not retire them: it says using them with care and judgement when thinking about careers and organisational performance is appropriate.\n\nIt also changes what managers are asked to do. They should pay particular attention to the 10th and 90th percentiles of AI adoption on their teams, and leaders are expected to understand the tools by using them on their own production work. No numeric targets are set. CNBC reports that Amazon had shut an internal leaderboard in May after employees inflated their usage.",
+  "source": "Amazon company news (memo to engineers)",
+  "sourceUrl": "https://www.aboutamazon.com/news/company-news/amazon-software-engineer-role-guideline-ai",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "observer": "Terk Terkowitz, vice president and distinguished engineer, Worldwide Amazon Stores, writing to Amazon's software development engineers and managers; the memo is published by Amazon itself.",
+  "leadTimeEstimate": "confirms current practice; ~6 months before large employers write similar guidance on AI metrics into review processes",
+  "corroboration": [
+    "https://www.cnbc.com/2026/10/27/amazon-ai-coding-tokenmaxxing.html",
+    "https://thenextweb.com/news/amazon-tokenmaxxing-memo-engineers-ai-metrics"
+  ],
+  "detectedAt": "2026-11-09",
+  "date": "2026-10-27",
+  "status": "published",
+  "tags": [
+    "performance-measurement",
+    "tokenmaxxing",
+    "engineering-management",
+    "ai-adoption-metrics",
+    "amazon"
+  ],
+  "category": [
+    "Org & Leadership",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**Usage stays in the room** — calling the metrics flawed while allowing them in career discussions leaves engineers unsure how far their AI use is judged.",
+    "**Managers watch the tails** — asking managers to look at the lowest and highest adopters makes individual AI use a management conversation, not only a team statistic.",
+    "**Leaders must use the tools** — expecting leaders to use AI on production work ties managerial credibility to hands-on use."
+  ],
+  "recommendedActions": [
+    "**State how usage data is used** — tell engineers in writing whether AI-usage data can enter performance or promotion discussions, and who sees it.",
+    "**Pair usage with outcome measures** — where adoption metrics are kept, report them only alongside delivery and quality outcomes for the same team."
+  ],
+  "risksAndCaveats": [
+    "**Company's own framing** — this is Amazon's published account of its policy; how managers apply it in reviews is not reported.",
+    "**One very large employer** — practices at Amazon's scale show direction, not what is happening across software work generally."
+  ]
+}

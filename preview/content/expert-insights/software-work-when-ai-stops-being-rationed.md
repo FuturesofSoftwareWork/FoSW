@@ -75,6 +75,7 @@ The choice illustrates an important distinction between the origin of an AI mode
 Such control does not automatically guarantee security or regulatory compliance. Organisations still need to assess model provenance, software supply-chain risks, licensing, vulnerabilities and the behaviour of the agents using the models. Revolut's presentation describes safeguards around its engineering agents, but it does not constitute an independent security assessment of the deployment. In particular, running the weights on dedicated capacity avoids sending requests to the model developer, although any infrastructure provider remains part of the chain of trust, and risks associated with the model itself remain.
 
 The case is relevant to discussions about European technological sovereignty. A company can use Chinese-developed model weights, American-designed computing hardware and infrastructure operated under European jurisdiction while retaining substantial control over its own data and deployment environment. At the same time, it may remain dependent on foreign model developers, hardware suppliers and software ecosystems.
+
 Technological autonomy therefore cannot be assessed from model nationality alone. It depends on the organisation's ability to control critical operations, manage risks and retain alternatives when technologies or suppliers change.
 
 ## What changes when a company runs its own models?

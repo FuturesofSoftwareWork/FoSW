@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-09-04",
+  "title": "Observing 19 experienced developers at work, researchers find waiting on agents has become a distinct stage of the job, filled with planning the next task",
+  "summary": "Researchers at KAIST and Carnegie Mellon watched 19 developers with three to 26 years' experience, mostly full-stack, backend and frontend engineers, work on their own tasks with their usual coding agents. Each session combined an interview, a think-aloud coding session and a workflow diagram. The preprint, posted on 21 September and not yet peer reviewed, describes developers shifting from implementing code to supervising delegated work.\n\nThe researchers map that supervision into seven stages: plan, monitor, wait, review, teach, fix by hand, and update reusable assets such as instruction files. Two are new kinds of work. Waiting is a stage of its own: developers leave the agent running and turn elsewhere, often to plan and instruct the next task. Review becomes a supervisory step rather than reading a colleague's change. Developers concentrate effort in planning, and some fold teaching the agent into the plan itself.\n\nA separate analysis of about 13,000 comments in three developer forums from May to August 2026 describes the demands of this work and how people cope, including handing parts of supervision to other agents.",
+  "source": "arXiv Preprint (cs.HC)",
+  "sourceUrl": "https://arxiv.org/abs/2609.24234",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "lagging",
+  "replicated": false,
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-11-09",
+  "date": "2026-09-21",
+  "status": "published",
+  "tags": [
+    "agent-supervision",
+    "developer-workflow",
+    "parallel-work",
+    "code-review",
+    "planning"
+  ],
+  "category": [
+    "SDLC Change",
+    "Skills & Learning",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "**Waiting becomes part of the job** — time spent while agents run is filled with other tasks, which turns development into overlapping supervision.",
+    "**Planning carries the skill** — effort moves to writing the plan, success criteria and cautions, so that is where competence now shows.",
+    "**Maintaining instructions is new work** — updating reusable assets for agents is a recurring task that someone has to own."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Small qualitative sample** — 19 developers recruited mainly through Korean and LinkedIn networks, including four graduate students, observed for about 40 minutes each; the paper does not say when the sessions took place.",
+    "**Forum findings are self-selected** — the demands and coping strategies come from Reddit threads, which over-represent people with problems to report."
+  ]
+}

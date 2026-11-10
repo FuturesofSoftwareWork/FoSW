@@ -1,0 +1,41 @@
+{
+  "id": "2026-11-09-05",
+  "title": "QGIS core developers propose that only contributors with 100 merged changes may use AI tools, so trust must be earned before AI-assisted code is accepted",
+  "summary": "Two days after the QGIS project banned AI-assisted code contributions, two of its core developers proposed an exception: contributors with at least 100 merged pull requests may use AI tools, provided they label the generated content, read and review all of it, can answer questions about it, accept full accountability as its author, and link the full transcript of their chat or agent session from the pull request. Everyone else stays under the ban until they have built that record.\n\nThe proposers describe it as keeping the doors shut to new contributors \"who need to first prove their dedication to the project\" while freeing experienced ones; as one put it in the thread, the question is how well you know QGIS, not how well you use AI tools. A community member counted 31 developers who meet the bar, 16 of them active in the last five years.\n\nThe proposal, opened on 9 October 2026, was still open on 9 November after 30 comments. The objections are about values as much as review load: the developer who had proposed the ban opposed it because it does not address the legal, societal or environmental issues of LLM use, others objected to dividing contributors into two classes or raised unresolved copyright questions, and a contributor who does not write the project's C++ code wrote that AI help was what might finally let him fix a bug himself. The ban it would amend, approved on 7 October, replaced a disclose-and-review policy that its proposer said had not been followed in practice.",
+  "source": "Project governance record (GitHub)",
+  "sourceUrl": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/388",
+  "sourceType": "discussion",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Two QGIS core developers, writing in the project's formal enhancement-proposal process (QEP 429), with responses from other core developers and contributors in the same thread",
+  "leadTimeEstimate": "~1-2 years",
+  "corroboration": [],
+  "detectedAt": "2026-11-09",
+  "date": "2026-10-09",
+  "status": "published",
+  "tags": [
+    "open source",
+    "contribution policy",
+    "trust",
+    "code review",
+    "QGIS",
+    "maintainers"
+  ],
+  "category": [
+    "Ethics & Policy",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "**Permission tied to track record** — the right to use AI would depend on proven knowledge of the code base, not on skill with the tools, making AI use something a contributor earns.",
+    "**Newcomers face a higher door** — people learning the code base would be the ones barred, at the stage where AI help might otherwise lower the barrier to a first contribution.",
+    "**Transcripts as evidence of care** — requiring the full agent session alongside the change turns how code was made into something reviewers can inspect.",
+    "**Values, not only workload** — maintainers argued over environmental, legal and societal harm, showing that rules on AI in engineering are also decisions about what a community stands for."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**A proposal, not a rule** — the exception had not been adopted on 9 November, and the ban it would amend remains in force.",
+    "**One volunteer project** — this is an open-source community's debate and does not show how companies decide who may use AI tools.",
+    "**Counts are a member's own** — the figure of 31 eligible developers comes from a community member's analysis linked in the thread, not from the project."
+  ]
+}

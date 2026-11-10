@@ -6,7 +6,7 @@
   "excerpt": "Revolut reports cutting AI inference costs by 90% while supporting approximately 2,000 engineers with self-hosted AI. Its experience raises questions about the economics of agentic software engineering, technological dependencies and the options available to smaller companies.",
   "markdownFile": "software-work-when-ai-stops-being-rationed.md",
   "date": "2026-11-04",
-  "status": "draft",
+  "status": "published",
   "relatedPhenomena": [
     "compute-becomes-a-budget-line"
   ],

@@ -80,10 +80,16 @@
       "stance": "supports",
       "primary": true,
       "note": "OpenAI incident report: two internal agents disabled their own monitoring (one emptied alert recipients, one edited a test to assert monitoring was absent and denied it later); found only because a person asked. Measures an agent acting beyond its granted oversight scope"
+    },
+    {
+      "signalId": "2026-10-27-08",
+      "stance": "supports",
+      "primary": true,
+      "note": "Stripe bounds agent authority: isolated devboxes with no user data, production services or arbitrary network, and a small default tool subset from a central server; full permissions granted only inside that boundary"
     }
   ],
   "observedReach": "gaining-traction",
-  "reachRationale": "The framing has been taken up by independent organisations rather than staying with the teams that first raised it: OWASP has published an agent-specific risk taxonomy, Microsoft, Palo Alto Networks and Auth0 have written implementation guides against it, and agent incidents are now tracked as a category. It stops short of the centre because the observed exposure is wider than the observed governance: most enterprises running agents cannot yet enumerate what those agents can reach, and the firsthand incidents come from AI-native organisations at the frontier of autonomy.",
+  "reachRationale": "The framing has been taken up by independent organisations rather than staying with the teams that first raised it: OWASP has published an agent-specific risk taxonomy, Microsoft, Palo Alto Networks and Auth0 have written implementation guides against it, and agent incidents are now tracked as a category. It stops short of the centre because the observed exposure is wider than the observed governance: most enterprises running agents cannot yet enumerate what those agents can reach, the firsthand incidents come from AI-native organisations at the frontier of autonomy, and the one firsthand account of governance at scale, Stripe's sandboxed agents with a curated tool set, comes from a frontier firm too.",
   "whatWouldChangeThis": [
     "A repeat of the injection benchmark shows framework- and product-level defences, rather than base-model refusal, doing most of the blocking",
     "Enterprise surveys show organisations can enumerate agent identities and their access with the confidence they already have for human users",
@@ -91,14 +97,13 @@
     "Incident data shows agent-initiated intrusions staying rare rather than becoming a recognised category with its own response playbook"
   ],
   "evidenceProfile": {
-    "independentContexts": 5,
+    "independentContexts": 6,
     "evidenceTypes": 3,
     "quartersSpanned": 4,
     "counterEvidence": false
   },
   "firstObserved": "2026-02-15",
   "latestEvidenceDate": "2026-10-20",
-  "possibleReachChange": null,
-  "reachReviewedAt": "2026-10-27",
+  "reachReviewedAt": "2026-11-09",
   "lastReviewed": "2026-10-27"
 }

@@ -2,7 +2,7 @@
   "id": "teams-get-smaller",
   "label": "Teams get smaller",
   "title": "Small groups are doing work that used to need a full team",
-  "thesis": "A small group with machine support may now carry work that once needed a full team, so the standard delivery team in software may be shrinking. The effects go beyond headcount to how work is coordinated, how careers progress and what a manager is for. The early reports come from forerunners and investors, so the size of the change is much less clear than its direction.",
+  "thesis": "A small group with machine support may now carry work that once needed a full team, so the standard delivery team in software may be shrinking. The effects go beyond headcount to how work is coordinated, how careers progress and what a manager is for. Most early reports come from forerunners and investors, so the size of the change is much less clear than its direction.",
   "currentPressure": "Organisations are reporting delivery from markedly smaller groups while overall demand for engineers has not fallen, so the pressure shows up in team composition rather than in total employment.",
   "status": "published",
   "primaryDimension": "organisation-and-leadership",
@@ -68,11 +68,17 @@
       "stance": "supports",
       "primary": false,
       "note": "Meta planned pods of two to three engineers plus a designer, at least eleven teams running that way by June; reported second-hand (Reuters via The Pragmatic Engineer). The reversed 60% cut is a headcount plan and is deliberately not filed as counter"
+    },
+    {
+      "signalId": "2026-08-07-06",
+      "stance": "supports",
+      "primary": true,
+      "note": "Orosz canvass of ~20 leaders; one quantified account: 6-10 person teams becoming 3-4 across a 10,000-developer agriculture firm; the other nineteen carry no numbers"
     }
   ],
   "observedReach": "gaining-traction",
-  "reachRationale": "Smaller delivery units are now described independently at several large established organisations: Instagram's pods of four to six, Redis's pods of three to four across a 350-400 person organisation, Meta's pods of two to three engineers plus a designer, and an investor writeup of teams shrinking from eight-to-ten to five or fewer. Some of the direction predates AI, so part of the pattern is not attributable to it. All accounts are self-reported, no independent survey measures median team size, and Meta's later reversal of a larger cut shows the pace is disputed.",
-  "reachReviewedAt": "2026-10-27",
+  "reachRationale": "Smaller delivery units are now described independently at several large established organisations: Instagram's pods of four to six, Redis's pods of three to four across a 350-400 person organisation, Meta's pods of two to three engineers plus a designer, and an investor writeup of teams shrinking from eight-to-ten to five or fewer, and a 10,000-developer agriculture company describing teams of six to ten becoming three to four, the first account from outside software firms and investors. Some of the direction predates AI, so part of the pattern is not attributable to it. All accounts are self-reported, no independent survey measures median team size, and Meta's later reversal of a larger cut shows the pace is disputed.",
+  "reachReviewedAt": "2026-11-09",
   "contested": false,
   "whatWouldChangeThis": [
     "Independent survey data from outside the investor and consultancy circuit reports median team size falling",
@@ -103,14 +109,13 @@
   ],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 4,
+    "independentContexts": 5,
     "evidenceTypes": 2,
-    "quartersSpanned": 2,
+    "quartersSpanned": 3,
     "counterEvidence": false
   },
-  "firstObserved": "2026-07-09",
+  "firstObserved": "2026-02-24",
   "latestEvidenceDate": "2026-10-20",
-  "possibleReachChange": null,
   "construct": "Whether the number of people in a standard software delivery unit is falling, and how work is reorganised around smaller units — measured as team or pod size, or the staffing a given piece of work needs. Not total engineering headcount, layoffs, hiring volumes or job-cut attribution, which move for reasons that leave the size of a delivery unit unchanged.",
   "lastReviewed": "2026-10-27"
 }

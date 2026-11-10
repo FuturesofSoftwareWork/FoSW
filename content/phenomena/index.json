@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-05T12:06:15Z",
+  "lastUpdated": "2026-11-10T07:41:13Z",
   "items": [
     {
       "id": "review-shifts-to-verification",
@@ -95,6 +95,12 @@
       "id": "the-gain-shrinks-downstream",
       "file": "the-gain-shrinks-downstream.json",
       "date": "2026-11-05",
+      "status": "published"
+    },
+    {
+      "id": "responsibility-without-means",
+      "file": "responsibility-without-means.json",
+      "date": "2026-11-10",
       "status": "published"
     }
   ]

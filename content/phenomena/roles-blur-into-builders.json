@@ -53,23 +53,29 @@
       "stance": "supports",
       "primary": true,
       "note": "DHH on the Basecamp experiment: designers used agents to implement changes directly; the PRs looked individually defensible but collectively damaged architecture and developers restored coherence by hand. Attached for designers shipping, and the architectural cost is the caution"
+    },
+    {
+      "signalId": "2026-10-19-06",
+      "stance": "supports",
+      "primary": true,
+      "note": "Linear, 166,000 paid users: share attaching a PR in 30 days rose 3% to 10% for product managers and 1% to 8% for designers, mostly June 2025-June 2026; 'attaching' is undefined and may include linking others' PRs"
     }
   ],
   "observedReach": "early-manifestations",
-  "reachRationale": "Seen in three forerunner organisations (an InfoQ panel's employers, Redis, 37signals' Basecamp experiment), one of which found the output harmful to architecture. No source counts non-engineer commits or shows them as common practice.",
+  "reachRationale": "Seen in three forerunner organisations (an InfoQ panel's employers, Redis, 37signals' Basecamp experiment), one of which found the output harmful to architecture. No source shows this as common practice. Linear's data on 166,000 users gives the first count: the share of product managers and designers attaching pull requests roughly tripled in a year, to 10% and 8%. The measure is loose, since attaching may mean linking a change someone else wrote.",
   "whatWouldChangeThis": [
     "Counts of commits or merged changes by non-engineer roles showing they stay a small, flat share",
     "Evidence that non-engineer changes are routinely reverted or rewritten by engineers",
     "Organisations that tried this and re-established a hard boundary between specification and implementation"
   ],
   "evidenceProfile": {
-    "independentContexts": 3,
-    "evidenceTypes": 1,
+    "independentContexts": 4,
+    "evidenceTypes": 2,
     "quartersSpanned": 1,
     "counterEvidence": false
   },
   "firstObserved": "2026-08-07",
   "latestEvidenceDate": "2026-08-27",
-  "reachReviewedAt": "2026-10-27",
+  "reachReviewedAt": "2026-11-09",
   "lastReviewed": "2026-10-27"
 }
