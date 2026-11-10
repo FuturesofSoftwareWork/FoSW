@@ -85,8 +85,8 @@
       "note": "Science study of 30M+ GitHub commits: ~29% of US Python functions AI-written by end 2024; function-level classifier on a 2024 cut-off, so a share of assisted code well short of a majority"
     }
   ],
-  "observedReach": "gaining-traction",
-  "reachRationale": "Reported across several kinds of organisation: an AI lab, a research organisation, a product company that has just gone 'pencils down', and the Amazon pilot teams. The reviewer's judgement is that these are examples of a theme heard widely across the field, not the full set of cases. Broad surveys still show full delegation at only 0-20% of tasks, so agent-written code is not yet the default, but the change is well beyond a few early adopters.",
+  "observedReach": "field-level-shift",
+  "reachRationale": "The reviewer judges that this now changes what the software field expects, which is what a field-level shift requires rather than universal adoption. The organisations whose tools most engineers use report agents carrying most of their own implementation: OpenAI's research organisation runs about three agent-workdays for every human one, and Anthropic's agents log six times the hours of its staff while its junior technical hiring has fallen sharply. Established product companies have followed, with 37signals making hand-written code the exception and Amazon's pilot teams splitting on how fully they delegate. Broad surveys still show full delegation at only 0-20% of tasks, so most engineers still write much of their code: the shift is in what the field expects and how roles are understood, not yet in what the median team does.",
   "whatWouldChangeThis": [
     "Independent organisations with no vendor tie reporting that humans still write most merged code in agent-heavy teams",
     "Human-intervention rates on multi-hour agent tasks staying above half, or rising",
@@ -101,6 +101,6 @@
   },
   "firstObserved": "2026-01-22",
   "latestEvidenceDate": "2026-10-16",
-  "reachReviewedAt": "2026-10-27",
+  "reachReviewedAt": "2026-11-10",
   "lastReviewed": "2026-10-27"
 }
