@@ -162,8 +162,8 @@
     }
   ],
   "observedReach": "field-level-shift",
-  "reachRationale": "The change has moved from maximising token use to cost consciousness across independent contexts: caps and approval tiers at Uber, Microsoft and Meta; a 27-company survey showing caps from $150 to about $3,000 a month per developer; and an institution, the Tokenomics Foundation, backed by ten large enterprises. The same management appears beyond the largest technology firms: Databricks replaces hard caps with escalating approval, Spotify routes bulk work to a cheap model, Revolut moved about 2,000 engineers to a self-hosted open model, and an open-source core team now budgets spend and energy. Per-task cost analyses show the unit of account being renegotiated in public. Counter-evidence (most agentic requests are simple) concerns how spend is distributed, not whether organisations now manage it.",
-  "reachReviewedAt": "2026-11-09",
+  "reachRationale": "The change has moved from maximising token use to cost consciousness across independent contexts: caps and approval tiers at Uber, Microsoft and Meta; a 27-company survey showing caps from $150 to about $3,000 a month per developer; and an institution, the Tokenomics Foundation, backed by ten large enterprises. The same management appears beyond the largest technology firms: Databricks replaces hard caps with escalating approval, Spotify routes bulk work to a cheap model, Revolut moved about 2,000 engineers to a self-hosted open model, and an open-source core team now budgets spend and energy. Stack Overflow's 2026 survey of over 30,000 developers finds 38% of respondents' organisations limiting AI usage and a quarter limiting who may use it. Per-task cost analyses show the unit of account being renegotiated in public. Counter-evidence (most agentic requests are simple) concerns how spend is distributed, not whether organisations now manage it.",
+  "reachReviewedAt": "2026-11-10",
   "contested": false,
   "contestedNote": null,
   "whatWouldChangeThis": [
@@ -204,12 +204,5 @@
   "firstObserved": "2026-01-09",
   "latestEvidenceDate": "2026-10-20",
   "construct": "Whether engineering organisations plan, attribute, cap and justify the cost of AI work as a managed operating expense, and how that spend relates to what it delivers per task. Not model price cuts, total AI adoption, or benchmark scores, all of which move without any organisation changing how it accounts for or approves AI spend.",
-  "lastReviewed": "2026-10-27",
-  "possibleReachChange": {
-    "reason": "gained 1 independent context(s) since reach was last reviewed (12 -> 13)",
-    "raisedAt": "2026-11-10",
-    "signalIds": [
-      "2026-11-10-02"
-    ]
-  }
+  "lastReviewed": "2026-10-27"
 }
