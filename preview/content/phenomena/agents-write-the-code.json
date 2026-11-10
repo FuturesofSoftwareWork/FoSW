@@ -67,12 +67,6 @@
       "note": "Amazon pilot: in the better teams engineers wrote only 1-2% of the code directly and let the assistant run unattended for up to several hours"
     },
     {
-      "signalId": "2026-03-10-01",
-      "stance": "counter",
-      "primary": false,
-      "note": "Anthropic trends report citing research: developers use AI in roughly 60% of work but fully delegate only 0-20% of tasks; the figure is cited, not measured by the report, so not primary"
-    },
-    {
       "signalId": "2026-03-23-03",
       "stance": "contextual",
       "primary": true,
@@ -92,7 +86,7 @@
     }
   ],
   "observedReach": "field-level-shift",
-  "reachRationale": "Writing code by hand is now the minority practice across the field, not only at forerunners. JetBrains' 2026 survey of over 15,000 professional developers, weighted to represent developers worldwide, finds agents fully generate about 47% of their code on average and only about 27% is written entirely by hand; over half of developers write less than a fifth of their code manually, and senior developers lead the shift. The organisations whose tools most engineers use run most of their own implementation through agents, and established product companies such as 37signals have made hand-written code the exception. This changes what the field expects of a software engineer. Full delegation is still a minority, about a fifth of developers, and Europe lags: about 16% of European and UK developers get most of their code from agents, against a third in East Asia. The figures are self-reported, and an earlier industry report from February 2026 put full delegation at 0-20% of tasks.",
+  "reachRationale": "Writing code by hand is now the minority practice across the field, not only at forerunners. JetBrains' 2026 survey of over 15,000 professional developers, weighted to represent developers worldwide, finds agents fully generate about 47% of their code on average and only about 27% is written entirely by hand; over half of developers write less than a fifth of their code manually, and senior developers lead the shift. The organisations whose tools most engineers use run most of their own implementation through agents, and established product companies such as 37signals have made hand-written code the exception. This changes what the field expects of a software engineer. Full delegation is still a minority, about a fifth of developers, and Europe lags: about 16% of European and UK developers get most of their code from agents, against a third in East Asia. The survey figures are self-reported estimates.",
   "whatWouldChangeThis": [
     "Independent organisations with no vendor tie reporting that humans still write most merged code in agent-heavy teams",
     "Human-intervention rates on multi-hour agent tasks staying above half, or rising",
