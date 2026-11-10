@@ -1,8 +1,8 @@
 {
   "id": "configuring-the-machine",
   "label": "Configuring the machine",
-  "title": "What lasts is the agent's context and limits, not its instructions",
-  "thesis": "Most teams use a ready-made coding agent and build the environment around it. Each new model absorbs more of the instructions teams write, so those matter less over time. What lasts is the context the agent cannot know, such as the organisation's domain, architecture and ownership, and the limits on what it may touch. The scarce skill shifts from instructing the machine to informing and bounding it.",
+  "title": "Agents gain from knowledge they cannot find, not from instructions",
+  "thesis": "Most teams use a ready-made coding agent and shape the environment around it. Telling the agent how to work adds little, and less as models improve. What changes results is knowledge the agent cannot find for itself, such as unreleased interfaces, internal conventions and domain mappings. Teams also set limits on what it may touch. The work around the agent shifts from instructing it to supplying what it cannot discover and bounding what it can do.",
   "currentPressure": "Each model generation makes more of a team's hand-written instruction redundant: controlled tests find rules files and prescribed techniques add little or nothing, and a contract harness that rescued a cheap model only slowed a frontier one. The one test that supplied context the agent could not otherwise know found a large gain.",
   "status": "published",
   "primaryDimension": "nature-and-division-of-work",
@@ -42,34 +42,10 @@
   ],
   "evidence": [
     {
-      "signalId": "2026-02-18-05",
-      "stance": "supports",
-      "primary": true,
-      "note": "same 15 models, materially better coding results with only the harness changed"
-    },
-    {
-      "signalId": "2026-04-06-03",
-      "stance": "supports",
-      "primary": true,
-      "note": "a published three-agent harness separating planning, generation and evaluation for multi-hour runs"
-    },
-    {
       "signalId": "2026-08-03-07",
       "stance": "supports",
       "primary": true,
       "note": "named companies standardising the gateway rather than mandating one vendor's tool"
-    },
-    {
-      "signalId": "2026-06-08-01",
-      "stance": "supports",
-      "primary": false,
-      "note": "practitioner synthesis: the engineering surface moves from prompts and frameworks to the control loop"
-    },
-    {
-      "signalId": "2026-06-08-02",
-      "stance": "contextual",
-      "primary": true,
-      "note": "the term is being defined in public, which is itself a sign the concept is unsettled"
     },
     {
       "signalId": "2026-03-11-03",
@@ -78,57 +54,57 @@
       "note": "systematic evaluation across 138 tasks finds repository context files often hinder rather than help"
     },
     {
-      "signalId": "2026-03-16-01",
+      "signalId": "2026-10-27-05",
       "stance": "supports",
       "primary": true,
-      "note": "Documents a working CLI coding agent whose capability is attributed to planner/executor separation, lazy tool discovery, adaptive context compaction and cross-session memory — named as the design principles that made it work, not the model behind it."
+      "note": "INFORMATION: Vercel evals on Next.js 16 APIs absent from training data; no docs 53%, on-demand docs skill 53% (unused in 56% of runs), 8KB docs index in AGENTS.md 100% on build/lint/test; vendor's own evals, model not stated"
     },
     {
-      "signalId": "2026-05-06-04",
+      "signalId": "2026-10-27-07",
       "stance": "supports",
       "primary": true,
-      "note": "Meta's own deployment: expert performance-engineering reasoning encoded as reusable agent 'skills' plus structured tooling around the model, applied autonomously across its infrastructure. Capability built rather than bought."
+      "note": "INFORMATION: Spotify Honk on Claude Code, no skills or MCP; context file adapted from the human migration guide left it guessing field mappings, explicit mapping tables fixed it; 240 migration PRs (qualitative before/after)"
     },
     {
-      "signalId": "2026-02-18-04",
+      "signalId": "2026-10-27-08",
       "stance": "supports",
       "primary": true,
-      "note": "Block's Goose team reports the decisive skill moving from prompt engineering to shaping persistent, structured context so agents can complete multi-step work reliably."
+      "note": "AUTHORITY plus scoped INFORMATION: Stripe maintains directory-scoped rules, a small default subset of a ~500-tool MCP server, and sandboxes with no production access around agents producing 1,300+ PRs/week; no comparison isolating any part"
     },
     {
-      "signalId": "2026-02-18-02",
-      "stance": "supports",
-      "primary": false,
-      "note": "Argues multi-agent coding is less about the model than about orchestration — planner/worker/judge coordination at scale. Secondary: reports Cursor's experiments rather than its own."
-    },
-    {
-      "signalId": "2026-05-06-09",
+      "signalId": "2026-10-27-03",
       "stance": "counter",
       "primary": true,
-      "note": "Production telemetry: 59% of agentic requests make only a single service call and just 18% make three or more. Measures how agents are actually configured in production and finds most are thin wrappers, not engineered harnesses."
+      "note": "INFORMATION: Meta private monorepo, developer-written context files +6.4 pp solve rate on a basic harness, no benefit and slight harm on a harness with ~3x navigation tools; curated context redundant once the agent can find it"
     },
     {
-      "signalId": "2026-08-17-10",
-      "stance": "counter",
+      "signalId": "2026-08-17-05",
+      "stance": "supports",
       "primary": true,
-      "note": "blinded test, 9 runs plus 82 attempts: full CLAUDE.md governance file scored 16.1/30 vs 16.3 with no guidance, two-sentence prompt 27.5; 0% compliance with behavioural rules. Measured whether written harness configuration improves outcomes; single author, small n"
+      "note": "PROCEDURE: Boeckeler, five batches with and without TDD instructions, same agent and model (Sonnet 4.6); no quality or mutation-score difference for 2.96-8.5x the tokens"
     },
     {
       "signalId": "2026-09-14-04",
-      "stance": "counter",
+      "stance": "supports",
       "primary": true,
       "note": "Dan Luu, 26 instructed conditions at ~80 trials each: naming a testing technique mostly did not produce it, defaults beat most instructed conditions, agents claimed methods they did not apply. Measured whether prompt-level configuration changes what the agent does"
     },
     {
-      "signalId": "2026-10-19-03",
+      "signalId": "2026-08-17-10",
       "stance": "supports",
+      "primary": true,
+      "note": "blinded test, 9 runs plus 82 attempts: full CLAUDE.md governance file scored 16.1/30 vs 16.3 with no guidance, two-sentence prompt 27.5; 0% compliance with behavioural rules. Measured whether written harness configuration improves outcomes; single author, small n"
+    },
+    {
+      "signalId": "2026-10-19-03",
+      "stance": "counter",
       "primary": true,
       "note": "paired experiment, 10 runs per arm, 178 acceptance tests: contract harness (API contracts, examples, tests, mocks) took a cheap model from 3/10 to 10/10 passes at ~$0.27/run, but added ~7x cost for no gain on a frontier model. Harness value depends on the model"
     }
   ],
-  "observedReach": "field-level-shift",
-  "reachRationale": "Vendors, platform teams and practitioners now explain agent outcomes through the harness rather than the model: harness-only changes lifted 15 models, adopters standardise the gateway rather than the tool, and a cheap model with a contract harness matched a frontier model at a third less cost. Studies of instruction files show much hand-written configuration does not help, which contests specific practices but not the shift of the decisive work into the harness. The vocabulary is still being argued over.",
-  "reachReviewedAt": "2026-10-27",
+  "observedReach": "gaining-traction",
+  "reachRationale": "Named organisations now build the environment around ready-made agents as practice: Shopify and Ramp route agents through a shared gateway, Stripe keeps scoped rules, a curated tool set and sandboxes, Spotify and Vercel supply knowledge the model lacks. Independent experiments agree that instructions on how to work add little, while supplied knowledge helps only where the agent cannot find it, and not at all for a strong model on a simple task. That is spreading practice, not yet a settled expectation across the field, and limits are described rather than shown to change results.",
+  "reachReviewedAt": "2026-11-09",
   "contested": false,
   "contestedNote": null,
   "whatWouldChangeThis": [
@@ -167,9 +143,8 @@
     "quartersSpanned": 3,
     "counterEvidence": true
   },
-  "firstObserved": "2026-01-19",
+  "firstObserved": "2026-01-27",
   "latestEvidenceDate": "2026-10-13",
-  "possibleReachChange": null,
   "construct": "What software teams put into the working environment of a packaged coding agent, and which parts of it change what the agent achieves while agent and model stay the same. Three kinds are distinguished: procedure — instructions on how to work, such as rules files, prescribed workflows and techniques, and checks the agent is made to run; information — what the agent cannot otherwise know, such as domain, architecture, conventions, design system, ownership and internal interfaces; and authority — what it may touch, such as tool and MCP access, permissions, sandboxes, gateways and policy layers. The construct also covers whether each kind's effect holds, shrinks or grows across model generations, and who designs, maintains and owns the environment. Not the harness inside the agent product (control loop, tool schemas, retry logic), including teams assembling their own agent from an SDK, except for the instruction, access and workflow elements any team configures. Not model benchmarks or releases, or agent adoption rates. Not the spread in delivery outcomes between teams with the same tooling, the acceptance suite as the definition of done, or how AI-generated changes are assured before merge — those belong to neighbouring phenomena.",
   "lastReviewed": "2026-10-27"
 }

@@ -1,0 +1,102 @@
+{
+  "id": "responsibility-without-means",
+  "label": "Responsibility without means",
+  "title": "Responsibility for AI in software work falls on engineers without the means to carry it",
+  "thesis": "As AI enters more of software work, both in how code is written and in the systems engineers build, organisations and open-source communities settle who is responsible by placing it on the individual engineer: whoever submits or approves the work answers for it, whatever tool produced it. The authority, time and recognition needed to carry that responsibility are not moving with it, so engineers are held answerable for risks they have no means to check or act on.",
+  "construct": "Who is made answerable for software work involving AI, whether code produced with AI tools or AI systems that engineers build, and whether that person has the authority, time or recognition to carry the responsibility: written responsibility rules, accountability for changes nobody read, credit for verification work, and engineers' ability to act on risks they see. Not AI tool adoption, review load or burnout on their own, contribution volume, or rules on disclosure format, all of which can change without responsibility moving.",
+  "currentPressure": "Agents produce changes faster than people can read them, and more AI-assisted work reaches reviewers and maintainers than they can check line by line.",
+  "status": "published",
+  "primaryDimension": "ethics-responsibility-and-society",
+  "potentialImpact": "moderate",
+  "implications": [
+    {
+      "dimension": "ethics-responsibility-and-society",
+      "statement": "Rules that make the contributor fully answerable whatever tool produced the work, as Debian adopted, assign responsibility without giving anyone more time or authority to discharge it.",
+      "actors": [
+        "developer",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "worker-experience-identity-and-wellbeing",
+      "statement": "Engineers who do the checking that keeps AI-generated flaws out see that work go unrecorded and unrewarded, and in one account it was the reason they left.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "When the engineers who see a risk are not the people authorised to act on it, concerns about AI work have no owner and tend not to be raised at all.",
+      "actors": [
+        "engineering-manager",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "Teams that mix engineers who read generated code with engineers who deliberately do not leave it unclear who answers for a change nobody read.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ]
+    },
+    {
+      "dimension": "skills-knowledge-and-learning",
+      "statement": "Making permission to use AI depend on a record of merged work, as proposed at QGIS, ties responsibility to proven knowledge of the code base and withholds AI help from newcomers.",
+      "actors": [
+        "new-entrant",
+        "reviewer"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-08-06-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "AT&T lead engineer's firsthand account: three mid-level engineers left within weeks; one said he could not handle \"making things right without any credit for it\"; an engineer spent three days preventing an AI-generated authentication flaw that appeared in no delivery metric. Shows both halves: responsibility for AI output, no credit or time for it"
+    },
+    {
+      "signalId": "2026-11-09-08",
+      "stance": "supports",
+      "primary": true,
+      "note": "University of Manchester interviews with 13 UK-based AI and software engineers (Feb-Mar 2026): \"ethical awareness without ethical agency\"; those who see a concern are not those authorised to act; speed rewarded over rigour. Shows the missing means; concerns engineers building AI systems, not using AI tools"
+    },
+    {
+      "signalId": "2026-09-07-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Debian general resolution: contributor bears full responsibility for submissions whatever the tool; outright ban rejected. Shows responsibility placed on the individual; says nothing about their means"
+    },
+    {
+      "signalId": "2026-11-09-05",
+      "stance": "supports",
+      "primary": true,
+      "note": "QGIS proposal (QEP 429, not adopted on 9 Nov): only contributors with 100+ merged PRs may use AI, and they must declare full accountability and link the agent transcript. Shows responsibility and permission tied to the individual's track record"
+    },
+    {
+      "signalId": "2026-09-23-05",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Product engineer argues that teams mixing engineers who read generated code with engineers who do not create conflict over who owns a change nobody read. An argument with one example, not a measurement"
+    }
+  ],
+  "observedReach": "early-manifestations",
+  "reachReviewedAt": "2026-11-10",
+  "reachRationale": "Engineers are being made answerable for AI-assisted work in a few independent settings: one open-source project has adopted a rule that puts full responsibility on the contributor (Debian), another has proposed one (QGIS), an engineering lead at a large US telecom describes engineers leaving over verification work that earned no credit, and a UK interview study finds engineers who see risks but cannot act on them. These are forerunner cases in separate populations. Nothing yet shows employers, vendors or projects across the field adopting this arrangement as a common model.",
+  "whatWouldChangeThis": [
+    "Organisations counting verification and review of AI-generated work in assessment and promotion, so the engineers made answerable are given credit and time for it",
+    "Responsibility for AI-generated code moving off the individual, through contracts, insurers or project rules that place it on the organisation or the tool vendor",
+    "Larger studies, such as the survey the Manchester researchers plan, finding that most engineers can act on the risks they raise"
+  ],
+  "evidenceProfile": {
+    "independentContexts": 4,
+    "evidenceTypes": 3,
+    "quartersSpanned": 2,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-07-06",
+  "latestEvidenceDate": "2026-10-09",
+  "lastReviewed": "2026-11-10"
+}
