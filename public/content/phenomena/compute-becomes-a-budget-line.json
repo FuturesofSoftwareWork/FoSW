@@ -153,6 +153,12 @@
       "stance": "supports",
       "primary": true,
       "note": "Wagtail core team: ~2 billion tokens in a month, half on an open-weight model for $68; decided to measure spend and energy continuously and give R&D its own budget (small OSS team)"
+    },
+    {
+      "signalId": "2026-11-10-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Stack Overflow Developer Survey 2026 (30,903 responses, Jun-Aug 2026): 38% of respondents' organisations set AI usage limits, 28% review spending data, 27% route work to different models, 25% limit who may use AI; 21% say spending is rising. Unweighted, recruited via Stack Overflow"
     }
   ],
   "observedReach": "field-level-shift",
@@ -190,7 +196,7 @@
   "related": [],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 12,
+    "independentContexts": 13,
     "evidenceTypes": 5,
     "quartersSpanned": 4,
     "counterEvidence": true
@@ -198,5 +204,12 @@
   "firstObserved": "2026-01-09",
   "latestEvidenceDate": "2026-10-20",
   "construct": "Whether engineering organisations plan, attribute, cap and justify the cost of AI work as a managed operating expense, and how that spend relates to what it delivers per task. Not model price cuts, total AI adoption, or benchmark scores, all of which move without any organisation changing how it accounts for or approves AI spend.",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (12 -> 13)",
+    "raisedAt": "2026-11-10",
+    "signalIds": [
+      "2026-11-10-02"
+    ]
+  }
 }
