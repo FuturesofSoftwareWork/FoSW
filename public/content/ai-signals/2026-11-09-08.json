@@ -1,0 +1,48 @@
+{
+  "id": "2026-11-09-08",
+  "title": "AI and software engineers see the ethical risks in what they build but lack the means to act, a Manchester interview study finds",
+  "summary": "Engineers building AI systems recognise the harms those systems can cause, but the way their work is organised stops them acting on it, according to a University of Manchester study based on interviews with thirteen UK-based AI and software engineers in startups, large technology firms, financial services, semiconductor manufacturing and university research. The authors call this \"ethical awareness without ethical agency\", and found it across every participant regardless of experience, company type or specialism.\n\nThey identify five mechanisms: responsibility is split so that the people who see a concern are not the people authorised to act on it; ethics is handed to checklists and responsible-AI tools that come to substitute for judgement; leaders reward speed over rigour; commercial pressure turns ethical commitments into line items that get negotiated away; and engineers are expected to judge legal and social risks they were not trained for, with ethics or legal staff distant or absent. Participants described safeguards they wanted to put in place but could not, and a slow erosion of their ability to treat ethical concerns as non-negotiable. One summed it up: \"I think all of the concerns are valid. I think none of them get raised.\"\n\nThe authors conclude that more ethics training will not close the gap, and that governance should look at incentives and how concerns are raised inside development organisations, not only at the documents they produce.",
+  "source": "Preprint, University of Manchester (Data for Policy 2026)",
+  "sourceUrl": "https://zenodo.org/records/21769778",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "weak",
+  "signalStage": "concurrent",
+  "dataCollectedPeriod": "February–March 2026",
+  "replicated": false,
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://www.manchester.ac.uk/about/news/ai-engineers-know-the-ethical-risks-presented-by-ai-but-workplace-culture-prevents-action"
+  ],
+  "detectedAt": "2026-11-09",
+  "date": "2026-08-03",
+  "status": "published",
+  "tags": [
+    "ethics",
+    "moral conflict",
+    "responsible AI",
+    "compliance",
+    "AI engineers",
+    "incentives"
+  ],
+  "category": [
+    "Ethics & Policy",
+    "Org & Leadership",
+    "Work Wellbeing"
+  ],
+  "whyItMatters": [
+    "**Training is not the gap** — the engineers already knew the risks, so programmes that add ethics training to individuals miss where the problem sits.",
+    "**Concerns have no owner** — when those who see a harm cannot act and those who can act do not see it, ethical judgement drops out of the workflow without anyone deciding to drop it.",
+    "**Compliance can replace care** — checklists and responsible-AI tooling meant to support judgement can become the work itself, signalling rigour while the substance is skipped.",
+    "**A quiet cost to engineers** — wanting safeguards and being unable to build them wears down how firmly engineers hold to their own standards over time."
+  ],
+  "recommendedActions": [
+    "**Give concerns a route** — name who decides on an ethical concern an engineer raises, and how it reaches them, rather than leaving it to informal conversation.",
+    "**Reward the careful work** — count testing, documentation and safety work in how engineers are assessed, so they are not the first things cut under deadline pressure."
+  ],
+  "risksAndCaveats": [
+    "**Thirteen interviews, mostly UK** — the study is exploratory and does not show how common the pattern is; the authors plan a larger survey next.",
+    "**Engineers building AI systems** — it concerns ethical risks in the AI products engineers build, not their use of AI coding tools.",
+    "**A preprint, self-reported** — it was presented at the Data for Policy 2026 conference and posted as a preprint, and it rests on engineers' own accounts rather than observation of their work."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "2026-11-09-03",
+  "title": "Maintainers of large open-source projects now rank burnout above code quality as their top concern about AI-assisted contributions, in a Linux Foundation survey",
+  "summary": "Linux Foundation Research published a survey of 234 open-source contributors and maintainers on 20 October, sponsored by Red Hat. Maintainers estimate that a quarter of incoming pull requests are low-quality AI-generated contributions, rising to 31% on projects with more than 50 contributors. 59% report that contribution volume has grown since generative AI arrived, and 69% on large projects.\n\nThe strain lands on review. On large projects 64% of maintainers say AI-assisted contributions have lengthened review, against 46% on small projects, and lead and co-maintainers report the steepest increases. On large projects maintainer burnout is the top concern, cited by 63%, ahead of contribution quality; on small and medium projects quality still comes first. Solo maintainers are the only group where about as many report shorter review times as longer ones.\n\nGovernance is lagging: only 35% of projects have a formal policy permitting AI use and 32% have none and no plans for one. The report also finds that AI lowers the barrier for newcomers while raising mentorship demands and eroding trust, and it recommends policies that put the review burden back on contributors.",
+  "source": "Linux Foundation Research",
+  "sourceUrl": "https://www.linuxfoundation.org/research/oss-development-gen-ai-era-2026",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "sampleSize": "234 open-source contributors and maintainers (between 92 and 174 answered individual maintainer questions)",
+  "sponsor": "Red Hat",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [
+    "https://www.linuxfoundation.org/press/new-lf-research-survey-shows-generative-ai-cuts-open-source-coding-time-in-half-but-25-of-incoming-pull-requests-are-considered-ai-slop",
+    "https://news.slashdot.org/story/26/10/26/0131241/25-of-incoming-pull-requests-may-be-ai-slop-finds-study-from-linux-foundation-research"
+  ],
+  "detectedAt": "2026-11-09",
+  "date": "2026-10-20",
+  "status": "published",
+  "tags": [
+    "open-source",
+    "maintainers",
+    "burnout",
+    "code-review",
+    "contribution-policy"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "Quality & Testing",
+    "Ethics & Policy"
+  ],
+  "whyItMatters": [
+    "**Review load concentrates on few people** — lead and co-maintainers of the largest projects absorb most of the added review, which is where burnout becomes the top worry.",
+    "**Shared infrastructure carries the cost** — software that companies depend on is maintained by people whose workload rises with every cheap contribution.",
+    "**Policy is still missing** — two thirds of projects have no formal rule on AI contributions, so each maintainer decides case by case."
+  ],
+  "recommendedActions": [
+    "**Write a contribution policy** — projects your organisation depends on may need help drafting disclosure and testing rules that move review effort back to contributors.",
+    "**Fund maintainer review time** — organisations relying on large open-source projects can sponsor review capacity rather than only code contributions."
+  ],
+  "risksAndCaveats": [
+    "**Small, self-selected sample** — 234 respondents, with about 100 to 170 answering each maintainer question, and the report does not state when the survey was fielded.",
+    "**Slop share is an estimate** — the 25% figure is maintainers' own estimate of incoming pull requests, not a measured count."
+  ]
+}

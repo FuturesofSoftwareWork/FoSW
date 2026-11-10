@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-09-01",
+  "title": "An engineer at a ten-person AI-native startup ships eleven times the pull requests he did at PostHog, with no human code review, and ends each day more tired",
+  "summary": "Neil Kakkar, a London engineer with nine years' experience at Bloomberg, PostHog and now Tano, compares his own pull-request history across two eras in an essay published by The Pragmatic Engineer on 3 November. At Tano, an influencer-marketing agency of about ten people that builds AI agents, he ships eleven times as many pull requests per month as he did at PostHog, and the team merges about 30 a day with a median time to merge under an hour.\n\nThe working arrangement around that output has changed. Code review is optional: an automated review agent runs on every pull request and there are no human reviews. Kakkar works on three to five things at once, starting from a plan and letting agents run for one to two hours, sometimes overnight, before reviewing a generated summary. He reports a revert rate six times lower, which he attributes to fixing forward rather than reverting.\n\nHe is candid about the cost. He feels more mentally tired at the end of each day, describes spending more time switching between tasks and fixing bugs than on his own goals, and says that many colleagues work beyond the 9-to-6 core hours. He uses a fixed 6pm finish to stay grounded. Gergely Orosz notes that across the industry he sees roughly a twofold increase in pull-request output, not elevenfold.",
+  "source": "The Pragmatic Engineer (reader essay)",
+  "sourceUrl": "https://newsletter.pragmaticengineer.com/p/how-software-engineering-is-changing",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Neil Kakkar, founding engineer at Tano (about ten people), previously a software engineer at PostHog for four years and Bloomberg for three; comparing his own pull-request records across employers. Essay selected by Gergely Orosz from 125 submissions.",
+  "leadTimeEstimate": "~6-12 months before human-free review and parallel agent supervision reach established product teams",
+  "corroboration": [],
+  "detectedAt": "2026-11-09",
+  "date": "2026-11-03",
+  "status": "published",
+  "tags": [
+    "code-review",
+    "parallel-work",
+    "cognitive-load",
+    "working-hours",
+    "ai-native-startup"
+  ],
+  "category": [
+    "SDLC Change",
+    "Work Wellbeing",
+    "Productivity"
+  ],
+  "whyItMatters": [
+    "**Human review drops out entirely** — at this startup an agent is the only reviewer, so responsibility for what merges rests on the author and on fixing forward.",
+    "**The day becomes supervising in parallel** — running three to five agent tasks at once replaces focused work with frequent switching between them.",
+    "**Output gains arrive with fatigue** — the same account that reports elevenfold output reports more tiredness and longer hours, so the gain is not free for the person."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**One engineer, one tiny startup** — a single self-reported comparison at a ten-person company with no legacy code; it has not been independently validated.",
+    "**Pull requests are a weak measure** — the author concedes the metric is easy to game, and Orosz puts the industry average nearer a twofold rise."
+  ]
+}
