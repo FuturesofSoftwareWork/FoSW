@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-08-28T00:00:00Z",
+  "lastUpdated": "2026-11-10T00:00:00Z",
   "items": [
     {
       "id": "software-work-when-ai-stops-being-rationed",
       "file": "software-work-when-ai-stops-being-rationed.json",
       "date": "2026-11-04",
-      "status": "draft"
+      "status": "published"
     },
     {
       "id": "ai-makes-coding-faster-rest-of-workflow",
