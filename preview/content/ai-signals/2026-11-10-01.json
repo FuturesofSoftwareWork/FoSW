@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-10-01",
+  "title": "Developers report that agents now write nearly half their code, and over half write less than a fifth of it by hand, in JetBrains' 15,000-developer survey",
+  "summary": "Professional developers say AI agents fully generated about 47% of the code they produced for work in the previous month, according to JetBrains' Developer Ecosystem Survey 2026, which asked over 15,000 developers worldwide in May–July 2026. On average about 38% was written with some AI assistance and about 27% entirely by hand. Over half of developers now write less than 20% of their code manually, and one in five writes none at all without AI help.\n\nFull delegation is still a minority practice. About 22% of developers get more than 80% of their code from agents, and JetBrains' cluster analysis sorts developers into agentic coders (about 31%), AI-assisted coders (about 47%) and manual coders (about 23%). Senior developers are among the first to hand coding to agents: about a quarter of them get over 80% of their code that way, more than juniors, who lean towards AI-assisted work.\n\nAdoption differs sharply by region and stack. About 16% of developers in Europe and the UK get over 80% of their code from agents, against 32–35% in China, Japan and South Korea. Go, JavaScript and TypeScript developers report the highest agent shares, around 54–55% on average, and C and C++ developers the lowest.",
+  "source": "Developer survey (JetBrains Research blog)",
+  "sourceUrl": "https://blog.jetbrains.com/research/2026/08/how-much-code-do-developers-really-let-agents-write/",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "sampleSize": "Over 15,000 professional developers worldwide, about 90% in developer, programmer or software engineer roles",
+  "fieldworkPeriod": "May–July 2026",
+  "sponsor": "JetBrains",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-11-10",
+  "date": "2026-08-26",
+  "status": "published",
+  "tags": [
+    "coding agents",
+    "agentic coding",
+    "developer survey",
+    "manual coding",
+    "seniority",
+    "Europe"
+  ],
+  "category": [
+    "AI Agents",
+    "SDLC Change"
+  ],
+  "whyItMatters": [
+    "**Hand-written code is the minority** — across a survey weighted to represent developers worldwide, code written without AI is now about a quarter of what developers produce, not the default.",
+    "**Seniors lead, not juniors** — the developers handing most of their code to agents are disproportionately senior, so this is a change in how experienced engineers work rather than a beginner's shortcut.",
+    "**Europe is behind the leaders** — European and UK developers fully delegate about half as often as developers in East Asia, which matters for competitiveness and for how European teams plan the shift.",
+    "**Full delegation is not yet universal** — about a fifth of developers rely almost entirely on agents, so most teams mix agentic, assisted and manual work and need practices that handle all three."
+  ],
+  "recommendedActions": [
+    "**Measure your own mix** — ask your engineers the same question about last month's code, so planning rests on your team's actual share of agent-written code rather than vendor claims."
+  ],
+  "risksAndCaveats": [
+    "**Self-reported estimates** — developers estimated their own shares in bands, and JetBrains averaged band midpoints, so the figures show perceived rather than measured code authorship, and the three averages sum to more than 100%.",
+    "**A tool vendor's survey** — JetBrains sells development tools including AI agents, though it reweights the sample by region, employment status, language and familiarity with its products to reduce bias towards its own users."
+  ]
+}
