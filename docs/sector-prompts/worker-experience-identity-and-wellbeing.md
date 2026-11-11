@@ -62,6 +62,7 @@ Out of scope — route to a neighbouring sector, do not surface here:
 | Team structure, management practice, org design, process | `organisation-and-leadership` |
 | Cost, ROI, productivity measurement as a business result | `economics-productivity-and-value` |
 | Accountability, liability, regulation, societal harm | `ethics-responsibility-and-society` |
+| Moral conflict: distress, guilt or refusal because the work clashes with the engineer's values | `ethics-responsibility-and-society` |
 | Who does which task, human/machine division of labour | `nature-and-division-of-work` |
 
 The boundary test: **a labour-market item is about the job; a wellbeing item is
