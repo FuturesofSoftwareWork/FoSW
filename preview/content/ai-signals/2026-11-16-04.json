@@ -1,0 +1,46 @@
+{
+  "id": "2026-11-16-04",
+  "title": "Demand for software engineers stalls while mobile and front-end openings nearly halve and design and user research shrink, in Lenny's late-2026 job market report",
+  "summary": "Open engineering roles at tech companies grew just 2.5% over the past year, after 29% through 2024 and 15% through 2025, according to Lenny Rachitsky's late-2026 job market report. It draws on TrueUp's tracking of job openings at more than 9,000 tech companies worldwide and Live Data Technologies' records of actual US hires. US companies hired about 113,000 software engineers between May 2025 and April 2026, less than half the 2022 peak of 239,000, and the number has fallen every year since. Since January 2024, engineering openings have risen 44% while actual hiring fell 17%.\n\nThe mix of roles is shifting. Demand for mobile and front-end engineers has nearly halved in a year, while security engineering and forward-deployed engineering are among the fastest-growing specialties. Forward-deployed engineer openings rose 4.6 times in a year, partly because other roles are being renamed. \"LLM\" now appears in more engineering job postings than Java. Product design hiring in the US fell from 27,600 in 2022 to about 12,600, and user research hiring fell 66%, the steepest drop of any role. Product manager openings are at a near four-year high.\n\nWork is also concentrating. Only 14% of open tech roles offer a remote option, a record low, and the Bay Area holds about one in five open engineering roles. Rachitsky attributes the decline of specialist roles to smaller AI-assisted teams taking broader ownership. That is his reading, and the data does not test it.",
+  "source": "Lenny's Newsletter",
+  "sourceUrl": "https://www.lennysnewsletter.com/p/state-of-the-tech-job-market-late",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "established",
+  "signalStage": "concurrent",
+  "sampleSize": "Job openings at 9,000+ tech companies worldwide (TrueUp); job changes for 124 million professionals, with hiring figures for the US only (Live Data Technologies)",
+  "fieldworkPeriod": "Openings tracked to late 2026; US hiring figures for May 2025–April 2026",
+  "sponsor": "Lenny's Newsletter, with data from TrueUp and Live Data Technologies",
+  "leadTimeEstimate": "confirms current practice; ~6-12 months ahead on the narrowing of specialist engineering roles",
+  "corroboration": [],
+  "detectedAt": "2026-11-16",
+  "date": "2026-11-10",
+  "status": "published",
+  "tags": [
+    "labour market",
+    "software engineer hiring",
+    "specialist roles",
+    "forward-deployed engineers",
+    "user research",
+    "remote work"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Org & Leadership",
+    "Business Impact"
+  ],
+  "whyItMatters": [
+    "**Fewer engineers actually hired** — US software engineer hiring has fallen every year since 2022 and is now less than half its peak, even as openings rose.",
+    "**Specialist roles are thinning out** — mobile and front-end demand nearly halved in a year, so engineers in narrow disciplines face a harder market than generalists.",
+    "**AI skills become a hiring filter** — LLM experience now appears in more engineering postings than Java, which changes what educators and job seekers need to cover.",
+    "**Research and design are squeezed** — user research hiring fell two-thirds, so less of the work of understanding users sits with specialists."
+  ],
+  "recommendedActions": [
+    "**Check your own role mix** — compare your team's specialist and generalist roles against these shifts before planning hiring or reskilling for 2027."
+  ],
+  "risksAndCaveats": [
+    "**US- and tech-company-centric** — openings cover tech companies only and hiring covers the US only, so the trends need checking against European and Finnish data before applying them here.",
+    "**AI is not shown as the cause** — the report shows what changed, not why, and its AI explanations are the author's own; TrueUp also powers the author's jobs board.",
+    "**Final section is paywalled** — the takeaway on growth outside software roles could not be read and is not reflected here."
+  ]
+}

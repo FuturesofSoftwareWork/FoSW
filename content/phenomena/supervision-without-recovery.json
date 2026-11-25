@@ -105,6 +105,12 @@
       "stance": "supports",
       "primary": true,
       "note": "three unrelated senior engineers, plus 15 HN commenters, each report on themselves that minding and skimming agent output has replaced immersion in the code (self-reports of felt immersion, not measured)"
+    },
+    {
+      "signalId": "2026-11-16-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "NCSU/Oklahoma survey, 203 agent users, Aug-Sep 2026: 83% say workload fell, yet 63% rate at least five of ten supervision activities very or extremely demanding; hardest are understanding code they did not write (59%) and tracking changes across files, sessions or agents (58%). Self-reported, non-probability sample"
     }
   ],
   "observedReach": "gaining-traction",
@@ -116,13 +122,20 @@
     "Teams that deliberately schedule supervision load report no better experience than teams that do not, which would locate the cause somewhere other than the shape of the day"
   ],
   "evidenceProfile": {
-    "independentContexts": 9,
+    "independentContexts": 10,
     "evidenceTypes": 2,
     "quartersSpanned": 4,
     "counterEvidence": true
   },
   "firstObserved": "2026-02-08",
-  "latestEvidenceDate": "2026-11-03",
+  "latestEvidenceDate": "2026-11-06",
   "reachReviewedAt": "2026-11-09",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (9 -> 10)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-16-01"
+    ]
+  }
 }

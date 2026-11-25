@@ -86,6 +86,12 @@
       "stance": "supports",
       "primary": true,
       "note": "Stripe bounds agent authority: isolated devboxes with no user data, production services or arbitrary network, and a small default tool subset from a central server; full permissions granted only inside that boundary"
+    },
+    {
+      "signalId": "2026-11-16-01",
+      "stance": "contextual",
+      "primary": true,
+      "note": "Same survey: 64% often approve at least one type of agent action (installing a dependency, touching deployment config) without close review, 61% even among careful code reviewers, and only 20% log or audit agent actions. Measures attributability of agent actions in practice; shows the gap, not governance moving"
     }
   ],
   "observedReach": "gaining-traction",
@@ -103,7 +109,7 @@
     "counterEvidence": false
   },
   "firstObserved": "2026-02-15",
-  "latestEvidenceDate": "2026-10-20",
+  "latestEvidenceDate": "2026-11-06",
   "reachReviewedAt": "2026-11-09",
   "lastReviewed": "2026-10-27"
 }

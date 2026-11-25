@@ -83,6 +83,12 @@
       "stance": "supports",
       "primary": true,
       "note": "JetBrains Developer Ecosystem Survey 2026, 15,000+ professional developers, May-July 2026, reweighted to the global population: agents fully generate ~47% of code on average, ~27% written fully by hand; over half write <20% manually; ~22% get >80% from agents; seniors lead; Europe/UK ~16% fully delegate vs 32-35% in East Asia. Self-reported in bands; vendor survey"
+    },
+    {
+      "signalId": "2026-11-16-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "AWS Emulator lead: his team has written and reviewed none of a customer-facing product's code; three teams of agents write fidelity tests, find divergences and fix them, hundreds at once, thousands of issues a day. Same parent company as 2026-09-01-01"
     }
   ],
   "observedReach": "field-level-shift",
@@ -94,13 +100,20 @@
     "A measured share of merged code written by agents at mainstream delivery organisations staying near the 0-20% full-delegation range"
   ],
   "evidenceProfile": {
-    "independentContexts": 6,
+    "independentContexts": 7,
     "evidenceTypes": 2,
     "quartersSpanned": 2,
     "counterEvidence": false
   },
   "firstObserved": "2026-01-22",
-  "latestEvidenceDate": "2026-10-16",
+  "latestEvidenceDate": "2026-11-11",
   "reachReviewedAt": "2026-11-10",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (6 -> 7)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-16-02"
+    ]
+  }
 }

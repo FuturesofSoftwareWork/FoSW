@@ -1,0 +1,41 @@
+{
+  "id": "2026-11-23-01",
+  "title": "ESLint stops paying outside contributors after AI-generated pull requests made it impossible to tell which work deserved payment",
+  "summary": "ESLint, one of the most widely used JavaScript tools, retired its paid contributor pool on 13 November 2026, effective immediately. For five years the project had paid outside contributors for merged work, $51,180 in total from 2022 to 2025 and $24,680 in 2025 alone. AI-generated contributions had been ruled ineligible for payment, and contributors were asked to disclose AI use in their pull requests, but the project's creator Nicholas C. Zakas writes that some did and some did not.\n\nHe says money was not the reason. The maintainers had found themselves investigating where each contribution came from, and pointing an AI tool at the project and asking it to fix something was not the contribution the pool was meant to reward. He writes that this took the joy out of the programme. The project names no replacement.\n\nThe case shows a mechanism by which agent-written code changes open-source work itself: once authorship cannot be verified cheaply, a scheme that paid people for their effort becomes a policing job for the maintainers, and the project withdraws one of the few routes by which volunteers were paid.",
+  "source": "ESLint Blog",
+  "sourceUrl": "https://eslint.org/blog/2026/11/retiring-contributor-pool/",
+  "sourceType": "social",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Nicholas C. Zakas, creator of ESLint and member of its Technical Steering Committee, writing about his own project's decision",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [
+    "https://socket.dev/blog/eslint-ends-paid-contributor-program"
+  ],
+  "detectedAt": "2026-11-23",
+  "date": "2026-11-13",
+  "status": "published",
+  "tags": [
+    "open source",
+    "maintainers",
+    "contributor payment",
+    "AI-generated contributions",
+    "disclosure"
+  ],
+  "category": [
+    "Ethics & Policy",
+    "Costs & Economics",
+    "Work Wellbeing"
+  ],
+  "whyItMatters": [
+    "**Verifying authorship becomes maintainers' work** — when disclosure is voluntary and unreliable, deciding who did the work turns into an investigation nobody signed up for.",
+    "**A paid route into open source closes** — schemes that pay outside contributors are rare, and this one ended because AI made effort hard to judge, not because of cost.",
+    "**Disclosure rules did not hold** — a project that required AI disclosure still could not rely on it, which matters for every policy built on self-declaration."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**One project, one maintainer's account** — the reasons are Zakas's own and have not been checked against contributors' views.",
+    "**Small sums involved** — the pool paid tens of thousands of dollars a year, so this shows a governance problem more than a change in open-source economics."
+  ]
+}

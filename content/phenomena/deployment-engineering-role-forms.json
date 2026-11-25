@@ -1,0 +1,73 @@
+{
+  "id": "deployment-engineering-role-forms",
+  "label": "Deployment engineering role forms",
+  "title": "Putting AI into production inside businesses becomes its own engineering job",
+  "thesis": "Taking AI from pilot into production inside a business is becoming a separate engineering job, and the model vendors are the ones defining it. Openings for forward-deployed engineers, who work inside the customer's organisation, rose more than fourfold in a year across thousands of tech companies, though partly through renaming. Anthropic is paying to train and certify 10,000 of them in consultancies and banks, and OpenAI grew its own group from two people to about 140.",
+  "construct": "The number of engineers whose job is to put AI systems into production inside a customer's or employer's business (forward-deployed or deployment engineers), measured as staff in such groups, job openings for the role and people trained or credentialed for it, and whether the work forms a distinct role with its own hiring, career path and credential. Not general AI or machine-learning engineering hiring, the share of job postings that mention LLMs, AI tool adoption by developers, consultancy AI revenue or vendor partnership announcements, all of which can grow without any distinct deployment role forming.",
+  "currentPressure": "Anthropic's stated rationale for its programme is that people who can make AI work inside a real business have become the hardest talent to find, and OpenAI's deployment engineers spend about half their time on customer sites.",
+  "status": "draft",
+  "primaryDimension": "careers-occupations-and-labour-markets",
+  "potentialImpact": "moderate",
+  "implications": [
+    {
+      "dimension": "careers-occupations-and-labour-markets",
+      "statement": "The first curriculum and badge for the engineer who takes AI from pilot to production belong to a model vendor, so the standard for this career path is being set by a supplier rather than by employers or educators.",
+      "actors": [
+        "developer",
+        "organisation"
+      ]
+    },
+    {
+      "dimension": "organisation-and-leadership",
+      "statement": "Organisations must choose between building deployment capability in-house and renting it from consultancies, which make up four of the eight organisations in the first cohort of Anthropic's programme.",
+      "actors": [
+        "executive",
+        "engineering-manager"
+      ]
+    },
+    {
+      "dimension": "nature-and-division-of-work",
+      "statement": "In a single week OpenAI's deployment engineers move between consulting with a customer's teams, writing tests from what they learned and building migration code, so the job combines client work and engineering in one role.",
+      "actors": [
+        "developer",
+        "technical-lead"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "signalId": "2026-11-16-04",
+      "stance": "supports",
+      "primary": true,
+      "note": "Lenny's late-2026 job market report on TrueUp openings at 9,000+ tech companies: forward-deployed engineer openings up 4.6x in a year, among the fastest-growing specialties, partly because other roles are being renamed. Attached for this figure only, not the overall hiring numbers"
+    },
+    {
+      "signalId": "2026-10-05-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "Anthropic commits $100M to train and credential 10,000 'Frontier Deployed Engineers' by end of 2027 (in-person block, graded practical, 12-week residency leading a real project); first cohorts from Accenture, Bain, Capgemini, Deloitte, McKinsey, Morgan Stanley, CBA, Novo Nordisk. A programme announced, not completions"
+    },
+    {
+      "signalId": "2026-08-17-11",
+      "stance": "supports",
+      "primary": true,
+      "note": "OpenAI's head of forward-deployed engineering: the group grew from 2 people to ~140 in a year, plus ~200 in a separate Deployment Company; engineers spend about half their time on customer sites. One vendor's own account"
+    }
+  ],
+  "observedReach": "gaining-traction",
+  "reachRationale": "The role appears in independent places at once: two competing model vendors have built or are training deployment engineers, and openings for the role rose 4.6 times across more than 9,000 tech companies. It is drawing dedicated investment and a credential, which marks the middle ring. It has not reached the centre: the growth sits in AI vendors, consultancies and large banks, and nothing yet shows ordinary software organisations creating the role or staffing delivery around it. If most of the rise in openings turns out to be renamed sales or solutions roles, the rim is the better ring.",
+  "whatWouldChangeThis": [
+    "Openings for forward-deployed roles fall back within a year, or most of the 4.6x rise is shown to be existing sales or solutions engineering roles renamed.",
+    "The role stays confined to AI vendors and the consultancies they partner with, with no ordinary software organisation hiring or training its own deployment engineers.",
+    "Anthropic's programme falls well short of 10,000 trained engineers by the end of 2027, or employers do not recognise the credential in hiring.",
+    "Vendors replace embedded engineers with self-serve deployment tooling and shrink their deployment groups."
+  ],
+  "evidenceProfile": {
+    "independentContexts": 3,
+    "evidenceTypes": 3,
+    "quartersSpanned": 2,
+    "counterEvidence": false
+  },
+  "firstObserved": "2026-08-15",
+  "latestEvidenceDate": "2026-11-10"
+}

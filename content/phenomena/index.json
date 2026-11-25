@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-10T07:41:13Z",
+  "lastUpdated": "2026-11-25T08:44:14Z",
   "items": [
     {
       "id": "review-shifts-to-verification",
@@ -102,6 +102,12 @@
       "file": "responsibility-without-means.json",
       "date": "2026-11-10",
       "status": "published"
+    },
+    {
+      "id": "deployment-engineering-role-forms",
+      "file": "deployment-engineering-role-forms.json",
+      "date": "2026-11-25",
+      "status": "draft"
     }
   ]
 }

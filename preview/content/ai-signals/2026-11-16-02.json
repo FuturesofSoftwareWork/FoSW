@@ -1,0 +1,40 @@
+{
+  "id": "2026-11-16-02",
+  "title": "An AWS team ships a customer-facing product whose code no person wrote or reviewed, and moves its own work into designing the gates that decide what merges",
+  "summary": "AWS released AWS Emulator on 11 November 2026, a local emulator of AWS services, and the senior principal engineer who leads it, Matt Goldberg, writes that his team has not written or reviewed any of its code. The work is split between three teams of agents: one writes fidelity tests against the real AWS cloud, one replays them to find where the emulator diverges, and one fixes each issue. A change merges only after it passes a gate of compilation, agent reviewers for coding standards and security, and a fidelity regression check. Goldberg reports hundreds of agents working at once and thousands of issues fixed a day.\n\nWhat the people do is build and tune the guardrails. Goldberg describes the test suite and the merge gate as what lets the team trust output it does not read, and says the gate gets most of their optimisation effort. They also correct the agents' judgement, for example telling them to reuse existing libraries after an earlier version built its own Python interpreter. He says turning a weekend prototype into a product customers can rely on still took serious engineering effort.\n\nThis is a shift in who answers for quality: responsibility moves from reviewing changes to designing the system that accepts them, for software released to outside users.",
+  "source": "Company Blog (About Amazon)",
+  "sourceUrl": "https://www.aboutamazon.com/news/aws/how-autonomous-ai-agents-built-aws-emulator",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Matt Goldberg, senior principal engineer at AWS, describing his own team's build of AWS Emulator",
+  "leadTimeEstimate": "~12-24 months ahead of mainstream for software released without human code review",
+  "corroboration": [],
+  "detectedAt": "2026-11-16",
+  "date": "2026-11-11",
+  "status": "published",
+  "tags": [
+    "autonomous agents",
+    "code review",
+    "merge gate",
+    "accountability",
+    "AWS",
+    "software factory"
+  ],
+  "category": [
+    "SDLC Change",
+    "Org & Leadership",
+    "Quality & Testing"
+  ],
+  "whyItMatters": [
+    "**Review moves into the gate** — the human job shifts from reading changes to deciding what a change must pass before it merges, and keeping that bar trustworthy.",
+    "**Accountability without reading the code** — a major vendor now puts its name to customer-facing software no employee has reviewed, which tests who answers when it fails.",
+    "**Specification becomes the asset** — the approach depends on an unambiguous spec and a reference implementation, which most product teams do not have."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**Vendor showcase** — the post promotes AWS's own agent tools and product, and its throughput figures are not independently verified.",
+    "**Unusually favourable conditions** — an emulator has a published API specification and the real cloud to test against, so the result says little about work without such a reference, and AWS is a forerunner rather than the field."
+  ]
+}

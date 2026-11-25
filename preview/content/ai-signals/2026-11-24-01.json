@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-24-01",
+  "title": "As staff across the firm build their own software with AI, engineers become the people who support, maintain and gatekeep it",
+  "summary": "Interviews at 58 US companies adopting AI, run by Anthropic's economists, found software being written well outside engineering. Of 140 pieces of software that interviewees described building with AI, product features and technical infrastructure stayed with technical staff, while non-technical staff built mostly internal apps and dashboards. The authors conclude that the bulk of software built by non-developers still needs support or infrastructure from technical employees.\n\nThe interviews describe what that does to engineering work. A law firm ended up with low-quality \"zombie\" apps that were hardly used. A prototype built outside engineering had to be implemented by a vendor and was still not in use months later. IT now decides which apps built by non-developers go into production. Several companies built shared infrastructure so that non-technical staff could build apps without creating security holes or substantial maintenance for engineers, and one head of engineering described going from a team of five developers to dozens of people who all want to release software.\n\nFor software teams, the change is less that others write code than that engineering becomes the platform, maintenance and approval function for software produced across the organisation.",
+  "source": "Anthropic Research",
+  "sourceUrl": "https://www.anthropic.com/research/working-with-ai",
+  "sourceType": "article",
+  "signalType": "field-report",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "sampleSize": "66 interviews at 58 US companies; 140 pieces of AI-built software classified",
+  "sponsor": "Anthropic",
+  "leadTimeEstimate": "~6-12 months",
+  "corroboration": [],
+  "detectedAt": "2026-11-24",
+  "date": "2026-11-23",
+  "status": "published",
+  "tags": [
+    "citizen developers",
+    "internal tools",
+    "maintenance",
+    "platform engineering",
+    "governance"
+  ],
+  "category": [
+    "Org & Leadership",
+    "SDLC Change",
+    "Ethics & Policy"
+  ],
+  "whyItMatters": [
+    "**Engineering becomes the support layer** — when anyone can build an app, engineers spend more of their time hosting, securing and maintaining software they did not write.",
+    "**Someone must decide what ships** — IT and engineering inherit a gatekeeping role over which apps built outside engineering reach production.",
+    "**Cheap software leaves expensive leftovers** — short-lived and abandoned apps still need ownership, and the cost falls on whoever is left supporting them."
+  ],
+  "recommendedActions": [
+    "**Name an owner before production** — require every app built outside engineering to have a named maintainer before it reaches users.",
+    "**Count the support load** — track how much engineering time goes to supporting software built elsewhere in the firm, so it is visible when teams are sized."
+  ],
+  "risksAndCaveats": [
+    "**Vendor studying its customers** — Anthropic sells the tools, interviewed only its own enterprise customers, and says the sample is not representative.",
+    "**Qualitative and loosely counted** — the split by builder appears only as a chart coded by an automated classifier, the report also cites 100 pieces of software elsewhere, and it gives no interview dates."
+  ]
+}
