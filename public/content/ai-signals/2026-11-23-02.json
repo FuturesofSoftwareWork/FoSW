@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-23-02",
+  "title": "A university's introductory programming course now requires students to work through coding agents, and students say they no longer learn to write code",
+  "summary": "The University of Michigan School of Information redesigned SI 506, its first programming course, over the summer of 2026 so that students must work with coding agents such as Codex and Claude Code. Students say the course was rebranded as a computational-thinking class the day before term began. The instructors, Anthony Whyte and Steve Oney, wrote that they used AI tools to build the redesign and called late 2025 an inflection point.\n\nA student quoted under a pseudonym says students prompt the agent first and write code last, and lack basic Python skills as a result. On 13 November a student group proposed a section taught without AI, or alternative courses that satisfy the requirement. A faculty member who does not teach the course argues that students without these skills may be less competitive in a job market being transformed by AI, and the student asks why anyone should pay for a degree in which students just use AI.\n\nThe case shows the question of how competence is built moving from employers into the first course of a degree, with students as well as faculty contesting the answer.",
+  "source": "The Michigan Daily",
+  "sourceUrl": "https://www.michigandaily.com/news/academics/why-get-a-degree-how-a-coding-course-ignited-a-firestorm-over-ai-in-the-u-m-school-of-information/",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "leading",
+  "observer": "Student newspaper reporting by Ari Hickman, quoting the course instructors Anthony Whyte and Steve Oney, Dean Andrea Forte, associate professor David Jurgens and enrolled students (two under pseudonyms)",
+  "leadTimeEstimate": "~1-2 years",
+  "corroboration": [],
+  "detectedAt": "2026-11-23",
+  "date": "2026-11-18",
+  "status": "published",
+  "tags": [
+    "computing education",
+    "introductory programming",
+    "coding agents",
+    "skills formation",
+    "students"
+  ],
+  "category": [
+    "Skills & Learning",
+    "Ethics & Policy",
+    "AI Agents"
+  ],
+  "whyItMatters": [
+    "**Agent use starts in week one** — when the first programming course is taught through agents, new entrants may never practise writing code unaided.",
+    "**Students contest the trade-off** — the pushback comes from learners worried about their own competence, not only from faculty or employers.",
+    "**Employers inherit the result** — graduates trained to direct agents rather than write code arrive with a different skill profile, which changes what junior roles can expect."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**One course, contested account** — the claim that students lack basic skills comes from an anonymous student, and the instructors did not explain how assessment works.",
+    "**Information school, not computer science** — SI 506 serves an information-science programme, so it may not reflect how engineering degrees are changing."
+  ]
+}

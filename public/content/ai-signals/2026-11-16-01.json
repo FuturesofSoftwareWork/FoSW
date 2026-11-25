@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-16-01",
+  "title": "Developers say coding agents lighten their workload, but most find supervising them mentally demanding and often approve agent actions without close review",
+  "summary": "A survey of 203 developers who use AI coding agents, run by North Carolina State University and the University of Oklahoma in August and September 2026, finds that the work has moved from writing code to supervising it, and that supervision is where the strain sits. Most respondents said agents reduced their workload (83%) and the mental effort of tasks (72%), and 72% said agents made coding more enjoyable. Yet 63% rated at least five of ten supervision activities as very or extremely mentally demanding. The hardest were understanding code they had not written (59%), tracking changes across files, sessions or agents (58%) and uncertainty about whether output was correct and complete (57%).\n\nOversight is thinner than it looks. 64% often approved at least one type of agent action, such as installing a dependency or touching deployment configuration, without close review, and this held for 61% of those who carefully reviewed most or all of the generated code. Only 20% logged or audited what agents did. Developers asked for autonomy that is bounded, observable or reversible: 65% wanted a check-in before changes to critical or production code.\n\nThe authors stress that the figures are self-reported perceptions from a non-probability sample, and that links between supervision demands and satisfaction are exploratory.",
+  "source": "arXiv Preprint (North Carolina State University, University of Oklahoma)",
+  "sourceUrl": "https://arxiv.org/abs/2611.10058",
+  "sourceType": "academic",
+  "signalType": "study",
+  "signalStrength": "emerging",
+  "signalStage": "concurrent",
+  "dataCollectedPeriod": "Five weeks in August and September 2026",
+  "replicated": false,
+  "leadTimeEstimate": "confirms current practice; ~6-12 months ahead on review of agent actions as a governance gap",
+  "corroboration": [],
+  "detectedAt": "2026-11-16",
+  "date": "2026-11-06",
+  "status": "published",
+  "tags": [
+    "coding agents",
+    "supervision",
+    "cognitive load",
+    "action approval",
+    "oversight",
+    "developer survey"
+  ],
+  "category": [
+    "Work Wellbeing",
+    "AI Agents",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Lighter work, heavier attention** — developers report less work and more enjoyment, but the effort has moved into reading, tracking and judging output they did not write.",
+    "**Code review is not oversight** — most developers who review the code still wave through what the agent does to their environment, so a code-review policy alone leaves agent actions unchecked.",
+    "**Accountability has no record** — with only a fifth logging agent actions, teams often cannot reconstruct who approved what when something goes wrong."
+  ],
+  "recommendedActions": [
+    "**Separate action approval from review** — decide which agent actions, such as installing dependencies or changing deployment configuration, need explicit sign-off, and log them.",
+    "**Count supervision as work** — when planning capacity, treat tracking and reviewing agent output as real load rather than assuming the time saved on writing code is free."
+  ],
+  "risksAndCaveats": [
+    "**Self-reported, non-probability sample** — respondents were recruited mainly through LinkedIn in North America and through Prolific, and report perceptions rather than observed behaviour.",
+    "**Early preprint** — submitted on 6 November 2026 and not yet peer reviewed, so the figures may change in revision."
+  ]
+}

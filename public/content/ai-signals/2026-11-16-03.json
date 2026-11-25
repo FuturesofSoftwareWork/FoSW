@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-16-03",
+  "title": "An engineering leader finds that faster AI-assisted coding cut one initiative's lead time by about 4%, because coding was a tenth of it",
+  "summary": "Bharat Sharma, a senior engineering leader with more than 17 years in platform and data engineering, compared an initiative built mostly with AI-assisted coding against a similar one built without it in his own organisation. In the non-AI initiative, writing code took about 10% of the total lead time. A large speed-up in coding therefore shortened the overall lead time by only about 4%.\n\nHe locates the remaining time in review queues lengthened by larger AI-assisted pull requests, waits for decisions and dependencies, and governance gates. He argues that the metrics organisations use to track AI adoption, such as pull requests merged and adoption rate, reward creating code rather than delivering it, so they show progress where delivery has barely moved. He places his figure alongside independent estimates that developers spend roughly 11% to 16% of their time writing code.\n\nHe presents the 4% as a single comparison in one unnamed organisation, not a general result.",
+  "source": "LeadDev",
+  "sourceUrl": "https://leaddev.com/velocity/your-engineers-got-twice-as-fast-your-lead-time-only-moved-4",
+  "sourceType": "article",
+  "signalType": "practitioner-account",
+  "signalStrength": "weak",
+  "signalStage": "concurrent",
+  "observer": "Bharat Sharma, senior engineering leader with 17+ years in platform and data engineering, reporting a comparison from his own organisation",
+  "leadTimeEstimate": "confirms current practice",
+  "corroboration": [],
+  "detectedAt": "2026-11-16",
+  "date": "2026-11-11",
+  "status": "published",
+  "tags": [
+    "lead time",
+    "delivery",
+    "productivity measurement",
+    "code review",
+    "AI adoption metrics"
+  ],
+  "category": [
+    "Productivity",
+    "Costs & Economics",
+    "Org & Leadership"
+  ],
+  "whyItMatters": [
+    "**Coding is a small slice** — when writing code is a tenth of lead time, even doubling its speed barely moves delivery, so the case for AI spend rests on the rest of the process.",
+    "**Adoption metrics mislead leaders** — counting merged pull requests or tool usage shows progress in creation while review, decisions and dependencies set the delivery pace.",
+    "**The bottleneck moves to people** — larger AI-assisted changes lengthen review queues, shifting load onto reviewers and decision-makers rather than removing it."
+  ],
+  "recommendedActions": [],
+  "risksAndCaveats": [
+    "**One comparison, unnamed organisation** — the 4% comes from two initiatives in one company and has not been replicated or independently checked.",
+    "**Initiatives are not identical** — comparing two different pieces of work leaves room for differences in scope or team to explain part of the result."
+  ]
+}
