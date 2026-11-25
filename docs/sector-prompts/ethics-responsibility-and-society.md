@@ -14,15 +14,18 @@ Dimension id: **`ethics-responsibility-and-society`**
 ## Your beat
 
 The **norms, values and responsibilities of software engineering** as AI changes it:
-what engineers expect of each other's work, what they owe users and the public, what
-counts as good practice, and who answers when agent-written code fails.
+what engineers expect of each other's work, who is trusted to do what, what they owe users
+and the public, what counts as good practice, who answers when agent-written code fails —
+and what it costs engineers when their own values and what the work demands of them pull
+apart.
 
 This project studies how software work changes. Ethics is not a subject in itself
 here. It qualifies when it shows up in how software is written, reviewed, released,
 operated and maintained, and in who is held responsible for it.
 
-One project vote on whether AI-written patches must be disclosed, with the thread that
-argued it, is worth more than ten essays on responsible AI.
+One project deciding that a contributor must earn the right to submit AI-written code, with
+the thread that argued it, is worth more than ten essays on responsible AI. So is one
+engineer's specific account of being asked to ship something they could not stand behind.
 
 ---
 
@@ -58,22 +61,58 @@ question is already settled in Europe, reject the item.
 Work through all four. Report what you searched under each, including the ones that
 returned nothing. An empty strand is a valid result; do not pad one to balance the others.
 
-### 1. Norms of the craft
+### 1. Values and moral conflict
+
+**This is the strand the corpus most lacks, so start here.** Engineers whose own values and
+what the work now demands of them pull apart, and what that costs them:
+
+- being required to ship, approve or maintain AI-written code they cannot vouch for
+- AI-use targets, quotas or performance-review metrics that conflict with an engineer's
+  judgement of quality or safety
+- seeing a risk in an AI system they build and having no way to act on it: concerns that
+  are never raised, safeguards dropped for a deadline, ethics reduced to a checklist
+- being asked to build the automation that replaces colleagues, or to train their own
+  replacement
+- refusing a tool or a task on principle — over quality, licensing, environmental cost or
+  harm to users — and what happened next
+- hiding AI use, or hiding non-use, because of what colleagues or managers would think
+- moral distress, guilt or a sense of complicity named as such, and engineers leaving a job
+  or the profession over it
+
+Two kinds of evidence count. **A named person's specific, firsthand account** of a
+situation they faced and what they did — not their position on AI in general. And **a study
+or survey with a stated method** that measures or documents these conflicts among software
+engineers. An essay arguing what engineers ought to feel is neither.
+
+This includes engineers who build AI systems, not only those who use AI tools: what an
+engineer may or may not do about a harmful model is as much a question of software work as
+what they do with a coding agent. Say which it is in the draft.
+
+### 2. Trust and the norms of the craft
 
 Shared expectations about AI in engineering work, set by a community, a professional body
-or several organisations rather than by one team:
+or several organisations rather than by one team. **What matters is who is trusted, or
+allowed, to do what — not the format of a rule.**
 
-- **Disclosure and attribution:** whether AI-written code must be marked, how (commit
-  trailers, `Assisted-by` or `Co-authored-by` tags, PR templates), and whether people comply.
-- **Contribution rules:** projects that ban, limit, require review of, or welcome AI-written
-  contributions, and what happens when they are enforced.
-- **What review is for:** whether a human must read every line, review by risk or blast
-  radius, who may merge agent-written changes, and what a reviewer's approval now vouches for.
+- **Earned trust:** rules that let contributors or engineers use AI only after they have
+  shown they can be trusted — a record of merged work, a seniority bar, a probation period,
+  an obligation to publish the agent's full transcript. QGIS's proposal to let contributors
+  with 100 merged pull requests use AI is the reference case.
+- **Contribution rules:** projects or organisations that ban, limit or welcome AI-written
+  contributions, when the source shows what changed in who may contribute or how the work is
+  checked, and what happens when the rule is enforced.
+- **What review now vouches for:** whether a human must read every line, review by risk or
+  blast radius, who may merge agent-written changes.
 - **Professional codes and bodies:** ACM, IEEE Computer Society, BCS, Gesellschaft für
   Informatik, and in Finland Tietoasiantuntijat and TEK, when they change what they expect
   of practitioners. No change is itself worth noting once, with the date you checked.
 
-### 2. Responsibility
+**Disclosure formats are minor details.** A tag, a commit trailer or a PR-template checkbox
+is not a signal on its own, and neither is adding or dropping one. Report a disclosure rule
+only when the source shows it changing trust: who is believed, who is checked harder, who
+may contribute at all.
+
+### 3. Responsibility
 
 Who answers for agent-written code, in practice:
 
@@ -85,14 +124,6 @@ Who answers for agent-written code, in practice:
   code between client, supplier and individual engineer, **when the source shows the terms
   changing what engineers do or sign**
 - disputes or rulings over who is liable for a defect in AI-written code
-
-### 3. Values and contested good practice
-
-Open disagreement among engineers about what good work is now, **only as observed
-behaviour, never as opinion**: a vote, a policy adopted and then reversed, a team that
-split over whether to read generated code, a refusal to use a tool on principle that had
-consequences, hidden use of AI and the reasons for it, measured stigma or measured
-disclosure rates. An essay arguing a position is not a signal; a community acting on one is.
 
 ### 4. Say over coding tools
 
@@ -150,17 +181,19 @@ or project policy with a stated effective date.
 | If the core claim is about… | It belongs to |
 | --- | --- |
 | One organisation's internal rule, how a team reorganises, what a manager does | `organisation-and-leadership` |
-| How the work feels to the person doing it | `worker-experience-identity-and-wellbeing` |
+| How the work feels to the person doing it, when no clash of values is involved | `worker-experience-identity-and-wellbeing` |
 | Who does which task, people or machines | `nature-and-division-of-work` |
 | Hiring, job loss, wages, entry into the profession | `careers-occupations-and-labour-markets` |
 | What to learn, curricula, training | `skills-knowledge-and-learning` |
 | Cost, ROI, productivity as a business result | `economics-productivity-and-value` |
 
-The boundary test: **an item here is about an expectation shared beyond one organisation,
-or about who answers for the work.** One company's review rule is organisation. The same
-rule adopted across a community, cited by others or set by a professional body is a norm.
-How it feels to follow it is wellbeing. Many items touch two of these, so file by what the
-evidence actually shows.
+The boundary test: **an item here is about values — an expectation shared beyond one
+organisation, who answers for the work, or a clash between an engineer's values and what
+the work demands.** One company's review rule is organisation. The same rule adopted across
+a community, cited by others or set by a professional body is a norm. Stress from workload
+or pace is wellbeing; stress from being asked to do something the engineer believes is
+wrong is moral conflict, and belongs here. Many items touch two of these, so file by what
+the evidence actually shows.
 
 **General layoff news is out, here as everywhere on this site.** A layoff item qualifies
 only if it shows who was held responsible for agent-written work, or a norm changing; an
@@ -170,17 +203,18 @@ account of how AI was used to replace work belongs to the generic run.
 
 ## Altitude
 
-**The test: can you name the engineering activity, the people or projects bound by the
-norm or responsibility, and what actually happened — adopted, enforced, contested,
-reversed or ignored?**
+**The test: can you name the engineering activity, the people affected, and what actually
+happened — a rule adopted, enforced or reversed, a conflict faced, a choice made?**
 
-- **Right altitude:** a project's adopted policy with its text and the thread that argued it;
-  a maintainer's account of enforcing or dropping a disclosure rule; a postmortem saying who
-  answered for agent-written code; a study with a real sample measuring how often engineers
-  disclose AI use and why they do not.
+- **Right altitude:** a project's rule on who may submit AI-written code, with its text and
+  the thread that argued it; an engineer's account of being told to ship generated code they
+  had not been able to check, and what they did; interview research showing engineers see
+  risks they cannot act on; a postmortem saying who answered for agent-written code.
 - **Wrong altitude:** AI ethics principles and frameworks; responsible-AI statements;
-  think-pieces on the future of the profession; AI safety and alignment research; consumer
-  harms such as deepfakes or chatbot safety; business-level regulation news (see above).
+  think-pieces on the future of the profession; general opinion for or against AI; AI safety
+  and alignment research; consumer harms such as deepfakes or chatbot safety;
+  business-level regulation news (see above); changes to disclosure formats such as tags and
+  commit trailers.
 
 **Tool news is excluded**, as in the generic run. A product's governance or disclosure
 feature is not a signal unless the source shows a community or organisation adopting it as
@@ -262,14 +296,22 @@ Conservancy blog, so it is a thin floor. The searches below are the method.
   postmortems and incident reviews that mention agent-written code.
 - **Professional bodies:** ACM, IEEE Computer Society, BCS, Gesellschaft für Informatik,
   Tietoasiantuntijat, TEK.
-- **Research:** arXiv cs.SE; ICSE's Software Engineering in Society track; CHASE; empirical
-  studies of disclosure, attribution and review practice.
+- **Research:** arXiv cs.SE and cs.CY; ICSE's Software Engineering in Society track; CHASE;
+  FAccT and AIES for studies of the engineers who build AI systems; university press releases,
+  which are often the first sign of interview studies like these. Read the paper itself.
+- **Practitioner accounts of moral conflict:** personal engineering blogs and Substack;
+  "Ask HN" and comment threads on Hacker News; Lobsters; LeadDev; Mastodon instances where
+  engineers post, such as hachyderm.io; conference talks. Useful search terms: `moral injury`
+  with `software engineer`, `complicit`, `"AI mandate"` with `developer`, `"refuse to use AI"`,
+  `"ship code I don't understand"`, `"AI usage" performance review engineers`, `"why I quit"`
+  with `AI`.
 - **Contracts and insurance:** technology errors-and-omissions insurers and IT-procurement
   bodies, only where terms on generated code have actually changed.
 
 Search in the local language for European material, since much of it is not in English:
 
-- Finnish: `tekoäly ohjelmistokehitys vastuu`, `tekoälyn käyttö koodissa ohjeistus`
+- Finnish: `tekoäly ohjelmistokehitys vastuu`, `tekoälyn käyttö koodissa ohjeistus`,
+  `ohjelmistokehittäjä eettinen kuormitus tekoäly`
 - German: `KI-generierter Code Haftung`, `KI Richtlinie Beiträge Open Source`
 - French: `code généré par IA responsabilité développeur`
 - Swedish: `AI-genererad kod ansvar utvecklare`
@@ -280,7 +322,10 @@ Search in the local language for European material, since much of it is not in E
 
 Output an item only if it passes the direct-link test AND shows at least one of:
 
-- a norm or rule on AI in engineering work adopted, enforced, contested, reversed or ignored
+- a conflict between engineers' values and what the work demands of them, in a named
+  person's firsthand account or a study with a stated method
+- a change in who is trusted or allowed to do what with AI in engineering work: adopted,
+  enforced, contested, reversed — or formally proposed, if the proposal itself is new
 - a change in who answers for agent-written code, in practice or in a binding document
 - measured evidence of how engineers actually follow or break such norms
 - an outside rule that passes the practice test
@@ -294,9 +339,12 @@ Reject items that are:
 - ethics principles, frameworks and position papers with nothing adopted behind them
   (`low-altitude`)
 - regulation or standards news that fails the practice test (`low-altitude`)
-- one person's opinion of what the norm should be, with no community acting on it
-  (`too-vague`)
-- proposed policies, model clauses and toolkits with no adopter (`illustrative-not-measured`)
+- one person's opinion of what the norm should be, or of AI in general, with no situation
+  they faced and no community acting on it (`too-vague`)
+- changes to disclosure formats, tags or commit trailers that change nobody's trust or
+  permissions (`low-altitude`)
+- model clauses and toolkits with no adopter, and proposals that only restate an existing
+  rule (`illustrative-not-measured`)
 - vendor governance content with no original data (`commercial-intent`)
 - recycled recaps of a policy you could read directly (`aggregator-used-primary-instead`)
 
@@ -314,15 +362,21 @@ Reject items that are:
    looked for and what you found.
 4. **Panic and boosterism both distort this topic.** "AI slop is destroying open source" and
    "the craft is obsolete" are both framings. Report what was done and measured.
+5. **Accounts of moral conflict travel without their source.** A resignation story or
+   "I refuse" post is often retold anonymously by recap sites. Trace it to the person's own
+   words, and drop it if you cannot. One account shows one person's situation; say so, and
+   do not present it as how engineers in general feel.
 
 ---
 
 ## Ranking — prefer in this order
 
-1. A norm or responsibility rule enforced, contested or reversed in practice
-2. A new shared rule adopted by a community, professional body or several organisations,
-   with its text read
-3. Measured evidence of how engineers follow, evade or disagree about such norms
+1. Measured evidence or firsthand accounts of engineers' values clashing with what the
+   work demands, and what they did about it
+2. A change in who is trusted or allowed to do what, enforced, contested or reversed in
+   practice
+3. A new shared rule or a genuinely new proposal on trust, from a community, professional
+   body or several organisations, with its text read
 4. Firsthand accounts of who answered for agent-written code
 5. Outside rules that pass the practice test
 6. Software workers getting or using a say over engineering tools
