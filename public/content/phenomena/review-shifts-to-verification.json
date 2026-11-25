@@ -177,13 +177,19 @@
       "stance": "contextual",
       "primary": true,
       "note": "Stack Overflow Developer Survey 2026: 48% trust AI output only when they can easily validate it and human-in-the-loop remains the dominant mode; shows verification pressure but not a change in how assurance is done"
+    },
+    {
+      "signalId": "2026-11-16-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "AWS Emulator: no person reviews changes; a change merges only after compilation, agent reviewers for standards and security, and a fidelity regression check, and the team spends most of its optimisation effort on that gate"
     }
   ],
   "observedReach": "gaining-traction",
   "reachRationale": "Review is being redistributed: automated review agents, linters and layered guardrails take over routine checking at Cloudflare, Anthropic and a small team that reviews by blast radius, so human attention goes to the highest-risk changes; leading practitioners have changed their stated advice. Further accounts show the same pattern in individual practice and small teams, at Spare, Tano and in Shopify's native rebuild, with human attention moving to the plan before work starts. Review agents without humans still merge far less than human-reviewed work, and assurance practice elsewhere remains diff-centric.",
   "reachReviewedAt": "2026-11-09",
   "evidenceProfile": {
-    "independentContexts": 13,
+    "independentContexts": 14,
     "evidenceTypes": 4,
     "quartersSpanned": 5,
     "counterEvidence": true
@@ -191,7 +197,7 @@
   "contested": false,
   "contestedNote": null,
   "firstObserved": "2025-12-01",
-  "latestEvidenceDate": "2026-11-03",
+  "latestEvidenceDate": "2026-11-11",
   "whatWouldChangeThis": [
     "Review practice stays diff-centric through 2027 despite sustained volume growth",
     "Automated reviewers are rolled back after escaped-defect rates rise"
@@ -221,5 +227,12 @@
   "related": [],
   "indicators": [],
   "construct": "Whether the assurance of AI-generated changes is moving from humans reading diffs to automated and layered checks — review agents, linters, tests, guardrails, risk-tiered review — with human attention reserved for the highest-risk changes. Not the volume of code generated, review queue length or acceptance rates on their own, or security-vulnerability rates, which show pressure on review but not any change in how assurance is done.",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (13 -> 14)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-16-02"
+    ]
+  }
 }

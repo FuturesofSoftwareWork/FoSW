@@ -74,6 +74,12 @@
       "stance": "supports",
       "primary": false,
       "note": "The author states his credence in agent output turns on the presence of conformance suites, tests and reproducible instructions rather than on reading the code. Secondary: a roundup reporting Cursor's planner/worker/judge experiments rather than its own observation."
+    },
+    {
+      "signalId": "2026-11-16-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "AWS Emulator: done means passing fidelity tests run against the real AWS cloud, and the lead names the test suite and merge gate as what lets the team trust code it does not read. The tests themselves are agent-written against a reference service; the people author and tune the gate"
     }
   ],
   "observedReach": "early-manifestations",
@@ -110,13 +116,20 @@
   ],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 2,
+    "independentContexts": 3,
     "evidenceTypes": 2,
-    "quartersSpanned": 1,
+    "quartersSpanned": 2,
     "counterEvidence": true
   },
   "firstObserved": "2026-01-08",
-  "latestEvidenceDate": "2026-07-27",
+  "latestEvidenceDate": "2026-11-11",
   "construct": "Whether the artifact that defines 'done' for software is shifting from code and product documents to an executable evaluation or acceptance suite that humans deliberately author — including the practices and roles that form around it. Not how much developers trust or verify AI code, model benchmark scores, or general testing practice, which move without the eval suite becoming the specification.",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (2 -> 3)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-16-02"
+    ]
+  }
 }

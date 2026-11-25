@@ -59,6 +59,12 @@
       "stance": "supports",
       "primary": true,
       "note": "Linear, 166,000 paid users: share attaching a PR in 30 days rose 3% to 10% for product managers and 1% to 8% for designers, mostly June 2025-June 2026; 'attaching' is undefined and may include linking others' PRs"
+    },
+    {
+      "signalId": "2026-11-24-01",
+      "stance": "supports",
+      "primary": true,
+      "note": "Anthropic economists' interviews at 58 US firms: of 140 pieces of software built with AI, non-technical staff built mostly internal apps and dashboards while product features stayed with technical staff; IT now gates which go to production and several firms built shared infrastructure so non-developers can build safely"
     }
   ],
   "observedReach": "early-manifestations",
@@ -69,13 +75,20 @@
     "Organisations that tried this and re-established a hard boundary between specification and implementation"
   ],
   "evidenceProfile": {
-    "independentContexts": 4,
+    "independentContexts": 5,
     "evidenceTypes": 2,
-    "quartersSpanned": 1,
+    "quartersSpanned": 2,
     "counterEvidence": false
   },
   "firstObserved": "2026-08-07",
-  "latestEvidenceDate": "2026-08-27",
+  "latestEvidenceDate": "2026-11-23",
   "reachReviewedAt": "2026-11-09",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (4 -> 5)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-24-01"
+    ]
+  }
 }

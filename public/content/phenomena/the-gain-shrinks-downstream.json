@@ -184,6 +184,12 @@
       "stance": "contextual",
       "primary": false,
       "note": "Reuters from internal documents: Meta cancelled a second restructuring wave after internal data reportedly showed agents not delivering assumed gains. About restructuring, not a measured productivity effect"
+    },
+    {
+      "signalId": "2026-11-16-03",
+      "stance": "supports",
+      "primary": true,
+      "note": "Engineering leader compares an AI-assisted initiative with a similar non-AI one in his own organisation: coding was ~10% of lead time, so a large coding speed-up cut total lead time ~4%; remaining time in review queues, decision waits and governance gates. One comparison, author says not general"
     }
   ],
   "observedReach": "field-level-shift",
@@ -195,14 +201,20 @@
     "Larger, less selected controlled trials showing a clear net speed-up for experienced developers"
   ],
   "evidenceProfile": {
-    "independentContexts": 13,
+    "independentContexts": 14,
     "evidenceTypes": 3,
-    "quartersSpanned": 3,
+    "quartersSpanned": 4,
     "counterEvidence": true
   },
   "firstObserved": "2026-01-14",
-  "latestEvidenceDate": "2026-10-13",
-  "possibleReachChange": null,
+  "latestEvidenceDate": "2026-11-11",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (13 -> 14)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-16-03"
+    ]
+  },
   "reachReviewedAt": "2026-11-05",
   "lastReviewed": "2026-11-05"
 }

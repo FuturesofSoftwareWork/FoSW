@@ -117,6 +117,12 @@
       "stance": "contextual",
       "primary": false,
       "note": "Statistics Finland register data as reported: 40% of vocational IT graduates in work a year on vs 66% across vocational fields, attributed to a qualification mismatch; higher-educated tech graduates 83% within six months vs 86% earlier; filed contextual by reviewer 2026-11-10: points both ways, and the statistics office attributes the vocational drop to a qualification mismatch rather than AI"
+    },
+    {
+      "signalId": "2026-11-23-02",
+      "stance": "supports",
+      "primary": true,
+      "note": "Michigan SI 506, a first programming course, redesigned so students must work through coding agents; a student says they prompt first, write code last and lack basic Python, and a student group asks for a no-AI section. Student-newspaper interviews, one pseudonymous student; faculty dispute the harm"
     }
   ],
   "observedReach": "gaining-traction",
@@ -125,7 +131,7 @@
   "contested": false,
   "contestedNote": null,
   "firstObserved": "2026-01-29",
-  "latestEvidenceDate": "2026-10-16",
+  "latestEvidenceDate": "2026-11-18",
   "whatWouldChangeThis": [
     "Entry-level postings recover to their 2023 share of engineering hiring and hold for two quarters",
     "Cohorts entering through AI-supervision roles reach senior-level judgement on the same timescale as earlier cohorts"
@@ -150,11 +156,18 @@
   "related": [],
   "indicators": [],
   "evidenceProfile": {
-    "independentContexts": 8,
-    "evidenceTypes": 3,
+    "independentContexts": 9,
+    "evidenceTypes": 4,
     "quartersSpanned": 4,
     "counterEvidence": false
   },
   "construct": "Whether the routes by which new software engineers build judgement are narrowing — entry-level hiring, the work juniors are given, and what juniors learn when machines do it first. Not overall engineering demand, total layoffs, or the share of developers using AI, which move without any change in how juniors enter or learn the profession.",
-  "lastReviewed": "2026-10-27"
+  "lastReviewed": "2026-10-27",
+  "possibleReachChange": {
+    "reason": "gained 1 independent context(s) since reach was last reviewed (8 -> 9)",
+    "raisedAt": "2026-11-25",
+    "signalIds": [
+      "2026-11-23-02"
+    ]
+  }
 }
